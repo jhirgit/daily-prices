@@ -1,11 +1,114 @@
-# Watchlist for the daily price job.
-# - One ticker per line. Blank lines and '#' comments (full-line or inline) are ignored.
-# - Use Yahoo Finance symbols: BRK-B (not BRK.B); London listings end in .L,
-#   Toronto in .TO, crypto like BTC-USD, indexes like ^GSPC.
-# - Edit freely; the job re-reads this file on every run.
+# ============================================================================
+# Watchlist  —  drafted 2026-06-18 from:
+#   - Google Drive: holdings-2026-06-10, portfolio-state-2026-06-09
+#   - project notes: silicon-control.md, precious-metals-state.md, iren-state.md
+# Group headers below are COMMENTS ONLY (the job ignores #-comments & blanks).
+# This is a DRAFT — prune freely. Yahoo symbols; foreign listings use suffixes.
+# ============================================================================
 
-SPY      # S&P 500 ETF (benchmark)
-QQQ      # Nasdaq 100 ETF
-IREN     # Iris Energy
-NVDA     # Nvidia
-GLD      # SPDR Gold Shares
+# --- CORE HOLDINGS: equities (owned across Chase + Schwab) ---
+JPM        # JPMorgan (RSU anchor)
+NVDA       # Nvidia (largest non-JPM position)
+INTC       # Intel
+AMSC       # American Superconductor
+ASML       # ASML (lithography monopoly)
+TSM        # Taiwan Semiconductor
+MU         # Micron (memory/HBM)
+COHR       # Coherent (optics)
+IREN       # Iris Energy
+NBIS       # Nebius Group
+WOLF       # Wolfspeed
+NOK        # Nokia
+HIMX       # Himax
+PENG       # Penguin Solutions
+POWI       # Power Integrations
+AOSL       # Alpha & Omega Semiconductor (power)
+ALAB       # Astera Labs
+IFNNY      # Infineon (ADR)
+SIVEF      # Sivers Semiconductors (OTC; Stockholm = SIVE.ST)
+NVO        # Novo Nordisk (ADR)
+HIMS       # Hims & Hers
+
+# --- CORE HOLDINGS: ETFs / funds (owned) ---
+QQQ        # Nasdaq 100
+EWY        # iShares MSCI South Korea
+IGV        # iShares Expanded Tech-Software
+RING       # iShares Global Gold Miners
+GDXJ       # VanEck Junior Gold Miners
+ICOP       # copper-miners sleeve
+MARS       # space/defense sleeve
+SLV        # iShares Silver Trust
+SILJ       # junior silver miners
+ETHA       # iShares Ethereum Trust
+
+# --- ACTIVE WATCHLIST (trading candidates / trigger names) ---
+AVGO       # Broadcom
+AMD        # AMD
+MRVL       # Marvell (S&P 500 add 6/22)
+CRWV       # CoreWeave (Jin credit canary)
+AXTI       # AXT (substrate; highest-beta CPO trade)
+NVTS       # Navitas
+AEHR       # Aehr Test Systems
+MPWR       # Monolithic Power
+MRAAY      # Murata (ADR)
+LITE       # Lumentum (optics)
+AAOI       # Applied Optoelectronics (optics)
+CIEN       # Ciena (optics)
+GLW        # Corning (optical glass)
+RDDT       # Reddit (watch, not held)
+DRAM       # memory ETF
+
+# --- SEMI SUPPLY CHAIN: "Silicon Control" thematic (research) ---
+005930.KS  # Samsung Electronics (Korea)
+000660.KS  # SK Hynix (Korea)
+SNDK       # Sandisk (NAND)
+# 285A.T   # Kioxia (Tokyo) — REMOVED: Yahoo's 285A.T price (¥96,900) is implausible for Kioxia; confirm the correct symbol before re-adding
+GEV        # GE Vernova (turbines/power)
+CAT        # Caterpillar (gensets)
+SIEGY      # Siemens (ADR)
+BE         # Bloom Energy (fuel cells)
+FLEX       # Flex (power/manufacturing)
+TXN        # Texas Instruments (power)
+
+# --- PRECIOUS METALS: research universe ---
+NEM        # Newmont (avoid/underweight)
+GOLD       # Barrick
+AU         # AngloGold Ashanti
+AEM        # Agnico Eagle (CORE)
+KGC        # Kinross (CORE)
+AGI        # Alamos Gold (CORE)
+HL         # Hecla (US-pure-play, CORE)
+PAAS       # Pan American Silver (CORE)
+AG         # First Majestic (avoid)
+CDE        # Coeur
+EXK        # Endeavour Silver
+SSRM       # SSR Mining
+FNV        # Franco-Nevada
+WPM        # Wheaton Precious Metals
+RGLD       # Royal Gold
+TFPM       # Triple Flag
+GDX        # senior gold miners
+SGDM       # Sprott gold miners
+SIL        # silver miners
+
+# --- AI / THEMATIC ETFs + crypto (some legacy; verify still held) ---
+THNQ       # Robo Global AI
+QTUM       # Defiance Quantum
+ROBT       # First Trust AI & Robotics
+BMNR       # Bitmine Immersion (crypto treasury)
+IBIT       # iShares Bitcoin Trust
+
+# --- MACRO / BENCHMARKS (spot signals referenced in state files) ---
+SPY        # S&P 500 ETF
+SMH        # semis ETF
+^GSPC      # S&P 500 index
+^IXIC      # Nasdaq Composite
+^SOX       # PHLX Semiconductor
+^KS11      # KOSPI
+^VIX       # volatility
+GLD        # gold (spot proxy)
+GC=F       # gold futures
+SI=F       # silver futures
+BZ=F       # Brent crude
+BTC-USD    # Bitcoin
+ETH-USD    # Ethereum
