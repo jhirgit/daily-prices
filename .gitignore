@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Note: prices.db is intentionally NOT ignored — the database is committed
+# to the repo so it accumulates history across daily runs.

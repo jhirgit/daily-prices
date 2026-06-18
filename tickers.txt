@@ -1,0 +1,11 @@
+# Watchlist for the daily price job.
+# - One ticker per line. Blank lines and '#' comments (full-line or inline) are ignored.
+# - Use Yahoo Finance symbols: BRK-B (not BRK.B); London listings end in .L,
+#   Toronto in .TO, crypto like BTC-USD, indexes like ^GSPC.
+# - Edit freely; the job re-reads this file on every run.
+
+SPY      # S&P 500 ETF (benchmark)
+QQQ      # Nasdaq 100 ETF
+IREN     # Iris Energy
+NVDA     # Nvidia
+GLD      # SPDR Gold Shares
