@@ -82,6 +82,18 @@ and commits the updated `prices.db` back to the repo. To enable it:
 
 To change the time, edit the `cron:` line (it's in **UTC**).
 
+## Ask Claude about your prices
+
+`mcp_server.py` exposes this database to Claude.ai chat (or Claude Desktop) as a
+read-only [MCP](https://modelcontextprotocol.io) connector, so you can ask
+*"how did NVDA do this week?"* and Claude queries `prices.db` for you. See
+**[MCP.md](MCP.md)** for the tools and how to connect.
+
+```bash
+pip install -r requirements-mcp.txt
+python mcp_server.py --port 8000      # streamable HTTP at /mcp, for Claude.ai
+```
+
 ## Querying the data
 
 ```powershell
