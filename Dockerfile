@@ -1,9 +1,13 @@
 # Container for the daily-prices MCP server.
 # Build:  docker build -t daily-prices-mcp .
-# Run:    docker run -p 8000:8000 -v "$PWD/prices.db:/app/prices.db:ro" daily-prices-mcp
+# Run:    docker run -p 8000:8000 \
+#           -e MCP_AUTH_TOKEN="$(python -c 'import secrets;print(secrets.token_urlsafe(32))')" \
+#           -v "$PWD/prices.db:/app/prices.db:ro" daily-prices-mcp
 #
-# Then expose port 8000 publicly (HTTPS) and add the resulting
-# https://<host>/mcp URL in Claude.ai under Settings -> Connectors.
+# With MCP_AUTH_TOKEN set, the endpoint is served at the secret path
+# /<token>/mcp (the startup log prints a masked confirmation). Expose port 8000
+# publicly over HTTPS and add https://<host>/<token>/mcp in Claude.ai under
+# Settings -> Connectors. Without the token it serves an unauthenticated /mcp.
 FROM python:3.12-slim
 
 WORKDIR /app

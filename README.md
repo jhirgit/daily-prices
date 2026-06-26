@@ -91,7 +91,8 @@ read-only [MCP](https://modelcontextprotocol.io) connector, so you can ask
 
 ```bash
 pip install -r requirements-mcp.txt
-python mcp_server.py --port 8000      # streamable HTTP at /mcp, for Claude.ai
+export MCP_AUTH_TOKEN="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+python mcp_server.py --port 8000      # streamable HTTP at /<token>/mcp, for Claude.ai
 ```
 
 ## Querying the data

@@ -23,8 +23,11 @@ raw-SQL tool rejects anything that isn't a single `SELECT`/`WITH` statement.
 ```bash
 pip install -r requirements-mcp.txt
 
+# Set a secret so the endpoint isn't public (see Authentication below)
+export MCP_AUTH_TOKEN="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+
 # Remote connector (what Claude.ai web/mobile speak): streamable HTTP
-python mcp_server.py --host 0.0.0.0 --port 8000      # serves at /mcp
+python mcp_server.py --host 0.0.0.0 --port 8000      # serves at /<token>/mcp
 
 # Local Claude Desktop instead
 python mcp_server.py --transport stdio
@@ -46,7 +49,9 @@ docker run -p 8000:8000 daily-prices-mcp
 ```
 
 Put it behind HTTPS (the platform's TLS, or a reverse proxy), then in Claude.ai:
-**Settings → Connectors → Add custom connector** → paste `https://<your-host>/mcp`.
+**Settings → Connectors → Add custom connector** → paste
+`https://<your-host>/<token>/mcp` (the startup log prints a masked confirmation
+of the path).
 
 **B. Quick test via a tunnel.** Run locally and expose it temporarily:
 
@@ -55,7 +60,7 @@ python mcp_server.py --port 8000
 ngrok http 8000          # or: cloudflared tunnel --url http://localhost:8000
 ```
 
-Add the tunnel's `https://…/mcp` URL as the connector.
+Add the tunnel's `https://…/<token>/mcp` URL as the connector.
 
 > **Note on the data.** The DB is regenerated and committed daily by the GitHub
 > Actions job. A hosted server reads whatever `prices.db` it was deployed with,
@@ -65,10 +70,31 @@ Add the tunnel's `https://…/mcp` URL as the connector.
 
 ### Authentication
 
-This server ships with **no auth** — fine for a quick personal/tunnelled test,
-but anyone with the URL can read your watchlist and price history. For anything
-long-lived, put it behind your host's access controls or an auth proxy before
-sharing the URL.
+Claude.ai custom connectors authenticate with **OAuth only** — its UI has no
+field for a static bearer token or API key. So this server uses the one thing
+Claude.ai *can* carry: a **secret URL**.
+
+Set `MCP_AUTH_TOKEN` to a long random value and the endpoint moves from the
+public `/mcp` to an unguessable `/<token>/mcp`; the token *is* the credential
+(like a private webhook URL). Requests to `/mcp` or a wrong token get a 404.
+
+```bash
+export MCP_AUTH_TOKEN="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+```
+
+Then the connector URL is `https://<your-host>/<token>/mcp`. Treat that whole
+URL as a password: serve it only over **HTTPS** (so the path is encrypted in
+transit) and don't paste it anywhere public. Rotate by changing the token.
+
+Caveats of secret-URL auth: the token can appear in server/reverse-proxy access
+logs and is single-tier (no per-user revocation). That's an acceptable bar for a
+personal, read-only price history. If you later want real per-user auth with
+consent and revocation, the heavier upgrade is a full **OAuth 2.1** flow — the
+MCP Python SDK supports it via a token verifier, but it requires running (or
+proxying to) an authorization server, which is overkill for one user.
+
+Without `MCP_AUTH_TOKEN` the server logs a warning and serves an unauthenticated
+`/mcp` — only do that on a trusted network or a throwaway tunnel.
 
 ## Claude Desktop (local, no hosting)
 

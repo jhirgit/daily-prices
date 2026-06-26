@@ -37,6 +37,7 @@ import argparse
 import os
 import re
 import sqlite3
+import sys
 from typing import Any
 
 from mcp.server.fastmcp import FastMCP
@@ -47,6 +48,17 @@ DB_PATH = os.environ.get("PRICES_DB", os.path.join(HERE, "prices.db"))
 
 # Hard cap on rows returned by any single tool call, to keep responses bounded.
 MAX_ROWS = 1000
+
+# Optional shared secret. When set, the MCP endpoint is served at an
+# unguessable path (/<token>/mcp) instead of the public /mcp, so the URL itself
+# acts as the credential. Claude.ai custom connectors don't support pasting a
+# static bearer token (OAuth only), so a secret URL is the simplest auth that
+# works with them over HTTPS. Generate one with:
+#   python -c "import secrets; print(secrets.token_urlsafe(32))"
+AUTH_TOKEN = os.environ.get("MCP_AUTH_TOKEN", "").strip()
+
+# A path segment can't contain '/'; keep it URL-safe so it sits cleanly in a URL.
+_TOKEN_RE = re.compile(r"^[A-Za-z0-9._~-]+$")
 
 mcp = FastMCP("daily-prices")
 
@@ -300,6 +312,30 @@ def main() -> None:
     if args.transport in ("streamable-http", "sse"):
         mcp.settings.host = args.host
         mcp.settings.port = args.port
+        if AUTH_TOKEN:
+            if not _TOKEN_RE.match(AUTH_TOKEN):
+                print(
+                    "MCP_AUTH_TOKEN must be URL-safe (letters, digits, '-._~'). "
+                    "Generate one with: python -c "
+                    '"import secrets; print(secrets.token_urlsafe(32))"',
+                    file=sys.stderr,
+                )
+                sys.exit(2)
+            # Serve at a secret path; the full URL is the credential.
+            mcp.settings.streamable_http_path = f"/{AUTH_TOKEN}/mcp"
+            masked = AUTH_TOKEN[:4] + "…" + AUTH_TOKEN[-2:]
+            print(
+                f"[auth] endpoint protected by secret path /{masked}/mcp "
+                "— give the full URL to Claude.ai, keep it private.",
+                file=sys.stderr,
+            )
+        else:
+            print(
+                "[auth] WARNING: no MCP_AUTH_TOKEN set — endpoint is PUBLIC at "
+                "/mcp. Anyone with the host can read your data. Set "
+                "MCP_AUTH_TOKEN before exposing this to the internet.",
+                file=sys.stderr,
+            )
     mcp.run(transport=args.transport)
 
 
