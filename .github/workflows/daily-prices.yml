@@ -1,0 +1,48 @@
+name: Daily Prices
+
+on:
+  schedule:
+    # 22:00 UTC every weekday. The US market closes 16:00 ET (= 20:00 UTC in
+    # summer / 21:00 UTC in winter); 22:00 UTC leaves buffer for the daily bar
+    # to settle. Note: GitHub can delay scheduled runs by 10-30+ min under load.
+    - cron: "0 22 * * 1-5"
+  workflow_dispatch: {}          # allow manual runs from the Actions tab
+
+permissions:
+  contents: write                # required to commit the updated database back
+
+concurrency:
+  group: daily-prices
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch prices
+        run: python fetch_prices.py
+
+      - name: Export text data (CSV + JSON for public URLs)
+        run: python export_data.py
+
+      - name: Commit updated database and exports
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prices.db data/
+          if git diff --staged --quiet; then
+            echo "No price changes to commit."
+          else
+            git commit -m "prices: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

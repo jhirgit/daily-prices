@@ -1,0 +1,4 @@
+# Dependencies for the MCP server (mcp_server.py) only.
+# The daily fetch job uses requirements.txt; keep these separate so the
+# Actions cron stays lean.
+mcp[cli]>=1.2.0

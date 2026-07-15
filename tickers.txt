@@ -1,0 +1,121 @@
+# ============================================================================
+# Watchlist — names tracked, grouped by sector/theme.
+# Group headers below are COMMENTS ONLY (the job ignores #-comments & blanks).
+# Yahoo Finance symbols. Foreign listings use suffixes (.KS Korea, .ST Sweden).
+# Indexes start with ^; futures end in =F; crypto is PAIR-USD.
+# ============================================================================
+
+# --- Semiconductors: compute, design, analog/power ---
+NVDA       # Nvidia
+AMD        # AMD
+AVGO       # Broadcom
+MRVL       # Marvell
+INTC       # Intel
+TSM        # Taiwan Semiconductor
+ASML       # ASML
+ALAB       # Astera Labs
+MPWR       # Monolithic Power
+AXTI       # AXT
+NVTS       # Navitas
+AEHR       # Aehr Test Systems
+HIMX       # Himax
+POWI       # Power Integrations
+AOSL       # Alpha & Omega Semiconductor
+IFNNY      # Infineon (ADR)
+MRAAY      # Murata (ADR)
+TXN        # Texas Instruments
+PENG       # Penguin Solutions
+SIVEF      # Sivers Semiconductors (Stockholm = SIVE.ST)
+WOLF       # Wolfspeed
+AMSC       # American Superconductor
+
+# --- Memory & storage ---
+MU         # Micron
+SNDK       # Sandisk
+005930.KS  # Samsung Electronics
+000660.KS  # SK Hynix
+DRAM       # memory ETF
+
+# --- Optics / networking ---
+COHR       # Coherent
+LITE       # Lumentum
+AAOI       # Applied Optoelectronics
+CIEN       # Ciena
+GLW        # Corning
+NOK        # Nokia
+
+# --- AI compute / datacenter operators ---
+IREN       # Iris Energy
+NBIS       # Nebius
+CRWV       # CoreWeave
+
+# --- Datacenter power / energy ---
+GEV        # GE Vernova
+CAT        # Caterpillar
+SIEGY      # Siemens (ADR)
+BE         # Bloom Energy
+FLEX       # Flex
+
+# --- Precious-metals miners & royalty ---
+NEM        # Newmont
+GOLD       # Barrick
+AU         # AngloGold Ashanti
+AEM        # Agnico Eagle
+KGC        # Kinross
+AGI        # Alamos Gold
+HL         # Hecla
+PAAS       # Pan American Silver
+AG         # First Majestic
+CDE        # Coeur
+EXK        # Endeavour Silver
+SSRM       # SSR Mining
+FNV        # Franco-Nevada
+WPM        # Wheaton Precious Metals
+RGLD       # Royal Gold
+TFPM       # Triple Flag
+
+# --- Metals ETFs ---
+GDX        # gold miners
+GDXJ       # junior gold miners
+SGDM       # Sprott gold miners
+SIL        # silver miners
+SILJ       # junior silver miners
+RING       # global gold miners
+SLV        # silver
+
+# --- Other equities ---
+JPM        # JPMorgan
+NVO        # Novo Nordisk (ADR)
+HIMS       # Hims & Hers
+RDDT       # Reddit
+SPCX       # SpaceX (IPO 2026-06-12)
+
+# --- Broad / thematic / crypto ETFs ---
+SPY        # S&P 500
+QQQ        # Nasdaq 100
+SMH        # semiconductors
+IGV        # software
+EWY        # South Korea
+ICOP       # copper miners
+MARS       # space/defense
+THNQ       # AI
+QTUM       # quantum / compute
+ROBT       # AI & robotics
+BMNR       # Bitmine (crypto treasury)
+IBIT       # Bitcoin ETF
+ETHA       # Ethereum ETF
+
+# --- Macro / benchmarks ---
+^GSPC      # S&P 500 index
+^IXIC      # Nasdaq Composite
+^SOX       # PHLX Semiconductor
+^KS11      # KOSPI
+^VIX       # volatility
+GLD        # gold
+GC=F       # gold futures
+SI=F       # silver futures
+BZ=F       # Brent crude
+BTC-USD    # Bitcoin
+ETH-USD    # Ethereum
+
+# Kioxia omitted — needs a verified Yahoo symbol (285A.T returns implausible data).
