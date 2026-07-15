@@ -101,12 +101,23 @@ Generate the exports locally with `python export_data.py` (writes `data/`).
 **2. MCP connector.** `mcp_server.py` exposes the database to Claude.ai (or
 Claude Desktop) as a read-only [MCP](https://modelcontextprotocol.io) connector
 with query tools, so you can ask *"how did NVDA do this week?"* and Claude
-queries `prices.db`. Needs hosting; see **[MCP.md](MCP.md)**.
+queries `prices.db`. It also has a live `get_intraday_quotes` tool that fetches
+current delayed prices for a batch of tickers on demand (bypassing the DB), so
+Claude can answer *"where is my watchlist trading right now?"*. Needs hosting;
+see **[MCP.md](MCP.md)**.
 
 ```bash
 pip install -r requirements-mcp.txt
 export MCP_AUTH_TOKEN="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
 python mcp_server.py --port 8000      # streamable HTTP at /<token>/mcp, for Claude.ai
+```
+
+**Intraday, no hosting.** In a Claude Code / cowork shell (or by hand) you can
+pull a batch of live quotes with the standalone CLI — no server required:
+
+```bash
+python intraday.py NVDA AMD SMH ^SOX --compact
+python intraday.py --tickers-file tickers.txt        # whole watchlist, JSON
 ```
 
 ## Querying the data

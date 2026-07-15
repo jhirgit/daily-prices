@@ -2,3 +2,5 @@
 # The daily fetch job uses requirements.txt; keep these separate so the
 # Actions cron stays lean.
 mcp[cli]>=1.2.0
+# get_intraday_quotes fetches live quotes on demand (also used by intraday.py).
+yfinance>=0.2.40

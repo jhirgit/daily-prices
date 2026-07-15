@@ -7,6 +7,9 @@ the most?"* and it queries the database for you.
 
 Access is **read-only**: the server opens the database in read-only mode and the
 raw-SQL tool rejects anything that isn't a single `SELECT`/`WITH` statement.
+(`get_intraday_quotes` is the one tool that reaches outside the DB — it fetches
+live quotes from Yahoo on demand — but it still never writes anything, and needs
+outbound internet access from wherever the server runs.)
 
 ## Tools Claude gets
 
@@ -15,6 +18,7 @@ raw-SQL tool rejects anything that isn't a single `SELECT`/`WITH` statement.
 | `list_tickers` | Every symbol, its bar count, and date coverage |
 | `get_price_history` | Daily OHLC bars for one ticker over a date range |
 | `get_latest_quote` | Newest daily close + newest delayed spot quote |
+| `get_intraday_quotes` | **Live** delayed quotes for a batch of tickers, fetched from Yahoo on demand (not the DB) |
 | `compare_performance` | % return of several tickers over a window, ranked |
 | `run_sql` | A single read-only `SELECT`/`WITH` query (escape hatch, max 1000 rows) |
 

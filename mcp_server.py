@@ -5,15 +5,18 @@ MCP server exposing the daily-prices SQLite database to an LLM client
 
 It serves **read-only** access to the data collected by ``fetch_prices.py``:
 the ``daily_prices`` (settled OHLC bars) and ``spot_quotes`` (delayed quotes)
-tables in ``prices.db``.
+tables in ``prices.db``. One tool (``get_intraday_quotes``) additionally
+fetches live delayed quotes straight from Yahoo on demand.
 
 Tools
 -----
-Curated, predictable queries:
+Curated, predictable queries (from the database):
   list_tickers           - which symbols exist, with their coverage window
   get_price_history      - daily OHLC bars for one ticker over a date range
   get_latest_quote       - newest daily close + newest delayed spot quote
   compare_performance    - % return of several tickers over a window
+Live, on demand (fetched from Yahoo, not the database):
+  get_intraday_quotes    - current delayed quotes for a batch of tickers
 A guarded escape hatch for ad-hoc analysis:
   run_sql                - a single read-only SELECT/WITH statement
 
@@ -266,6 +269,35 @@ def compare_performance(
             )
     out.sort(key=lambda r: (r["pct_change"] is None, -(r["pct_change"] or 0)))
     return out
+
+
+# --------------------------------------------------------------------------- #
+# Live quotes (fetched on demand from Yahoo, not from the DB)
+# --------------------------------------------------------------------------- #
+@mcp.tool()
+def get_intraday_quotes(tickers: list[str]) -> dict[str, Any]:
+    """Current delayed intraday quotes for a batch of tickers, fetched LIVE from
+    Yahoo Finance right now — not from the stored database.
+
+    Use this when you need where symbols are trading *today*, rather than the
+    last settled daily close the database tools return. Ideal for a quick
+    "where is my watchlist trading now?" across many names at once.
+
+    Args:
+        tickers: Symbols to quote, e.g. ["NVDA", "AMD", "SMH", "^SOX"]. Up to
+            120 per call. Yahoo symbols, case-insensitive (indexes start "^",
+            futures end "=F", crypto is PAIR-USD).
+
+    Returns an envelope {fetched_at, source, requested, ok, quotes} where each
+    quote carries price, previous_close, change, change_pct, open, day_high,
+    day_low and currency. Prices are delayed ~15 min; when a market is closed
+    the price reflects that session's last print. A symbol that can't be fetched
+    comes back with its ``error`` set instead of prices, so one bad ticker never
+    fails the whole batch.
+    """
+    from intraday import snapshot  # lazy import: only needs yfinance when called
+
+    return snapshot(tickers)
 
 
 # --------------------------------------------------------------------------- #
