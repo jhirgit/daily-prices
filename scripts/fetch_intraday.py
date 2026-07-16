@@ -7,7 +7,7 @@ Reads:
 
 Writes:
   data/intraday.json          - most recent snapshot
-  data/history/<stamp>.json   - timestamped copy
+  data/history/<stamp>.json   - timestamped copy (pruned to the newest KEEP_HISTORY)
   $GITHUB_STEP_SUMMARY        - Markdown table (when run in Actions)
 
 Uses only the Python standard library (no pip install needed).
@@ -24,6 +24,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 FINNHUB_URL = "https://finnhub.io/api/v1/quote"
+KEEP_HISTORY = 20  # newest snapshots retained in data/history/
 
 
 def iso(ts):
@@ -93,6 +94,11 @@ def main():
     stamp = payload["as_of"].replace(":", "").replace("-", "")
     with open(f"data/history/{stamp}.json", "w") as f:
         json.dump(payload, f, indent=2)
+
+    # timestamped names sort chronologically, so lexicographic order works
+    snaps = sorted(f for f in os.listdir("data/history") if f.endswith(".json"))
+    for old in snaps[:-KEEP_HISTORY]:
+        os.remove(os.path.join("data/history", old))
 
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path:

@@ -132,7 +132,8 @@ dependencies), then commits the result back to `main`:
 - `data/intraday.json` — the latest snapshot, also served as a plain JSON
   endpoint: `https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/intraday.json`
   (`data/latest.json` stays owned by the nightly daily-close export)
-- `data/history/<stamp>.json` — a timestamped copy per run
+- `data/history/<stamp>.json` — a timestamped copy per run (pruned to the
+  newest 20; older snapshots remain in git history)
 - a Markdown price table in the workflow run's job summary
 
 Setup (one time): add a Finnhub token as repo secret **`FINNHUB_API_KEY`**
