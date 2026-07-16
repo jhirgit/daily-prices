@@ -120,6 +120,34 @@ python intraday.py NVDA AMD SMH ^SOX --compact
 python intraday.py --tickers-file tickers.txt        # whole watchlist, JSON
 ```
 
+## On-demand intraday service (GitHub Actions + Finnhub)
+
+For real-time quotes without hosting anything: the **Intraday Prices** workflow
+(`.github/workflows/intraday-prices.yml`) is a `workflow_dispatch` that anyone
+with repo access (including a Claude/Cowork session) can trigger with a
+comma-separated ticker list. It fetches live quotes from
+[Finnhub](https://finnhub.io/) via `scripts/fetch_intraday.py` (stdlib only, no
+dependencies), then commits the result back to `main`:
+
+- `data/intraday.json` — the latest snapshot, also served as a plain JSON
+  endpoint: `https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/intraday.json`
+  (`data/latest.json` stays owned by the nightly daily-close export)
+- `data/history/<stamp>.json` — a timestamped copy per run
+- a Markdown price table in the workflow run's job summary
+
+Setup (one time): add a Finnhub token as repo secret **`FINNHUB_API_KEY`**
+(Settings -> Secrets and variables -> Actions).
+
+Trigger it from the UI (Actions -> Intraday Prices -> Run workflow) or the CLI:
+
+```bash
+gh workflow run "Intraday Prices" -f tickers=AAPL,MSFT,NVDA
+```
+
+Caveats: outside US market hours Finnhub returns the last close (`price` ==
+`prev_close` is expected, not a bug); unknown symbols land in the `errors`
+array; the free tier allows 60 req/min, so the script sleeps 1s per ticker.
+
 ## Querying the data
 
 ```powershell
