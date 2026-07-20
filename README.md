@@ -123,9 +123,11 @@ python intraday.py --tickers-file tickers.txt        # whole watchlist, JSON
 ## On-demand intraday service (GitHub Actions + Finnhub)
 
 For real-time quotes without hosting anything: the **Intraday Prices** workflow
-(`.github/workflows/intraday-prices.yml`) is a `workflow_dispatch` that anyone
-with repo access (including a Claude/Cowork session) can trigger with a
-comma-separated ticker list. It fetches live quotes from
+(`.github/workflows/intraday-prices.yml`) runs on a cron every 20 minutes during
+US market hours (fetching the Finnhub-compatible watchlist symbols), and is also
+a `workflow_dispatch` that anyone with repo access (including a Claude/Cowork
+session) can trigger with a comma-separated ticker list — leave the input empty
+to fetch the watchlist. It fetches live quotes from
 [Finnhub](https://finnhub.io/) via `scripts/fetch_intraday.py` (stdlib only, no
 dependencies), then commits the result back to `main`:
 

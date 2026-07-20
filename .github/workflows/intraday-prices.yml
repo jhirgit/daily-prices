@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       tickers:
-        description: "Comma-separated tickers (e.g. AAPL,MSFT,NVDA)"
-        required: true
+        description: "Comma-separated tickers (e.g. AAPL,MSFT,NVDA); empty = watchlist"
+        required: false
         type: string
+  schedule:
+    # every 20 min during US market hours (13:30-20:00 UTC, EDT); fetches the
+    # watchlist (Finnhub-compatible symbols only) so intraday.json stays fresh
+    # without anyone needing GitHub auth
+    - cron: "*/20 13-20 * * 1-5"
 
 permissions:
   contents: write
@@ -39,7 +44,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "intraday: ${{ inputs.tickers }} [skip ci]"
+            git commit -m "intraday: ${{ inputs.tickers || 'watchlist' }} [skip ci]"
             git pull --rebase
             git push
           fi

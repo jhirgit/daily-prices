@@ -35,6 +35,25 @@ def now_iso():
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
+def load_watchlist(path="tickers.txt"):
+    """Watchlist symbols that Finnhub's free tier can actually quote.
+
+    Skips indices (^SOX), futures (GC=F), foreign listings (005930.KS),
+    and Yahoo-style crypto pairs (BTC-USD) - those return t=0 anyway and
+    would each still burn a request + 1s sleep.
+    """
+    syms = []
+    with open(path) as f:
+        for line in f:
+            sym = line.split("#")[0].strip().upper()
+            if not sym:
+                continue
+            if any(c in sym for c in "^=.") or sym.endswith("-USD"):
+                continue
+            syms.append(sym)
+    return syms
+
+
 def get_quote(symbol, token):
     params = urllib.parse.urlencode({"symbol": symbol, "token": token})
     with urllib.request.urlopen(f"{FINNHUB_URL}?{params}", timeout=15) as resp:
@@ -53,6 +72,8 @@ def main():
         if t and t not in seen:
             seen.add(t)
             tickers.append(t)
+    if not tickers:
+        tickers = load_watchlist()  # cron path: no explicit input
     if not tickers:
         sys.exit("No tickers provided (set TICKERS, comma-separated)")
 
