@@ -11,8 +11,10 @@ on:
     # every 20 min during US market hours (13:30-20:00 UTC, EDT); fetches the
     # watchlist (Finnhub-compatible symbols only) so intraday.json stays fresh
     # without anyone needing GitHub auth
-    # off-peak minute marks: GitHub skips/delays busy slots like :00/:20/:40
-    - cron: "3,23,43 13-20 * * 1-5"
+    # off-peak minute marks: GitHub skips/delays busy slots like :00/:20/:40.
+    # Ends at 19:43 UTC (3:43pm EDT) so the last snapshot freezes ~15 min
+    # before the close - a stable pre-close mark until the EOD job publishes.
+    - cron: "3,23,43 13-19 * * 1-5"
 
 permissions:
   contents: write
