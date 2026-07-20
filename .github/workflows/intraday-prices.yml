@@ -11,7 +11,8 @@ on:
     # every 20 min during US market hours (13:30-20:00 UTC, EDT); fetches the
     # watchlist (Finnhub-compatible symbols only) so intraday.json stays fresh
     # without anyone needing GitHub auth
-    - cron: "*/20 13-20 * * 1-5"
+    # off-peak minute marks: GitHub skips/delays busy slots like :00/:20/:40
+    - cron: "3,23,43 13-20 * * 1-5"
 
 permissions:
   contents: write
