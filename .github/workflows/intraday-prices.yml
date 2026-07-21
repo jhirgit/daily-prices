@@ -14,6 +14,8 @@ on:
     # off-peak minute marks: GitHub skips/delays busy slots like :00/:20/:40.
     # Ends at 19:43 UTC (3:43pm EDT) so the last snapshot freezes ~15 min
     # before the close - a stable pre-close mark until the EOD job publishes.
+    # NOTE: if this cron goes quiet after a schedule edit, touch this file
+    # (any commit) to force GitHub to re-register the schedule.
     - cron: "3,23,43 13-19 * * 1-5"
 
 permissions:
