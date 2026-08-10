@@ -171,9 +171,9 @@ def record_spot(conn, ticker, tkr):
     return price
 
 
-def process_ticker(conn, symbol):
+def process_ticker(conn, symbol, lookback=LOOKBACK):
     tkr = yf.Ticker(symbol)
-    bars = tkr.history(period=LOOKBACK, auto_adjust=False, actions=False)
+    bars = tkr.history(period=lookback, auto_adjust=False, actions=False)
     if bars is None or bars.empty:
         raise RuntimeError("no daily bars returned (delisted or bad symbol?)")
     n = upsert_daily(conn, symbol, bars)
@@ -183,10 +183,10 @@ def process_ticker(conn, symbol):
     return n, _f(last.get("Open")), _f(last.get("Close")), spot
 
 
-def process_with_retry(conn, symbol):
+def process_with_retry(conn, symbol, lookback=LOOKBACK):
     for attempt in range(1, ATTEMPTS + 1):
         try:
-            return process_ticker(conn, symbol)
+            return process_ticker(conn, symbol, lookback)
         except Exception as e:  # noqa: BLE001 - per-ticker isolation is intentional
             if attempt == ATTEMPTS:
                 raise
@@ -199,6 +199,9 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Fetch daily prices into SQLite.")
     ap.add_argument("--db", default=DEFAULT_DB, help="SQLite database path")
     ap.add_argument("--tickers", default=DEFAULT_TICKERS, help="ticker list file")
+    ap.add_argument("--lookback", default=LOOKBACK,
+                    help="history window per run, yfinance period syntax (default %(default)s; "
+                         "use e.g. 1y for a one-time backfill — upsert dedupes overlap)")
     args = ap.parse_args()
 
     symbols = load_tickers(args.tickers)
@@ -213,7 +216,7 @@ def main() -> int:
     ok, failed = 0, []
     for i, sym in enumerate(symbols):
         try:
-            n, o, c, spot = process_with_retry(conn, sym)
+            n, o, c, spot = process_with_retry(conn, sym, args.lookback)
             print(f"  [ok]   {sym:8s} bars+{n}  open={_fmt(o)} close={_fmt(c)} spot={_fmt(spot)}")
             ok += 1
         except Exception as e:  # noqa: BLE001

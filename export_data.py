@@ -72,6 +72,25 @@ def _latest_snapshot(conn: sqlite3.Connection) -> dict:
             """
         )
     }
+    # 200-session simple moving average of settled closes. Emitted only when a
+    # full 200 bars exist (dma200_n reports the bar count either way, so a
+    # consumer can distinguish "not enough history" from "ticker missing").
+    dma = {
+        r["ticker"]: r
+        for r in conn.execute(
+            """
+            SELECT ticker, COUNT(close) AS n, AVG(close) AS avg_close
+            FROM (
+                SELECT ticker, close,
+                       ROW_NUMBER() OVER (PARTITION BY ticker ORDER BY date DESC) AS rn
+                FROM daily_prices
+                WHERE close IS NOT NULL
+            )
+            WHERE rn <= 200
+            GROUP BY ticker
+            """
+        )
+    }
     tickers = []
     for sym in sorted(set(daily) | set(spot)):
         d, s = daily.get(sym), spot.get(sym)
@@ -88,6 +107,8 @@ def _latest_snapshot(conn: sqlite3.Connection) -> dict:
                 "spot_price": _round(s["price"]) if s else None,
                 "spot_captured_at": s["captured_at"] if s else None,
                 "currency": s["currency"] if s else None,
+                "dma200": _round(m["avg_close"]) if (m := dma.get(sym)) and m["n"] >= 200 else None,
+                "dma200_n": m["n"] if m else 0,
             }
         )
     return {
