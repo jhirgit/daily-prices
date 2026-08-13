@@ -91,11 +91,17 @@ def cik_map():
     return {v["ticker"].upper(): f"{v['cik_str']:010d}" for v in data.values()}
 
 
-def list_form4s(cik, since_iso):
-    """(accession, primaryDocument, filingDate) for form 4/4A since since_iso.
+def list_forms(cik, since_iso):
+    """{'f4': [...], 'f144': [...]} of (accession, primaryDocument, filingDate,
+    form) since since_iso.
 
     The 'recent' block covers the last 1000 filings; if that window doesn't
     reach back to since_iso, pull the older index pages it references.
+
+    Form 144s matter because FPIs (e.g. SHOP) are exempt from Section 16 — their
+    insiders never file Form 4s, but affiliate sales still require a Form 144
+    notice, which lands in the ISSUER's stream. That is the only EDGAR-visible
+    insider-sale signal for such names.
     """
     sub = json.loads(get(f"https://data.sec.gov/submissions/CIK{cik}.json"))
     blocks = [sub["filings"]["recent"]]
@@ -105,14 +111,61 @@ def list_form4s(cik, since_iso):
             if extra.get("filingTo", "") >= since_iso:
                 blocks.append(json.loads(get(
                     "https://data.sec.gov/submissions/" + extra["name"])))
-    out = []
+    out = {"f4": [], "f144": []}
     for b in blocks:
         for form, fdate, acc, doc in zip(
                 b["form"], b["filingDate"], b["accessionNumber"],
                 b["primaryDocument"]):
-            if form in ("4", "4/A") and fdate >= since_iso:
-                out.append((acc, doc, fdate, form))
+            if fdate < since_iso:
+                continue
+            if form in ("4", "4/A"):
+                out["f4"].append((acc, doc, fdate, form))
+            elif form in ("144", "144/A"):
+                out["f144"].append((acc, doc, fdate, form))
     return out
+
+
+def _local(tag):
+    """Strip XML namespace from a tag name."""
+    return tag.rsplit("}", 1)[-1]
+
+
+def parse_form144(cik, acc, doc):
+    """Return sell-notice txns from one Form 144 XML (namespaced 'own:' schema).
+
+    A 144 is a NOTICE of proposed sale, not an execution report — value is the
+    aggregate market value the seller declared. Older paper-style 144s without
+    XML are skipped (returned as empty).
+    """
+    a = acc.replace("-", "")
+    base = doc.split("/")[-1]
+    if not base.endswith(".xml"):
+        # paper/HTML 144 — no structured data; treat as empty so it is never re-fetched
+        return []
+    url = f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{a}/{base}"
+    t = ET.fromstring(get(url))
+    vals = {}
+    for el in t.iter():
+        vals.setdefault(_local(el.tag), (el.text or "").strip())
+    # A 144 can sit in a company's stream because the company is the FILER
+    # (e.g. Novo Nordisk A/S noticing a sale of ANOTHER issuer's shares).
+    # Only keep notices where the securities sold are OUR issuer's.
+    issuer = vals.get("issuerCik", "")
+    if not issuer or int(issuer) != int(cik):
+        return []
+    seller = vals.get("nameOfPersonForWhoseAccountTheSecuritiesAreToBeSold", "?")
+    rel = vals.get("relationshipToIssuer", "")
+    units = float(vals.get("noOfUnitsSold", 0) or 0)
+    value = float(vals.get("aggregateMarketValue", 0) or 0)
+    d = vals.get("approxSaleDate", "")  # MM/DD/YYYY
+    m = re.match(r"(\d{2})/(\d{2})/(\d{4})", d)
+    iso = f"{m.group(3)}-{m.group(1)}-{m.group(2)}" if m else ""
+    if not (units and iso):
+        return []
+    px = round(value / units, 2) if units else 0
+    return [{"d": iso, "o": seller, "r": rel, "c": "S144",
+             "sh": round(units), "px": px, "v": round(value),
+             "plan": False, "acc": acc}]
 
 
 def parse_form4(cik, acc, doc):
@@ -160,7 +213,7 @@ def aggregate(txns, months):
         row = idx[m]
         if x["c"] in BUY_CODES:
             row["b"] += x["v"]; row["bn"] += 1
-        else:
+        else:  # "S" or "S144" — anything stored that isn't a buy is a sell
             row["s"] += x["v"]; row["sn"] += 1
             if x["plan"]:
                 row["sp"] += x["v"]
@@ -199,12 +252,13 @@ def main():
         seen = {x["acc"] for x in state.get("txns", [])}
         seen |= set(state.get("empty_accs", []))
         try:
-            filings = list_form4s(cik, since_fetch)
+            forms = list_forms(cik, since_fetch)
         except Exception as e:
             print(f"{tk}: submissions fetch failed ({e}); carrying prior state",
                   file=sys.stderr)
             out[tk] = state or {"status": "error"}
             continue
+        filings = forms["f4"]
         txns = [x for x in state.get("txns", []) if x["d"][:7] >= months[0] or
                 x["d"] >= since_fetch]
         empty = set(state.get("empty_accs", []))
@@ -228,16 +282,59 @@ def main():
             if k in keyset:
                 continue
             keyset.add(k); dd.append(x)
-        status = "ok" if filings or dd else "no-section16"
+        # accessions whose txns all deduped away contribute nothing forever —
+        # mark them empty so amendments aren't refetched every run
+        empty |= {x["acc"] for x in txns} - {x["acc"] for x in dd}
+        # Mode decision. Form-4 P/S coverage wins. With NO Form-4 P/S, fall back
+        # to Form 144 sale notices — the only EDGAR-visible insider-sale signal
+        # for FPIs like SHOP, whose insiders are exempt from Section 16 (their
+        # buys are not observable on EDGAR at all). 144s are NOT read for names
+        # with Form-4 coverage: a domestic insider's 144 precedes the same
+        # sale's Form 4, so folding both in would double-count.
+        t144, e144, new144 = [], set(state.get("empty_accs144", [])), 0
+        if not dd and forms["f144"]:
+            t144 = [x for x in state.get("txns144", [])
+                    if x["d"][:7] >= months[0] or x["d"] >= since_fetch]
+            seen144 = {x["acc"] for x in t144} | e144
+            for acc, doc, fdate, form in forms["f144"]:
+                if acc in seen144:
+                    continue
+                try:
+                    got = parse_form144(cik, acc, doc)
+                except Exception as e:
+                    print(f"{tk} {acc}: 144 parse failed ({e})", file=sys.stderr)
+                    continue
+                if got:
+                    t144.extend(got); new144 += len(got)
+                else:
+                    e144.add(acc)
+            # 144/A amendments re-notice the same sale -> dedupe, keep first
+            ddd, kset = [], set()
+            for x in sorted(t144, key=lambda x: (x["d"], x["acc"])):
+                k = (x["o"], x["d"], x["sh"], x["v"])
+                if k in kset:
+                    continue
+                kset.add(k); ddd.append(x)
+            t144 = ddd
+
+        if dd:
+            status, use = "ok", dd
+        elif [x for x in t144 if x["d"][:7] >= months[0]]:
+            status, use = "144", t144
+        elif filings:
+            status, use = "ok", dd      # Form-4 coverage exists, zero P/S — real quiet
+        else:
+            status, use = "no-section16", dd
         out[tk] = {
             "status": status, "cik": cik,
             "txns": dd, "empty_accs": sorted(empty),
-            "months": aggregate(dd, months),
-            "tot_b": sum(x["v"] for x in dd if x["c"] in BUY_CODES and x["d"][:7] >= months[0]),
-            "tot_s": sum(x["v"] for x in dd if x["c"] in SELL_CODES and x["d"][:7] >= months[0]),
+            "txns144": t144, "empty_accs144": sorted(e144),
+            "months": aggregate(use, months),
+            "tot_b": sum(x["v"] for x in use if x["c"] in BUY_CODES and x["d"][:7] >= months[0]),
+            "tot_s": sum(x["v"] for x in use if x["c"] not in BUY_CODES and x["d"][:7] >= months[0]),
         }
-        print(f"{tk}: {len(filings)} filings, +{new} new txns, "
-              f"{len(dd)} kept, status={out[tk]['status']}")
+        print(f"{tk}: {len(filings)} f4 / {len(forms['f144'])} f144 filings, "
+              f"+{new} new txns, +{new144} new 144s, status={out[tk]['status']}")
 
     doc = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -260,8 +357,8 @@ def main():
         "months": months,
         "note": doc["codes"]["note"],
         "tickers": {
-            tk: ({"status": v["status"]} if v.get("status") != "ok" else {
-                "status": "ok", "tot_b": v["tot_b"], "tot_s": v["tot_s"],
+            tk: ({"status": v["status"]} if v.get("status") not in ("ok", "144") else {
+                "status": v["status"], "tot_b": v["tot_b"], "tot_s": v["tot_s"],
                 # per month: [buy$, sell$, buyN, sellN, plan-sell$]
                 "m": [[r["b"], r["s"], r["bn"], r["sn"], r["sp"]]
                       for r in v["months"]],
