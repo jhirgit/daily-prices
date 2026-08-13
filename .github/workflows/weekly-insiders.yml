@@ -1,0 +1,30 @@
+name: Weekly Insiders
+
+on:
+  schedule:
+    # Saturday 13:00 UTC — after the week's Form 4 flow has settled (filings
+    # are due within 2 business days of the transaction; Friday's filings are
+    # in by Friday evening ET). GitHub can delay scheduled runs by 10-30+ min.
+    - cron: "0 13 * * 6"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch insider transactions (EDGAR, incremental)
+        run: python fetch_insiders.py
+      - name: Commit updated insiders.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/insiders.json data/insiders_12m.json
+          git diff --cached --quiet || git commit -m "insiders: weekly [skip ci]"
+          git push
