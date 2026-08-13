@@ -4,23 +4,32 @@ Export the SQLite price database to plain-text files that can be served over a
 public URL (e.g. GitHub raw) and read directly by an LLM such as Claude.ai chat.
 
 Writes into an output directory (default: ./data):
-  daily_prices.csv  - full history of settled OHLC bars
-  spot_quotes.csv   - full history of delayed spot quotes
-  latest.json       - compact snapshot: the newest bar + newest quote per ticker
+  daily_prices.csv.gz - full history of settled OHLC bars, gzipped
+  spot_quotes.csv     - full history of delayed spot quotes
+  latest.json         - compact snapshot: the newest bar + newest quote per ticker
+  technicals.json     - regime-gated indicators + momentum (see technicals.py)
 
 SQLite is binary and can't be fetched-and-read from a URL; these text exports
 can. Run it after fetch_prices.py (the GitHub Actions workflow does exactly
 this, then commits the refreshed files).
+
+daily_prices.csv is gzipped because the 10-year history is ~17.5MB raw, which
+is at the edge of what jsDelivr will serve; gzipped it is ~4MB. Nothing in the
+dashboard reads it directly -- it exists so a URL fetch can get the full history.
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
+import gzip
+import io
 import json
 import os
 import sqlite3
 from datetime import datetime, timezone
+
+import technicals
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DB = os.path.join(HERE, "prices.db")
@@ -35,11 +44,16 @@ def _round(v, dp=PRICE_DP):
     return round(v, dp) if isinstance(v, float) else v
 
 
-def _export_table(conn: sqlite3.Connection, table: str, price_cols: set[str], path: str) -> int:
+def _export_table(conn: sqlite3.Connection, table: str, price_cols: set[str],
+                  path: str, compress: bool = False) -> int:
     cur = conn.execute(f"SELECT * FROM {table} ORDER BY 1, 2")
     cols = [d[0] for d in cur.description]
     n = 0
-    with open(path, "w", newline="", encoding="utf-8") as fh:
+    # mtime=0 so an unchanged export produces a byte-identical file and the
+    # daily CI commit stays empty instead of churning the repo every run.
+    opener = (lambda: io.TextIOWrapper(gzip.GzipFile(path, "wb", mtime=0), encoding="utf-8", newline="")) \
+        if compress else (lambda: open(path, "w", newline="", encoding="utf-8"))
+    with opener() as fh:
         w = csv.writer(fh)
         w.writerow(cols)
         for row in cur:
@@ -133,11 +147,13 @@ def main() -> int:
     conn = sqlite3.connect(args.db)
     conn.row_factory = sqlite3.Row
 
-    daily_csv = os.path.join(args.out, "daily_prices.csv")
+    daily_csv = os.path.join(args.out, "daily_prices.csv.gz")
     spot_csv = os.path.join(args.out, "spot_quotes.csv")
     latest_json = os.path.join(args.out, "latest.json")
+    tech_json = os.path.join(args.out, "technicals.json")
 
-    nd = _export_table(conn, "daily_prices", {"open", "high", "low", "close", "adj_close"}, daily_csv)
+    nd = _export_table(conn, "daily_prices", {"open", "high", "low", "close", "adj_close"},
+                       daily_csv, compress=True)
     ns = _export_table(conn, "spot_quotes", {"price", "previous_close"}, spot_csv)
     snap = _latest_snapshot(conn)
     with open(latest_json, "w", encoding="utf-8") as fh:
@@ -145,9 +161,22 @@ def main() -> int:
         fh.write("\n")
     conn.close()
 
+    # Retire the uncompressed export if a previous run left one behind.
+    stale = os.path.join(args.out, "daily_prices.csv")
+    if os.path.exists(stale):
+        os.remove(stale)
+        print(f"Removed superseded {stale}")
+
+    tech = technicals.build(db=args.db)
+    with open(tech_json, "w", encoding="utf-8") as fh:
+        json.dump(tech, fh, indent=2)
+        fh.write("\n")
+
     print(f"Wrote {nd} rows -> {daily_csv}")
     print(f"Wrote {ns} rows -> {spot_csv}")
     print(f"Wrote {snap['count']} tickers -> {latest_json}")
+    print(f"Wrote {tech['count']} tickers -> {tech_json} "
+          f"({len(tech['skipped'])} skipped for short history)")
     return 0
 
 

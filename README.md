@@ -58,6 +58,65 @@ Custom paths:
 python fetch_prices.py --tickers mylist.txt --db C:\data\prices.db
 ```
 
+## Technicals (`technicals.py`)
+
+Computes regime-gated indicators from the stored daily bars and writes
+`data/technicals.json` (~230KB) for the dashboard's Technicals tab. Pure
+stdlib — no extra dependency beyond what `fetch_prices.py` already needs.
+
+```powershell
+python technicals.py            # writes data/technicals.json
+python technicals.py --stdout   # print instead
+python test_technicals.py       # test suite
+```
+
+It is built from two papers that disagree, and the disagreement is the design:
+
+* **Chio 2022** (`arXiv:2206.12282`) — naked MACD(12,26,9) is close to a coin
+  flip (win rate 0.37–0.41). Adding *price-pressure* information (RSI, MFI, or
+  his volume-and-volatility indicator VPVMA) lifts it. But he never compares
+  against buy-and-hold, across 2015–2021.
+* **Hurwitz & Marwala 2011** (`arXiv:1110.3383`) — an indicator only works when
+  its own assumption holds. MACD assumes a trend, RSI assumes a cycle, and those
+  are mutually exclusive.
+
+So the **regime is classified first** and the indicator family whose assumption
+fails is muted rather than displayed, and **every strategy is scored against
+buy-and-hold** over the same window.
+
+### The regime gate is calibrated, not eyeballed
+
+Thresholds come from a Monte Carlo against a random-walk null (20,000 paths,
+90-session windows). Two results drove the design and are worth keeping in mind:
+
+* `R² ≥ 0.50` is **worthless** as a trend test — **44.7% of pure random walks
+  clear it**. The bar is set at `R² ≥ 0.85`, the p90 of the null.
+* The **variance ratio does not detect cycles** at these horizons. A sinusoid is
+  locally smooth, so cyclical data returns VR of 3.9–11.3 — far *above* 1, not
+  below. VR is reported as a diagnostic only. What separates a cycle from a
+  random walk is *smoothness*: a clean swing crosses its SMA20 ~4–6 times per
+  100 sessions, a random walk chops across ~11 times.
+
+The gate publishes its own error rates (`regime_error_rates`): ~10% of random
+walks still get labelled trending, ~8% mean-reverting. Over 90 sessions a random
+walk genuinely can look like a trend — that is a fact about markets, not a bug.
+
+### Two corrections to Chio's printed VPVMA spec
+
+Both look like typesetting errors and are documented in `vpvma()`:
+
+* eq 4.2-6 writes `EMA(SVWMA * DV, s)` for the **long** leg, which would make it
+  identical to the short leg. `LVWMA` is used.
+* Table 8's sell rule repeats the buy rule's `VPVMA(t-1) <= VPVMAS(t-1)`; taken
+  literally the strategy can never sell. Mirrored to `>=`.
+
+### Returns use adjusted closes, fills use raw closes
+
+Momentum and relative strength run on `adj_close` so dividend payers (the gold
+sleeve) are not understated against non-payers (the semis). The backtest uses
+raw `close`, because Chio's argument that "no one can buy at Adj Close" is right
+for simulating fills — and wrong for comparing total return across names.
+
 ## Run daily on GitHub Actions
 
 `.github/workflows/daily-prices.yml` runs the script at **22:00 UTC on weekdays**
