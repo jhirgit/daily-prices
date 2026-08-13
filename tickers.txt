@@ -22,7 +22,9 @@ HIMX       # Himax
 POWI       # Power Integrations
 AOSL       # Alpha & Omega Semiconductor
 IFNNY      # Infineon (ADR)
-MRAAY      # Murata (ADR)
+MRAAY      # Murata (ADR, 2 ADS = 1 ord) - liquid US line
+MRAAF      # Murata (foreign ordinary, 1:1) - THIN, often single-print days
+6981.T     # Murata (Tokyo, PRIMARY - price discovery happens here)
 TXN        # Texas Instruments
 PENG       # Penguin Solutions
 SIVEF      # Sivers Semiconductors (Stockholm = SIVE.ST)
