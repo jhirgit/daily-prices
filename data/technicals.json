@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-13T22:46:44Z",
+  "generated_at": "2026-08-14T02:36:52Z",
   "method": {
     "regime_gate": "Over the last 90 sessions: trending if log-price R^2 >= 0.85; mean_reverting if R^2 < 0.35 and SMA20 crossings <= 7.0 per 100 sessions; else neither.",
     "regime_calibration": "Thresholds are Monte-Carlo calibrated against a random-walk null (2,000 draws, 90-session windows). R^2 >= 0.85 is the p90 of that null -- note that R^2 >= 0.50 would be met by 44.7% of pure random walks, which is why the common 'it looks trendy' threshold is useless. The Lo-MacKinlay variance ratio is reported as a diagnostic but does NOT classify: a sinusoid is locally smooth, so cyclical data returns VR of 3.9-11.3, far above 1, not below it.",
@@ -14,7 +14,7 @@
     "not_advice": "Descriptive only. No position sizing, no recommendation."
   },
   "min_bars": 260,
-  "count": 94,
+  "count": 100,
   "skipped": [
     {
       "ticker": "6981.T",
@@ -94,7 +94,7 @@
         "vs_200dma": 0.30146,
         "vs_50dma": -0.22536,
         "tsmom_12m": 1,
-        "rank_universe": 0.979,
+        "rank_universe": 0.98,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.334722
       },
@@ -182,7 +182,7 @@
         "vs_200dma": 0.34143,
         "vs_50dma": -0.06656,
         "tsmom_12m": 1,
-        "rank_universe": 0.894,
+        "rank_universe": 0.9,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.188255
       },
@@ -270,7 +270,7 @@
         "vs_200dma": 0.377656,
         "vs_50dma": -0.033712,
         "tsmom_12m": 1,
-        "rank_universe": 0.936,
+        "rank_universe": 0.94,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.892253
       },
@@ -358,7 +358,7 @@
         "vs_200dma": 1.17062,
         "vs_50dma": 0.325177,
         "tsmom_12m": 1,
-        "rank_universe": 0.915,
+        "rank_universe": 0.92,
         "rank_group": 0.9,
         "rs_126_vs_proxy": 1.564593
       },
@@ -446,7 +446,7 @@
         "vs_200dma": -0.015174,
         "vs_50dma": 0.150408,
         "tsmom_12m": 1,
-        "rank_universe": 0.17,
+        "rank_universe": 0.16,
         "rank_group": 0.125,
         "rs_126_vs_proxy": 0.001189
       },
@@ -534,7 +534,7 @@
         "vs_200dma": -0.012857,
         "vs_50dma": 0.09813,
         "tsmom_12m": 1,
-        "rank_universe": 0.649,
+        "rank_universe": 0.65,
         "rank_group": 0.938,
         "rs_126_vs_proxy": -0.051995
       },
@@ -622,7 +622,7 @@
         "vs_200dma": -0.152375,
         "vs_50dma": 0.036565,
         "tsmom_12m": 1,
-        "rank_universe": 0.202,
+        "rank_universe": 0.2,
         "rank_group": 0.188,
         "rs_126_vs_proxy": -0.145579
       },
@@ -710,7 +710,7 @@
         "vs_200dma": 0.500968,
         "vs_50dma": -0.092998,
         "tsmom_12m": 1,
-        "rank_universe": 0.638,
+        "rank_universe": 0.64,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.581371
       },
@@ -798,7 +798,7 @@
         "vs_200dma": 0.495124,
         "vs_50dma": -0.054706,
         "tsmom_12m": 1,
-        "rank_universe": 0.872,
+        "rank_universe": 0.88,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.592244
       },
@@ -886,7 +886,7 @@
         "vs_200dma": -0.153539,
         "vs_50dma": -0.13405,
         "tsmom_12m": -1,
-        "rank_universe": 0.085,
+        "rank_universe": 0.08,
         "rank_group": 0.05,
         "rs_126_vs_proxy": -0.352447
       },
@@ -974,7 +974,7 @@
         "vs_200dma": 0.045583,
         "vs_50dma": -0.199532,
         "tsmom_12m": 1,
-        "rank_universe": 0.394,
+        "rank_universe": 0.38,
         "rank_group": 0.2,
         "rs_126_vs_proxy": 0.028556
       },
@@ -1021,6 +1021,94 @@
         }
       }
     },
+    "ARTY": {
+      "ticker": "ARTY",
+      "group": "Broad / thematic / crypto ETFs",
+      "proxy": "SPY",
+      "bars": 2039,
+      "first_date": "2018-06-28",
+      "last_date": "2026-08-13",
+      "close": 77.56,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.4726,
+        "r2_vs_null_pct": 50,
+        "vr": 0.9989,
+        "cross_rate": 14.08,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 1.2089,
+        "macd_signal": 0.0415,
+        "macd_hist": 1.1674,
+        "macd_hist_prev": 1.0216,
+        "rsi": 63.14,
+        "mfi": 61.45,
+        "vpvma": -10.579636,
+        "vpvma_signal": -5.203511
+      },
+      "momentum": {
+        "mom_12_1": 0.706884,
+        "mom_6_1": 0.431385,
+        "ret_12m": 0.826013,
+        "ret_3m": 0.134916,
+        "ret_1m": 0.069793,
+        "dist_52w_high": -0.039505,
+        "dist_52w_low": 0.878421,
+        "vs_200dma": 0.34963,
+        "vs_50dma": 0.072889,
+        "tsmom_12m": 1,
+        "rank_universe": 0.59,
+        "rank_group": 0.722,
+        "rs_126_vs_proxy": 0.354948
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 1.3085,
+          "buy_hold_return": 2.285,
+          "excess_vs_hold": -0.9765,
+          "beat_hold": false,
+          "n_trades": 75,
+          "win_rate": 0.493
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.8599,
+          "buy_hold_return": 2.285,
+          "excess_vs_hold": -1.4251,
+          "beat_hold": false,
+          "n_trades": 7,
+          "win_rate": 0.571
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 2.285,
+          "excess_vs_hold": -2.285,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": -0.0257,
+          "buy_hold_return": 2.285,
+          "excess_vs_hold": -2.3107,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 0.0
+        },
+        "vpvma": {
+          "strategy_return": 0.7799,
+          "buy_hold_return": 2.285,
+          "excess_vs_hold": -1.5051,
+          "beat_hold": false,
+          "n_trades": 136,
+          "win_rate": 0.566
+        }
+      }
+    },
     "ASML": {
       "ticker": "ASML",
       "group": "Semiconductors: compute, design, analog/power",
@@ -1062,7 +1150,7 @@
         "vs_200dma": 0.29725,
         "vs_50dma": 0.04204,
         "tsmom_12m": 1,
-        "rank_universe": 0.787,
+        "rank_universe": 0.8,
         "rank_group": 0.65,
         "rs_126_vs_proxy": -0.090592
       },
@@ -1150,7 +1238,7 @@
         "vs_200dma": 0.03292,
         "vs_50dma": 0.130198,
         "tsmom_12m": 1,
-        "rank_universe": 0.479,
+        "rank_universe": 0.47,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.046281
       },
@@ -1238,7 +1326,7 @@
         "vs_200dma": 0.132168,
         "vs_50dma": 0.065352,
         "tsmom_12m": 1,
-        "rank_universe": 0.362,
+        "rank_universe": 0.35,
         "rank_group": 0.15,
         "rs_126_vs_proxy": -0.13859
       },
@@ -1326,7 +1414,7 @@
         "vs_200dma": 0.553008,
         "vs_50dma": 0.111277,
         "tsmom_12m": 1,
-        "rank_universe": 0.989,
+        "rank_universe": 0.99,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 1.034701
       },
@@ -1414,7 +1502,7 @@
         "vs_200dma": 0.284114,
         "vs_50dma": -0.049005,
         "tsmom_12m": 1,
-        "rank_universe": 0.947,
+        "rank_universe": 0.95,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.069273
       },
@@ -1502,8 +1590,8 @@
         "vs_200dma": -0.232972,
         "vs_50dma": 0.125899,
         "tsmom_12m": -1,
-        "rank_universe": 0.011,
-        "rank_group": 0.083,
+        "rank_universe": 0.01,
+        "rank_group": 0.056,
         "rs_126_vs_proxy": -0.168783
       },
       "backtest": {
@@ -1549,6 +1637,94 @@
         }
       }
     },
+    "BOTZ": {
+      "ticker": "BOTZ",
+      "group": "Broad / thematic / crypto ETFs",
+      "proxy": "SPY",
+      "bars": 2492,
+      "first_date": "2016-09-13",
+      "last_date": "2026-08-13",
+      "close": 37.82,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.0766,
+        "r2_vs_null_pct": 15,
+        "vr": 1.0091,
+        "cross_rate": 11.27,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 0.3612,
+        "macd_signal": -0.0243,
+        "macd_hist": 0.3855,
+        "macd_hist_prev": 0.4133,
+        "rsi": 60.67,
+        "mfi": 70.76,
+        "vpvma": -1.349922,
+        "vpvma_signal": -0.421535
+      },
+      "momentum": {
+        "mom_12_1": 0.082346,
+        "mom_6_1": -0.064183,
+        "ret_12m": 0.140868,
+        "ret_3m": -0.070754,
+        "ret_1m": 0.054069,
+        "dist_52w_high": -0.091521,
+        "dist_52w_low": 0.182244,
+        "vs_200dma": 0.023304,
+        "vs_50dma": 0.028321,
+        "tsmom_12m": 1,
+        "rank_universe": 0.18,
+        "rank_group": 0.278,
+        "rs_126_vs_proxy": -0.127176
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 1.6424,
+          "buy_hold_return": 1.5623,
+          "excess_vs_hold": 0.0801,
+          "beat_hold": true,
+          "n_trades": 92,
+          "win_rate": 0.5
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 1.3083,
+          "buy_hold_return": 1.5623,
+          "excess_vs_hold": -0.254,
+          "beat_hold": false,
+          "n_trades": 8,
+          "win_rate": 0.625
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.5623,
+          "excess_vs_hold": -1.5623,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.5623,
+          "excess_vs_hold": -1.5623,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0072,
+          "buy_hold_return": 1.5623,
+          "excess_vs_hold": -1.5551,
+          "beat_hold": false,
+          "n_trades": 188,
+          "win_rate": 0.532
+        }
+      }
+    },
     "BTC-USD": {
       "ticker": "BTC-USD",
       "group": "Macro / benchmarks",
@@ -1590,7 +1766,7 @@
         "vs_200dma": -0.088142,
         "vs_50dma": 0.001638,
         "tsmom_12m": -1,
-        "rank_universe": 0.096,
+        "rank_universe": 0.09,
         "rank_group": 0.182,
         "rs_126_vs_proxy": null
       },
@@ -1678,7 +1854,7 @@
         "vs_200dma": 0.063141,
         "vs_50dma": 0.043012,
         "tsmom_12m": 1,
-        "rank_universe": 0.372,
+        "rank_universe": 0.36,
         "rank_group": 0.727,
         "rs_126_vs_proxy": null
       },
@@ -1766,7 +1942,7 @@
         "vs_200dma": 0.13531,
         "vs_50dma": -0.064914,
         "tsmom_12m": 1,
-        "rank_universe": 0.766,
+        "rank_universe": 0.78,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.220697
       },
@@ -1854,7 +2030,7 @@
         "vs_200dma": -0.004728,
         "vs_50dma": 0.12625,
         "tsmom_12m": 1,
-        "rank_universe": 0.415,
+        "rank_universe": 0.41,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.039234
       },
@@ -1942,7 +2118,7 @@
         "vs_200dma": 0.223277,
         "vs_50dma": 0.025206,
         "tsmom_12m": 1,
-        "rank_universe": 0.904,
+        "rank_universe": 0.91,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.048794
       },
@@ -2030,7 +2206,7 @@
         "vs_200dma": 0.236695,
         "vs_50dma": -0.035127,
         "tsmom_12m": 1,
-        "rank_universe": 0.809,
+        "rank_universe": 0.82,
         "rank_group": 0.167,
         "rs_126_vs_proxy": 0.029961
       },
@@ -2206,7 +2382,7 @@
         "vs_200dma": 0.141689,
         "vs_50dma": 0.17094,
         "tsmom_12m": -1,
-        "rank_universe": 0.043,
+        "rank_universe": 0.04,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.213502
       },
@@ -2294,7 +2470,7 @@
         "vs_200dma": 0.468381,
         "vs_50dma": 0.014209,
         "tsmom_12m": 1,
-        "rank_universe": 0.723,
+        "rank_universe": 0.73,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.551066
       },
@@ -2382,7 +2558,7 @@
         "vs_200dma": -0.069126,
         "vs_50dma": 0.03915,
         "tsmom_12m": -1,
-        "rank_universe": 0.064,
+        "rank_universe": 0.06,
         "rank_group": 0.091,
         "rs_126_vs_proxy": null
       },
@@ -2470,8 +2646,8 @@
         "vs_200dma": -0.210741,
         "vs_50dma": 0.055607,
         "tsmom_12m": -1,
-        "rank_universe": 0.021,
-        "rank_group": 0.167,
+        "rank_universe": 0.02,
+        "rank_group": 0.111,
         "rs_126_vs_proxy": -0.146351
       },
       "backtest": {
@@ -2558,7 +2734,7 @@
         "vs_200dma": 0.269225,
         "vs_50dma": -0.013424,
         "tsmom_12m": 1,
-        "rank_universe": 0.777,
+        "rank_universe": 0.79,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.21019
       },
@@ -2646,7 +2822,7 @@
         "vs_200dma": 0.074412,
         "vs_50dma": 0.229899,
         "tsmom_12m": 1,
-        "rank_universe": 0.447,
+        "rank_universe": 0.44,
         "rank_group": 0.625,
         "rs_126_vs_proxy": 0.000596
       },
@@ -2734,7 +2910,7 @@
         "vs_200dma": 0.368238,
         "vs_50dma": -0.081673,
         "tsmom_12m": 1,
-        "rank_universe": 0.798,
+        "rank_universe": 0.81,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.349715
       },
@@ -2822,7 +2998,7 @@
         "vs_200dma": 0.018896,
         "vs_50dma": 0.072647,
         "tsmom_12m": 1,
-        "rank_universe": 0.245,
+        "rank_universe": 0.24,
         "rank_group": 0.375,
         "rs_126_vs_proxy": 0.082867
       },
@@ -2910,7 +3086,7 @@
         "vs_200dma": -0.016024,
         "vs_50dma": 0.06401,
         "tsmom_12m": 1,
-        "rank_universe": 0.319,
+        "rank_universe": 0.31,
         "rank_group": 0.636,
         "rs_126_vs_proxy": null
       },
@@ -2998,7 +3174,7 @@
         "vs_200dma": 0.005005,
         "vs_50dma": 0.122945,
         "tsmom_12m": 1,
-        "rank_universe": 0.383,
+        "rank_universe": 0.37,
         "rank_group": 0.286,
         "rs_126_vs_proxy": 0.0
       },
@@ -3086,7 +3262,7 @@
         "vs_200dma": 0.00347,
         "vs_50dma": 0.132169,
         "tsmom_12m": 1,
-        "rank_universe": 0.426,
+        "rank_universe": 0.42,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.014462
       },
@@ -3174,7 +3350,7 @@
         "vs_200dma": 0.227191,
         "vs_50dma": 0.023369,
         "tsmom_12m": 1,
-        "rank_universe": 0.574,
+        "rank_universe": 0.56,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.101962
       },
@@ -3262,7 +3438,7 @@
         "vs_200dma": -0.032073,
         "vs_50dma": 0.045964,
         "tsmom_12m": 1,
-        "rank_universe": 0.298,
+        "rank_universe": 0.29,
         "rank_group": 0.455,
         "rs_126_vs_proxy": null
       },
@@ -3350,7 +3526,7 @@
         "vs_200dma": 0.144426,
         "vs_50dma": -0.105125,
         "tsmom_12m": 1,
-        "rank_universe": 0.84,
+        "rank_universe": 0.85,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.157242
       },
@@ -3438,7 +3614,7 @@
         "vs_200dma": 0.059745,
         "vs_50dma": 0.055352,
         "tsmom_12m": 1,
-        "rank_universe": 0.617,
+        "rank_universe": 0.62,
         "rank_group": 0.875,
         "rs_126_vs_proxy": -0.156321
       },
@@ -3526,7 +3702,7 @@
         "vs_200dma": -0.020267,
         "vs_50dma": -0.093224,
         "tsmom_12m": -1,
-        "rank_universe": 0.106,
+        "rank_universe": 0.1,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.525282
       },
@@ -3614,7 +3790,7 @@
         "vs_200dma": 0.29294,
         "vs_50dma": -0.040086,
         "tsmom_12m": 1,
-        "rank_universe": 0.681,
+        "rank_universe": 0.68,
         "rank_group": 0.6,
         "rs_126_vs_proxy": 0.273126
       },
@@ -3702,7 +3878,7 @@
         "vs_200dma": -0.038683,
         "vs_50dma": 0.137881,
         "tsmom_12m": 1,
-        "rank_universe": 0.702,
+        "rank_universe": 0.71,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.101125
       },
@@ -3790,7 +3966,7 @@
         "vs_200dma": -0.128109,
         "vs_50dma": 0.161616,
         "tsmom_12m": -1,
-        "rank_universe": 0.032,
+        "rank_universe": 0.03,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.100402
       },
@@ -3878,8 +4054,8 @@
         "vs_200dma": -0.179216,
         "vs_50dma": -0.000668,
         "tsmom_12m": -1,
-        "rank_universe": 0.053,
-        "rank_group": 0.25,
+        "rank_universe": 0.05,
+        "rank_group": 0.167,
         "rs_126_vs_proxy": -0.170849
       },
       "backtest": {
@@ -3966,8 +4142,8 @@
         "vs_200dma": 0.1046,
         "vs_50dma": 0.05393,
         "tsmom_12m": 1,
-        "rank_universe": 0.564,
-        "rank_group": 0.833,
+        "rank_universe": 0.55,
+        "rank_group": 0.667,
         "rs_126_vs_proxy": -0.13218
       },
       "backtest": {
@@ -4054,7 +4230,7 @@
         "vs_200dma": 0.206788,
         "vs_50dma": -0.124691,
         "tsmom_12m": 1,
-        "rank_universe": 0.628,
+        "rank_universe": 0.63,
         "rank_group": 0.45,
         "rs_126_vs_proxy": -0.020479
       },
@@ -4101,6 +4277,94 @@
         }
       }
     },
+    "IGPT": {
+      "ticker": "IGPT",
+      "group": "Broad / thematic / crypto ETFs",
+      "proxy": "SPY",
+      "bars": 2510,
+      "first_date": "2016-08-15",
+      "last_date": "2026-08-13",
+      "close": 95.26,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.4868,
+        "r2_vs_null_pct": 50,
+        "vr": 0.9636,
+        "cross_rate": 16.9,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.5471,
+        "macd_signal": -1.3636,
+        "macd_hist": 0.8165,
+        "macd_hist_prev": 0.5986,
+        "rsi": 55.24,
+        "mfi": 46.57,
+        "vpvma": -20.982114,
+        "vpvma_signal": -10.002435
+      },
+      "momentum": {
+        "mom_12_1": 0.970105,
+        "mom_6_1": 0.579821,
+        "ret_12m": 0.896445,
+        "ret_3m": 0.047389,
+        "ret_1m": -0.037389,
+        "dist_52w_high": -0.11886,
+        "dist_52w_low": 0.929903,
+        "vs_200dma": 0.305166,
+        "vs_50dma": -0.00325,
+        "tsmom_12m": 1,
+        "rank_universe": 0.69,
+        "rank_group": 0.833,
+        "rs_126_vs_proxy": 0.345629
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.5893,
+          "buy_hold_return": 4.9662,
+          "excess_vs_hold": -4.3768,
+          "beat_hold": false,
+          "n_trades": 109,
+          "win_rate": 0.422
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 1.7413,
+          "buy_hold_return": 4.9662,
+          "excess_vs_hold": -3.2249,
+          "beat_hold": false,
+          "n_trades": 10,
+          "win_rate": 0.6
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 4.9662,
+          "excess_vs_hold": -4.9662,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 4.9662,
+          "excess_vs_hold": -4.9662,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.8892,
+          "buy_hold_return": 4.9662,
+          "excess_vs_hold": -4.0769,
+          "beat_hold": false,
+          "n_trades": 179,
+          "win_rate": 0.52
+        }
+      }
+    },
     "IGV": {
       "ticker": "IGV",
       "group": "Broad / thematic / crypto ETFs",
@@ -4142,8 +4406,8 @@
         "vs_200dma": 0.128093,
         "vs_50dma": 0.133337,
         "tsmom_12m": -1,
-        "rank_universe": 0.128,
-        "rank_group": 0.333,
+        "rank_universe": 0.12,
+        "rank_group": 0.222,
         "rs_126_vs_proxy": 0.130107
       },
       "backtest": {
@@ -4230,7 +4494,7 @@
         "vs_200dma": 0.497354,
         "vs_50dma": -0.046034,
         "tsmom_12m": 1,
-        "rank_universe": 0.926,
+        "rank_universe": 0.93,
         "rank_group": 0.95,
         "rs_126_vs_proxy": 0.524482
       },
@@ -4318,7 +4582,7 @@
         "vs_200dma": -0.051584,
         "vs_50dma": -0.012396,
         "tsmom_12m": 1,
-        "rank_universe": 0.755,
+        "rank_universe": 0.76,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.261447
       },
@@ -4365,6 +4629,94 @@
         }
       }
     },
+    "IWM": {
+      "ticker": "IWM",
+      "group": "Broad / thematic / crypto ETFs",
+      "proxy": "SPY",
+      "bars": 2513,
+      "first_date": "2016-08-15",
+      "last_date": "2026-08-13",
+      "close": 303.5,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.7575,
+        "r2_vs_null_pct": 80,
+        "vr": 0.7372,
+        "cross_rate": 14.08,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 2.3301,
+        "macd_signal": 1.5008,
+        "macd_hist": 0.8293,
+        "macd_hist_prev": 0.7942,
+        "rsi": 61.42,
+        "mfi": 59.55,
+        "vpvma": -72.721966,
+        "vpvma_signal": -20.706534
+      },
+      "momentum": {
+        "mom_12_1": 0.317587,
+        "mom_6_1": 0.120969,
+        "ret_12m": 0.352023,
+        "ret_3m": 0.076243,
+        "ret_1m": 0.026135,
+        "dist_52w_high": 0.0,
+        "dist_52w_low": 0.346435,
+        "vs_200dma": 0.131293,
+        "vs_50dma": 0.02967,
+        "tsmom_12m": 1,
+        "rank_universe": 0.4,
+        "rank_group": 0.5,
+        "rs_126_vs_proxy": 0.017805
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 1.3377,
+          "buy_hold_return": 1.4595,
+          "excess_vs_hold": -0.1217,
+          "beat_hold": false,
+          "n_trades": 101,
+          "win_rate": 0.485
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.522,
+          "buy_hold_return": 1.4595,
+          "excess_vs_hold": -0.9375,
+          "beat_hold": false,
+          "n_trades": 11,
+          "win_rate": 0.455
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.4595,
+          "excess_vs_hold": -1.4595,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.3333,
+          "buy_hold_return": 1.4595,
+          "excess_vs_hold": -1.1262,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "vpvma": {
+          "strategy_return": 0.4356,
+          "buy_hold_return": 1.4595,
+          "excess_vs_hold": -1.0239,
+          "beat_hold": false,
+          "n_trades": 175,
+          "win_rate": 0.491
+        }
+      }
+    },
     "JPM": {
       "ticker": "JPM",
       "group": "Other equities",
@@ -4406,7 +4758,7 @@
         "vs_200dma": 0.154352,
         "vs_50dma": 0.073865,
         "tsmom_12m": 1,
-        "rank_universe": 0.287,
+        "rank_universe": 0.28,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.043674
       },
@@ -4494,7 +4846,7 @@
         "vs_200dma": -0.072113,
         "vs_50dma": 0.080092,
         "tsmom_12m": 1,
-        "rank_universe": 0.33,
+        "rank_universe": 0.32,
         "rank_group": 0.438,
         "rs_126_vs_proxy": -0.07184
       },
@@ -4582,7 +4934,7 @@
         "vs_200dma": 0.393167,
         "vs_50dma": 0.081694,
         "tsmom_12m": 1,
-        "rank_universe": 0.957,
+        "rank_universe": 0.96,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.079702
       },
@@ -4670,7 +5022,7 @@
         "vs_200dma": 0.110889,
         "vs_50dma": -0.030766,
         "tsmom_12m": 1,
-        "rank_universe": 0.585,
+        "rank_universe": 0.57,
         "rank_group": 0.35,
         "rs_126_vs_proxy": -0.195548
       },
@@ -4758,7 +5110,7 @@
         "vs_200dma": 0.582349,
         "vs_50dma": -0.066566,
         "tsmom_12m": 1,
-        "rank_universe": 0.883,
+        "rank_universe": 0.89,
         "rank_group": 0.85,
         "rs_126_vs_proxy": 0.716447
       },
@@ -4846,7 +5198,7 @@
         "vs_200dma": 0.57818,
         "vs_50dma": -0.073064,
         "tsmom_12m": 1,
-        "rank_universe": 0.83,
+        "rank_universe": 0.84,
         "rank_group": 0.7,
         "rs_126_vs_proxy": 0.924595
       },
@@ -4934,7 +5286,7 @@
         "vs_200dma": 0.730607,
         "vs_50dma": -0.013549,
         "tsmom_12m": 1,
-        "rank_universe": 0.968,
+        "rank_universe": 0.97,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.630667
       },
@@ -5022,7 +5374,7 @@
         "vs_200dma": 0.750512,
         "vs_50dma": 0.150295,
         "tsmom_12m": 1,
-        "rank_universe": 0.819,
+        "rank_universe": 0.83,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 1.026467
       },
@@ -5110,7 +5462,7 @@
         "vs_200dma": 0.086722,
         "vs_50dma": 0.154755,
         "tsmom_12m": 1,
-        "rank_universe": 0.468,
+        "rank_universe": 0.46,
         "rank_group": 0.688,
         "rs_126_vs_proxy": 0.105022
       },
@@ -5198,7 +5550,7 @@
         "vs_200dma": 0.13021,
         "vs_50dma": -0.110152,
         "tsmom_12m": 1,
-        "rank_universe": 0.851,
+        "rank_universe": 0.86,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.012936
       },
@@ -5286,7 +5638,7 @@
         "vs_200dma": 0.041869,
         "vs_50dma": 0.183424,
         "tsmom_12m": -1,
-        "rank_universe": 0.074,
+        "rank_universe": 0.07,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.009412
       },
@@ -5374,7 +5726,7 @@
         "vs_200dma": 0.156859,
         "vs_50dma": 0.092039,
         "tsmom_12m": 1,
-        "rank_universe": 0.255,
+        "rank_universe": 0.25,
         "rank_group": 0.1,
         "rs_126_vs_proxy": -0.164326
       },
@@ -5462,7 +5814,7 @@
         "vs_200dma": 0.003411,
         "vs_50dma": -0.009195,
         "tsmom_12m": -1,
-        "rank_universe": 0.181,
+        "rank_universe": 0.17,
         "rank_group": 0.75,
         "rs_126_vs_proxy": -0.120722
       },
@@ -5638,7 +5990,7 @@
         "vs_200dma": -0.074255,
         "vs_50dma": 0.024892,
         "tsmom_12m": 1,
-        "rank_universe": 0.436,
+        "rank_universe": 0.43,
         "rank_group": 0.562,
         "rs_126_vs_proxy": -0.04609
       },
@@ -5726,7 +6078,7 @@
         "vs_200dma": 0.787194,
         "vs_50dma": 0.22129,
         "tsmom_12m": 1,
-        "rank_universe": 0.713,
+        "rank_universe": 0.72,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.875725
       },
@@ -5814,7 +6166,7 @@
         "vs_200dma": 0.784886,
         "vs_50dma": -0.029247,
         "tsmom_12m": 1,
-        "rank_universe": 0.862,
+        "rank_universe": 0.87,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 1.265065
       },
@@ -5902,7 +6254,7 @@
         "vs_200dma": 0.131562,
         "vs_50dma": -0.135942,
         "tsmom_12m": 1,
-        "rank_universe": 0.532,
+        "rank_universe": 0.52,
         "rank_group": 0.25,
         "rs_126_vs_proxy": -0.084835
       },
@@ -5990,8 +6342,8 @@
         "vs_200dma": 0.126079,
         "vs_50dma": 0.02644,
         "tsmom_12m": 1,
-        "rank_universe": 0.34,
-        "rank_group": 0.583,
+        "rank_universe": 0.33,
+        "rank_group": 0.444,
         "rs_126_vs_proxy": 0.059022
       },
       "backtest": {
@@ -6078,8 +6430,8 @@
         "vs_200dma": 0.238244,
         "vs_50dma": 0.032784,
         "tsmom_12m": 1,
-        "rank_universe": 0.543,
-        "rank_group": 0.75,
+        "rank_universe": 0.53,
+        "rank_group": 0.611,
         "rs_126_vs_proxy": 0.179966
       },
       "backtest": {
@@ -6166,7 +6518,7 @@
         "vs_200dma": -0.11202,
         "vs_50dma": -0.095698,
         "tsmom_12m": -1,
-        "rank_universe": 0.138,
+        "rank_universe": 0.13,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.004462
       },
@@ -6254,7 +6606,7 @@
         "vs_200dma": -0.019712,
         "vs_50dma": 0.097511,
         "tsmom_12m": 1,
-        "rank_universe": 0.223,
+        "rank_universe": 0.22,
         "rank_group": 0.312,
         "rs_126_vs_proxy": -0.044832
       },
@@ -6342,7 +6694,7 @@
         "vs_200dma": 0.013409,
         "vs_50dma": 0.13079,
         "tsmom_12m": 1,
-        "rank_universe": 0.404,
+        "rank_universe": 0.39,
         "rank_group": 0.429,
         "rs_126_vs_proxy": 0.02373
       },
@@ -6430,8 +6782,8 @@
         "vs_200dma": 0.148963,
         "vs_50dma": 0.089272,
         "tsmom_12m": 1,
-        "rank_universe": 0.191,
-        "rank_group": 0.417,
+        "rank_universe": 0.19,
+        "rank_group": 0.333,
         "rs_126_vs_proxy": 0.050041
       },
       "backtest": {
@@ -6518,7 +6870,7 @@
         "vs_200dma": 0.022734,
         "vs_50dma": 0.131266,
         "tsmom_12m": 1,
-        "rank_universe": 0.351,
+        "rank_universe": 0.34,
         "rank_group": 0.143,
         "rs_126_vs_proxy": 0.030015
       },
@@ -6606,7 +6958,7 @@
         "vs_200dma": 0.197385,
         "vs_50dma": 0.298475,
         "tsmom_12m": 1,
-        "rank_universe": 0.117,
+        "rank_universe": 0.11,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.045613
       },
@@ -6694,7 +7046,7 @@
         "vs_200dma": -0.084991,
         "vs_50dma": 0.050037,
         "tsmom_12m": 1,
-        "rank_universe": 0.5,
+        "rank_universe": 0.49,
         "rank_group": 0.818,
         "rs_126_vs_proxy": null
       },
@@ -6782,7 +7134,7 @@
         "vs_200dma": 0.130166,
         "vs_50dma": 0.046308,
         "tsmom_12m": 1,
-        "rank_universe": 0.234,
+        "rank_universe": 0.23,
         "rank_group": 0.2,
         "rs_126_vs_proxy": -0.242942
       },
@@ -6870,7 +7222,7 @@
         "vs_200dma": 0.01779,
         "vs_50dma": 0.11715,
         "tsmom_12m": 1,
-        "rank_universe": 0.457,
+        "rank_universe": 0.45,
         "rank_group": 0.714,
         "rs_126_vs_proxy": 0.01349
       },
@@ -6958,7 +7310,7 @@
         "vs_200dma": 0.013402,
         "vs_50dma": 0.118167,
         "tsmom_12m": 1,
-        "rank_universe": 0.489,
+        "rank_universe": 0.48,
         "rank_group": 0.857,
         "rs_126_vs_proxy": 0.004358
       },
@@ -7046,7 +7398,7 @@
         "vs_200dma": -0.092029,
         "vs_50dma": 0.040467,
         "tsmom_12m": 1,
-        "rank_universe": 0.511,
+        "rank_universe": 0.5,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.088005
       },
@@ -7134,8 +7486,8 @@
         "vs_200dma": 0.278215,
         "vs_50dma": -0.005689,
         "tsmom_12m": 1,
-        "rank_universe": 0.691,
-        "rank_group": 0.917,
+        "rank_universe": 0.7,
+        "rank_group": 0.889,
         "rs_126_vs_proxy": 0.25676
       },
       "backtest": {
@@ -7269,6 +7621,94 @@
         }
       }
     },
+    "SOXX": {
+      "ticker": "SOXX",
+      "group": "Broad / thematic / crypto ETFs",
+      "proxy": "SPY",
+      "bars": 2513,
+      "first_date": "2016-08-15",
+      "last_date": "2026-08-13",
+      "close": 550.74,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.3883,
+        "r2_vs_null_pct": 45,
+        "vr": 0.7412,
+        "cross_rate": 14.08,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -4.0662,
+        "macd_signal": -9.4941,
+        "macd_hist": 5.4279,
+        "macd_hist_prev": 4.7979,
+        "rsi": 53.15,
+        "mfi": 40.7,
+        "vpvma": -1036.212518,
+        "vpvma_signal": -643.980895
+      },
+      "momentum": {
+        "mom_12_1": 1.230017,
+        "mom_6_1": 0.543242,
+        "ret_12m": 1.211824,
+        "ret_3m": 0.042991,
+        "ret_1m": -0.008158,
+        "dist_52w_high": -0.159188,
+        "dist_52w_low": 1.278798,
+        "vs_200dma": 0.330458,
+        "vs_50dma": -0.022433,
+        "tsmom_12m": 1,
+        "rank_universe": 0.77,
+        "rank_group": 0.944,
+        "rs_126_vs_proxy": 0.354388
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 2.2634,
+          "buy_hold_return": 14.4082,
+          "excess_vs_hold": -12.1448,
+          "beat_hold": false,
+          "n_trades": 103,
+          "win_rate": 0.466
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 3.9335,
+          "buy_hold_return": 14.4082,
+          "excess_vs_hold": -10.4747,
+          "beat_hold": false,
+          "n_trades": 10,
+          "win_rate": 0.7
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 14.4082,
+          "excess_vs_hold": -14.4082,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.1403,
+          "buy_hold_return": 14.4082,
+          "excess_vs_hold": -14.2679,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "vpvma": {
+          "strategy_return": 1.2548,
+          "buy_hold_return": 14.4082,
+          "excess_vs_hold": -13.1534,
+          "beat_hold": false,
+          "n_trades": 171,
+          "win_rate": 0.585
+        }
+      }
+    },
     "SPY": {
       "ticker": "SPY",
       "group": "Broad / thematic / crypto ETFs",
@@ -7310,8 +7750,8 @@
         "vs_200dma": 0.103376,
         "vs_50dma": 0.039273,
         "tsmom_12m": 1,
-        "rank_universe": 0.277,
-        "rank_group": 0.5,
+        "rank_universe": 0.27,
+        "rank_group": 0.389,
         "rs_126_vs_proxy": 0.0
       },
       "backtest": {
@@ -7398,7 +7838,7 @@
         "vs_200dma": 0.182836,
         "vs_50dma": 0.123599,
         "tsmom_12m": 1,
-        "rank_universe": 0.596,
+        "rank_universe": 0.58,
         "rank_group": 0.812,
         "rs_126_vs_proxy": 0.388539
       },
@@ -7486,7 +7926,7 @@
         "vs_200dma": -0.047226,
         "vs_50dma": 0.065119,
         "tsmom_12m": 1,
-        "rank_universe": 0.149,
+        "rank_universe": 0.14,
         "rank_group": 0.062,
         "rs_126_vs_proxy": 0.009861
       },
@@ -7574,8 +8014,8 @@
         "vs_200dma": 0.313036,
         "vs_50dma": 0.083251,
         "tsmom_12m": 1,
-        "rank_universe": 0.521,
-        "rank_group": 0.667,
+        "rank_universe": 0.51,
+        "rank_group": 0.556,
         "rs_126_vs_proxy": 0.313075
       },
       "backtest": {
@@ -7662,7 +8102,7 @@
         "vs_200dma": 0.186403,
         "vs_50dma": 0.012039,
         "tsmom_12m": 1,
-        "rank_universe": 0.606,
+        "rank_universe": 0.6,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.185598
       },
@@ -7750,7 +8190,7 @@
         "vs_200dma": 0.182622,
         "vs_50dma": -0.065914,
         "tsmom_12m": 1,
-        "rank_universe": 0.553,
+        "rank_universe": 0.54,
         "rank_group": 0.3,
         "rs_126_vs_proxy": -0.141588
       },
@@ -7838,7 +8278,7 @@
         "vs_200dma": 0.052481,
         "vs_50dma": 0.13784,
         "tsmom_12m": 1,
-        "rank_universe": 0.213,
+        "rank_universe": 0.21,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.064908
       },
@@ -7885,6 +8325,94 @@
         }
       }
     },
+    "WTAI": {
+      "ticker": "WTAI",
+      "group": "Broad / thematic / crypto ETFs",
+      "proxy": "SPY",
+      "bars": 1170,
+      "first_date": "2021-12-09",
+      "last_date": "2026-08-13",
+      "close": 43.32,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.4091,
+        "r2_vs_null_pct": 45,
+        "vr": 0.868,
+        "cross_rate": 14.08,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.0651,
+        "macd_signal": -0.606,
+        "macd_hist": 0.5409,
+        "macd_hist_prev": 0.4525,
+        "rsi": 56.6,
+        "mfi": 46.85,
+        "vpvma": -5.195414,
+        "vpvma_signal": -2.270702
+      },
+      "momentum": {
+        "mom_12_1": 0.750107,
+        "mom_6_1": 0.483652,
+        "ret_12m": 0.731323,
+        "ret_3m": 0.064635,
+        "ret_1m": -0.010733,
+        "dist_52w_high": -0.104033,
+        "dist_52w_low": 0.739759,
+        "vs_200dma": 0.259629,
+        "vs_50dma": 0.011016,
+        "tsmom_12m": 1,
+        "rank_universe": 0.61,
+        "rank_group": 0.778,
+        "rs_126_vs_proxy": 0.29871
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0991,
+          "buy_hold_return": 0.746,
+          "excess_vs_hold": -0.6469,
+          "beat_hold": false,
+          "n_trades": 48,
+          "win_rate": 0.333
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.0283,
+          "buy_hold_return": 0.746,
+          "excess_vs_hold": -0.7177,
+          "beat_hold": false,
+          "n_trades": 8,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.746,
+          "excess_vs_hold": -0.746,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": -0.0353,
+          "buy_hold_return": 0.746,
+          "excess_vs_hold": -0.7813,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.667
+        },
+        "vpvma": {
+          "strategy_return": 0.6207,
+          "buy_hold_return": 0.746,
+          "excess_vs_hold": -0.1253,
+          "beat_hold": false,
+          "n_trades": 82,
+          "win_rate": 0.61
+        }
+      }
+    },
     "^GSPC": {
       "ticker": "^GSPC",
       "group": "Macro / benchmarks",
@@ -7926,7 +8454,7 @@
         "vs_200dma": 0.103056,
         "vs_50dma": 0.038792,
         "tsmom_12m": 1,
-        "rank_universe": 0.266,
+        "rank_universe": 0.26,
         "rank_group": 0.364,
         "rs_126_vs_proxy": null
       },
@@ -8014,7 +8542,7 @@
         "vs_200dma": 0.109238,
         "vs_50dma": 0.034502,
         "tsmom_12m": 1,
-        "rank_universe": 0.309,
+        "rank_universe": 0.3,
         "rank_group": 0.545,
         "rs_126_vs_proxy": null
       },
@@ -8102,7 +8630,7 @@
         "vs_200dma": 0.126005,
         "vs_50dma": -0.120596,
         "tsmom_12m": 1,
-        "rank_universe": 0.734,
+        "rank_universe": 0.74,
         "rank_group": 0.909,
         "rs_126_vs_proxy": null
       },
@@ -8190,7 +8718,7 @@
         "vs_200dma": 0.315063,
         "vs_50dma": -0.014382,
         "tsmom_12m": 1,
-        "rank_universe": 0.745,
+        "rank_universe": 0.75,
         "rank_group": 1.0,
         "rs_126_vs_proxy": null
       },
@@ -8278,7 +8806,7 @@
         "vs_200dma": -0.210768,
         "vs_50dma": -0.151294,
         "tsmom_12m": -1,
-        "rank_universe": 0.16,
+        "rank_universe": 0.15,
         "rank_group": 0.273,
         "rs_126_vs_proxy": null
       },

@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-13T22:46:40Z",
+  "generated_at": "2026-08-14T02:36:47Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
-  "count": 101,
+  "count": 107,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -185,6 +185,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "ARTY",
+      "date": "2026-08-13",
+      "open": 76.35,
+      "high": 78.26,
+      "low": 76.35,
+      "close": 77.56,
+      "adj_close": 77.56,
+      "volume": 611373,
+      "spot_price": 77.56,
+      "spot_captured_at": "2026-08-14T02:36:38Z",
+      "currency": "USD",
+      "dma200": 57.4676,
+      "dma200_n": 200
+    },
+    {
       "ticker": "ASML",
       "date": "2026-08-13",
       "open": 1818.21,
@@ -272,6 +287,21 @@
       "spot_captured_at": "2026-08-13T22:46:20Z",
       "currency": "USD",
       "dma200": 23.8453,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "BOTZ",
+      "date": "2026-08-13",
+      "open": 37.695,
+      "high": 37.89,
+      "low": 37.64,
+      "close": 37.82,
+      "adj_close": 37.82,
+      "volume": 703022,
+      "spot_price": 37.82,
+      "spot_captured_at": "2026-08-14T02:36:44Z",
+      "currency": "USD",
+      "dma200": 36.9587,
       "dma200_n": 200
     },
     {
@@ -725,6 +755,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "IGPT",
+      "date": "2026-08-13",
+      "open": 93.26,
+      "high": 95.78,
+      "low": 93.26,
+      "close": 95.26,
+      "adj_close": 95.26,
+      "volume": 175995,
+      "spot_price": 95.26,
+      "spot_captured_at": "2026-08-14T02:36:42Z",
+      "currency": "USD",
+      "dma200": 72.9869,
+      "dma200_n": 200
+    },
+    {
       "ticker": "IGV",
       "date": "2026-08-13",
       "open": 103.73,
@@ -767,6 +812,21 @@
       "spot_captured_at": "2026-08-13T22:45:14Z",
       "currency": "USD",
       "dma200": 47.1945,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "IWM",
+      "date": "2026-08-13",
+      "open": 304.04,
+      "high": 305.05,
+      "low": 302.72,
+      "close": 303.5,
+      "adj_close": 303.5,
+      "volume": 13989886,
+      "spot_price": 303.5,
+      "spot_captured_at": "2026-08-14T02:36:37Z",
+      "currency": "USD",
+      "dma200": 268.2771,
       "dma200_n": 200
     },
     {
@@ -1310,6 +1370,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "SOXX",
+      "date": "2026-08-13",
+      "open": 547.15,
+      "high": 562.25,
+      "low": 546.4,
+      "close": 550.74,
+      "adj_close": 550.74,
+      "volume": 5850612,
+      "spot_price": 550.74,
+      "spot_captured_at": "2026-08-14T02:36:35Z",
+      "currency": "USD",
+      "dma200": 413.9476,
+      "dma200_n": 200
+    },
+    {
       "ticker": "SPCX",
       "date": "2026-08-13",
       "open": 143.6168,
@@ -1442,6 +1517,21 @@
       "spot_captured_at": "2026-08-13T22:45:41Z",
       "currency": "USD",
       "dma200": 125.2849,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "WTAI",
+      "date": "2026-08-13",
+      "open": 42.7,
+      "high": 43.7799,
+      "low": 42.7,
+      "close": 43.32,
+      "adj_close": 43.32,
+      "volume": 215499,
+      "spot_price": 43.32,
+      "spot_captured_at": "2026-08-14T02:36:40Z",
+      "currency": "USD",
+      "dma200": 34.3911,
       "dma200_n": 200
     },
     {
