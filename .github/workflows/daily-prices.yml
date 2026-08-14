@@ -6,7 +6,16 @@ on:
     # summer / 21:00 UTC in winter); 22:00 UTC leaves buffer for the daily bar
     # to settle. Note: GitHub can delay scheduled runs by 10-30+ min under load.
     - cron: "0 22 * * 1-5"
-  workflow_dispatch: {}          # allow manual runs from the Actions tab
+  workflow_dispatch:             # manual runs from the Actions tab / gh CLI
+    inputs:
+      lookback:
+        description: "History window (yfinance period). Use e.g. 10y to backfill new tickers once."
+        required: false
+        default: "7d"
+      tickers:
+        description: "Optional comma-separated subset to fetch (default: whole tickers.txt)"
+        required: false
+        default: ""
 
 permissions:
   contents: write                # required to commit the updated database back
@@ -30,7 +39,16 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Fetch prices
-        run: python fetch_prices.py
+        env:
+          LOOKBACK: ${{ inputs.lookback || '7d' }}
+          TICKERS: ${{ inputs.tickers || '' }}
+        run: |
+          ARGS="--lookback $LOOKBACK"
+          if [ -n "$TICKERS" ]; then
+            echo "$TICKERS" | tr ',' '\n' > dispatch-tickers.txt
+            ARGS="$ARGS --tickers dispatch-tickers.txt"
+          fi
+          python fetch_prices.py $ARGS
 
       - name: Export text data (CSV + JSON for public URLs)
         run: python export_data.py
