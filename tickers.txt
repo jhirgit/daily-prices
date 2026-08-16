@@ -135,4 +135,16 @@ BZ=F       # Brent crude
 BTC-USD    # Bitcoin
 ETH-USD    # Ethereum
 
+# --- added 2026-08-16: SK hynix ADR premium tracking (skhy-state-2026-08-16) ---
+# SKHY trades at a large, structurally sticky premium to 000660.KS because the
+# KSD local->ADR conversion quota (2.5%) is exhausted. Tracking the premium as a
+# live spread needs all three of: SKHY, 000660.KS (already present), and USD/KRW.
+# SKHY verified live via Finnhub (intraday workflow, 2026-08-14 quote $166.33).
+# KRW=X is the standard Yahoo symbol for USD/KRW but is UNVERIFIED from the
+# session that added it (Yahoo was egress-blocked; known-good 000660.KS failed
+# the same test, so the check measured the proxy, not the symbol). Check the
+# next scheduled run populates it before relying on it — cf. the Kioxia note.
+SKHY       # SK hynix ADR (Nasdaq) — 10 ADR = 1 ordinary 000660.KS
+KRW=X      # USD/KRW — required to compute the SKHY vs 000660.KS premium
+
 # Kioxia omitted — needs a verified Yahoo symbol (285A.T returns implausible data).
