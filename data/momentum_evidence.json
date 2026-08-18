@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-08-18T15:59:50Z",
+  "span": {
+    "from": "2016-08-13",
+    "to": "2026-08-17",
+    "names_used": 100
+  },
+  "params": {
+    "stacked": "close > EMA20 > EMA50 > EMA200",
+    "coiled": "ATR14% <= p20 of own trailing 252 sessions",
+    "buyers": "50d up-day volume >= 1.2x down-day volume",
+    "forward_horizons_sessions": [
+      21,
+      63
+    ],
+    "returns": "adjusted closes (dividends count)"
+  },
+  "conditions": {
+    "full_setup": {
+      "n_names": 96,
+      "n_episodes": 2384,
+      "fwd21": {
+        "n": 13817,
+        "median": 0.0211,
+        "mean": 0.0274,
+        "hit_rate": 0.612
+      },
+      "fwd63": {
+        "n": 13809,
+        "median": 0.0465,
+        "mean": 0.076,
+        "hit_rate": 0.617
+      }
+    },
+    "stacked_only": {
+      "n_names": 97,
+      "n_episodes": 6555,
+      "fwd21": {
+        "n": 66511,
+        "median": 0.0185,
+        "mean": 0.0285,
+        "hit_rate": 0.585
+      },
+      "fwd63": {
+        "n": 65079,
+        "median": 0.0464,
+        "mean": 0.0873,
+        "hit_rate": 0.615
+      }
+    },
+    "coiled_only": {
+      "n_names": 97,
+      "n_episodes": 4208,
+      "fwd21": {
+        "n": 44303,
+        "median": 0.0095,
+        "mean": 0.0189,
+        "hit_rate": 0.541
+      },
+      "fwd63": {
+        "n": 44230,
+        "median": 0.0182,
+        "mean": 0.0492,
+        "hit_rate": 0.543
+      }
+    },
+    "buyers_only": {
+      "n_names": 97,
+      "n_episodes": 5547,
+      "fwd21": {
+        "n": 70904,
+        "median": 0.0171,
+        "mean": 0.0277,
+        "hit_rate": 0.576
+      },
+      "fwd63": {
+        "n": 68948,
+        "median": 0.044,
+        "mean": 0.0893,
+        "hit_rate": 0.6
+      }
+    },
+    "baseline": {
+      "n_names": 98,
+      "n_episodes": 98,
+      "fwd21": {
+        "n": 189380,
+        "median": 0.0151,
+        "mean": 0.0265,
+        "hit_rate": 0.563
+      },
+      "fwd63": {
+        "n": 185291,
+        "median": 0.0418,
+        "mean": 0.085,
+        "hit_rate": 0.595
+      }
+    }
+  },
+  "notes": [
+    "Flags are lookahead-free (trailing windows only); swing pivots are excluded from conditions because they confirm late.",
+    "Consecutive qualifying days overlap heavily -- episodes is the honest unit.",
+    "Survivorship-biased by construction: these are names that earned their way onto the watchlist. A description of their past, not an expectation."
+  ]
+}

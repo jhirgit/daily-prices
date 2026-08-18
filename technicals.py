@@ -111,6 +111,29 @@ def r2_vs_null_pct(r2):
 
 MIN_BARS = 260               # below this a name gets no technicals at all
 
+# --- momentum structure (the screener-card families, collapsed to three facts) ---
+# A commercial setup card shows ~12 chips (MA FAN, ATR SQZ, CLOSE HI, 52W HI,
+# VDU, HH/HL, W.EMA, OBV+, NR7, U/D VOL, SQUEEZE, SPRING ...) and scores N/12.
+# Most of those chips restate one fact -- "price went up" -- so a count
+# manufactures confidence out of correlation. Collapsed here to three families
+# that are actually orthogonal:
+#   1. trend STRUCTURE   (EMA stack order, confirmed swing pivots, close position)
+#   2. VOLATILITY state  (ATR% ranked within the name's own trailing year --
+#                         subsumes ATR SQZ / SQUEEZE / NR7, which all measure
+#                         "range is contracting")
+#   3. PARTICIPATION     (up-day vs down-day volume, OBV direction, relative
+#                         volume -- Chio's price-pressure finding generalized)
+# Deliberately no composite score. Consciously skipped: SPRING (needs a defined
+# trading range; fuzzy heuristic), W.EMA (redundant with the daily 200), NR7
+# (a noisier single-day version of the ATR percentile).
+ATR_N = 14
+STACK_EMAS = (20, 50, 200)
+ATR_RANK_WIN = 252           # rank today's ATR% within the name's own year
+CONTRACT_MAX = 0.20          # at/below own 20th percentile = "coiled"
+EXPAND_MIN = 0.80            # at/above own 80th percentile = "wide"
+UDVOL_CONFIRM = 1.2          # up-day volume outweighs down-day volume by >=20%
+SWING_K = 5                  # a pivot needs 5 sessions on each side to confirm
+
 
 # --------------------------------------------------------------------------
 # primitives
@@ -411,6 +434,171 @@ def momentum(closes, adj=None):
 
 
 # --------------------------------------------------------------------------
+# momentum structure
+# --------------------------------------------------------------------------
+
+def atr_pct_series(highs, lows, closes, n=ATR_N):
+    """Wilder ATR(14) as a percent of close, full series (None until warm)."""
+    m = len(closes)
+    out = [None] * m
+    if m < n + 1:
+        return out
+    trs = [highs[0] - lows[0]]
+    for i in range(1, m):
+        trs.append(max(highs[i] - lows[i],
+                       abs(highs[i] - closes[i - 1]),
+                       abs(lows[i] - closes[i - 1])))
+    prev = sum(trs[1:n + 1]) / n
+    if closes[n]:
+        out[n] = 100.0 * prev / closes[n]
+    for i in range(n + 1, m):
+        prev = (prev * (n - 1) + trs[i]) / n
+        if closes[i]:
+            out[i] = 100.0 * prev / closes[i]
+    return out
+
+
+def pct_rank_trailing(vals, win=ATR_RANK_WIN):
+    """Percentile of the LAST value within the trailing `win` values, inclusive.
+    None until a full window exists -- a rank against a partial year is a
+    different statistic and would silently mean something else."""
+    if not vals or vals[-1] is None:
+        return None
+    tail = [v for v in vals[-win:] if v is not None]
+    if len(tail) < win:
+        return None
+    v = vals[-1]
+    return sum(1 for x in tail if x <= v) / len(tail)
+
+
+def ema_stack(closes):
+    """Order of close vs EMA20/50/200 -- trend structure as a STATE description.
+    This is not the statistical trend test (classify_regime is); over 90
+    sessions plenty of random walks also produce an aligned stack."""
+    e = {n: ema(closes, n) for n in STACK_EMAS}
+    last = {n: e[n][-1] for n in STACK_EMAS}
+    if any(v is None for v in last.values()):
+        return {"state": None, "ema200_slope_63d": None}
+    c = closes[-1]
+    if c > last[20] > last[50] > last[200]:
+        state = "aligned_up"
+    elif c < last[20] < last[50] < last[200]:
+        state = "aligned_down"
+    else:
+        state = "mixed"
+    s200 = e[200]
+    slope = None
+    if len(s200) > 63 and s200[-64]:
+        slope = s200[-1] / s200[-64] - 1
+    return {"state": state, "ema200_slope_63d": slope}
+
+
+def swing_label(highs, lows, k=SWING_K):
+    """HH/HL vs LH/LL from the last two confirmed pivot highs and lows.
+    A pivot needs k bars on each side, so this read lags by k sessions --
+    confirmed structure only, nothing repaints."""
+    ph, pl = [], []
+    for i in range(k, len(highs) - k):
+        wh = highs[i - k:i + k + 1]
+        if highs[i] == max(wh) and wh.count(highs[i]) == 1:
+            ph.append(highs[i])
+        wl = lows[i - k:i + k + 1]
+        if lows[i] == min(wl) and wl.count(lows[i]) == 1:
+            pl.append(lows[i])
+    if len(ph) < 2 or len(pl) < 2:
+        return None
+    hh, hl = ph[-1] > ph[-2], pl[-1] > pl[-2]
+    return "HH/HL" if (hh and hl) else "LH/LL" if (not hh and not hl) else "mixed"
+
+
+def close_position(highs, lows, closes, n=20):
+    """Where in its daily range the name has been closing, 0..1, 20d average.
+    Buyers pressing into the close live near 1; the card's CLOSE HI chip."""
+    num = den = 0.0
+    for i in range(max(0, len(closes) - n), len(closes)):
+        rng = highs[i] - lows[i]
+        if rng > 0:
+            num += (closes[i] - lows[i]) / rng
+            den += 1
+    return (num / den) if den else None
+
+
+def ud_vol_ratio(closes, vols, n=50):
+    """Up-day volume / down-day volume over n sessions. >1 = accumulation-ish.
+    Capped at 9.99 (a zero-down-day window is 'all buyers', not infinity)."""
+    up = dn = 0.0
+    for i in range(max(1, len(closes) - n), len(closes)):
+        v = float(vols[i] or 0)
+        if closes[i] > closes[i - 1]:
+            up += v
+        elif closes[i] < closes[i - 1]:
+            dn += v
+    if up + dn == 0:
+        return None
+    return 9.99 if dn == 0 else min(up / dn, 9.99)
+
+
+def obv_read(closes, vols, look=63):
+    """On-balance volume vs price over `look` sessions: confirms, or diverges.
+    Bullish divergence = price down while OBV rises (accumulation into
+    weakness); bearish = price up on fading volume."""
+    if len(closes) <= look or sum((v or 0) for v in vols[-look:]) == 0:
+        return None
+    obv, series = 0.0, [0.0]
+    for i in range(1, len(closes)):
+        v = float(vols[i] or 0)
+        if closes[i] > closes[i - 1]:
+            obv += v
+        elif closes[i] < closes[i - 1]:
+            obv -= v
+        series.append(obv)
+    d_obv = series[-1] - series[-1 - look]
+    d_px = closes[-1] - closes[-1 - look]
+    if d_px > 0 and d_obv < 0:
+        return "bearish_divergence"
+    if d_px < 0 and d_obv > 0:
+        return "bullish_divergence"
+    return "confirms"
+
+
+def momentum_structure(highs, lows, closes, vols):
+    """The three families, plus the conjunction flag `in_setup` =
+    stacked up + volatility coiled + buyers outweighing sellers."""
+    stack = ema_stack(closes)
+    atrp = atr_pct_series(highs, lows, closes)
+    rank = pct_rank_trailing(atrp)
+    vol_state = (None if rank is None else
+                 "contracted" if rank <= CONTRACT_MAX else
+                 "expanded" if rank >= EXPAND_MIN else "normal")
+    has_vol = any(vols[-50:])
+    ud = ud_vol_ratio(closes, vols) if has_vol else None
+    s10 = sma([float(v or 0) for v in vols], 10)
+    s50 = sma([float(v or 0) for v in vols], 50)
+    v10v50 = (s10[-1] / s50[-1]) if (s10[-1] and s50[-1]) else None
+    rvol = (float(vols[-1] or 0) / s50[-1]) if s50[-1] else None
+    in_setup = (stack["state"] == "aligned_up" and vol_state == "contracted"
+                and ud is not None and ud >= UDVOL_CONFIRM)
+
+    def r(v, d=4):
+        return None if v is None else round(v, d)
+
+    return {
+        "stack": stack["state"],
+        "ema200_slope_63d": r(stack["ema200_slope_63d"]),
+        "swing": swing_label(highs, lows),
+        "close_pos_20": r(close_position(highs, lows, closes), 3),
+        "atr_pct": r(atrp[-1], 2),
+        "atr_pct_rank_1y": r(rank, 3),
+        "vol_state": vol_state,
+        "ud_vol_50d": r(ud, 2),
+        "vol_10v50": r(v10v50, 2),
+        "rvol": r(rvol, 2),
+        "obv_63d": obv_read(closes, vols),
+        "in_setup": bool(in_setup),
+    }
+
+
+# --------------------------------------------------------------------------
 # backtest -- always against buy-and-hold
 # --------------------------------------------------------------------------
 
@@ -564,6 +752,16 @@ def load_bars(conn, ticker):
     return rows
 
 
+def _load_evidence():
+    """momentum_evidence.json if it has been generated; None otherwise."""
+    try:
+        with open(os.path.join(DEFAULT_OUT, "momentum_evidence.json"),
+                  encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return None
+
+
 def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
     conn = sqlite3.connect(db)
     groups = load_groups(tickers_file)
@@ -618,6 +816,7 @@ def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
                 "vpvma_signal": None if vs[-1] is None else round(vs[-1], 6),
             },
             "momentum": momentum(closes, adjs),
+            "setup": momentum_structure(highs, lows, closes, vols),
             "backtest": bt,
         }
 
@@ -677,9 +876,22 @@ def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
                 "cost -- Chio's own assumptions -- but ALWAYS reported against buy-and-hold over "
                 "the same window, which his paper omits."
             ),
+            "momentum_structure": (
+                "Three orthogonal families per name: trend structure (close>EMA20>50>200, "
+                "confirmed-pivot HH/HL, 20d close position), volatility state (Wilder ATR14% "
+                "ranked within the name's own trailing year), participation (50d up/down-day "
+                "volume ratio, OBV 63d, RVOL). in_setup = stacked + coiled(<=p20) + U/D>=1.2. "
+                "Deliberately no N-of-12 composite: screener chips are heavily correlated and "
+                "a count manufactures confidence. momentum_evidence carries the base rates of "
+                "these states on this book's own history."
+            ),
             "not_advice": "Descriptive only. No position sizing, no recommendation.",
         },
         "min_bars": MIN_BARS,
+        # Event-study base rates for the setup states, generated by
+        # momentum_evidence.py (slow, run on demand) and inlined here so the
+        # dashboard can print evidence next to the states it displays.
+        "momentum_evidence": _load_evidence(),
         "count": len(out),
         "skipped": skipped,
         "tickers": out,

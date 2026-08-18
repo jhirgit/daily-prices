@@ -225,6 +225,75 @@ check_true("NOW maps to IGV proxy",
 check_true("comment headers are not parsed as tickers",
            not any(t.startswith("-") or " " in t for t in groups))
 
+print("\nmomentum structure -- the three screener families")
+# ATR: constant 2-point range on a 100 close = 2% forever
+n_c = [100.0] * 300
+n_h = [101.0] * 300
+n_l = [99.0] * 300
+atr = T.atr_pct_series(n_h, n_l, n_c)
+check("ATR% on constant-range series", atr[-1], 2.0, 1e-9)
+check("ATR warms up after n bars", atr[T.ATR_N - 1], None)
+
+check("pct_rank_trailing top", T.pct_rank_trailing([1.0, 2.0, 3.0, 4.0, 5.0], 5), 1.0, 1e-9)
+check("pct_rank_trailing bottom", T.pct_rank_trailing([5.0, 4.0, 3.0, 2.0, 1.0], 5), 0.2, 1e-9)
+check("pct_rank_trailing partial window is None",
+      T.pct_rank_trailing([1.0, 2.0], 5), None)
+
+up = [100.0 * (1.003 ** i) for i in range(300)]
+dn = list(reversed(up))
+check("ema_stack monotone up", T.ema_stack(up)["state"], "aligned_up")
+check("ema_stack monotone down", T.ema_stack(dn)["state"], "aligned_down")
+
+# rising zigzag: 14-bar triangle waves, amplitude 14, base climbing 4 per wave.
+# Geometry matters: the peak must be the strict max of its +/-5 window (swing_label
+# rejects tied extremes on purpose -- a flat top is not a confirmed pivot).
+zz_h, zz_l = [], []
+for blk in range(8):
+    base = 100.0 + 4 * blk
+    for j in range(14):
+        lvl = base + 2 * (j if j <= 7 else 14 - j)
+        zz_h.append(lvl + 1)
+        zz_l.append(lvl - 1)
+check("swing label on rising zigzag", T.swing_label(zz_h, zz_l), "HH/HL")
+# and the mirror: falling zigzag reads LH/LL
+check("swing label on falling zigzag",
+      T.swing_label(list(reversed(zz_h)), list(reversed(zz_l))), "LH/LL")
+
+alt_c = [100 + (1 if i % 2 else 0) for i in range(80)]
+alt_v = [2_000_000 if alt_c[i] > alt_c[i - 1] else 1_000_000 for i in range(1, 80)]
+alt_v = [1_000_000] + alt_v
+check("U/D volume ratio 2:1", T.ud_vol_ratio(alt_c, alt_v), 2.0, 0.05)
+
+# bearish divergence: price grinds up on thin volume, dumps on heavy volume
+div_c, div_v, px = [], [], 100.0
+for i in range(120):
+    if i % 10 == 9:
+        px -= 0.5
+        div_v.append(50_000_000)
+    else:
+        px += 0.1
+        div_v.append(1_000_000)
+    div_c.append(px)
+check("OBV bearish divergence detected", T.obv_read(div_c, div_v), "bearish_divergence")
+
+novol = T.momentum_structure(n_h, n_l, n_c, [0] * 300)
+check_true("zero-volume name cannot be in setup",
+           novol["ud_vol_50d"] is None and not novol["in_setup"])
+
+print("\nevidence flags are lookahead-free")
+import momentum_evidence as ME
+tr_c = trending(400)
+tr_h = [x * 1.01 for x in tr_c]
+tr_l = [x * 0.99 for x in tr_c]
+tr_v = [1_000_000] * 400
+st, co, bu = ME.day_flags(tr_h, tr_l, tr_c, tr_v)
+check_true("flag arrays match series length", len(st) == len(co) == len(bu) == 400)
+check_true("stacked flag warms up (None early, defined late)",
+           st[0] is None and st[-1] is not None)
+check_true("coiled needs a full trailing year",
+           all(v is None for v in co[:T.ATR_RANK_WIN - 1]))
+check_true("buyers flag defined after 50 sessions", bu[60] is not None)
+
 print("\n" + ("-" * 60))
 if FAILS:
     print(f"{len(FAILS)} FAILED: {', '.join(FAILS)}")
