@@ -1,0 +1,47 @@
+name: Overnight Snapshot
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # 11:30 UTC every weekday = 7:30 ET (EDT) / 6:30 ET (EST). Asia has closed,
+    # Europe is a few hours into its session, US index futures are trading --
+    # the "what happened overnight" read a US reader wants before the open.
+    # NOTE: scheduled workflows only fire from the repo's DEFAULT branch, so
+    # this cron is dormant until overnight.yml lands on main.
+    - cron: "30 11 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: overnight
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch overnight snapshot
+        run: python overnight.py
+
+      - name: Commit overnight.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/overnight.json
+          if git diff --staged --quiet; then
+            echo "No overnight changes to commit."
+          else
+            git commit -m "overnight: $(date -u +'%Y-%m-%d %H:%M UTC') [skip ci]"
+            git push
+          fi
