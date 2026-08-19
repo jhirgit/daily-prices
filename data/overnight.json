@@ -1,0 +1,205 @@
+{
+  "generated_at": "2026-08-19T04:52:29Z",
+  "source": "SEED from prices.db end-of-day closes (last completed session)",
+  "status": "seed",
+  "status_note": "Real end-of-day numbers for tracked symbols; blanks (US futures, DAX, Shanghai, Taiwan, rates/FX, WTI) fill in once the Overnight workflow runs on main each morning.",
+  "note": "pct = latest close vs prior close. Live morning board replaces this after deploy to main.",
+  "groups": [
+    {
+      "group": "US overnight (futures)",
+      "items": [
+        {
+          "ticker": "ES=F",
+          "name": "S&P 500",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        },
+        {
+          "ticker": "NQ=F",
+          "name": "Nasdaq 100",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        },
+        {
+          "ticker": "YM=F",
+          "name": "Dow",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        },
+        {
+          "ticker": "RTY=F",
+          "name": "Russell 2000",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        }
+      ]
+    },
+    {
+      "group": "Asia (closed)",
+      "items": [
+        {
+          "ticker": "^N225",
+          "name": "Nikkei 225 (Tokyo)",
+          "last": 65664.5078,
+          "prev_close": 67460.7266,
+          "pct": -2.663,
+          "currency": null,
+          "asof": "2026-08-19"
+        },
+        {
+          "ticker": "^HSI",
+          "name": "Hang Seng (Hong Kong)",
+          "last": 25522.5703,
+          "prev_close": 25471.1504,
+          "pct": 0.202,
+          "currency": null,
+          "asof": "2026-08-19"
+        },
+        {
+          "ticker": "^KS11",
+          "name": "KOSPI (Seoul)",
+          "last": 6977.9399,
+          "prev_close": 6813.3398,
+          "pct": 2.416,
+          "currency": null,
+          "asof": "2026-08-14"
+        },
+        {
+          "ticker": "^TWII",
+          "name": "Taiwan Weighted",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        },
+        {
+          "ticker": "000001.SS",
+          "name": "Shanghai Composite",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        }
+      ]
+    },
+    {
+      "group": "Europe (open)",
+      "items": [
+        {
+          "ticker": "^FTSE",
+          "name": "FTSE 100 (London)",
+          "last": 10728.0,
+          "prev_close": 10720.2998,
+          "pct": 0.072,
+          "currency": null,
+          "asof": "2026-08-18"
+        },
+        {
+          "ticker": "^GDAXI",
+          "name": "DAX (Frankfurt)",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        },
+        {
+          "ticker": "^STOXX50E",
+          "name": "Euro Stoxx 50",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        },
+        {
+          "ticker": "^FCHI",
+          "name": "CAC 40 (Paris)",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        }
+      ]
+    },
+    {
+      "group": "Rates / FX / Commodities",
+      "items": [
+        {
+          "ticker": "^TNX",
+          "name": "US 10Y yield",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        },
+        {
+          "ticker": "DX-Y.NYB",
+          "name": "Dollar index",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        },
+        {
+          "ticker": "GC=F",
+          "name": "Gold",
+          "last": 4392.8999,
+          "prev_close": 4417.7998,
+          "pct": -0.564,
+          "currency": null,
+          "asof": "2026-08-18"
+        },
+        {
+          "ticker": "CL=F",
+          "name": "WTI crude",
+          "last": null,
+          "prev_close": null,
+          "pct": null,
+          "currency": null,
+          "asof": null
+        }
+      ]
+    },
+    {
+      "group": "Crypto (24h)",
+      "items": [
+        {
+          "ticker": "BTC-USD",
+          "name": "Bitcoin",
+          "last": 64534.6406,
+          "prev_close": 64506.2539,
+          "pct": 0.044,
+          "currency": null,
+          "asof": "2026-08-18"
+        },
+        {
+          "ticker": "ETH-USD",
+          "name": "Ethereum",
+          "last": 1912.97,
+          "prev_close": 1912.2021,
+          "pct": 0.04,
+          "currency": null,
+          "asof": "2026-08-18"
+        }
+      ]
+    }
+  ]
+}

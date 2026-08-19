@@ -126,7 +126,10 @@ ETHA       # Ethereum ETF
 ^GSPC      # S&P 500 index
 ^IXIC      # Nasdaq Composite
 ^SOX       # PHLX Semiconductor
-^KS11      # KOSPI
+^KS11      # KOSPI (Korea)
+^FTSE      # FTSE 100 (London) - overnight read
+^N225      # Nikkei 225 (Tokyo) - overnight read
+^HSI       # Hang Seng (Hong Kong) - overnight read
 ^VIX       # volatility
 GLD        # gold
 GC=F       # gold futures

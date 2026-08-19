@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-18T22:28:14Z",
+  "generated_at": "2026-08-19T04:14:19Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
-  "count": 108,
+  "count": 111,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -1550,6 +1550,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "^FTSE",
+      "date": "2026-08-18",
+      "open": 10720.9004,
+      "high": 10779.9004,
+      "low": 10701.7002,
+      "close": 10728.0,
+      "adj_close": 10728.0,
+      "volume": 772638300,
+      "spot_price": 10728.0,
+      "spot_captured_at": "2026-08-19T04:14:13Z",
+      "currency": "GBP",
+      "dma200": 10289.7095,
+      "dma200_n": 200
+    },
+    {
       "ticker": "^GSPC",
       "date": "2026-08-18",
       "open": 7700.04,
@@ -1562,6 +1577,21 @@
       "spot_captured_at": "2026-08-18T22:27:58Z",
       "currency": "USD",
       "dma200": 7083.179,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "^HSI",
+      "date": "2026-08-19",
+      "open": 25346.9004,
+      "high": 25532.4102,
+      "low": 25315.3203,
+      "close": 25522.5703,
+      "adj_close": 25522.5703,
+      "volume": 0,
+      "spot_price": 25522.5703,
+      "spot_captured_at": "2026-08-19T04:14:16Z",
+      "currency": "HKD",
+      "dma200": 25704.8743,
       "dma200_n": 200
     },
     {
@@ -1592,6 +1622,21 @@
       "spot_captured_at": "2026-08-18T22:28:01Z",
       "currency": "KRW",
       "dma200": 5873.2334,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "^N225",
+      "date": "2026-08-19",
+      "open": 66812.2734,
+      "high": 66833.5078,
+      "low": 65326.7617,
+      "close": 65664.5078,
+      "adj_close": 65664.5078,
+      "volume": 0,
+      "spot_price": 65664.5078,
+      "spot_captured_at": "2026-08-19T04:14:14Z",
+      "currency": "JPY",
+      "dma200": 58077.7216,
       "dma200_n": 200
     },
     {
