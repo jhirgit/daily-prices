@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-19T04:14:25Z",
+  "generated_at": "2026-08-19T18:57:54Z",
   "method": {
     "regime_gate": "Over the last 90 sessions: trending if log-price R^2 >= 0.85; mean_reverting if R^2 < 0.35 and SMA20 crossings <= 7.0 per 100 sessions; else neither.",
     "regime_calibration": "Thresholds are Monte-Carlo calibrated against a random-walk null (2,000 draws, 90-session windows). R^2 >= 0.85 is the p90 of that null -- note that R^2 >= 0.50 would be met by 44.7% of pure random walks, which is why the common 'it looks trendy' threshold is useless. The Lo-MacKinlay variance ratio is reported as a diagnostic but does NOT classify: a sinusoid is locally smooth, so cyclical data returns VR of 3.9-11.3, far above 1, not below it.",
@@ -120,7 +120,7 @@
       "Survivorship-biased by construction: these are names that earned their way onto the watchlist. A description of their past, not an expectation."
     ]
   },
-  "count": 103,
+  "count": 104,
   "skipped": [
     {
       "ticker": "6981.T",
@@ -307,7 +307,7 @@
         "vs_200dma": 0.332333,
         "vs_50dma": -0.055774,
         "tsmom_12m": 1,
-        "rank_universe": 0.903,
+        "rank_universe": 0.904,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.157727
       },
@@ -409,7 +409,7 @@
         "vs_200dma": 0.368052,
         "vs_50dma": -0.005002,
         "tsmom_12m": 1,
-        "rank_universe": 0.951,
+        "rank_universe": 0.952,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 1.140443
       },
@@ -511,7 +511,7 @@
         "vs_200dma": 1.109271,
         "vs_50dma": 0.304092,
         "tsmom_12m": 1,
-        "rank_universe": 0.932,
+        "rank_universe": 0.933,
         "rank_group": 0.95,
         "rs_126_vs_proxy": 2.094092
       },
@@ -613,7 +613,7 @@
         "vs_200dma": 0.018158,
         "vs_50dma": 0.184802,
         "tsmom_12m": 1,
-        "rank_universe": 0.165,
+        "rank_universe": 0.163,
         "rank_group": 0.062,
         "rs_126_vs_proxy": -0.006453
       },
@@ -715,7 +715,7 @@
         "vs_200dma": -0.033574,
         "vs_50dma": 0.079603,
         "tsmom_12m": 1,
-        "rank_universe": 0.68,
+        "rank_universe": 0.673,
         "rank_group": 0.938,
         "rs_126_vs_proxy": -0.032396
       },
@@ -817,7 +817,7 @@
         "vs_200dma": -0.151774,
         "vs_50dma": 0.045852,
         "tsmom_12m": 1,
-        "rank_universe": 0.194,
+        "rank_universe": 0.192,
         "rank_group": 0.188,
         "rs_126_vs_proxy": -0.142124
       },
@@ -919,7 +919,7 @@
         "vs_200dma": 0.396969,
         "vs_50dma": -0.142843,
         "tsmom_12m": 1,
-        "rank_universe": 0.621,
+        "rank_universe": 0.615,
         "rank_group": 0.4,
         "rs_126_vs_proxy": 0.754595
       },
@@ -1021,7 +1021,7 @@
         "vs_200dma": 0.482808,
         "vs_50dma": -0.05099,
         "tsmom_12m": 1,
-        "rank_universe": 0.874,
+        "rank_universe": 0.875,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.705952
       },
@@ -1123,7 +1123,7 @@
         "vs_200dma": -0.157234,
         "vs_50dma": -0.128186,
         "tsmom_12m": -1,
-        "rank_universe": 0.068,
+        "rank_universe": 0.067,
         "rank_group": 0.05,
         "rs_126_vs_proxy": -0.394815
       },
@@ -1225,7 +1225,7 @@
         "vs_200dma": -0.031112,
         "vs_50dma": -0.236222,
         "tsmom_12m": 1,
-        "rank_universe": 0.301,
+        "rank_universe": 0.298,
         "rank_group": 0.15,
         "rs_126_vs_proxy": -0.106213
       },
@@ -1327,7 +1327,7 @@
         "vs_200dma": 0.270682,
         "vs_50dma": 0.018845,
         "tsmom_12m": 1,
-        "rank_universe": 0.583,
+        "rank_universe": 0.577,
         "rank_group": 0.722,
         "rs_126_vs_proxy": 0.255726
       },
@@ -1429,7 +1429,7 @@
         "vs_200dma": 0.255374,
         "vs_50dma": 0.012091,
         "tsmom_12m": 1,
-        "rank_universe": 0.816,
+        "rank_universe": 0.817,
         "rank_group": 0.7,
         "rs_126_vs_proxy": -0.088582
       },
@@ -1531,7 +1531,7 @@
         "vs_200dma": 0.058711,
         "vs_50dma": 0.156814,
         "tsmom_12m": 1,
-        "rank_universe": 0.485,
+        "rank_universe": 0.481,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.070138
       },
@@ -1633,7 +1633,7 @@
         "vs_200dma": 0.029067,
         "vs_50dma": -0.025193,
         "tsmom_12m": 1,
-        "rank_universe": 0.398,
+        "rank_universe": 0.394,
         "rank_group": 0.2,
         "rs_126_vs_proxy": -0.179695
       },
@@ -2041,7 +2041,7 @@
         "vs_200dma": -0.01081,
         "vs_50dma": -0.001388,
         "tsmom_12m": 1,
-        "rank_universe": 0.155,
+        "rank_universe": 0.154,
         "rank_group": 0.278,
         "rs_126_vs_proxy": -0.155838
       },
@@ -2143,7 +2143,7 @@
         "vs_200dma": -0.065272,
         "vs_50dma": 0.012214,
         "tsmom_12m": -1,
-        "rank_universe": 0.078,
+        "rank_universe": 0.077,
         "rank_group": 0.143,
         "rs_126_vs_proxy": null
       },
@@ -2245,7 +2245,7 @@
         "vs_200dma": 0.112653,
         "vs_50dma": 0.098729,
         "tsmom_12m": 1,
-        "rank_universe": 0.466,
+        "rank_universe": 0.462,
         "rank_group": 0.714,
         "rs_126_vs_proxy": null
       },
@@ -2347,7 +2347,7 @@
         "vs_200dma": 0.110124,
         "vs_50dma": -0.076058,
         "tsmom_12m": 1,
-        "rank_universe": 0.777,
+        "rank_universe": 0.779,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.210643
       },
@@ -2449,7 +2449,7 @@
         "vs_200dma": -0.002143,
         "vs_50dma": 0.124927,
         "tsmom_12m": 1,
-        "rank_universe": 0.369,
+        "rank_universe": 0.365,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.042417
       },
@@ -2551,7 +2551,7 @@
         "vs_200dma": 0.109264,
         "vs_50dma": -0.04491,
         "tsmom_12m": 1,
-        "rank_universe": 0.922,
+        "rank_universe": 0.923,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.040619
       },
@@ -2653,7 +2653,7 @@
         "vs_200dma": 0.145612,
         "vs_50dma": -0.083879,
         "tsmom_12m": 1,
-        "rank_universe": 0.893,
+        "rank_universe": 0.894,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.003617
       },
@@ -2755,7 +2755,7 @@
         "vs_200dma": 0.543869,
         "vs_50dma": 0.113469,
         "tsmom_12m": 1,
-        "rank_universe": 0.699,
+        "rank_universe": 0.692,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.632061
       },
@@ -2857,7 +2857,7 @@
         "vs_200dma": 0.006513,
         "vs_50dma": 0.029789,
         "tsmom_12m": -1,
-        "rank_universe": 0.097,
+        "rank_universe": 0.096,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.267726
       },
@@ -2959,7 +2959,7 @@
         "vs_200dma": 0.420565,
         "vs_50dma": -0.012528,
         "tsmom_12m": 1,
-        "rank_universe": 0.757,
+        "rank_universe": 0.75,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.593476
       },
@@ -3061,7 +3061,7 @@
         "vs_200dma": -0.045528,
         "vs_50dma": 0.034535,
         "tsmom_12m": -1,
-        "rank_universe": 0.049,
+        "rank_universe": 0.048,
         "rank_group": 0.071,
         "rs_126_vs_proxy": null
       },
@@ -3265,7 +3265,7 @@
         "vs_200dma": 0.197723,
         "vs_50dma": -0.054783,
         "tsmom_12m": 1,
-        "rank_universe": 0.796,
+        "rank_universe": 0.798,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.151704
       },
@@ -3367,7 +3367,7 @@
         "vs_200dma": 0.003277,
         "vs_50dma": 0.141385,
         "tsmom_12m": 1,
-        "rank_universe": 0.456,
+        "rank_universe": 0.452,
         "rank_group": 0.688,
         "rs_126_vs_proxy": -0.031389
       },
@@ -3469,7 +3469,7 @@
         "vs_200dma": 0.310465,
         "vs_50dma": -0.098755,
         "tsmom_12m": 1,
-        "rank_universe": 0.845,
+        "rank_universe": 0.846,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.334956
       },
@@ -3571,7 +3571,7 @@
         "vs_200dma": 0.021678,
         "vs_50dma": 0.076902,
         "tsmom_12m": 1,
-        "rank_universe": 0.243,
+        "rank_universe": 0.24,
         "rank_group": 0.375,
         "rs_126_vs_proxy": 0.055326
       },
@@ -3673,7 +3673,7 @@
         "vs_200dma": -0.022161,
         "vs_50dma": 0.057701,
         "tsmom_12m": 1,
-        "rank_universe": 0.35,
+        "rank_universe": 0.346,
         "rank_group": 0.643,
         "rs_126_vs_proxy": null
       },
@@ -3775,7 +3775,7 @@
         "vs_200dma": 0.009368,
         "vs_50dma": 0.125704,
         "tsmom_12m": 1,
-        "rank_universe": 0.379,
+        "rank_universe": 0.375,
         "rank_group": 0.286,
         "rs_126_vs_proxy": 0.0
       },
@@ -3877,7 +3877,7 @@
         "vs_200dma": -0.003915,
         "vs_50dma": 0.120894,
         "tsmom_12m": 1,
-        "rank_universe": 0.408,
+        "rank_universe": 0.404,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.005484
       },
@@ -3979,7 +3979,7 @@
         "vs_200dma": 0.165068,
         "vs_50dma": -0.025925,
         "tsmom_12m": 1,
-        "rank_universe": 0.66,
+        "rank_universe": 0.654,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.121943
       },
@@ -4081,7 +4081,7 @@
         "vs_200dma": -0.03437,
         "vs_50dma": 0.04543,
         "tsmom_12m": 1,
-        "rank_universe": 0.33,
+        "rank_universe": 0.327,
         "rank_group": 0.571,
         "rs_126_vs_proxy": null
       },
@@ -4183,7 +4183,7 @@
         "vs_200dma": 0.144617,
         "vs_50dma": -0.089541,
         "tsmom_12m": 1,
-        "rank_universe": 0.825,
+        "rank_universe": 0.827,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.120806
       },
@@ -4285,7 +4285,7 @@
         "vs_200dma": 0.00615,
         "vs_50dma": 0.002391,
         "tsmom_12m": 1,
-        "rank_universe": 0.602,
+        "rank_universe": 0.596,
         "rank_group": 0.875,
         "rs_126_vs_proxy": -0.189704
       },
@@ -4388,7 +4388,7 @@
         "vs_50dma": -0.138045,
         "tsmom_12m": -1,
         "rank_universe": 0.087,
-        "rank_group": 0.25,
+        "rank_group": 0.2,
         "rs_126_vs_proxy": 0.489971
       },
       "setup": {
@@ -4489,7 +4489,7 @@
         "vs_200dma": 0.258209,
         "vs_50dma": -0.029605,
         "tsmom_12m": 1,
-        "rank_universe": 0.67,
+        "rank_universe": 0.663,
         "rank_group": 0.6,
         "rs_126_vs_proxy": 0.385242
       },
@@ -4591,7 +4591,7 @@
         "vs_200dma": -0.03135,
         "vs_50dma": 0.141945,
         "tsmom_12m": 1,
-        "rank_universe": 0.709,
+        "rank_universe": 0.702,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.047129
       },
@@ -4795,7 +4795,7 @@
         "vs_200dma": -0.154636,
         "vs_50dma": 0.01854,
         "tsmom_12m": -1,
-        "rank_universe": 0.039,
+        "rank_universe": 0.038,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.156206
       },
@@ -4897,7 +4897,7 @@
         "vs_200dma": 0.097276,
         "vs_50dma": 0.052586,
         "tsmom_12m": 1,
-        "rank_universe": 0.544,
+        "rank_universe": 0.538,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.07873
       },
@@ -4999,7 +4999,7 @@
         "vs_200dma": 0.114831,
         "vs_50dma": -0.169813,
         "tsmom_12m": 1,
-        "rank_universe": 0.641,
+        "rank_universe": 0.635,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.090281
       },
@@ -5101,7 +5101,7 @@
         "vs_200dma": 0.253291,
         "vs_50dma": -0.031906,
         "tsmom_12m": 1,
-        "rank_universe": 0.689,
+        "rank_universe": 0.683,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.292052
       },
@@ -5203,7 +5203,7 @@
         "vs_200dma": 0.084598,
         "vs_50dma": 0.084512,
         "tsmom_12m": -1,
-        "rank_universe": 0.117,
+        "rank_universe": 0.115,
         "rank_group": 0.222,
         "rs_126_vs_proxy": 0.114844
       },
@@ -5407,7 +5407,7 @@
         "vs_200dma": -0.104671,
         "vs_50dma": -0.052073,
         "tsmom_12m": 1,
-        "rank_universe": 0.748,
+        "rank_universe": 0.74,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.266801
       },
@@ -5509,7 +5509,7 @@
         "vs_200dma": 0.115709,
         "vs_50dma": 0.015266,
         "tsmom_12m": 1,
-        "rank_universe": 0.427,
+        "rank_universe": 0.423,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.014399
       },
@@ -5611,8 +5611,8 @@
         "vs_200dma": 0.151648,
         "vs_50dma": 0.064024,
         "tsmom_12m": 1,
-        "rank_universe": 0.32,
-        "rank_group": 1.0,
+        "rank_universe": 0.317,
+        "rank_group": 0.8,
         "rs_126_vs_proxy": 0.05688
       },
       "setup": {
@@ -5713,7 +5713,7 @@
         "vs_200dma": -0.064913,
         "vs_50dma": 0.091691,
         "tsmom_12m": 1,
-        "rank_universe": 0.282,
+        "rank_universe": 0.279,
         "rank_group": 0.438,
         "rs_126_vs_proxy": -0.086847
       },
@@ -5815,7 +5815,7 @@
         "vs_200dma": 0.358692,
         "vs_50dma": 0.072401,
         "tsmom_12m": 1,
-        "rank_universe": 0.961,
+        "rank_universe": 0.962,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.040284
       },
@@ -5917,7 +5917,7 @@
         "vs_200dma": 0.083121,
         "vs_50dma": -0.042499,
         "tsmom_12m": 1,
-        "rank_universe": 0.592,
+        "rank_universe": 0.587,
         "rank_group": 0.35,
         "rs_126_vs_proxy": -0.184371
       },
@@ -6019,7 +6019,7 @@
         "vs_200dma": 0.337105,
         "vs_50dma": -0.190643,
         "tsmom_12m": 1,
-        "rank_universe": 0.883,
+        "rank_universe": 0.885,
         "rank_group": 0.85,
         "rs_126_vs_proxy": 0.418558
       },
@@ -6080,6 +6080,108 @@
         }
       }
     },
+    "MRNA": {
+      "ticker": "MRNA",
+      "group": "Other equities",
+      "proxy": "SPY",
+      "bars": 1934,
+      "first_date": "2018-12-07",
+      "last_date": "2026-08-19",
+      "close": 154.39,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.3223,
+        "r2_vs_null_pct": 40,
+        "vr": 0.3921,
+        "cross_rate": 8.45,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 7.9748,
+        "macd_signal": 1.3292,
+        "macd_hist": 6.6455,
+        "macd_hist_prev": 0.9173,
+        "rsi": 90.86,
+        "mfi": 94.06,
+        "vpvma": 249.178481,
+        "vpvma_signal": 15.789111
+      },
+      "momentum": {
+        "mom_12_1": 1.123887,
+        "mom_6_1": 0.280258,
+        "ret_12m": 4.496262,
+        "ret_3m": 2.376859,
+        "ret_1m": 1.587831,
+        "dist_52w_high": 0.0,
+        "dist_52w_low": 5.90474,
+        "vs_200dma": 2.250667,
+        "vs_50dma": 1.43099,
+        "tsmom_12m": 1,
+        "rank_universe": 0.769,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": 1.932288
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.2113,
+        "swing": "mixed",
+        "close_pos_20": 0.514,
+        "atr_pct": 6.84,
+        "atr_pct_rank_1y": 0.782,
+        "vol_state": "normal",
+        "ud_vol_50d": 2.9,
+        "vol_10v50": 2.03,
+        "rvol": 15.18,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.6912,
+          "buy_hold_return": 7.3005,
+          "excess_vs_hold": -6.6093,
+          "beat_hold": false,
+          "n_trades": 67,
+          "win_rate": 0.388
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.2809,
+          "buy_hold_return": 7.3005,
+          "excess_vs_hold": -7.0196,
+          "beat_hold": false,
+          "n_trades": 8,
+          "win_rate": 0.375
+        },
+        "macd_rsi": {
+          "strategy_return": 9.4813,
+          "buy_hold_return": 7.3005,
+          "excess_vs_hold": 2.1808,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 7.3005,
+          "excess_vs_hold": -7.3005,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.6248,
+          "buy_hold_return": 7.3005,
+          "excess_vs_hold": -6.6757,
+          "beat_hold": false,
+          "n_trades": 107,
+          "win_rate": 0.402
+        }
+      }
+    },
     "MRVL": {
       "ticker": "MRVL",
       "group": "Semiconductors: compute, design, analog/power",
@@ -6121,7 +6223,7 @@
         "vs_200dma": 0.512525,
         "vs_50dma": -0.082838,
         "tsmom_12m": 1,
-        "rank_universe": 0.864,
+        "rank_universe": 0.865,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.956748
       },
@@ -6325,7 +6427,7 @@
         "vs_200dma": 0.680767,
         "vs_50dma": 0.114871,
         "tsmom_12m": 1,
-        "rank_universe": 0.854,
+        "rank_universe": 0.856,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.822003
       },
@@ -6427,7 +6529,7 @@
         "vs_200dma": 0.097675,
         "vs_50dma": 0.16378,
         "tsmom_12m": 1,
-        "rank_universe": 0.417,
+        "rank_universe": 0.413,
         "rank_group": 0.562,
         "rs_126_vs_proxy": 0.073373
       },
@@ -6529,7 +6631,7 @@
         "vs_200dma": 0.105819,
         "vs_50dma": -0.100526,
         "tsmom_12m": 1,
-        "rank_universe": 0.835,
+        "rank_universe": 0.837,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.017962
       },
@@ -6733,7 +6835,7 @@
         "vs_200dma": 0.126276,
         "vs_50dma": 0.061857,
         "tsmom_12m": 1,
-        "rank_universe": 0.233,
+        "rank_universe": 0.231,
         "rank_group": 0.1,
         "rs_126_vs_proxy": -0.149301
       },
@@ -6835,8 +6937,8 @@
         "vs_200dma": -0.016186,
         "vs_50dma": -0.033799,
         "tsmom_12m": -1,
-        "rank_universe": 0.136,
-        "rank_group": 0.75,
+        "rank_universe": 0.135,
+        "rank_group": 0.6,
         "rs_126_vs_proxy": -0.150499
       },
       "setup": {
@@ -6937,7 +7039,7 @@
         "vs_200dma": 0.032318,
         "vs_50dma": -0.151171,
         "tsmom_12m": 1,
-        "rank_universe": 0.631,
+        "rank_universe": 0.625,
         "rank_group": 0.45,
         "rs_126_vs_proxy": 0.145916
       },
@@ -7039,7 +7141,7 @@
         "vs_200dma": -0.091252,
         "vs_50dma": 0.014601,
         "tsmom_12m": 1,
-        "rank_universe": 0.437,
+        "rank_universe": 0.433,
         "rank_group": 0.625,
         "rs_126_vs_proxy": -0.058117
       },
@@ -7141,7 +7243,7 @@
         "vs_200dma": 0.670617,
         "vs_50dma": 0.132741,
         "tsmom_12m": 1,
-        "rank_universe": 0.728,
+        "rank_universe": 0.721,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.816668
       },
@@ -7243,7 +7345,7 @@
         "vs_200dma": 0.68156,
         "vs_50dma": -0.064609,
         "tsmom_12m": 1,
-        "rank_universe": 0.786,
+        "rank_universe": 0.788,
         "rank_group": 0.65,
         "rs_126_vs_proxy": 1.157114
       },
@@ -7345,7 +7447,7 @@
         "vs_200dma": 0.058599,
         "vs_50dma": -0.172876,
         "tsmom_12m": 1,
-        "rank_universe": 0.563,
+        "rank_universe": 0.558,
         "rank_group": 0.3,
         "rs_126_vs_proxy": -0.077289
       },
@@ -7447,7 +7549,7 @@
         "vs_200dma": 0.101297,
         "vs_50dma": 0.006347,
         "tsmom_12m": 1,
-        "rank_universe": 0.359,
+        "rank_universe": 0.356,
         "rank_group": 0.444,
         "rs_126_vs_proxy": 0.058606
       },
@@ -7549,7 +7651,7 @@
         "vs_200dma": 0.184724,
         "vs_50dma": -0.004564,
         "tsmom_12m": 1,
-        "rank_universe": 0.534,
+        "rank_universe": 0.529,
         "rank_group": 0.611,
         "rs_126_vs_proxy": 0.163933
       },
@@ -7651,8 +7753,8 @@
         "vs_200dma": -0.107728,
         "vs_50dma": -0.092253,
         "tsmom_12m": -1,
-        "rank_universe": 0.107,
-        "rank_group": 0.5,
+        "rank_universe": 0.106,
+        "rank_group": 0.4,
         "rs_126_vs_proxy": 0.005968
       },
       "setup": {
@@ -7753,7 +7855,7 @@
         "vs_200dma": -0.003924,
         "vs_50dma": 0.113209,
         "tsmom_12m": 1,
-        "rank_universe": 0.223,
+        "rank_universe": 0.221,
         "rank_group": 0.312,
         "rs_126_vs_proxy": -0.065489
       },
@@ -7855,7 +7957,7 @@
         "vs_200dma": 0.023658,
         "vs_50dma": 0.140068,
         "tsmom_12m": 1,
-        "rank_universe": 0.388,
+        "rank_universe": 0.385,
         "rank_group": 0.429,
         "rs_126_vs_proxy": 0.020447
       },
@@ -7957,7 +8059,7 @@
         "vs_200dma": 0.108367,
         "vs_50dma": 0.050117,
         "tsmom_12m": 1,
-        "rank_universe": 0.184,
+        "rank_universe": 0.183,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.032255
       },
@@ -8059,7 +8161,7 @@
         "vs_200dma": 0.020539,
         "vs_50dma": 0.126952,
         "tsmom_12m": 1,
-        "rank_universe": 0.34,
+        "rank_universe": 0.337,
         "rank_group": 0.143,
         "rs_126_vs_proxy": 0.0202
       },
@@ -8161,7 +8263,7 @@
         "vs_200dma": 0.110627,
         "vs_50dma": 0.179149,
         "tsmom_12m": 1,
-        "rank_universe": 0.126,
+        "rank_universe": 0.125,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.024908
       },
@@ -8263,7 +8365,7 @@
         "vs_200dma": -0.10448,
         "vs_50dma": 0.033921,
         "tsmom_12m": 1,
-        "rank_universe": 0.553,
+        "rank_universe": 0.548,
         "rank_group": 0.786,
         "rs_126_vs_proxy": null
       },
@@ -8365,7 +8467,7 @@
         "vs_200dma": 0.098964,
         "vs_50dma": 0.017311,
         "tsmom_12m": 1,
-        "rank_universe": 0.204,
+        "rank_universe": 0.202,
         "rank_group": 0.2,
         "rs_126_vs_proxy": -0.183979
       },
@@ -8467,7 +8569,7 @@
         "vs_200dma": 0.000585,
         "vs_50dma": 0.099198,
         "tsmom_12m": 1,
-        "rank_universe": 0.447,
+        "rank_universe": 0.442,
         "rank_group": 0.714,
         "rs_126_vs_proxy": 0.012771
       },
@@ -8569,7 +8671,7 @@
         "vs_200dma": -0.016373,
         "vs_50dma": 0.086858,
         "tsmom_12m": 1,
-        "rank_universe": 0.476,
+        "rank_universe": 0.471,
         "rank_group": 0.857,
         "rs_126_vs_proxy": 0.002899
       },
@@ -8671,7 +8773,7 @@
         "vs_200dma": -0.106558,
         "vs_50dma": 0.03472,
         "tsmom_12m": 1,
-        "rank_universe": 0.505,
+        "rank_universe": 0.5,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.024604
       },
@@ -8773,7 +8875,7 @@
         "vs_200dma": 0.227443,
         "vs_50dma": -0.035631,
         "tsmom_12m": 1,
-        "rank_universe": 0.718,
+        "rank_universe": 0.712,
         "rank_group": 0.889,
         "rs_126_vs_proxy": 0.23747
       },
@@ -8977,7 +9079,7 @@
         "vs_200dma": 0.272603,
         "vs_50dma": -0.052837,
         "tsmom_12m": 1,
-        "rank_universe": 0.767,
+        "rank_universe": 0.76,
         "rank_group": 0.944,
         "rs_126_vs_proxy": 0.329641
       },
@@ -9079,7 +9181,7 @@
         "vs_200dma": 0.086603,
         "vs_50dma": 0.02349,
         "tsmom_12m": 1,
-        "rank_universe": 0.272,
+        "rank_universe": 0.269,
         "rank_group": 0.389,
         "rs_126_vs_proxy": 0.0
       },
@@ -9181,7 +9283,7 @@
         "vs_200dma": 0.171222,
         "vs_50dma": 0.109586,
         "tsmom_12m": 1,
-        "rank_universe": 0.524,
+        "rank_universe": 0.519,
         "rank_group": 0.812,
         "rs_126_vs_proxy": 0.378457
       },
@@ -9283,7 +9385,7 @@
         "vs_200dma": -0.065092,
         "vs_50dma": 0.042959,
         "tsmom_12m": 1,
-        "rank_universe": 0.175,
+        "rank_universe": 0.173,
         "rank_group": 0.125,
         "rs_126_vs_proxy": -0.022209
       },
@@ -9385,7 +9487,7 @@
         "vs_200dma": 0.253795,
         "vs_50dma": 0.036878,
         "tsmom_12m": 1,
-        "rank_universe": 0.495,
+        "rank_universe": 0.49,
         "rank_group": 0.556,
         "rs_126_vs_proxy": 0.268454
       },
@@ -9487,7 +9589,7 @@
         "vs_200dma": 0.133616,
         "vs_50dma": -0.026922,
         "tsmom_12m": 1,
-        "rank_universe": 0.65,
+        "rank_universe": 0.644,
         "rank_group": 0.55,
         "rs_126_vs_proxy": -0.183948
       },
@@ -9589,7 +9691,7 @@
         "vs_200dma": 0.168927,
         "vs_50dma": -0.065877,
         "tsmom_12m": 1,
-        "rank_universe": 0.515,
+        "rank_universe": 0.51,
         "rank_group": 0.25,
         "rs_126_vs_proxy": -0.12844
       },
@@ -9691,7 +9793,7 @@
         "vs_200dma": 0.054202,
         "vs_50dma": 0.138426,
         "tsmom_12m": 1,
-        "rank_universe": 0.214,
+        "rank_universe": 0.212,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.05402
       },
@@ -9793,7 +9895,7 @@
         "vs_200dma": 0.20066,
         "vs_50dma": -0.027133,
         "tsmom_12m": 1,
-        "rank_universe": 0.612,
+        "rank_universe": 0.606,
         "rank_group": 0.778,
         "rs_126_vs_proxy": 0.209404
       },
@@ -9895,7 +9997,7 @@
         "vs_200dma": 0.042595,
         "vs_50dma": 0.009576,
         "tsmom_12m": 1,
-        "rank_universe": 0.252,
+        "rank_universe": 0.25,
         "rank_group": 0.286,
         "rs_126_vs_proxy": null
       },
@@ -9997,7 +10099,7 @@
         "vs_200dma": 0.085919,
         "vs_50dma": 0.0226,
         "tsmom_12m": 1,
-        "rank_universe": 0.262,
+        "rank_universe": 0.26,
         "rank_group": 0.357,
         "rs_126_vs_proxy": null
       },
@@ -10099,7 +10201,7 @@
         "vs_200dma": -0.007092,
         "vs_50dma": 0.03515,
         "tsmom_12m": 1,
-        "rank_universe": 0.146,
+        "rank_universe": 0.144,
         "rank_group": 0.214,
         "rs_126_vs_proxy": null
       },
@@ -10201,7 +10303,7 @@
         "vs_200dma": 0.086143,
         "vs_50dma": 0.014479,
         "tsmom_12m": 1,
-        "rank_universe": 0.291,
+        "rank_universe": 0.288,
         "rank_group": 0.429,
         "rs_126_vs_proxy": null
       },
@@ -10303,7 +10405,7 @@
         "vs_200dma": 0.188092,
         "vs_50dma": -0.058086,
         "tsmom_12m": 1,
-        "rank_universe": 0.806,
+        "rank_universe": 0.808,
         "rank_group": 1.0,
         "rs_126_vs_proxy": null
       },
@@ -10405,7 +10507,7 @@
         "vs_200dma": 0.130632,
         "vs_50dma": -0.024482,
         "tsmom_12m": 1,
-        "rank_universe": 0.573,
+        "rank_universe": 0.567,
         "rank_group": 0.857,
         "rs_126_vs_proxy": null
       },
@@ -10507,7 +10609,7 @@
         "vs_200dma": 0.255954,
         "vs_50dma": -0.046951,
         "tsmom_12m": 1,
-        "rank_universe": 0.738,
+        "rank_universe": 0.731,
         "rank_group": 0.929,
         "rs_126_vs_proxy": null
       },
@@ -10609,7 +10711,7 @@
         "vs_200dma": -0.144052,
         "vs_50dma": -0.064803,
         "tsmom_12m": 1,
-        "rank_universe": 0.311,
+        "rank_universe": 0.308,
         "rank_group": 0.5,
         "rs_126_vs_proxy": null
       },

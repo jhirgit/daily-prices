@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-19T04:14:19Z",
+  "generated_at": "2026-08-19T18:57:49Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
-  "count": 111,
+  "count": 112,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -932,6 +932,21 @@
       "spot_captured_at": "2026-08-18T22:26:10Z",
       "currency": "USD",
       "dma200": 16.9695,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "MRNA",
+      "date": "2026-08-19",
+      "open": 116.245,
+      "high": 163.47,
+      "low": 114.46,
+      "close": 154.39,
+      "adj_close": 154.39,
+      "volume": 156343124,
+      "spot_price": 154.39,
+      "spot_captured_at": "2026-08-19T18:57:45Z",
+      "currency": "USD",
+      "dma200": 47.4949,
       "dma200_n": 200
     },
     {
