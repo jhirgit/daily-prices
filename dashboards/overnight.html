@@ -1,0 +1,194 @@
+<title>Overnight Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#0b0e13; --surface:#141922; --surface-2:#1b212c;
+  --ink:#e9edf3; --muted:#94a0b0; --faint:#6b7686;
+  --line:#232a35; --line-strong:#313a48;
+  --accent:#38d2df;
+  --up:#3fd39b; --up-soft:#3fd39b1c;
+  --dn:#ff6f61; --dn-soft:#ff6f611c;
+  --flat:#8b95a5;
+  --warn:#f0b45e; --warn-soft:#f0b45e18;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.32);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 64px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* header */
+header{padding:34px 0 18px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 24px;justify-content:space-between}
+.htitle .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.htitle h1{margin:0;font-size:2rem;font-weight:700;letter-spacing:-.02em}
+.hmeta{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);line-height:1.7}
+.hmeta b{color:var(--ink);font-weight:600}
+.hmeta .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--up);margin-right:5px;vertical-align:middle}
+.hmeta .dot.stale{background:var(--warn)}
+
+/* status banner */
+.banner{display:none;gap:12px;align-items:flex-start;margin:6px 0 22px;padding:14px 16px;border-radius:11px;background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 26%,transparent)}
+.banner.show{display:flex}
+.banner .ic{color:var(--warn);font-family:"IBM Plex Mono",monospace;font-weight:700}
+.banner p{margin:0;font-size:.9rem;color:var(--ink);line-height:1.5}
+
+/* movers strip */
+.movers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:26px}
+.movecard{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow);padding:16px 18px}
+.movecard .lab{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.movecard.up .lab{color:var(--up)} .movecard.dn .lab{color:var(--dn)}
+.moverow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0}
+.moverow .nm{font-size:.88rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.moverow .pc{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.92rem;flex:none}
+
+/* group board */
+.group{margin-bottom:8px}
+.ghead{display:flex;align-items:center;gap:12px;margin:22px 0 6px}
+.ghead h2{margin:0;font-size:.82rem;font-family:"IBM Plex Mono",monospace;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ghead .hint{font-size:11px;color:var(--faint)}
+.ghead .hr{flex:1;height:1px;background:var(--line)}
+.rows{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.row{display:grid;grid-template-columns:1fr 118px 96px;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .name{font-size:.95rem;color:var(--ink)}
+.row .name .tk{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--faint);margin-left:8px}
+.row .price{font-family:"IBM Plex Mono",monospace;font-size:.9rem;color:var(--muted);text-align:right}
+.row .chg{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.chip{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.9rem;padding:3px 9px;border-radius:6px;min-width:74px;text-align:right}
+.chip.up{color:var(--up);background:var(--up-soft)} .chip.dn{color:var(--dn);background:var(--dn-soft)} .chip.flat{color:var(--flat);background:var(--surface-2)}
+.chip.na{color:var(--faint);background:transparent;font-weight:400}
+/* magnitude bar under name */
+.bar{grid-column:1 / -1;height:3px;border-radius:2px;background:var(--surface-2);margin-top:-6px;position:relative;overflow:hidden;display:none}
+footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--faint);line-height:1.7}
+.empty{padding:60px 20px;text-align:center;color:var(--muted)}
+@media (max-width:620px){
+  .movers{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr 92px 84px}
+  header{align-items:flex-start}
+  .hmeta{text-align:left}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="htitle">
+      <div class="eyebrow">Global Markets · Pre-Open</div>
+      <h1>Overnight</h1>
+    </div>
+    <div class="hmeta" id="meta">loading…</div>
+  </header>
+
+  <div class="banner" id="banner"><span class="ic">!</span><p id="banner-text"></p></div>
+
+  <div class="movers" id="movers" hidden>
+    <div class="movecard up"><div class="lab">Leading &mdash; overnight gainers</div><div id="mv-up"></div></div>
+    <div class="movecard dn"><div class="lab">Lagging &mdash; overnight decliners</div><div id="mv-dn"></div></div>
+  </div>
+
+  <div id="board"><div class="empty">Loading overnight board…</div></div>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+// Points at the committed snapshot. After the Overnight workflow lands on main
+// this is the live morning board; on a branch, swap main -> branch name to preview.
+const DATA_URL = "https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/overnight.json";
+
+const HINTS = {
+  "US overnight (futures)":"live vs prior settle",
+  "Asia (closed)":"completed session",
+  "Europe (open)":"session so far",
+  "Rates / FX / Commodities":"vs prior close",
+  "Crypto (24h)":"trailing 24h",
+};
+const fmtPrice = v => v==null ? "—" : v.toLocaleString("en-US",{maximumFractionDigits: v>=1000?0 : v>=1?2:4});
+const fmtPct = v => (v>0?"+":"") + v.toFixed(2) + "%";
+const cls = v => v==null ? "na" : v>0.049 ? "up" : v<-0.049 ? "dn" : "flat";
+
+function agoText(iso){
+  if(!iso) return "";
+  const t = new Date(iso), now = new Date(), m = Math.round((now-t)/60000);
+  if (isNaN(m)) return "";
+  if (m < 60) return m + "m ago";
+  const h = Math.floor(m/60); if (h < 24) return h + "h ago";
+  return Math.floor(h/24) + "d ago";
+}
+
+async function load(){
+  let d;
+  try{
+    const r = await fetch(DATA_URL + "?nocache=" + Date.now(), {cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    d = await r.json();
+  }catch(e){
+    document.getElementById("board").innerHTML =
+      '<div class="empty">No snapshot yet &mdash; the Overnight workflow publishes <code>data/overnight.json</code> each weekday morning once it is live on <b>main</b>.<br><br><span class="mono" style="font-size:11px">'+String(e)+'</span></div>';
+    document.getElementById("meta").textContent = "no data";
+    return;
+  }
+  render(d);
+}
+
+function render(d){
+  const seed = d.status === "seed";
+  const gen = d.generated_at;
+  document.getElementById("meta").innerHTML =
+    '<span class="dot'+(seed?' stale':'')+'"></span>'+(seed?"seed":"live")+
+    '<br><b>'+ (gen? gen.replace("T"," ").replace("Z"," UTC") : "—") +'</b>'+
+    '<br>'+ agoText(gen);
+
+  if (seed || d.status_note){
+    const b = document.getElementById("banner");
+    b.classList.add("show");
+    document.getElementById("banner-text").innerHTML =
+      (seed?"<b>Seed snapshot.</b> ":"") + (d.status_note || "");
+  }
+
+  // flatten for movers
+  const all = [];
+  (d.groups||[]).forEach(g => (g.items||[]).forEach(i => { if(i.pct!=null) all.push(i); }));
+  const up = [...all].sort((a,b)=>b.pct-a.pct).slice(0,3);
+  const dn = [...all].sort((a,b)=>a.pct-b.pct).slice(0,3);
+  if (all.length){
+    document.getElementById("movers").hidden = false;
+    document.getElementById("mv-up").innerHTML = up.map(moverRow).join("") || emptyMover();
+    document.getElementById("mv-dn").innerHTML = dn.map(moverRow).join("") || emptyMover();
+  }
+
+  const board = document.getElementById("board");
+  board.innerHTML = (d.groups||[]).map(g => {
+    const rows = (g.items||[]).map(i => {
+      const c = cls(i.pct);
+      return '<div class="row">'
+        + '<div class="name">'+i.name+'<span class="tk">'+i.ticker+'</span></div>'
+        + '<div class="price tnum">'+fmtPrice(i.last)+'</div>'
+        + '<div class="chg"><span class="chip '+c+' tnum">'+(i.pct==null?"—":fmtPct(i.pct))+'</span></div>'
+        + '</div>';
+    }).join("");
+    return '<div class="group"><div class="ghead"><h2>'+g.group+'</h2>'
+      + '<span class="hint">'+(HINTS[g.group]||"")+'</span><span class="hr"></span></div>'
+      + '<div class="rows">'+rows+'</div></div>';
+  }).join("");
+
+  document.getElementById("foot").innerHTML =
+    "Source: "+(d.source||"—")+" &nbsp;·&nbsp; "+(d.note||"")+
+    "<br>Not investment advice · marks are delayed and for review only.";
+}
+
+function moverRow(i){
+  return '<div class="moverow"><span class="nm">'+i.name+'</span>'
+    + '<span class="pc" style="color:'+(i.pct>0?"var(--up)":i.pct<0?"var(--dn)":"var(--flat)")+'">'
+    + fmtPct(i.pct)+'</span></div>';
+}
+function emptyMover(){ return '<div class="moverow"><span class="nm" style="color:var(--faint)">—</span></div>'; }
+
+load();
+</script>
