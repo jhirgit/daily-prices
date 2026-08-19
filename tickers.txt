@@ -126,7 +126,10 @@ ETHA       # Ethereum ETF
 ^GSPC      # S&P 500 index
 ^IXIC      # Nasdaq Composite
 ^SOX       # PHLX Semiconductor
-^KS11      # KOSPI
+^KS11      # KOSPI (Korea)
+^FTSE      # FTSE 100 (London session proxy)
+^N225      # Nikkei 225 (Tokyo/Asia session proxy)
+^HSI       # Hang Seng (Hong Kong/Asia session proxy)
 ^VIX       # volatility
 GLD        # gold
 GC=F       # gold futures
