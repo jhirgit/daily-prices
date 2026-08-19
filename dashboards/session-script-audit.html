@@ -1,0 +1,508 @@
+<title>The Session Script Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root{
+  --bg:#eef0f3; --surface:#ffffff; --surface-2:#f6f7f9;
+  --ink:#141922; --muted:#5b6472; --faint:#8b95a5;
+  --line:#e1e4e9; --line-strong:#cfd4dc;
+  --accent:#0c7a84; --accent-soft:#0c7a8418;
+  --pass:#12795b; --pass-soft:#12795b18;
+  --fail:#c02f24; --fail-soft:#c02f2416;
+  --weak:#a56a06; --weak-soft:#a56a0618;
+  --shadow:0 1px 2px rgba(20,25,34,.06),0 8px 24px rgba(20,25,34,.05);
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0e13; --surface:#141922; --surface-2:#1b212c;
+    --ink:#e9edf3; --muted:#94a0b0; --faint:#6b7686;
+    --line:#232a35; --line-strong:#313a48;
+    --accent:#38d2df; --accent-soft:#38d2df1f;
+    --pass:#40d69d; --pass-soft:#40d69d1c;
+    --fail:#ff6f61; --fail-soft:#ff6f611c;
+    --weak:#f0b45e; --weak-soft:#f0b45e18;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0e13; --surface:#141922; --surface-2:#1b212c;
+  --ink:#e9edf3; --muted:#94a0b0; --faint:#6b7686;
+  --line:#232a35; --line-strong:#313a48;
+  --accent:#38d2df; --accent-soft:#38d2df1f;
+  --pass:#40d69d; --pass-soft:#40d69d1c;
+  --fail:#ff6f61; --fail-soft:#ff6f611c;
+  --weak:#f0b45e; --weak-soft:#f0b45e18;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  font-size:16px; line-height:1.55; letter-spacing:-.003em;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3{text-wrap:balance; margin:0}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:0}
+
+/* eyebrow */
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
+}
+.eyebrow.muted{color:var(--faint)}
+
+/* header */
+header{padding:64px 0 20px}
+.kicker-row{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-bottom:26px}
+.provenance{
+  display:inline-flex;gap:8px;align-items:center;font-family:"IBM Plex Mono",monospace;
+  font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:100px;
+  padding:5px 12px;background:var(--surface)
+}
+.provenance b{color:var(--ink);font-weight:600}
+header h1{
+  font-size:clamp(2.5rem,6.5vw,4.4rem); line-height:1.02; font-weight:700;
+  letter-spacing:-.03em; margin:0 0 18px;
+}
+header h1 .thin{font-weight:400;color:var(--muted)}
+.dek{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--muted);max-width:60ch;line-height:1.5}
+
+/* verdict banner */
+.verdict{
+  margin:40px 0 8px; border:1px solid var(--line); border-radius:16px;
+  background:var(--surface); box-shadow:var(--shadow); overflow:hidden;
+  display:grid; grid-template-columns:1.15fr 1fr;
+}
+.verdict .quote{padding:32px 34px; border-right:1px solid var(--line)}
+.verdict .quote .src{margin-bottom:14px}
+.verdict blockquote{
+  margin:0; font-family:"IBM Plex Serif",Georgia,serif; font-size:1.18rem;
+  line-height:1.5; color:var(--ink);
+}
+.verdict blockquote .em{font-style:italic;color:var(--muted)}
+.verdict .rule{
+  margin-top:18px;padding-top:14px;border-top:1px dashed var(--line-strong);
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);line-height:1.6
+}
+.verdict .call{
+  padding:32px 34px; display:flex; flex-direction:column; justify-content:center;
+  gap:14px; background:var(--fail-soft);
+}
+.stamp{
+  align-self:flex-start; font-family:"IBM Plex Mono",monospace; font-weight:600;
+  font-size:13px; letter-spacing:.05em; text-transform:uppercase; color:var(--fail);
+  border:1.5px solid var(--fail); border-radius:8px; padding:8px 14px;
+}
+.verdict .call h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.verdict .call p{margin:0;color:var(--muted);font-size:.97rem}
+
+/* section scaffolding */
+section{padding:40px 0}
+.sec-head{margin-bottom:26px}
+.sec-head h2{font-size:1.7rem;font-weight:700;letter-spacing:-.02em;margin:8px 0 6px}
+.sec-head p{margin:0;color:var(--muted);max-width:64ch}
+
+/* base-rate explainer */
+.explain{
+  border:1px solid var(--line);border-radius:16px;background:var(--surface);
+  box-shadow:var(--shadow);padding:30px 32px;display:grid;grid-template-columns:1fr 1fr;gap:0
+}
+.explain .col{padding:0 26px}
+.explain .col:first-child{border-right:1px solid var(--line);padding-left:0}
+.explain .col:last-child{padding-right:0}
+.explain .lab{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.explain .big{font-size:2.9rem;font-weight:700;letter-spacing:-.03em;line-height:1}
+.explain .big.claim{color:var(--ink)}
+.explain .big.truth{color:var(--fail)}
+.explain .sub{margin-top:8px;color:var(--muted);font-size:.95rem;line-height:1.5}
+.explain .sub b{color:var(--ink);font-weight:600}
+
+/* scorecards */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{
+  border:1px solid var(--line);border-radius:14px;background:var(--surface);
+  box-shadow:var(--shadow);padding:24px 24px 22px;display:flex;flex-direction:column;gap:16px
+}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card .sc-id{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--faint);letter-spacing:.08em}
+.card h3{font-size:1.12rem;font-weight:600;letter-spacing:-.01em;margin-top:4px;line-height:1.25}
+.card .says{color:var(--muted);font-size:.92rem;margin-top:6px;line-height:1.5}
+.card .says b{color:var(--ink);font-weight:600}
+.pill{
+  flex:none;font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:100px;white-space:nowrap
+}
+.pill.fail{color:var(--fail);background:var(--fail-soft);border:1px solid color-mix(in srgb,var(--fail) 30%,transparent)}
+.pill.weak{color:var(--weak);background:var(--weak-soft);border:1px solid color-mix(in srgb,var(--weak) 30%,transparent)}
+.pill.pass{color:var(--pass);background:var(--pass-soft);border:1px solid color-mix(in srgb,var(--pass) 30%,transparent)}
+
+/* bar comparo */
+.bars{display:flex;flex-direction:column;gap:11px;margin-top:2px}
+.barrow{display:grid;grid-template-columns:78px 1fr 64px;align-items:center;gap:12px}
+.barrow .rl{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.02em}
+.track{position:relative;height:20px;background:var(--surface-2);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:5px 0 0 5px}
+.fill.measured{background:var(--accent)}
+.fill.base{background:color-mix(in srgb,var(--faint) 55%,transparent)}
+.barrow .val{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;text-align:right;color:var(--ink)}
+.excess{
+  display:flex;align-items:center;gap:8px;margin-top:4px;padding-top:12px;border-top:1px dashed var(--line);
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted)
+}
+.excess .delta{font-weight:600}
+.excess .delta.neg{color:var(--fail)}
+.excess .delta.flat{color:var(--weak)}
+.excess .p{margin-left:auto;color:var(--faint)}
+
+/* robustness table */
+.tablewrap{border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:520px}
+thead th{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);font-weight:500;text-align:right;padding:16px 18px;border-bottom:1px solid var(--line)
+}
+thead th:first-child{text-align:left}
+tbody td{padding:14px 18px;text-align:right;border-bottom:1px solid var(--line);font-family:"IBM Plex Mono",monospace}
+tbody td:first-child{text-align:left;font-family:"IBM Plex Sans",sans-serif;font-weight:500}
+tbody tr:last-child td{border-bottom:0}
+.neg{color:var(--fail);font-weight:600}
+.flat{color:var(--weak);font-weight:600}
+.cap{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--faint);margin-top:12px;line-height:1.5}
+
+/* the real signal */
+.signal{
+  border:1px solid color-mix(in srgb,var(--accent) 32%,var(--line));
+  border-radius:16px;background:
+    linear-gradient(180deg,var(--accent-soft),transparent 60%),var(--surface);
+  box-shadow:var(--shadow);padding:32px 34px;display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center
+}
+.signal .txt h3{font-size:1.35rem;font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+.signal .txt p{margin:0 0 12px;color:var(--muted)}
+.signal .txt p b{color:var(--ink)}
+.signal .txt .tag{color:var(--accent);font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.gapchart{display:flex;flex-direction:column;gap:14px}
+.gapbar{display:flex;flex-direction:column;gap:6px}
+.gapbar .gl{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+.gapbar .gl .gv{color:var(--ink);font-weight:600}
+.gtrack{height:26px;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;overflow:hidden;position:relative}
+.gfill{height:100%;border-radius:6px 0 0 6px}
+.gfill.up{background:var(--pass)}
+.gfill.dn{background:var(--fail)}
+.g50{position:absolute;top:-6px;bottom:-6px;left:50%;width:2px;background:var(--line-strong)}
+.gapnote{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--faint);text-align:center;margin-top:2px}
+
+/* literature */
+.lit{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.paper{border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);padding:22px 24px;display:flex;flex-direction:column;gap:10px}
+.paper .badge{align-self:flex-start;font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:6px}
+.paper .badge.supports{color:var(--weak);background:var(--weak-soft)}
+.paper .badge.vol{color:var(--accent);background:var(--accent-soft)}
+.paper .badge.against{color:var(--fail);background:var(--fail-soft)}
+.paper cite{font-style:normal;font-weight:600;font-size:1rem;line-height:1.3;color:var(--ink)}
+.paper .meta{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--faint)}
+.paper p{margin:0;font-size:.92rem;color:var(--muted);line-height:1.5}
+
+/* bottom line */
+.bottom{border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow);padding:34px;display:flex;flex-direction:column;gap:18px}
+.bottom h2{font-size:1.55rem;font-weight:700;letter-spacing:-.02em}
+.bl-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:4px}
+.bl-item{padding:18px 20px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.bl-item .n{font-family:"IBM Plex Mono",monospace;font-size:1.9rem;font-weight:700;letter-spacing:-.02em;line-height:1}
+.bl-item .n.fail{color:var(--fail)} .bl-item .n.pass{color:var(--pass)} .bl-item .n.weak{color:var(--weak)}
+.bl-item .t{margin-top:8px;font-size:.9rem;color:var(--muted);line-height:1.45}
+.flag{
+  display:flex;gap:14px;align-items:flex-start;padding:20px 22px;border-radius:12px;
+  background:var(--fail-soft);border:1px solid color-mix(in srgb,var(--fail) 22%,transparent)
+}
+.flag .ic{font-family:"IBM Plex Mono",monospace;font-weight:700;color:var(--fail);font-size:1.1rem;line-height:1.4}
+.flag p{margin:0;font-size:.95rem;color:var(--ink);line-height:1.55}
+.flag p b{color:var(--fail)}
+
+/* methodology */
+.method{display:grid;grid-template-columns:1fr 1fr;gap:28px 44px}
+.method .blk h4{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;font-weight:600}
+.method .blk p{margin:0 0 10px;font-size:.9rem;color:var(--muted);line-height:1.55}
+.method .blk p b{color:var(--ink);font-weight:600}
+.method code{font-family:"IBM Plex Mono",monospace;font-size:.84em;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--ink)}
+
+footer{padding:44px 0 72px;border-top:1px solid var(--line);margin-top:20px}
+footer .fl{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--faint)}
+footer .dis{margin-top:18px;font-size:12px;color:var(--faint);max-width:80ch;line-height:1.6}
+
+@media (max-width:760px){
+  .verdict,.explain,.cards,.signal,.lit,.bl-grid,.method{grid-template-columns:1fr}
+  .verdict .quote{border-right:0;border-bottom:1px solid var(--line)}
+  .explain .col:first-child{border-right:0;border-bottom:1px solid var(--line);padding:0 0 22px}
+  .explain .col{padding:22px 0 0}
+  .explain .col:last-child{padding-top:22px}
+  .signal{gap:24px}
+  header{padding:44px 0 12px}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker-row">
+    <span class="eyebrow">Session Script · Forensic Audit</span>
+    <span class="provenance mono">10Y &nbsp;·&nbsp; <b>2016&ndash;2026</b></span>
+    <span class="provenance mono">Nikkei · FTSE · S&amp;P&nbsp;500</span>
+    <span class="provenance mono">n&nbsp;=&nbsp;<b>2,313</b> days</span>
+  </div>
+  <h1>Does the 4&nbsp;a.m. session script <span class="thin">actually predict the day?</span></h1>
+  <p class="dek">A viral pitch claims the market writes its script overnight: if one session reverses, the next continues &mdash; a rotation so reliable it &ldquo;has done this every single day for decades.&rdquo; We tested every claim it makes against ten years of open-to-close data.</p>
+</header>
+
+<div class="verdict">
+  <div class="quote">
+    <div class="src eyebrow muted">The claim, condensed</div>
+    <blockquote>&ldquo;If the previous session <span class="em">reversed</span>, the next session <span class="em">continues</span>. If Asia reversed, London continues. If London reversed, New York continues. If no session reversed, New York is the reversal.&rdquo;</blockquote>
+    <div class="rule">Entry model: trade New York in London&rsquo;s direction.<br>Marketed result: 43% &rarr; 64% win rate · &ldquo;$30k+/month&rdquo; · <span style="color:var(--fail)">DM me &lsquo;SYSTEM&rsquo;</span></div>
+  </div>
+  <div class="call">
+    <span class="stamp">Does not hold water</span>
+    <h2>Zero of the four scenarios beat the base rate. Three fail in the <em>opposite</em> direction.</h2>
+    <p>The impressive-looking hit rates are just market drift and global co-movement. Conditioning on a &ldquo;reversal&rdquo; adds no information &mdash; and often subtracts it.</p>
+  </div>
+</div>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">The sleight of hand</span>
+    <h2>Why 56% sounds like an edge and isn&rsquo;t</h2>
+    <p>The pitch quotes a conditional hit rate but never tells you the base rate. New York &ldquo;continues&rdquo; London most days no matter what came before, because world equity markets move together and drift up. That co-movement &mdash; not the &ldquo;script&rdquo; &mdash; is the whole number.</p>
+  </div>
+  <div class="explain">
+    <div class="col">
+      <div class="lab">After a London &ldquo;reversal,&rdquo; NY continues</div>
+      <div class="big claim tnum">56.2%</div>
+      <div class="sub">The figure the story leans on. Sounds like a real tilt.</div>
+    </div>
+    <div class="col">
+      <div class="lab">But NY continues London <b>anyway</b></div>
+      <div class="big truth tnum">58.2%</div>
+      <div class="sub">Unconditional base rate. The &ldquo;signal&rdquo; day is <b>2 points worse</b> than an ordinary day &mdash; the reversal filter destroys value, it doesn&rsquo;t create it.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">The scoreboard</span>
+    <h2>Every scenario vs. the base rate it has to beat</h2>
+    <p>Each card compares the strategy&rsquo;s conditional hit rate (teal) against what happens unconditionally (grey). Only the gap between them &mdash; the excess &mdash; is real information. Bars share a 40&ndash;65% scale.</p>
+  </div>
+  <div class="cards">
+
+    <div class="card">
+      <div>
+        <div class="top">
+          <div><div class="sc-id">SCENARIO 1</div><h3>London reversal &rarr; NY continuation</h3></div>
+          <span class="pill fail">No edge</span>
+        </div>
+        <div class="says">He says: <b>continue London&rsquo;s move</b> in NY. This is the actual money trade.</div>
+      </div>
+      <div class="bars">
+        <div class="barrow"><span class="rl">Measured</span><div class="track"><div class="fill measured" style="width:64.8%"></div></div><span class="val">56.2%</span></div>
+        <div class="barrow"><span class="rl">Base rate</span><div class="track"><div class="fill base" style="width:72.8%"></div></div><span class="val">58.2%</span></div>
+      </div>
+      <div class="excess"><span>Excess: <span class="delta neg">&minus;2.0 pp</span></span><span class="p">z = &minus;1.32 · p = 0.19</span></div>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="top">
+          <div><div class="sc-id">SCENARIO 2</div><h3>No reversal &rarr; NY is the reversal</h3></div>
+          <span class="pill fail">No edge</span>
+        </div>
+        <div class="says">He says: a quiet Asia + London means NY <b>reverses</b> the trend.</div>
+      </div>
+      <div class="bars">
+        <div class="barrow"><span class="rl">Measured</span><div class="track"><div class="fill measured" style="width:2.4%"></div></div><span class="val">40.6%</span></div>
+        <div class="barrow"><span class="rl">Base rate</span><div class="track"><div class="fill base" style="width:7.2%"></div></div><span class="val">41.8%</span></div>
+      </div>
+      <div class="excess"><span>Excess: <span class="delta neg">&minus;1.2 pp</span></span><span class="p">z = &minus;0.63 · p = 0.53</span></div>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="top">
+          <div><div class="sc-id">SCENARIO 3</div><h3>Asia reversal &rarr; London &amp; NY continue</h3></div>
+          <span class="pill fail">Backfires</span>
+        </div>
+        <div class="says">His &ldquo;<b>highest-probability day.</b>&rdquo; Measured on the NY leg. It is the worst.</div>
+      </div>
+      <div class="bars">
+        <div class="barrow"><span class="rl">Measured</span><div class="track"><div class="fill measured" style="width:48.0%"></div></div><span class="val">52.0%</span></div>
+        <div class="barrow"><span class="rl">Base rate</span><div class="track"><div class="fill base" style="width:72.8%"></div></div><span class="val">58.2%</span></div>
+      </div>
+      <div class="excess"><span>Excess: <span class="delta neg">&minus;6.2 pp</span></span><span class="p">z = &minus;4.30 · p &lt; 0.0001</span></div>
+    </div>
+
+    <div class="card">
+      <div>
+        <div class="top">
+          <div><div class="sc-id">THE ENGINE</div><h3>&ldquo;After a reversal, expect continuation&rdquo;</h3></div>
+          <span class="pill fail">Backfires</span>
+        </div>
+        <div class="says">The core mechanism, tested on the full <b>Asia&rarr;London&rarr;NY</b> sign sequence.</div>
+      </div>
+      <div class="bars">
+        <div class="barrow"><span class="rl">Measured</span><div class="track"><div class="fill measured" style="width:46.8%"></div></div><span class="val">51.7%</span></div>
+        <div class="barrow"><span class="rl">Base rate</span><div class="track"><div class="fill base" style="width:57.2%"></div></div><span class="val">54.3%</span></div>
+      </div>
+      <div class="excess"><span>Excess: <span class="delta neg">&minus;2.6 pp</span></span><span class="p">z = &minus;2.92 · p = 0.0035</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Robustness · Asian markets</span>
+    <h2>Swap in any Asian market &mdash; same verdict</h2>
+    <p>The story names &ldquo;Asia&rdquo; generically. Whether Asia is represented by the Nikkei, the Hang Seng, or the KOSPI, the two headline scenarios land in the same place: no edge on Scenario 1, a consistent negative edge on Scenario 3.</p>
+  </div>
+  <div class="tablewrap">
+    <table class="tnum">
+      <thead>
+        <tr>
+          <th>Asia proxy</th><th>Days</th>
+          <th>S1 rate</th><th>vs base</th>
+          <th>S3 rate</th><th>vs base</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Nikkei 225</td><td>2,313</td><td>56.2%</td><td class="flat">&minus;2.0 pp</td><td>52.0%</td><td class="neg">&minus;6.2 pp</td></tr>
+        <tr><td>Hang Seng</td><td>2,369</td><td>57.7%</td><td class="flat">+0.1 pp</td><td>50.5%</td><td class="neg">&minus;7.2 pp</td></tr>
+        <tr><td>KOSPI</td><td>2,321</td><td>57.1%</td><td class="flat">&minus;0.6 pp</td><td>51.1%</td><td class="neg">&minus;6.6 pp</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cap">S1 = London reversal &rarr; NY continues London. S3 = Asia reversal &rarr; NY continues Asia. &ldquo;vs base&rdquo; = excess over the unconditional NY-continuation rate for that pairing. Positive would support the claim; none do.</div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">The kernel of truth</span>
+    <h2>There <em>is</em> one real effect &mdash; and it&rsquo;s the opposite of what&rsquo;s being sold</h2>
+    <p>The pitch&rsquo;s most literal claim is that the candle printed while you slept tells you the day. Tested directly on the S&amp;P 500 &mdash; does the <b>overnight</b> move predict the <b>intraday</b> open-to-close move? &mdash; there is a small, statistically real tilt. But it is <em>momentum</em>, not reversal, and it is a whisper, not a script.</p>
+  </div>
+  <div class="signal">
+    <div class="txt">
+      <div class="tag">S&amp;P 500 · overnight &rarr; intraday · 2,515 days</div>
+      <h3 style="margin-top:10px">When it gaps up overnight, the day continues up &mdash; 8.8 points more often.</h3>
+      <p>Correlation of the overnight and intraday returns is <b>+0.23</b>. Sign agreement <b>54.9%</b> (z = 4.89). This is genuine intraday momentum &mdash; documented in the peer-reviewed literature &mdash; but an 8.8-point tilt is a long way from &ldquo;the market tells you the <em>entire</em> day&rsquo;s direction.&rdquo;</p>
+      <p style="color:var(--fail)"><b>Note the direction:</b> a gap that keeps going is <em>continuation</em>. The script sells &ldquo;reversal&rdquo; as the signal &mdash; the exact opposite of the only effect that survives.</p>
+    </div>
+    <div class="gapchart">
+      <div class="gapbar">
+        <div class="gl"><span>Gapped UP overnight</span><span class="gv">57.7% close up</span></div>
+        <div class="gtrack"><div class="gfill up" style="width:57.7%"></div><div class="g50"></div></div>
+      </div>
+      <div class="gapbar">
+        <div class="gl"><span>Gapped DOWN overnight</span><span class="gv">49.0% close up</span></div>
+        <div class="gtrack"><div class="gfill dn" style="width:49.0%"></div><div class="g50"></div></div>
+      </div>
+      <div class="gapnote">dashed line = coin flip (50%) · P(intraday close up)</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">What the research actually says</span>
+    <h2>The literature nearby &mdash; and what it does and doesn&rsquo;t support</h2>
+    <p>Real academic work exists on cross-session effects. None of it endorses a deterministic reversal-continuation rotation. It documents weak statistical tilts and volatility spillovers &mdash; useful, but nothing you can run a &ldquo;done by 10:30&rdquo; system on.</p>
+  </div>
+  <div class="lit">
+    <div class="paper">
+      <span class="badge supports">Partly supports the kernel</span>
+      <cite>Market Intraday Momentum</cite>
+      <div class="meta">Gao, Han, Li &amp; Zhou · <i>J. Financial Economics</i> 129(2), 2018</div>
+      <p>The first half-hour return predicts the last half-hour return in S&amp;P ETFs, 1993&ndash;2013. Real, but small, and strongest only on high-volume / high-volatility / news days &mdash; the momentum our Track&nbsp;1 finds, not a reversal script.</p>
+    </div>
+    <div class="paper">
+      <span class="badge vol">Volatility, not direction</span>
+      <cite>Meteor Showers or Heat Waves?</cite>
+      <div class="meta">Engle, Ito &amp; Lin · <i>Econometrica</i> 58(3), 1990</div>
+      <p>Volatility spills from one time-zone&rsquo;s market to the next (&ldquo;meteor showers&rdquo;). Foundational for cross-session linkage &mdash; but it&rsquo;s about how <em>much</em> price moves, never which <em>way</em>. It cannot power a directional script.</p>
+    </div>
+    <div class="paper">
+      <span class="badge vol">Co-movement, not a script</span>
+      <cite>Correlations in Price Changes &amp; Volatility across International Stock Markets</cite>
+      <div class="meta">Hamao, Masulis &amp; Ng · <i>Rev. Financial Studies</i> 3(2), 1990</div>
+      <p>Documents exactly the global co-movement that inflates the &ldquo;continuation&rdquo; base rates here. Markets follow each other &mdash; which is why NY &ldquo;continues&rdquo; London 58% of the time with no signal at all.</p>
+    </div>
+    <div class="paper">
+      <span class="badge against">Cautions against it</span>
+      <cite>A Tug of War: Overnight versus Intraday Expected Returns</cite>
+      <div class="meta">Lou, Polk &amp; Skouras · <i>J. Financial Economics</i> 134(1), 2019</div>
+      <p>Overnight and intraday returns frequently carry <em>opposite</em> signs for the same strategies. Direct evidence that &ldquo;the pre-market candle tells you the day&rdquo; is unreliable as a rule &mdash; the relationship flips by strategy and horizon.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="bottom">
+    <div>
+      <span class="eyebrow">Bottom line</span>
+      <h2 style="margin-top:8px">A real, weak momentum tilt was inflated into a deterministic &ldquo;script&rdquo; and wrapped in a sales funnel.</h2>
+    </div>
+    <div class="bl-grid">
+      <div class="bl-item"><div class="n fail tnum">0 / 4</div><div class="t">Scenarios that beat their base rate over 10 years.</div></div>
+      <div class="bl-item"><div class="n fail tnum">3</div><div class="t">Claims that are significantly wrong &mdash; the &ldquo;signal&rdquo; predicts the opposite.</div></div>
+      <div class="bl-item"><div class="n weak tnum">+8.8pp</div><div class="t">The one real effect (overnight&rarr;intraday momentum) &mdash; useful, far from deterministic.</div></div>
+    </div>
+    <div class="flag">
+      <span class="ic">!</span>
+      <p><b>Read the ending, not the setup.</b> The post closes with &ldquo;DM me &lsquo;SYSTEM&rsquo;&hellip; a high-ticket offer.&rdquo; The precise win-rate story (43% &rarr; 64%, funded in 60 days, done by 10:30) is standard high-ticket coaching copy: an unfalsifiable mechanism (&ldquo;reversal,&rdquo; &ldquo;sweep,&rdquo; &ldquo;fair-value gap&rdquo; are labeled after the fact) plus a specific rags-to-riches number and a scarcity close. That structure &mdash; not the data &mdash; is doing the persuading.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="eyebrow">Methodology &amp; honest limits</span></div>
+  <div class="method">
+    <div class="blk">
+      <h4>How a session was scored</h4>
+      <p>Each market&rsquo;s local cash session is one candle: <b>sign(close &minus; open)</b>. Within a calendar date the chain runs <b>Asia &rarr; London &rarr; New York</b>, which is the true chronological order (Tokyo morning, London midday, NY afternoon). A session <b>continues</b> if its sign equals the prior session&rsquo;s, <b>reverses</b> if opposite.</p>
+      <p>Indices: Asia = Nikkei&nbsp;225 <code>^N225</code> (robustness: <code>^HSI</code>, <code>^KS11</code>), London = FTSE&nbsp;100 <code>^FTSE</code>, US = S&amp;P&nbsp;500 <code>^GSPC</code>. Common trading days only.</p>
+    </div>
+    <div class="blk">
+      <h4>How each claim was judged</h4>
+      <p>Every conditional rate is tested against its <b>base rate</b> &mdash; the unconditional continuation/reversal frequency &mdash; not against 50%, because drift and co-movement already push those well past a coin flip. Reported with Wilson 95% intervals and a two-sided z-test of the excess.</p>
+      <p>Track&nbsp;1 is a cleaner single-instrument test: the S&amp;P&rsquo;s overnight leg (<code>prev close&rarr;open</code>) vs its intraday leg (<code>open&rarr;close</code>), which needs no cross-market proxy.</p>
+    </div>
+    <div class="blk">
+      <h4>Where this is a proxy</h4>
+      <p>The pitch trades <b>one</b> instrument (futures / FX / gold) across intraday sessions. Track&nbsp;2 uses <b>three different indices</b> as session stand-ins &mdash; a reasonable, transparent proxy, but not the identical asset the story describes. Track&nbsp;1 removes that gap and still finds only a weak momentum tilt.</p>
+      <p>The original claim is also partly <b>unfalsifiable</b>: &ldquo;reversal&rdquo; and &ldquo;sweep&rdquo; are discretionary chart labels. This audit picks the most reasonable objective definition; under it, the claim fails.</p>
+    </div>
+    <div class="blk">
+      <h4>What would change the answer</h4>
+      <p>A true test of the intraday version needs <b>tick / hourly futures data</b> segmented into Asia, London, and NY hours on one instrument &mdash; not available here. If the effect were as strong as advertised (&ldquo;every single day for decades&rdquo;), it would still show through the daily proxy. It does not.</p>
+      <p>Sample is a <b>2016&ndash;2026 bull market</b>; drift flatters every &ldquo;up continues up&rdquo; count, which makes the failure to beat base rates more damning, not less.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">
+    <span>Data: <b style="color:var(--muted)">jhirgit/daily-prices</b></span>
+    <span>Yahoo Finance daily OHLC</span>
+    <span>Window: 2016-08 &rarr; 2026-08</span>
+    <span>Generated 2026-08-19</span>
+    <span>Analysis: session_rotation_analysis.py</span>
+  </div>
+  <p class="dis">Educational analysis of a publicly circulated trading claim, not investment advice. Past open-to-close statistics describe history and do not predict future returns. Figures are computed from end-of-day index data; an intraday, single-instrument implementation could differ, but the burden of proof is on a claim that markets follow a near-deterministic daily script &mdash; and ten years of data do not carry it.</p>
+</footer>
+
+</div>
