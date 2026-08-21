@@ -13,6 +13,7 @@ MRVL       # Marvell
 INTC       # Intel
 TSM        # Taiwan Semiconductor
 ASML       # ASML
+LRCX       # Lam Research (WFE etch/deposition; state file + DCF 8/21)
 ALAB       # Astera Labs
 MPWR       # Monolithic Power
 AXTI       # AXT
@@ -105,6 +106,7 @@ SPCX       # SpaceX (IPO 2026-06-12)
 
 # --- Real estate / REITs ---
 INVH       # Invitation Homes (single-family rental REIT; state file + DCF 8/21)
+EQIX       # Equinix (data-center REIT; state file + DCF 8/21)
 
 # --- Broad / thematic / crypto ETFs ---
 SPY        # S&P 500
