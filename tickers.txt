@@ -142,6 +142,10 @@ GLD        # gold
 GC=F       # gold futures
 SI=F       # silver futures
 BZ=F       # Brent crude
+CPER       # copper (US Copper Index Fund) - industrial-demand read
+HYG        # US high-yield credit (iShares iBoxx HY) - credit-risk read
+LQD        # US investment-grade credit (iShares iBoxx IG)
+UUP        # US dollar bullish (Invesco DB USD Index) - dollar read
 BTC-USD    # Bitcoin
 ETH-USD    # Ethereum
 

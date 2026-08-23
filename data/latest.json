@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-21T22:30:25Z",
+  "generated_at": "2026-08-23T20:33:11Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
-  "count": 116,
+  "count": 120,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -395,6 +395,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "CPER",
+      "date": "2026-08-21",
+      "open": 39.91,
+      "high": 40.03,
+      "low": 39.82,
+      "close": 39.99,
+      "adj_close": 39.99,
+      "volume": 765200,
+      "spot_price": 39.99,
+      "spot_captured_at": "2026-08-23T20:33:05Z",
+      "currency": "USD",
+      "dma200": 36.2801,
+      "dma200_n": 200
+    },
+    {
       "ticker": "CRWD",
       "date": "2026-08-21",
       "open": 190.5,
@@ -725,6 +740,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "HYG",
+      "date": "2026-08-21",
+      "open": 79.66,
+      "high": 79.66,
+      "low": 79.55,
+      "close": 79.61,
+      "adj_close": 79.61,
+      "volume": 37523200,
+      "spot_price": 79.61,
+      "spot_captured_at": "2026-08-23T20:33:06Z",
+      "currency": "USD",
+      "dma200": 80.1548,
+      "dma200_n": 200
+    },
+    {
       "ticker": "IBIT",
       "date": "2026-08-21",
       "open": 43.67,
@@ -902,6 +932,21 @@
       "spot_captured_at": "2026-08-21T22:28:15Z",
       "currency": "USD",
       "dma200": 652.6196,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "LQD",
+      "date": "2026-08-21",
+      "open": 105.97,
+      "high": 106.02,
+      "low": 105.82,
+      "close": 105.92,
+      "adj_close": 105.92,
+      "volume": 24263700,
+      "spot_price": 105.92,
+      "spot_captured_at": "2026-08-23T20:33:08Z",
+      "currency": "USD",
+      "dma200": 109.3125,
       "dma200_n": 200
     },
     {
@@ -1577,6 +1622,21 @@
       "spot_captured_at": "2026-08-21T22:27:53Z",
       "currency": "USD",
       "dma200": 234.4672,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "UUP",
+      "date": "2026-08-21",
+      "open": 27.89,
+      "high": 27.94,
+      "low": 27.89,
+      "close": 27.9,
+      "adj_close": 27.9,
+      "volume": 592900,
+      "spot_price": 27.9,
+      "spot_captured_at": "2026-08-23T20:33:09Z",
+      "currency": "USD",
+      "dma200": 27.7337,
       "dma200_n": 200
     },
     {
