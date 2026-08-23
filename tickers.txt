@@ -60,6 +60,10 @@ SIEGY      # Siemens (ADR)
 BE         # Bloom Energy
 FLEX       # Flex
 
+# --- Clean energy / precision industrials (watchlist init 8/23/26, not held) ---
+ENPH       # Enphase Energy (solar microinverters + IQ storage; state file + DCF 8/23)
+VPG        # Vishay Precision Group (precision sensors/resistors, load cells; state file + DCF 8/23)
+
 # --- Precious-metals miners & royalty ---
 NEM        # Newmont
 GOLD       # Barrick
