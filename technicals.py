@@ -849,6 +849,29 @@ def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
     # client's TECH.tickers filter.
     try:
         regime_block = regime.build_regime(conn, set(out.keys()))
+        # Leg readability gate (v60, framework-review item 5): the composite's
+        # EMA-slope legs (types ratio/trend) assume their input is TRENDING --
+        # the same H&M assumption MACD carries. Run classify_regime (the
+        # Monte-Carlo-calibrated gate above) on each such leg's continuous
+        # input and DISCLOSE the result. Votes are NOT zeroed: at the p90 R^2
+        # bar most 90-session windows are "neither", so gating the math would
+        # delete the composite -- instead the client dims an unreadable leg's
+        # vote. Attached HERE (not in regime.build_regime) deliberately: the
+        # classifier is technicals.py's and already has its own H&M generator
+        # tests, and keeping it out of build_regime keeps the JS-oracle parity
+        # surface (regime_e2e_parity.py) exactly as it was.
+        if isinstance(regime_block, dict) and regime_block.get("legs"):
+            for _leg in regime_block["legs"]:
+                if _leg.get("type") not in ("ratio", "trend"):
+                    continue
+                _tail = [v for v in _leg.get("cont", [])[-REGIME_WINDOW:]]
+                if len(_tail) < REGIME_WINDOW or any(v is None or v <= 0 for v in _tail):
+                    _leg["gate"] = {"regime": "insufficient_history", "r2": None,
+                                    "readable": False}
+                    continue
+                _g = classify_regime(_tail)
+                _leg["gate"] = {"regime": _g["regime"], "r2": _g.get("r2"),
+                                "readable": bool(_g.get("trend_ok"))}
     except Exception as exc:  # never let the regime layer break the per-ticker output
         regime_block = {"error": f"{type(exc).__name__}: {exc}"}
 

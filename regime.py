@@ -194,23 +194,69 @@ def breadth_leg_series(frac):
 # composite / flips / base rates
 # ==========================================================================
 
-def composite_series(legs):
-    """Net the legs to a state: risk-on at net>=+0.34, defensive at <=-0.34,
-    else neutral (net = raw sum / #legs). `sum` is the un-normalised total. Port
-    of RC.compositeSeries."""
+def composite_series(legs, first_actives=None):
+    """Net the legs to a state with HYSTERESIS (v60): ENTER risk-on at
+    net >= +0.34 / defensive at net <= -0.34, then HOLD the state while
+    |net| >= 0.17 on the same side; a cross of the OPPOSITE entry threshold
+    flips directly. net = raw sum / k(i), where k(i) counts only legs that are
+    ACTIVE by bar i (first_actives[j] <= i) -- a leg still in warm-up no longer
+    dilutes the denominator toward neutral. first_actives=None means all legs
+    active from bar 0 (k constant). `sum` stays the un-normalised total; `k`
+    is emitted per bar. Port of RC.compositeSeries."""
     n = len(legs[0])
-    k = len(legs) or 1
-    thr = 0.34
+    enter = 0.34
+    exit_ = 0.17
+    fas = first_actives if first_actives is not None else [0] * len(legs)
     total = [0] * n
+    kser = [0] * n
     state = [None] * n
+    prev = None
     for i in range(n):
         s = 0
+        k = 0
         for j in range(len(legs)):
             s += legs[j][i]
+            if fas[j] <= i:
+                k += 1
         total[i] = s
-        net = s / k
-        state[i] = "risk-on" if net >= thr else ("defensive" if net <= -thr else "neutral")
-    return {"sum": total, "state": state}
+        kser[i] = k
+        net = (s / k) if k else 0.0
+        if prev == "risk-on":
+            st = "defensive" if net <= -enter else ("risk-on" if net >= exit_ else "neutral")
+        elif prev == "defensive":
+            st = "risk-on" if net >= enter else ("defensive" if net <= -exit_ else "neutral")
+        else:
+            st = "risk-on" if net >= enter else ("defensive" if net <= -enter else "neutral")
+        state[i] = st
+        prev = st
+    return {"sum": total, "state": state, "k": kser}
+
+
+def durations(state):
+    """Run-length statistics of the composite state series: per-state spell
+    count + median spell length, and the CURRENT spell (state, age in
+    sessions). The regime label is only worth what its persistence is -- this
+    is the number that says how much to trust a fresh flip. Port of
+    RC.durations."""
+    by = {"risk-on": [], "neutral": [], "defensive": []}
+    cur = None
+    cnt = 0
+    for s in state:
+        if s == cur:
+            cnt += 1
+        else:
+            if cur is not None and cur in by:
+                by[cur].append(cnt)
+            cur = s
+            cnt = 1
+    if cur is not None and cur in by:
+        by[cur].append(cnt)
+    out = {}
+    for s in ("risk-on", "neutral", "defensive"):
+        runs = by[s]
+        out[s] = {"n": len(runs), "median": median(runs)}
+    current = None if cur is None else {"state": cur, "age": cnt}
+    return {"by_state": out, "current": current}
 
 
 def flips(dates, state):
@@ -255,6 +301,250 @@ def base_rates(series, names, state, H=21):
             "hit": (sum(1 for x in arr if x > 0) / len(arr)) if arr else None,
         }
     return res
+
+
+def base_rates_multi(series, names, state, hs=(5, 21, 63)):
+    """base_rates at several horizons plus an unconditional 'all' bucket and an
+    honesty field: n_eff = ceil(n / H), the approximate number of INDEPENDENT
+    observations once the H-bar overlap of consecutive windows is accounted
+    for (windows sampled every bar overlap ~H times; hit rates look far more
+    stable than they are without this). Output {'h5': {...}, 'h21': {...},
+    'h63': {...}}, each state -> {n, n_eff, median, hit}. Port of
+    RC.baseRatesMulti."""
+    arrs = [series[t] for t in names if series.get(t)]
+    n = len(arrs[0]) if arrs else 0
+    res = {}
+    for H in hs:
+        bk = {"risk-on": [], "neutral": [], "defensive": [], "all": []}
+        t = 0
+        while t + H < n:
+            st = state[t]
+            rets = []
+            for k in range(len(arrs)):
+                a = arrs[k][t]
+                b = arrs[k][t + H]
+                if a is not None and b is not None and a > 0:
+                    rets.append(b / a - 1)
+            m = median(rets)
+            if m is not None:
+                if st in bk:
+                    bk[st].append(m)
+                bk["all"].append(m)
+            t += 1
+        out = {}
+        for s in ("risk-on", "neutral", "defensive", "all"):
+            arr = bk[s]
+            out[s] = {
+                "n": len(arr),
+                "n_eff": int(math.ceil(len(arr) / H)) if arr else 0,
+                "median": median(arr),
+                "hit": (sum(1 for x in arr if x > 0) / len(arr)) if arr else None,
+            }
+        res["h" + str(H)] = out
+    return res
+
+
+# ==========================================================================
+# v60 legs: realized vol, correlation, dispersion + activation helpers
+# (each function is a verbatim-parity pair with the same-named RC function)
+# ==========================================================================
+
+def ret_series(close):
+    """Daily simple-return series; null where either close is null or the
+    base is non-positive. Port of RC.retSeries."""
+    out = [None] * len(close)
+    for i in range(1, len(close)):
+        a = close[i - 1]
+        b = close[i]
+        out[i] = (b / a - 1) if (a is not None and b is not None and a > 0) else None
+    return out
+
+
+def rv_series(close, n=21):
+    """Annualised realised volatility: sample stdev (n-1) of the last `n`
+    daily simple returns x sqrt(252). STRICT window -- null unless all `n`
+    returns in the window exist. Port of RC.rvSeries."""
+    r = ret_series(close)
+    out = [None] * len(close)
+    for i in range(len(close)):
+        if i < n:
+            continue
+        s = 0.0
+        s2 = 0.0
+        ok = True
+        for t in range(i - n + 1, i + 1):
+            v = r[t]
+            if v is None:
+                ok = False
+                break
+            s += v
+            s2 += v * v
+        if not ok:
+            continue
+        var = (s2 - s * s / n) / (n - 1)
+        if var < 0:
+            var = 0.0
+        out[i] = math.sqrt(var) * math.sqrt(252)
+    return out
+
+
+def pct_rank_series(vals, win=252):
+    """Percentile of each value within its own trailing `win` values
+    (inclusive of itself): count(window <= v)/win. STRICT window -- null
+    unless all `win` values exist. Port of RC.pctRankSeries."""
+    out = [None] * len(vals)
+    for i in range(len(vals)):
+        if i < win - 1:
+            continue
+        v = vals[i]
+        if v is None:
+            continue
+        c = 0
+        ok = True
+        for t in range(i - win + 1, i + 1):
+            w = vals[t]
+            if w is None:
+                ok = False
+                break
+            if w <= v:
+                c += 1
+        if ok:
+            out[i] = c / win
+    return out
+
+
+def pct_vote_series(pct, lo=0.30, hi=0.70):
+    """Vote on a percentile series: +1 at or below `lo` (calm / dispersed),
+    -1 at or above `hi` (stressed / crowded), else 0; null -> 0. The band is
+    fixed at 30/70 -- the same own-trailing-year framing the setup column's
+    ATR percentile uses. Port of RC.pctVoteSeries."""
+    return [0 if p is None else (1 if p <= lo else (-1 if p >= hi else 0)) for p in pct]
+
+
+def corr_pair_series(a, b, win=63):
+    """Rolling Pearson correlation of two price series' daily returns over a
+    STRICT `win` window (null unless all pairs exist). Port of
+    RC.corrPairSeries."""
+    ra = ret_series(a)
+    rb = ret_series(b)
+    n = min(len(a), len(b))
+    out = [None] * n
+    for i in range(n):
+        if i < win:
+            continue
+        sa = 0.0
+        sb = 0.0
+        saa = 0.0
+        sbb = 0.0
+        sab = 0.0
+        ok = True
+        for t in range(i - win + 1, i + 1):
+            x = ra[t]
+            y = rb[t]
+            if x is None or y is None:
+                ok = False
+                break
+            sa += x
+            sb += y
+            saa += x * x
+            sbb += y * y
+            sab += x * y
+        if not ok:
+            continue
+        cov = sab - sa * sb / win
+        va = saa - sa * sa / win
+        vb = sbb - sb * sb / win
+        if va <= 0 or vb <= 0:
+            continue
+        out[i] = cov / math.sqrt(va * vb)
+    return out
+
+
+def corr_vote_series(corr, thr=0.20):
+    """Vote on a correlation series by SIGN with a dead zone: +1 at or below
+    -thr (bonds hedge stocks -> growth-driven tape, risk-supportive), -1 at or
+    above +thr (no hedge -> inflation/liquidity-driven, risk-hostile), else 0.
+    Port of RC.corrVoteSeries."""
+    return [0 if c is None else (1 if c <= -thr else (-1 if c >= thr else 0)) for c in corr]
+
+
+def avg_corr_series(series, names, win=63, min_n=8):
+    """Average pairwise correlation across `names` over a rolling `win`
+    window, via the sigma-weighted portfolio-variance identity:
+    avgcorr = (N^2*Var_p - sum(var_i)) / ((sum(sd_i))^2 - sum(var_i)), with
+    equal-weight portfolio p and sample (n-1) variances. Membership at bar i =
+    names whose returns are all non-null in the window; null when fewer than
+    `min_n` members or a degenerate denominator. Port of RC.avgCorrSeries."""
+    rets = []
+    for t in names:
+        c = series.get(t)
+        if c:
+            rets.append(ret_series(c))
+    n = len(rets[0]) if rets else 0
+    out = [None] * n
+    for i in range(n):
+        if i < win:
+            continue
+        members = []
+        for k in range(len(rets)):
+            ok = True
+            for t in range(i - win + 1, i + 1):
+                if rets[k][t] is None:
+                    ok = False
+                    break
+            if ok:
+                members.append(k)
+        N = len(members)
+        if N < min_n:
+            continue
+        s1 = 0.0
+        s2 = 0.0
+        psum = 0.0
+        psum2 = 0.0
+        for t in range(i - win + 1, i + 1):
+            p = 0.0
+            for k in members:
+                p += rets[k][t]
+            p /= N
+            psum += p
+            psum2 += p * p
+        for k in members:
+            s = 0.0
+            ss = 0.0
+            for t in range(i - win + 1, i + 1):
+                v = rets[k][t]
+                s += v
+                ss += v * v
+            var = (ss - s * s / win) / (win - 1)
+            if var < 0:
+                var = 0.0
+            s1 += math.sqrt(var)
+            s2 += var
+        var_p = (psum2 - psum * psum / win) / (win - 1)
+        denom = s1 * s1 - s2
+        if denom <= 0:
+            continue
+        out[i] = (N * N * var_p - s2) / denom
+    return out
+
+
+def leg_first_active(cont):
+    """First bar where an EMA-slope leg (ratio/trend rule) can vote non-zero:
+    i >= 21 with cont, its 50-EMA and the EMA 21 bars back all non-null.
+    Returns len(cont) if never. Port of RC.legFirstActive."""
+    e = ema(cont, 50)
+    for i in range(len(cont)):
+        if i >= 21 and cont[i] is not None and e[i] is not None and e[i - 21] is not None:
+            return i
+    return len(cont)
+
+
+def first_non_null(arr):
+    """Index of the first non-null value, or len(arr). Port of RC.firstNonNull."""
+    for i in range(len(arr)):
+        if arr[i] is not None:
+            return i
+    return len(arr)
 
 
 # ==========================================================================
@@ -347,11 +637,33 @@ def sector_ladder(series, etfs):
     third). Each row also carries the SHORT-TERM read: r21 (21 trading sessions
     ~= 1 calendar month) and third21, the row's third of the field by 21d
     return on the last bar -- the renderer surfaces 21d-vs-63d disagreement as
-    an early-turn tell. `etfs` is a list of {"t","name","side"}. Port of
-    RC.sectorLadder."""
+    an early-turn tell.
+
+    v60 DEDUP: an etf entry may carry "grp" (sleeve group). The thirds /
+    streak / divergence FIELD keeps only the first-listed present member of
+    each group (the primary); later members are TWINS -- they still show
+    levels (r21/r63/r126/blend) but get third=third21=None, streak=0 and
+    twin_of=<primary ticker>, so near-duplicate proxies (SMH+SOXX, the three
+    gold-miner ETFs) no longer double-count the same sleeve in the field or
+    fire the divergence/turn tells twice. `etfs` is a list of
+    {"t","name","side"[,"grp"]}. Port of RC.sectorLadder."""
     present = [e for e in etfs if series.get(e["t"])]
+    seen_grp = {}
+    field_set = {}
+    twin_of = [None] * len(present)
+    for k in range(len(present)):
+        g = present[k].get("grp")
+        if not g:
+            field_set[k] = 1
+        elif g not in seen_grp:
+            seen_grp[g] = k
+            field_set[k] = 1
+        else:
+            twin_of[k] = present[seen_grp[g]]["t"]
+    field_idx = sorted(field_set.keys())
     rows = []
-    for e in present:
+    for k in range(len(present)):
+        e = present[k]
         c = series[e["t"]]
         r21 = ret(c, 21)
         r63 = ret(c, 63)
@@ -361,54 +673,30 @@ def sector_ladder(series, etfs):
         else:
             blend = r63 if r63 is not None else r126
         rows.append({"t": e["t"], "name": e["name"], "side": e.get("side"),
-                     "r21": r21, "r63": r63, "r126": r126, "blend": blend})
+                     "r21": r21, "r63": r63, "r126": r126, "blend": blend,
+                     "twin_of": twin_of[k]})
     n = len(series[present[0]["t"]]) if present else 0
 
-    r63ser = []
-    for e in present:
-        c = series[e["t"]]
+    def ret_ser(k, lag):
+        c = series[present[k]["t"]]
         s = [None] * len(c)
         for i in range(len(c)):
-            a = c[i - 63] if i >= 63 else None
+            a = c[i - lag] if i >= lag else None
             b = c[i]
             s[i] = (b / a - 1) if (a is not None and b is not None and a > 0) else None
-        r63ser.append(s)
+        return s
 
-    r21ser = []
-    for e in present:
-        c = series[e["t"]]
-        s = [None] * len(c)
-        for i in range(len(c)):
-            a = c[i - 21] if i >= 21 else None
-            b = c[i]
-            s[i] = (b / a - 1) if (a is not None and b is not None and a > 0) else None
-        r21ser.append(s)
+    # return series for FIELD members only, keyed by position in `present`
+    r63ser = {k: ret_ser(k, 63) for k in field_idx}
+    r21ser = {k: ret_ser(k, 21) for k in field_idx}
 
-    def third_at(k, i):
-        mine = r63ser[k][i]
+    def third_at(ser, k, i):
+        mine = ser[k][i]
         if mine is None:
             return None
         vals = []
-        for q in range(len(present)):
-            v = r63ser[q][i]
-            if v is not None:
-                vals.append(v)
-        vals.sort(reverse=True)  # descending, stable -> ties keep original order
-        L = len(vals)
-        pos = vals.index(mine)   # first occurrence, mirrors JS Array.indexOf
-        if pos < math.ceil(L / 3):
-            return "top"
-        if pos >= L - math.ceil(L / 3):
-            return "bottom"
-        return "mid"
-
-    def third21_at(k, i):
-        mine = r21ser[k][i]
-        if mine is None:
-            return None
-        vals = []
-        for q in range(len(present)):
-            v = r21ser[q][i]
+        for q in field_idx:
+            v = ser[q][i]
             if v is not None:
                 vals.append(v)
         vals.sort(reverse=True)  # descending, stable -> ties keep original order
@@ -422,14 +710,19 @@ def sector_ladder(series, etfs):
 
     last = n - 1
     for k in range(len(rows)):
-        t_third = third_at(k, last) if last >= 0 else None
+        if k not in field_set:   # twin: levels only, out of the field
+            rows[k]["third"] = None
+            rows[k]["third21"] = None
+            rows[k]["streak"] = 0
+            continue
+        t_third = third_at(r63ser, k, last) if last >= 0 else None
         rows[k]["third"] = t_third
-        rows[k]["third21"] = third21_at(k, last) if last >= 0 else None
+        rows[k]["third21"] = third_at(r21ser, k, last) if last >= 0 else None
         rows[k]["streak"] = 0
         if t_third == "top" or t_third == "bottom":
             i = last
             s = 0
-            while i >= 0 and third_at(k, i) == t_third:
+            while i >= 0 and third_at(r63ser, k, i) == t_third:
                 s += 1
                 i -= 1
             rows[k]["streak"] = s
@@ -446,8 +739,14 @@ def sector_ladder(series, etfs):
 # The sector-rotation ladder + offense/defense divergence field. Verbatim from
 # index.html `REG_ETFS` (v52). `side` drives the divergence tell.
 REG_ETFS = [
-    {"t": "SMH", "name": "Semis", "side": "offense"},
-    {"t": "SOXX", "name": "Semis (SOXX)", "side": "offense"},
+    # grp = sleeve group for the v60 dedup: only the first-listed present
+    # member of a grp joins the thirds/streak/divergence field; later members
+    # are display-only twins. SLV (the metal) and SILJ (jr miners) are
+    # deliberately NOT grouped -- metal vs miner is an economic distinction
+    # (today's SLV-vs-SILJ 63d gap is exactly that), unlike the true
+    # near-duplicates SMH/SOXX and GDX/GDXJ/RING.
+    {"t": "SMH", "name": "Semis", "side": "offense", "grp": "semis"},
+    {"t": "SOXX", "name": "Semis (SOXX)", "side": "offense", "grp": "semis"},
     {"t": "QQQ", "name": "Nasdaq 100", "side": "offense"},
     {"t": "IWM", "name": "Small caps", "side": "offense"},
     {"t": "IGV", "name": "Software", "side": "offense"},
@@ -458,16 +757,19 @@ REG_ETFS = [
     {"t": "SPY", "name": "S&P 500", "side": None},
     {"t": "EWY", "name": "Korea", "side": None},
     {"t": "ICOP", "name": "Copper miners", "side": None},
-    {"t": "GDX", "name": "Gold miners", "side": "defense"},
-    {"t": "GDXJ", "name": "Jr gold miners", "side": "defense"},
-    {"t": "RING", "name": "Gold miners (RING)", "side": "defense"},
+    {"t": "GDX", "name": "Gold miners", "side": "defense", "grp": "gold"},
+    {"t": "GDXJ", "name": "Jr gold miners", "side": "defense", "grp": "gold"},
+    {"t": "RING", "name": "Gold miners (RING)", "side": "defense", "grp": "gold"},
     {"t": "SILJ", "name": "Jr silver miners", "side": "defense"},
     {"t": "SLV", "name": "Silver", "side": "defense"},
 ]
 
-# The composite legs, as (label, key, kind, ...). Verbatim from the addRatio /
-# addTrend calls in renderRegimePanel (v52). Macro legs activate the moment
-# their tickers are present. Order preserved so the composite matches the client.
+# The composite legs. v52 carried the three macro + two equity trend-rule legs
+# verbatim from renderRegimePanel; v60 adds the three ORTHOGONAL-MECHANISM legs
+# (stocks-bonds correlation, SPY realised vol, book dispersion) -- the
+# framework-review finding was that six EMA-slope rules on correlated risk
+# proxies are one measurement in six coats. Macro legs activate the moment
+# their tickers are present. Order is display/parity order.
 LEG_RATIOS = [
     # (label, key, num_candidates, den_candidates, macro)
     ("Credit — HY vs IG", "credit_hy_ig", ["HYG"], ["LQD"], True),
@@ -477,10 +779,22 @@ LEG_TRENDS = [
     # (label, key, ticker_candidates, invert, macro)
     ("Dollar (inverse)", "dollar_inv", ["UUP"], True, True),
 ]
+LEG_CORR = [
+    # (label, key, a_candidates, b_candidates, macro) — rolling 63d return corr,
+    # vote by SIGN with a ±0.20 dead zone (negative = bonds hedge stocks = risk-supportive)
+    ("Stocks–bonds corr", "stocks_bonds_corr", ["SPY"], ["TLT"], True),
+]
 LEG_RATIOS_EQUITY = [
     ("Offense vs defense", "offense_defense", ["SMH", "SOXX"], ["GDX", "GDXJ", "RING"], False),
     ("Beta appetite", "beta_appetite", ["QQQ", "IWM", "SOXX"], ["SPY"], False),
 ]
+LEG_VOL = [
+    # (label, key, ticker_candidates, macro) — rv21 percentile vs own trailing
+    # year, +1 in the calmest 30%, −1 in the most stressed 30%
+    ("Volatility (SPY)", "spy_vol", ["SPY"], False),
+]
+# Book dispersion (avg pairwise 63d corr of the covered book, percentile vs own
+# trailing year, +1 dispersed / −1 crowded) is built from BOOK_UNION below.
 
 # The COVERED EQUITY BOOK (backlog #2): the breadth / base-rate pool is the
 # union of the Book tab's HELD, REST and FLAT arrays -- an explicit book set,
@@ -608,7 +922,8 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         legs.append(s)
         leg_info.append({"key": key, "label": label, "type": "ratio",
                          "val": nm + "÷" + dn, "series": s, "last": s[-1],
-                         "cont": cont, "macro": bool(macro)})
+                         "cont": cont, "macro": bool(macro),
+                         "first_active": leg_first_active(cont)})
 
     def add_trend(label, key, tick_list, invert, macro):
         t = _first_present(series, tick_list)
@@ -618,17 +933,62 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         legs.append(s)
         leg_info.append({"key": key, "label": label, "type": "trend",
                          "val": ("↓" if invert else "↑") + t, "series": s,
-                         "last": s[-1], "cont": series[t], "macro": bool(macro)})
+                         "last": s[-1], "cont": series[t], "macro": bool(macro),
+                         "first_active": leg_first_active(series[t])})
 
-    # ORDER matters for parity with the client: macro ratios, then the trend,
-    # then the equity ratios, then breadth (exactly the addRatio/addTrend order
-    # in renderRegimePanel).
+    def add_corr(label, key, a_list, b_list, macro):
+        ta = _first_present(series, a_list)
+        tb = _first_present(series, b_list)
+        if not ta or not tb:
+            return
+        cont = corr_pair_series(series[ta], series[tb], 63)
+        s = corr_vote_series(cont, 0.20)
+        legs.append(s)
+        leg_info.append({"key": key, "label": label, "type": "corr",
+                         "val": ta + "↔" + tb + " 63d", "series": s,
+                         "last": s[-1], "cont": cont, "macro": bool(macro),
+                         "first_active": first_non_null(cont)})
+
+    def add_vol(label, key, tick_list, macro):
+        t = _first_present(series, tick_list)
+        if not t:
+            return
+        rv = rv_series(series[t], 21)
+        pct = pct_rank_series(rv, 252)
+        s = pct_vote_series(pct, 0.30, 0.70)
+        legs.append(s)
+        pl = pct[-1] if pct else None
+        leg_info.append({"key": key, "label": label, "type": "vol",
+                         "val": t + " rv21" + ("" if pl is None else " p" + str(int(math.floor(pl * 100 + 0.5)))),
+                         "series": s, "last": s[-1], "cont": rv, "macro": bool(macro),
+                         "first_active": first_non_null(pct)})
+
+    def add_disp(label, key, names):
+        ac = avg_corr_series(series, names, 63, 8)
+        if first_non_null(ac) >= len(ac):
+            return
+        pct = pct_rank_series(ac, 252)
+        s = pct_vote_series(pct, 0.30, 0.70)
+        legs.append(s)
+        pl = pct[-1] if pct else None
+        leg_info.append({"key": key, "label": label, "type": "disp",
+                         "val": "avg corr" + ("" if pl is None else " p" + str(int(math.floor(pl * 100 + 0.5)))),
+                         "series": s, "last": s[-1], "cont": ac, "macro": False,
+                         "first_active": first_non_null(pct)})
+
+    # ORDER is display/parity order: macro ratios, the dollar trend, the
+    # stocks-bonds correlation, the equity ratios, SPY vol, breadth, book
+    # dispersion. The emit oracle replicates this exactly.
     for label, key, num, den, macro in LEG_RATIOS:
         add_ratio(label, key, num, den, macro)
     for label, key, tick, invert, macro in LEG_TRENDS:
         add_trend(label, key, tick, invert, macro)
+    for label, key, a, b, macro in LEG_CORR:
+        add_corr(label, key, a, b, macro)
     for label, key, num, den, macro in LEG_RATIOS_EQUITY:
         add_ratio(label, key, num, den, macro)
+    for label, key, tick, macro in LEG_VOL:
+        add_vol(label, key, tick, macro)
 
     book = [t for t in BOOK_UNION if _is_book_equity(t, series)]
     frac = breadth_series(series, book) if book else None
@@ -638,7 +998,10 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         legs.append(breadth_leg)
         leg_info.append({"key": "breadth_book_200d", "label": "Breadth (book >200d)",
                          "type": "breadth", "series": breadth_leg,
-                         "last": breadth_leg[-1], "cont": frac, "macro": False})
+                         "last": breadth_leg[-1], "cont": frac, "macro": False,
+                         "first_active": first_non_null(frac)})
+    if book:
+        add_disp("Book dispersion", "book_dispersion", book)
 
     if not legs:
         return {"dates": dates, "asof": dates[-1] if dates else None,
@@ -646,11 +1009,14 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
                 "ladder": None, "receipts": {}, "base_rates": None,
                 "note": "no inputs available"}
 
-    comp = composite_series(legs)
+    fas = [x["first_active"] for x in leg_info]
+    comp = composite_series(legs, fas)
     active = len(legs)
     macro_count = sum(1 for x in leg_info if x.get("macro"))
     last = len(comp["sum"]) - 1
-    net_last = comp["sum"][last] / active if active else None
+    k_last = comp["k"][last] if last >= 0 else 0
+    net_last = comp["sum"][last] / k_last if k_last else None
+    dur = durations(comp["state"])
 
     # receipts pool = the emitted (>=MIN_BARS) technicals tickers minus sector
     # ETFs -- mirrors the client's `TECH.tickers` filter (NOT the book set).
@@ -672,17 +1038,21 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         "t": r["t"], "name": r["name"], "side": r["side"],
         "r21": _r(r["r21"]), "r63": _r(r["r63"]), "r126": _r(r["r126"]),
         "blend": _r(r["blend"]), "third": r["third"], "third21": r["third21"],
-        "streak": r["streak"],
+        "streak": r["streak"], "twin_of": r["twin_of"],
     } for r in lad["rows"]]
 
-    br = base_rates(series, book, comp["state"], 21)
-    base_rates_out = {s: {"n": br[s]["n"], "median": _r(br[s]["median"], 9),
-                          "hit": _r(br[s]["hit"], 6)} for s in br}
+    brm = base_rates_multi(series, book, comp["state"], (5, 21, 63))
+    base_rates_out = {}
+    for hk, states in brm.items():
+        base_rates_out[hk] = {s: {"n": b["n"], "n_eff": b["n_eff"],
+                                  "median": _r(b["median"], 9), "hit": _r(b["hit"], 6)}
+                              for s, b in states.items()}
 
     legs_out = [{
         "key": x["key"], "label": x["label"], "type": x["type"],
         "val": x.get("val"), "macro": x.get("macro", False),
         "series": x["series"], "last": x["last"],
+        "first_active": x["first_active"],
         "cont": [_r(v) for v in x["cont"]],  # continuous underlying, for the per-metric sparklines
     } for x in leg_info]
 
@@ -694,12 +1064,16 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         "composite": {
             "sum": comp["sum"],
             "state": comp["state"],
+            "k": comp["k"],
             "net_last": _r(net_last),
             "state_last": comp["state"][last],
             "score_last": comp["sum"][last],
             "active_legs": active,
+            "k_last": k_last,
             "macro_legs": macro_count,
+            "hysteresis": {"enter": 0.34, "exit": 0.17},
         },
+        "durations": dur,
         "legs": legs_out,
         "breadth": None if frac is None else {
             "frac": [_r(f) for f in frac],

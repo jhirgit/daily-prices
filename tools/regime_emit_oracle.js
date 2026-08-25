@@ -33,33 +33,64 @@ function addRatio(key, name, numList, denList, macro) {
   const cont = RC.ratio(series[nm], series[dn]);
   const s = RC.ratioLegSeries(cont);
   legs.push(s); legKeys.push(key);
-  info.push({ key, label: name, type: "ratio", val: nm + "÷" + dn, macro: !!macro, series: s, last: s[s.length - 1], cont });
+  info.push({ key, label: name, type: "ratio", val: nm + "÷" + dn, macro: !!macro, series: s, last: s[s.length - 1], cont, first_active: RC.legFirstActive(cont) });
 }
 function addTrend(key, name, tickList, invert, macro) {
   const t = firstPresent(tickList); if (!t) return;
   const s = RC.trendLegSeries(series[t], invert);
   legs.push(s); legKeys.push(key);
-  info.push({ key, label: name, type: "trend", val: (invert ? "↓" : "↑") + t, macro: !!macro, series: s, last: s[s.length - 1], cont: series[t] });
+  info.push({ key, label: name, type: "trend", val: (invert ? "↓" : "↑") + t, macro: !!macro, series: s, last: s[s.length - 1], cont: series[t], first_active: RC.legFirstActive(series[t]) });
+}
+function addCorr(key, name, aList, bList, macro) {
+  const ta = firstPresent(aList), tb = firstPresent(bList); if (!ta || !tb) return;
+  const cont = RC.corrPairSeries(series[ta], series[tb], 63);
+  const s = RC.corrVoteSeries(cont, 0.20);
+  legs.push(s); legKeys.push(key);
+  info.push({ key, label: name, type: "corr", val: ta + "↔" + tb + " 63d", macro: !!macro, series: s, last: s[s.length - 1], cont, first_active: RC.firstNonNull(cont) });
+}
+function addVol(key, name, tickList, macro) {
+  const t = firstPresent(tickList); if (!t) return;
+  const rv = RC.rvSeries(series[t], 21);
+  const pct = RC.pctRankSeries(rv, 252);
+  const s = RC.pctVoteSeries(pct, 0.30, 0.70);
+  legs.push(s); legKeys.push(key);
+  const pl = pct.length ? pct[pct.length - 1] : null;
+  info.push({ key, label: name, type: "vol", val: t + " rv21" + (pl == null ? "" : " p" + Math.round(pl * 100)), macro: !!macro, series: s, last: s[s.length - 1], cont: rv, first_active: RC.firstNonNull(pct) });
+}
+function addDisp(key, name, names) {
+  const ac = RC.avgCorrSeries(series, names, 63, 8);
+  if (RC.firstNonNull(ac) >= ac.length) return;
+  const pct = RC.pctRankSeries(ac, 252);
+  const s = RC.pctVoteSeries(pct, 0.30, 0.70);
+  legs.push(s); legKeys.push(key);
+  const pl = pct.length ? pct[pct.length - 1] : null;
+  info.push({ key, label: name, type: "disp", val: "avg corr" + (pl == null ? "" : " p" + Math.round(pl * 100)), macro: false, series: s, last: s[s.length - 1], cont: ac, first_active: RC.firstNonNull(pct) });
 }
 addRatio("credit_hy_ig", "Credit — HY vs IG", ["HYG"], ["LQD"], true);
 addRatio("copper_gold", "Copper / gold", ["CPER"], ["GLD"], true);
 addTrend("dollar_inv", "Dollar (inverse)", ["UUP"], true, true);
+addCorr("stocks_bonds_corr", "Stocks–bonds corr", ["SPY"], ["TLT"], true);
 addRatio("offense_defense", "Offense vs defense", ["SMH", "SOXX"], ["GDX", "GDXJ", "RING"], false);
 addRatio("beta_appetite", "Beta appetite", ["QQQ", "IWM", "SOXX"], ["SPY"], false);
+addVol("spy_vol", "Volatility (SPY)", ["SPY"], false);
 
 let frac = book.length ? RC.breadthSeries(series, book) : null;
 let breadthLeg = null;
 if (frac) {
   breadthLeg = RC.breadthLegSeries(frac);
   legs.push(breadthLeg); legKeys.push("breadth_book_200d");
-  info.push({ key: "breadth_book_200d", label: "Breadth (book >200d)", type: "breadth", val: null, macro: false, series: breadthLeg, last: breadthLeg[breadthLeg.length - 1], cont: frac });
+  info.push({ key: "breadth_book_200d", label: "Breadth (book >200d)", type: "breadth", val: null, macro: false, series: breadthLeg, last: breadthLeg[breadthLeg.length - 1], cont: frac, first_active: RC.firstNonNull(frac) });
 }
+if (book.length) addDisp("book_dispersion", "Book dispersion", book);
 
-const comp = RC.compositeSeries(legs);
+const fas = info.map((x) => x.first_active);
+const comp = RC.compositeSeries(legs, fas);
 const active = legs.length;
 const macroCount = info.filter((x) => x.macro).length;
 const last = comp.sum.length - 1;
-const netLast = active ? comp.sum[last] / active : null;
+const kLast = last >= 0 ? comp.k[last] : 0;
+const netLast = kLast ? comp.sum[last] / kLast : null;
+const dur = RC.durations(comp.state);
 
 // receipts pool = emitted (>=MIN_BARS) tickers minus sector ETFs (client's TECH.tickers filter)
 const recPool = P.emitted.filter((t) => series[t] && !etfSet[t]);
@@ -71,11 +102,9 @@ Object.keys(rr).forEach((t) => {
 });
 
 const lad = RC.sectorLadder(series, REG_ETFS);
-const ladderRows = lad.rows.map((r) => ({ t: r.t, name: r.name, side: r.side, r21: r.r21, r63: r.r63, r126: r.r126, blend: r.blend, third: r.third, third21: r.third21, streak: r.streak }));
+const ladderRows = lad.rows.map((r) => ({ t: r.t, name: r.name, side: r.side, r21: r.r21, r63: r.r63, r126: r.r126, blend: r.blend, third: r.third, third21: r.third21, streak: r.streak, twin_of: r.twin_of }));
 
-const br = RC.baseRates(series, book, comp.state, 21);
-const baseRates = {};
-["risk-on", "neutral", "defensive"].forEach((s) => { baseRates[s] = { n: br[s].n, median: br[s].median, hit: br[s].hit }; });
+const baseRates = RC.baseRatesMulti(series, book, comp.state, [5, 21, 63]);
 
 const out = {
   dates,
@@ -83,11 +112,13 @@ const out = {
   axis: "equity-trading-day (SPY)",
   mode: macroCount >= 2 ? "cross-asset" : "equity-internal",
   composite: {
-    sum: comp.sum, state: comp.state, net_last: netLast,
+    sum: comp.sum, state: comp.state, k: comp.k, net_last: netLast,
     state_last: comp.state[last], score_last: comp.sum[last],
-    active_legs: active, macro_legs: macroCount,
+    active_legs: active, k_last: kLast, macro_legs: macroCount,
+    hysteresis: { enter: 0.34, exit: 0.17 },
   },
-  legs: info.map((x) => ({ key: x.key, label: x.label, type: x.type, val: x.val, macro: x.macro, series: x.series, last: x.last, cont: x.cont })),
+  durations: dur,
+  legs: info.map((x) => ({ key: x.key, label: x.label, type: x.type, val: x.val, macro: x.macro, series: x.series, last: x.last, first_active: x.first_active, cont: x.cont })),
   breadth: frac == null ? null : { frac, leg: breadthLeg, pool_size: book.length, pool: "BOOK", pool_tickers: book },
   ladder: { rows: ladderRows, divergence: lad.divergence },
   receipts,

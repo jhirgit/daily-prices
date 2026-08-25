@@ -176,6 +176,46 @@ const cases = [
   { id: "ladder_nodiv", fn: "sectorLadder", args: { series: ladSeries, etfs: ladEtfsNoDiv } },
   { id: "ladder_missing", fn: "sectorLadder", args: { series: { E1: ladSeries.E1 }, etfs: [{ t: "E1", name: "x", side: null }, { t: "NOPE", name: "y", side: null }] } },
   { id: "ladder_ragged", fn: "sectorLadder", args: { series: RP.series, etfs: RP.names.map((t, i) => ({ t, name: t, side: i % 2 ? "offense" : "defense" })) } },
+  // v60: grp dedup — E2/E4 twin E1/E3; twins carry levels only (third/third21 null, twin_of set)
+  { id: "ladder_grp_twins", fn: "sectorLadder", args: { series: ladSeries, etfs: [
+    { t: "E1", name: "semi", side: "offense", grp: "semi" }, { t: "E2", name: "semi2", side: "offense", grp: "semi" },
+    { t: "E3", name: "gold", side: "defense", grp: "gold" }, { t: "E4", name: "gold2", side: "defense", grp: "gold" },
+    { t: "E5", name: "neu", side: null }, { t: "E6", name: "neu2", side: null } ] } },
+  { id: "ladder_grp_missing_primary", fn: "sectorLadder", args: { series: { E2: ladSeries.E2, E3: ladSeries.E3, E5: ladSeries.E5 }, etfs: [
+    { t: "E1", name: "semi", side: "offense", grp: "semi" }, { t: "E2", name: "semi2", side: "offense", grp: "semi" },
+    { t: "E3", name: "gold", side: "defense", grp: "gold" }, { t: "E5", name: "neu", side: null } ] } },
+
+  // v60 composite: hysteresis + first_actives / per-bar k
+  { id: "composite_hyst_hold", fn: "compositeSeries", args: { legs: [[1, 1, 0, 0, -1], [1, 0, 1, 0, -1], [1, 0, 0, 0, -1]] } },
+  { id: "composite_hyst_direct_flip", fn: "compositeSeries", args: { legs: [[1, -1], [1, -1], [1, -1]] } },
+  { id: "composite_first_actives", fn: "compositeSeries", args: { legs: [[1, 1, 1, 1], [0, 0, 1, 1], [0, 0, 0, -1]], firstActives: [0, 2, 3] } },
+  { id: "composite_ragged_fas", fn: "compositeSeries", args: { legs: [legR1, legR2, legT1, legT2, legB], firstActives: [22, 22, 60, 120, 199] } },
+
+  // v60 durations
+  { id: "durations_basic", fn: "durations", args: { state: ["neutral", "neutral", "risk-on", "risk-on", "risk-on", "defensive", "neutral", "neutral"] } },
+  { id: "durations_single", fn: "durations", args: { state: ["risk-on"] } },
+  { id: "durations_empty", fn: "durations", args: { state: [] } },
+
+  // v60 series helpers
+  { id: "retSeries_gaps", fn: "retSeries", args: { close: [100, 110, null, 121, 0, 50, 55] } },
+  { id: "rv_geo", fn: "rvSeries", args: { close: geo(60, 1.01), n: 21 } },
+  { id: "rv_ragged", fn: "rvSeries", args: { close: RP.series.EEE, n: 21 } },
+  { id: "pct_basic", fn: "pctRankSeries", args: { vals: rising(30), win: 10 } },
+  { id: "pct_nullwin", fn: "pctRankSeries", args: { vals: (() => { const v = rising(30); v[25] = null; return v; })(), win: 10 } },
+  { id: "pctVote_bounds", fn: "pctVoteSeries", args: { pct: [null, 0.30, 0.3001, 0.70, 0.6999, 0.5, 0, 1], lo: 0.30, hi: 0.70 } },
+  { id: "corrPair_same", fn: "corrPairSeries", args: { a: RP.series.AAA, b: RP.series.AAA, win: 63 } },
+  { id: "corrPair_ab", fn: "corrPairSeries", args: { a: RP.series.AAA, b: RP.series.BBB, win: 63 } },
+  { id: "corrPair_late", fn: "corrPairSeries", args: { a: RP.series.AAA, b: RP.series.FFF, win: 63 } },
+  { id: "corrVote_bounds", fn: "corrVoteSeries", args: { corr: [null, -0.2, -0.1999, 0.2, 0.1999, 0, -1, 1], thr: 0.20 } },
+  { id: "avgCorr_ragged", fn: "avgCorrSeries", args: { series: RP.series, names: RP.names, win: 63, minN: 3 } },
+  { id: "avgCorr_minN_gate", fn: "avgCorrSeries", args: { series: RP.series, names: RP.names, win: 63, minN: 7 } },
+  { id: "legFirstActive_ragged", fn: "legFirstActive", args: { cont: ratAB } },
+  { id: "legFirstActive_never", fn: "legFirstActive", args: { cont: [null, null, null] } },
+  { id: "firstNonNull_mid", fn: "firstNonNull", args: { arr: [null, null, 5, null] } },
+  { id: "firstNonNull_none", fn: "firstNonNull", args: { arr: [null, null] } },
+
+  // v60 baseRatesMulti
+  { id: "baseratesmulti_ragged", fn: "baseRatesMulti", args: { series: RP.series, names: RP.names, state: stateVec, hs: [5, 21, 63] } },
 ];
 
 // prefix-invariance (lookahead) cases from test_regime.js: truncate the flip
@@ -194,12 +234,23 @@ function run(fn, a) {
     case "trendLegSeries": return RC.trendLegSeries(a.px, a.invert);
     case "breadthSeries": return RC.breadthSeries(a.series, a.names);
     case "breadthLegSeries": return RC.breadthLegSeries(a.frac);
-    case "compositeSeries": return RC.compositeSeries(a.legs);
+    case "compositeSeries": return RC.compositeSeries(a.legs, a.firstActives);
     case "flips": return RC.flips(a.dates, a.state);
     case "baseRates": return RC.baseRates(a.series, a.names, a.state, a.H);
+    case "baseRatesMulti": return RC.baseRatesMulti(a.series, a.names, a.state, a.hs);
     case "rankReceipts": return RC.rankReceipts(a.series, a.names);
     case "ret": return RC.ret(a.close, a.lag);
     case "sectorLadder": return RC.sectorLadder(a.series, a.etfs);
+    case "durations": return RC.durations(a.state);
+    case "retSeries": return RC.retSeries(a.close);
+    case "rvSeries": return RC.rvSeries(a.close, a.n);
+    case "pctRankSeries": return RC.pctRankSeries(a.vals, a.win);
+    case "pctVoteSeries": return RC.pctVoteSeries(a.pct, a.lo, a.hi);
+    case "corrPairSeries": return RC.corrPairSeries(a.a, a.b, a.win);
+    case "corrVoteSeries": return RC.corrVoteSeries(a.corr, a.thr);
+    case "avgCorrSeries": return RC.avgCorrSeries(a.series, a.names, a.win, a.minN);
+    case "legFirstActive": return RC.legFirstActive(a.cont);
+    case "firstNonNull": return RC.firstNonNull(a.arr);
     default: throw new Error("unknown fn " + fn);
   }
 }
