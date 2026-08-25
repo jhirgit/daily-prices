@@ -10,8 +10,10 @@ history, trends, or "how did X do this week/month".
 
 - `https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/latest.json`
   — newest daily bar + newest delayed spot quote per ticker (compact; start here)
-- `https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/daily_prices.csv`
-  — full daily OHLC + adj_close + volume history, all tickers
+- `https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/daily_prices.csv.gz`
+  — full daily OHLC + adj_close + volume history, all tickers. **gzip-compressed**
+  (~4.7 MB; the raw 10-year CSV is ~17.5 MB) — gunzip before parsing (in the
+  browser via `DecompressionStream`). The uncompressed `.csv` is gone (404).
 - `https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/spot_quotes.csv`
   — history of delayed spot snapshots
 

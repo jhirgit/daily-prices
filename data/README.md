@@ -9,7 +9,7 @@ the live data. No server or auth required (the repository just needs to be
 | File | Raw URL | Contents |
 |------|---------|----------|
 | `latest.json` | https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/latest.json | Compact snapshot: newest daily bar + newest delayed quote per ticker. Small — best for "what's the latest price of X". |
-| `daily_prices.csv` | https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/daily_prices.csv | Full history of settled OHLC bars. |
+| `daily_prices.csv.gz` | https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/daily_prices.csv.gz | Full history of settled OHLC bars. **gzip-compressed** (~4.7 MB; ~17.5 MB uncompressed) — gunzip before parsing (browser: `DecompressionStream`). |
 | `spot_quotes.csv` | https://raw.githubusercontent.com/jhirgit/daily-prices/main/data/spot_quotes.csv | Full history of delayed spot quotes. |
 
 ## Using it in Claude.ai
