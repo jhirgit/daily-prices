@@ -922,7 +922,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         legs.append(s)
         leg_info.append({"key": key, "label": label, "type": "ratio",
                          "val": nm + "÷" + dn, "series": s, "last": s[-1],
-                         "cont": cont, "macro": bool(macro),
+                         "cont": cont, "macro": bool(macro), "voting": True,
                          "first_active": leg_first_active(cont)})
 
     def add_trend(label, key, tick_list, invert, macro):
@@ -934,19 +934,28 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         leg_info.append({"key": key, "label": label, "type": "trend",
                          "val": ("↓" if invert else "↑") + t, "series": s,
                          "last": s[-1], "cont": series[t], "macro": bool(macro),
+                         "voting": True,
                          "first_active": leg_first_active(series[t])})
 
     def add_corr(label, key, a_list, b_list, macro):
+        # v62: DISPLAY-ONLY (voting=False). The stocks-bonds correlation
+        # classifies the TAPE TYPE (growth- vs inflation-driven), not risk
+        # appetite: over 10y it voted +1 on 42% of days SPY sat >=5% below its
+        # 63d high (bonds hedging equity stress is not risk-on), and its seat
+        # in the denominator alone raised the defensive entry bar from -3/6 to
+        # -4/9 -- which is exactly why the composite never printed defensive
+        # through the March 2026 -8.6% drawdown. It stays on the panel as a
+        # tape-type read; it is NOT in the vote sum or the denominator.
         ta = _first_present(series, a_list)
         tb = _first_present(series, b_list)
         if not ta or not tb:
             return
         cont = corr_pair_series(series[ta], series[tb], 63)
         s = corr_vote_series(cont, 0.20)
-        legs.append(s)
         leg_info.append({"key": key, "label": label, "type": "corr",
                          "val": ta + "↔" + tb + " 63d", "series": s,
                          "last": s[-1], "cont": cont, "macro": bool(macro),
+                         "voting": False,
                          "first_active": first_non_null(cont)})
 
     def add_vol(label, key, tick_list, macro):
@@ -961,6 +970,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         leg_info.append({"key": key, "label": label, "type": "vol",
                          "val": t + " rv21" + ("" if pl is None else " p" + str(int(math.floor(pl * 100 + 0.5)))),
                          "series": s, "last": s[-1], "cont": rv, "macro": bool(macro),
+                         "voting": True,
                          "first_active": first_non_null(pct)})
 
     def add_disp(label, key, names):
@@ -974,6 +984,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         leg_info.append({"key": key, "label": label, "type": "disp",
                          "val": "avg corr" + ("" if pl is None else " p" + str(int(math.floor(pl * 100 + 0.5)))),
                          "series": s, "last": s[-1], "cont": ac, "macro": False,
+                         "voting": True,
                          "first_active": first_non_null(pct)})
 
     # ORDER is display/parity order: macro ratios, the dollar trend, the
@@ -999,6 +1010,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         leg_info.append({"key": "breadth_book_200d", "label": "Breadth (book >200d)",
                          "type": "breadth", "series": breadth_leg,
                          "last": breadth_leg[-1], "cont": frac, "macro": False,
+                         "voting": True,
                          "first_active": first_non_null(frac)})
     if book:
         add_disp("Book dispersion", "book_dispersion", book)
@@ -1009,10 +1021,10 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
                 "ladder": None, "receipts": {}, "base_rates": None,
                 "note": "no inputs available"}
 
-    fas = [x["first_active"] for x in leg_info]
+    fas = [x["first_active"] for x in leg_info if x["voting"]]
     comp = composite_series(legs, fas)
-    active = len(legs)
-    macro_count = sum(1 for x in leg_info if x.get("macro"))
+    active = len(legs)  # VOTING legs only; display-only legs are not in `legs`
+    macro_count = sum(1 for x in leg_info if x.get("macro") and x.get("voting"))
     last = len(comp["sum"]) - 1
     k_last = comp["k"][last] if last >= 0 else 0
     net_last = comp["sum"][last] / k_last if k_last else None
@@ -1051,6 +1063,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
     legs_out = [{
         "key": x["key"], "label": x["label"], "type": x["type"],
         "val": x.get("val"), "macro": x.get("macro", False),
+        "voting": x.get("voting", True),
         "series": x["series"], "last": x["last"],
         "first_active": x["first_active"],
         "cont": [_r(v) for v in x["cont"]],  # continuous underlying, for the per-metric sparklines

@@ -33,20 +33,20 @@ function addRatio(key, name, numList, denList, macro) {
   const cont = RC.ratio(series[nm], series[dn]);
   const s = RC.ratioLegSeries(cont);
   legs.push(s); legKeys.push(key);
-  info.push({ key, label: name, type: "ratio", val: nm + "÷" + dn, macro: !!macro, series: s, last: s[s.length - 1], cont, first_active: RC.legFirstActive(cont) });
+  info.push({ key, label: name, type: "ratio", val: nm + "÷" + dn, macro: !!macro, voting: true, series: s, last: s[s.length - 1], cont, first_active: RC.legFirstActive(cont) });
 }
 function addTrend(key, name, tickList, invert, macro) {
   const t = firstPresent(tickList); if (!t) return;
   const s = RC.trendLegSeries(series[t], invert);
   legs.push(s); legKeys.push(key);
-  info.push({ key, label: name, type: "trend", val: (invert ? "↓" : "↑") + t, macro: !!macro, series: s, last: s[s.length - 1], cont: series[t], first_active: RC.legFirstActive(series[t]) });
+  info.push({ key, label: name, type: "trend", val: (invert ? "↓" : "↑") + t, macro: !!macro, voting: true, series: s, last: s[s.length - 1], cont: series[t], first_active: RC.legFirstActive(series[t]) });
 }
 function addCorr(key, name, aList, bList, macro) {
+  // v62: DISPLAY-ONLY tape-type read — not pushed into legs (no vote, no denominator seat)
   const ta = firstPresent(aList), tb = firstPresent(bList); if (!ta || !tb) return;
   const cont = RC.corrPairSeries(series[ta], series[tb], 63);
   const s = RC.corrVoteSeries(cont, 0.20);
-  legs.push(s); legKeys.push(key);
-  info.push({ key, label: name, type: "corr", val: ta + "↔" + tb + " 63d", macro: !!macro, series: s, last: s[s.length - 1], cont, first_active: RC.firstNonNull(cont) });
+  info.push({ key, label: name, type: "corr", val: ta + "↔" + tb + " 63d", macro: !!macro, voting: false, series: s, last: s[s.length - 1], cont, first_active: RC.firstNonNull(cont) });
 }
 function addVol(key, name, tickList, macro) {
   const t = firstPresent(tickList); if (!t) return;
@@ -55,7 +55,7 @@ function addVol(key, name, tickList, macro) {
   const s = RC.pctVoteSeries(pct, 0.30, 0.70);
   legs.push(s); legKeys.push(key);
   const pl = pct.length ? pct[pct.length - 1] : null;
-  info.push({ key, label: name, type: "vol", val: t + " rv21" + (pl == null ? "" : " p" + Math.round(pl * 100)), macro: !!macro, series: s, last: s[s.length - 1], cont: rv, first_active: RC.firstNonNull(pct) });
+  info.push({ key, label: name, type: "vol", val: t + " rv21" + (pl == null ? "" : " p" + Math.round(pl * 100)), macro: !!macro, voting: true, series: s, last: s[s.length - 1], cont: rv, first_active: RC.firstNonNull(pct) });
 }
 function addDisp(key, name, names) {
   const ac = RC.avgCorrSeries(series, names, 63, 8);
@@ -64,7 +64,7 @@ function addDisp(key, name, names) {
   const s = RC.pctVoteSeries(pct, 0.30, 0.70);
   legs.push(s); legKeys.push(key);
   const pl = pct.length ? pct[pct.length - 1] : null;
-  info.push({ key, label: name, type: "disp", val: "avg corr" + (pl == null ? "" : " p" + Math.round(pl * 100)), macro: false, series: s, last: s[s.length - 1], cont: ac, first_active: RC.firstNonNull(pct) });
+  info.push({ key, label: name, type: "disp", val: "avg corr" + (pl == null ? "" : " p" + Math.round(pl * 100)), macro: false, voting: true, series: s, last: s[s.length - 1], cont: ac, first_active: RC.firstNonNull(pct) });
 }
 addRatio("credit_hy_ig", "Credit — HY vs IG", ["HYG"], ["LQD"], true);
 addRatio("copper_gold", "Copper / gold", ["CPER"], ["GLD"], true);
@@ -79,14 +79,14 @@ let breadthLeg = null;
 if (frac) {
   breadthLeg = RC.breadthLegSeries(frac);
   legs.push(breadthLeg); legKeys.push("breadth_book_200d");
-  info.push({ key: "breadth_book_200d", label: "Breadth (book >200d)", type: "breadth", val: null, macro: false, series: breadthLeg, last: breadthLeg[breadthLeg.length - 1], cont: frac, first_active: RC.firstNonNull(frac) });
+  info.push({ key: "breadth_book_200d", label: "Breadth (book >200d)", type: "breadth", val: null, macro: false, voting: true, series: breadthLeg, last: breadthLeg[breadthLeg.length - 1], cont: frac, first_active: RC.firstNonNull(frac) });
 }
 if (book.length) addDisp("book_dispersion", "Book dispersion", book);
 
-const fas = info.map((x) => x.first_active);
+const fas = info.filter((x) => x.voting).map((x) => x.first_active);
 const comp = RC.compositeSeries(legs, fas);
-const active = legs.length;
-const macroCount = info.filter((x) => x.macro).length;
+const active = legs.length;  // voting legs only
+const macroCount = info.filter((x) => x.macro && x.voting).length;
 const last = comp.sum.length - 1;
 const kLast = last >= 0 ? comp.k[last] : 0;
 const netLast = kLast ? comp.sum[last] / kLast : null;
@@ -118,7 +118,7 @@ const out = {
     hysteresis: { enter: 0.34, exit: 0.17 },
   },
   durations: dur,
-  legs: info.map((x) => ({ key: x.key, label: x.label, type: x.type, val: x.val, macro: x.macro, series: x.series, last: x.last, first_active: x.first_active, cont: x.cont })),
+  legs: info.map((x) => ({ key: x.key, label: x.label, type: x.type, val: x.val, macro: x.macro, voting: x.voting, series: x.series, last: x.last, first_active: x.first_active, cont: x.cont })),
   breadth: frac == null ? null : { frac, leg: breadthLeg, pool_size: book.length, pool: "BOOK", pool_tickers: book },
   ladder: { rows: ladderRows, divergence: lad.divergence },
   receipts,
