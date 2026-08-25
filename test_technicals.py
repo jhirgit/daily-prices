@@ -294,6 +294,96 @@ check_true("coiled needs a full trailing year",
            all(v is None for v in co[:T.ATR_RANK_WIN - 1]))
 check_true("buyers flag defined after 50 sessions", bu[60] is not None)
 
+print("\nregime port -- golden-fixture parity vs the JS oracle (SPEC-8)")
+# The client-side regime engine (deploy-jr-dash/regime_core.js) is the ORACLE.
+# tools/regime_parity_gen.js froze its output for a shared fixture into
+# parity/expected.json; here the Python port (regime.py) is run on the SAME
+# parity/fixture.json and must match EXACTLY for integer votes / states / tiers
+# / streaks and within abs<1e-9 for floats (blend, sinceRet, base-rate medians).
+# Any divergence blocks the port. Regenerate the golden data with:
+#   node tools/regime_parity_gen.js
+import json
+import os
+import regime as RG
+
+_PAR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "parity")
+_PARITY_TOL = 1e-9
+
+
+def _regime_run_case(fn, a):
+    if fn == "ratio": return RG.ratio(a["num"], a["den"])
+    if fn == "ratioLegSeries": return RG.ratio_leg_series(a["rat"])
+    if fn == "trendLegSeries": return RG.trend_leg_series(a["px"], a["invert"])
+    if fn == "breadthSeries": return RG.breadth_series(a["series"], a["names"])
+    if fn == "breadthLegSeries": return RG.breadth_leg_series(a["frac"])
+    if fn == "compositeSeries": return RG.composite_series(a["legs"])
+    if fn == "flips": return RG.flips(a["dates"], a["state"])
+    if fn == "baseRates": return RG.base_rates(a["series"], a["names"], a["state"], a.get("H") or 21)
+    if fn == "rankReceipts": return RG.rank_receipts(a["series"], a["names"])
+    if fn == "ret": return RG.ret(a["close"], a["lag"])
+    if fn == "sectorLadder": return RG.sector_ladder(a["series"], a["etfs"])
+    raise ValueError("unknown fn " + fn)
+
+
+def _regime_diff(exp, act, path=""):
+    """Tolerant deep compare: exact for None/str/bool, abs<=1e-9 for numbers
+    (which is also exact for integer votes/streaks), recursive for list/dict."""
+    if exp is None:
+        return [] if act is None else [f"{path}: expected null, got {act!r}"]
+    if isinstance(exp, bool) or isinstance(act, bool):
+        return [] if exp == act else [f"{path}: bool {exp!r} != {act!r}"]
+    if isinstance(exp, str):
+        return [] if exp == act else [f"{path}: str {exp!r} != {act!r}"]
+    if isinstance(exp, (int, float)):
+        if not isinstance(act, (int, float)):
+            return [f"{path}: number {exp!r} vs {act!r}"]
+        return [] if abs(exp - act) <= _PARITY_TOL else [f"{path}: {exp!r} != {act!r}"]
+    if isinstance(exp, list):
+        if not isinstance(act, list) or len(exp) != len(act):
+            return [f"{path}: list shape {len(exp) if isinstance(exp, list) else '?'} vs "
+                    f"{len(act) if isinstance(act, list) else type(act).__name__}"]
+        out = []
+        for i, (e, a) in enumerate(zip(exp, act)):
+            out += _regime_diff(e, a, f"{path}[{i}]")
+        return out
+    if isinstance(exp, dict):
+        if not isinstance(act, dict):
+            return [f"{path}: dict vs {type(act).__name__}"]
+        out = []
+        if set(exp) != set(act):
+            out.append(f"{path}: keys {sorted(exp)} != {sorted(act)}")
+        for k in set(exp) & set(act):
+            out += _regime_diff(exp[k], act[k], f"{path}.{k}")
+        return out
+    return [f"{path}: unhandled {type(exp).__name__}"]
+
+
+try:
+    with open(os.path.join(_PAR, "fixture.json"), encoding="utf-8") as _fh:
+        _cases = json.load(_fh)["cases"]
+    with open(os.path.join(_PAR, "expected.json"), encoding="utf-8") as _fh:
+        _expected = json.load(_fh)
+except OSError as _e:
+    check_true("regime parity fixtures present", False, str(_e))
+    _cases, _expected = [], {}
+
+_by_fn = {}
+_mismatch_examples = []
+for _c in _cases:
+    _act = _regime_run_case(_c["fn"], _c["args"])
+    _mism = _regime_diff(_expected[_c["id"]], _act, _c["id"])
+    _by_fn.setdefault(_c["fn"], [0, 0])
+    _by_fn[_c["fn"]][0] += 0 if _mism else 1
+    _by_fn[_c["fn"]][1] += 1
+    if _mism and len(_mismatch_examples) < 8:
+        _mismatch_examples += _mism[:2]
+for _fn in sorted(_by_fn):
+    _ok, _tot = _by_fn[_fn]
+    check_true(f"regime parity: {_fn} ({_ok}/{_tot} cases)", _ok == _tot,
+               "" if _ok == _tot else "; ".join(_mismatch_examples[:4]))
+check_true(f"regime parity: all {len(_cases)} fixture cases match the JS oracle",
+           bool(_cases) and all(v[0] == v[1] for v in _by_fn.values()))
+
 print("\n" + ("-" * 60))
 if FAILS:
     print(f"{len(FAILS)} FAILED: {', '.join(FAILS)}")

@@ -40,6 +40,8 @@ import re
 import sqlite3
 from datetime import datetime, timezone
 
+import regime  # cross-sectional regime/rotation/rank-receipt port (SPEC-8)
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DB = os.path.join(HERE, "prices.db")
 DEFAULT_TICKERS = os.path.join(HERE, "tickers.txt")
@@ -838,6 +840,18 @@ def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
                 rs = round((a[-1] / a[-127]) / (b[-1] / b[-127]) - 1, 6)
         v["momentum"]["rs_126_vs_proxy"] = rs
 
+    # Cross-sectional regime layer (SPEC-8). Computed on the EQUITY trading-day
+    # axis (SPY bars) from the same SQLite source -- resolves item #3 (the
+    # client's crypto-inclusive union axis) at the source. Emitted ALONGSIDE the
+    # per-ticker records (Phase 1): the browser still computes its own copy, so
+    # this block can be diffed against the live client before the render flips.
+    # The receipts pool is the emitted (>=MIN_BARS) technicals set, mirroring the
+    # client's TECH.tickers filter.
+    try:
+        regime_block = regime.build_regime(conn, set(out.keys()))
+    except Exception as exc:  # never let the regime layer break the per-ticker output
+        regime_block = {"error": f"{type(exc).__name__}: {exc}"}
+
     conn.close()
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -895,6 +909,10 @@ def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
         "count": len(out),
         "skipped": skipped,
         "tickers": out,
+        # Cross-sectional risk-appetite composite, sector-rotation ladder and
+        # 12-1 rank receipts (SPEC-8). See regime.py; parity with the client
+        # engine (regime_core.js) is pinned by test_technicals.py.
+        "regime": regime_block,
     }
 
 
