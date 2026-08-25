@@ -71,7 +71,7 @@ Object.keys(rr).forEach((t) => {
 });
 
 const lad = RC.sectorLadder(series, REG_ETFS);
-const ladderRows = lad.rows.map((r) => ({ t: r.t, name: r.name, side: r.side, r63: r.r63, r126: r.r126, blend: r.blend, third: r.third, streak: r.streak }));
+const ladderRows = lad.rows.map((r) => ({ t: r.t, name: r.name, side: r.side, r21: r.r21, r63: r.r63, r126: r.r126, blend: r.blend, third: r.third, third21: r.third21, streak: r.streak }));
 
 const br = RC.baseRates(series, book, comp.state, 21);
 const baseRates = {};

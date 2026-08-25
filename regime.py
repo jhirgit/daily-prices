@@ -344,11 +344,16 @@ def sector_ladder(series, etfs):
     """Rank sector ETFs by a 63d/126d blended return, tag each into thirds of
     the field by 63d return with a streak, sort by blend desc, and flag an
     offense/defense divergence (an offense AND a defense sleeve both in the top
-    third). `etfs` is a list of {"t","name","side"}. Port of RC.sectorLadder."""
+    third). Each row also carries the SHORT-TERM read: r21 (21 trading sessions
+    ~= 1 calendar month) and third21, the row's third of the field by 21d
+    return on the last bar -- the renderer surfaces 21d-vs-63d disagreement as
+    an early-turn tell. `etfs` is a list of {"t","name","side"}. Port of
+    RC.sectorLadder."""
     present = [e for e in etfs if series.get(e["t"])]
     rows = []
     for e in present:
         c = series[e["t"]]
+        r21 = ret(c, 21)
         r63 = ret(c, 63)
         r126 = ret(c, 126)
         if r63 is not None and r126 is not None:
@@ -356,7 +361,7 @@ def sector_ladder(series, etfs):
         else:
             blend = r63 if r63 is not None else r126
         rows.append({"t": e["t"], "name": e["name"], "side": e.get("side"),
-                     "r63": r63, "r126": r126, "blend": blend})
+                     "r21": r21, "r63": r63, "r126": r126, "blend": blend})
     n = len(series[present[0]["t"]]) if present else 0
 
     r63ser = []
@@ -368,6 +373,16 @@ def sector_ladder(series, etfs):
             b = c[i]
             s[i] = (b / a - 1) if (a is not None and b is not None and a > 0) else None
         r63ser.append(s)
+
+    r21ser = []
+    for e in present:
+        c = series[e["t"]]
+        s = [None] * len(c)
+        for i in range(len(c)):
+            a = c[i - 21] if i >= 21 else None
+            b = c[i]
+            s[i] = (b / a - 1) if (a is not None and b is not None and a > 0) else None
+        r21ser.append(s)
 
     def third_at(k, i):
         mine = r63ser[k][i]
@@ -387,10 +402,29 @@ def sector_ladder(series, etfs):
             return "bottom"
         return "mid"
 
+    def third21_at(k, i):
+        mine = r21ser[k][i]
+        if mine is None:
+            return None
+        vals = []
+        for q in range(len(present)):
+            v = r21ser[q][i]
+            if v is not None:
+                vals.append(v)
+        vals.sort(reverse=True)  # descending, stable -> ties keep original order
+        L = len(vals)
+        pos = vals.index(mine)   # first occurrence, mirrors JS Array.indexOf
+        if pos < math.ceil(L / 3):
+            return "top"
+        if pos >= L - math.ceil(L / 3):
+            return "bottom"
+        return "mid"
+
     last = n - 1
     for k in range(len(rows)):
         t_third = third_at(k, last) if last >= 0 else None
         rows[k]["third"] = t_third
+        rows[k]["third21"] = third21_at(k, last) if last >= 0 else None
         rows[k]["streak"] = 0
         if t_third == "top" or t_third == "bottom":
             i = last
@@ -636,8 +670,9 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
     lad = sector_ladder(series, REG_ETFS)
     ladder_rows = [{
         "t": r["t"], "name": r["name"], "side": r["side"],
-        "r63": _r(r["r63"]), "r126": _r(r["r126"]), "blend": _r(r["blend"]),
-        "third": r["third"], "streak": r["streak"],
+        "r21": _r(r["r21"]), "r63": _r(r["r63"]), "r126": _r(r["r126"]),
+        "blend": _r(r["blend"]), "third": r["third"], "third21": r["third21"],
+        "streak": r["streak"],
     } for r in lad["rows"]]
 
     br = base_rates(series, book, comp["state"], 21)

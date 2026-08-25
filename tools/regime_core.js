@@ -12,6 +12,11 @@
 // any behavior change must stay logic-identical to the inline copy, and the Node
 // test suite (test/test_regime.js) is the guardrail that proves it.
 //
+// v56: sectorLadder additionally carries r21 (21-session ≈ 1-month return) and
+// third21 (last-bar third of the field by 21d return) — the ladder's short-term
+// trend read. Added ORACLE-FIRST (no inline index.html copy exists since #8
+// Phase 3); daily-prices/regime.py ports it and the parity fixtures pin it.
+//
 // UMD-ish guard: works in Node (module.exports) AND the browser (window.RC).
 //
 // Semantics reference: TECHNICALS_SPEC.md §4-§6.  This is an EQUITY-INTERNAL /
@@ -63,12 +68,14 @@
   function ret(close,lag){var i=close.length-1,a=i>=lag?close[i-lag]:null,b=close[i];return(a!=null&&b!=null&&a>0)?b/a-1:null;}
   function sectorLadder(series,etfs){
     var present=etfs.filter(function(e){return series[e.t];});
-    var rows=present.map(function(e){var c=series[e.t],r63=ret(c,63),r126=ret(c,126),blend=(r63!=null&&r126!=null)?(r63+r126)/2:(r63!=null?r63:r126);return{t:e.t,name:e.name,side:e.side||null,r63:r63,r126:r126,blend:blend};});
+    var rows=present.map(function(e){var c=series[e.t],r21=ret(c,21),r63=ret(c,63),r126=ret(c,126),blend=(r63!=null&&r126!=null)?(r63+r126)/2:(r63!=null?r63:r126);return{t:e.t,name:e.name,side:e.side||null,r21:r21,r63:r63,r126:r126,blend:blend};});
     var n=present.length?series[present[0].t].length:0;
     var r63ser=present.map(function(e){var c=series[e.t],s=new Array(c.length);for(var i=0;i<c.length;i++){var a=i>=63?c[i-63]:null,b=c[i];s[i]=(a!=null&&b!=null&&a>0)?b/a-1:null;}return s;});
+    var r21ser=present.map(function(e){var c=series[e.t],s=new Array(c.length);for(var i=0;i<c.length;i++){var a=i>=21?c[i-21]:null,b=c[i];s[i]=(a!=null&&b!=null&&a>0)?b/a-1:null;}return s;});
     function thirdAt(k,i){var mine=r63ser[k][i];if(mine==null)return null;var vals=[];for(var q=0;q<present.length;q++){var v=r63ser[q][i];if(v!=null)vals.push(v);}vals.sort(function(p,z){return z-p;});var L=vals.length,pos=vals.indexOf(mine);if(pos<Math.ceil(L/3))return"top";if(pos>=L-Math.ceil(L/3))return"bottom";return"mid";}
+    function third21At(k,i){var mine=r21ser[k][i];if(mine==null)return null;var vals=[];for(var q=0;q<present.length;q++){var v=r21ser[q][i];if(v!=null)vals.push(v);}vals.sort(function(p,z){return z-p;});var L=vals.length,pos=vals.indexOf(mine);if(pos<Math.ceil(L/3))return"top";if(pos>=L-Math.ceil(L/3))return"bottom";return"mid";}
     var last=n-1;
-    rows.forEach(function(row,k){var tThird=thirdAt(k,last);row.third=tThird;row.streak=0;if(tThird==="top"||tThird==="bottom"){var i=last,s=0;while(i>=0&&thirdAt(k,i)===tThird){s++;i--;}row.streak=s;}});
+    rows.forEach(function(row,k){var tThird=thirdAt(k,last);row.third=tThird;row.third21=third21At(k,last);row.streak=0;if(tThird==="top"||tThird==="bottom"){var i=last,s=0;while(i>=0&&thirdAt(k,i)===tThird){s++;i--;}row.streak=s;}});
     rows.sort(function(a,b){return(b.blend==null?-9e9:b.blend)-(a.blend==null?-9e9:a.blend);});
     var topOff=rows.some(function(r){return r.third==="top"&&r.side==="offense";}),topDef=rows.some(function(r){return r.third==="top"&&r.side==="defense";});
     return{rows:rows,divergence:topOff&&topDef};
