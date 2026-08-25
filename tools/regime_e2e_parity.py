@@ -72,7 +72,7 @@ def main():
     oracle_path = os.path.join(PAR, "oracle_regime.json")
     with open(panel_path, "w", encoding="utf-8") as fh:
         json.dump({"dates": dates, "series": series, "emitted": emitted,
-                   "book_universe": RG.BOOK_UNION}, fh)
+                   "book_universe": RG.BOOK_UNION, "reg_etfs": RG.REG_ETFS}, fh)
 
     subprocess.run(["node", os.path.join(HERE, "tools", "regime_emit_oracle.js"),
                     panel_path, oracle_path], check=True)

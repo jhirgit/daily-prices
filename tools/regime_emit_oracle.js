@@ -18,16 +18,9 @@ const [, , panelPath, outPath] = process.argv;
 const P = JSON.parse(fs.readFileSync(panelPath, "utf8"));
 const series = P.series, dates = P.dates;
 
-// --- verbatim from index.html ---
-const REG_ETFS = [
-  { t: "SMH", name: "Semis", side: "offense" }, { t: "SOXX", name: "Semis (SOXX)", side: "offense" },
-  { t: "QQQ", name: "Nasdaq 100", side: "offense" }, { t: "IWM", name: "Small caps", side: "offense" },
-  { t: "IGV", name: "Software", side: "offense" }, { t: "ARTY", name: "AI basket", side: "offense" },
-  { t: "SPY", name: "S&P 500", side: null }, { t: "EWY", name: "Korea", side: null }, { t: "ICOP", name: "Copper miners", side: null },
-  { t: "GDX", name: "Gold miners", side: "defense" }, { t: "GDXJ", name: "Jr gold miners", side: "defense" },
-  { t: "RING", name: "Gold miners (RING)", side: "defense" }, { t: "SILJ", name: "Jr silver miners", side: "defense" },
-  { t: "SLV", name: "Silver", side: "defense" },
-];
+// REG_ETFS is passed in via panel.json (sourced from regime.py's REG_ETFS) so it
+// can never drift from the port; the leg calls below stay verbatim from index.html.
+const REG_ETFS = P.reg_etfs;
 function firstPresent(list) { for (let i = 0; i < list.length; i++) if (series[list[i]]) return list[i]; return null; }
 
 const etfSet = {}; REG_ETFS.forEach((e) => { etfSet[e.t] = 1; });
@@ -40,13 +33,13 @@ function addRatio(key, name, numList, denList, macro) {
   const cont = RC.ratio(series[nm], series[dn]);
   const s = RC.ratioLegSeries(cont);
   legs.push(s); legKeys.push(key);
-  info.push({ key, label: name, type: "ratio", val: nm + "÷" + dn, macro: !!macro, series: s, last: s[s.length - 1] });
+  info.push({ key, label: name, type: "ratio", val: nm + "÷" + dn, macro: !!macro, series: s, last: s[s.length - 1], cont });
 }
 function addTrend(key, name, tickList, invert, macro) {
   const t = firstPresent(tickList); if (!t) return;
   const s = RC.trendLegSeries(series[t], invert);
   legs.push(s); legKeys.push(key);
-  info.push({ key, label: name, type: "trend", val: (invert ? "↓" : "↑") + t, macro: !!macro, series: s, last: s[s.length - 1] });
+  info.push({ key, label: name, type: "trend", val: (invert ? "↓" : "↑") + t, macro: !!macro, series: s, last: s[s.length - 1], cont: series[t] });
 }
 addRatio("credit_hy_ig", "Credit — HY vs IG", ["HYG"], ["LQD"], true);
 addRatio("copper_gold", "Copper / gold", ["CPER"], ["GLD"], true);
@@ -59,7 +52,7 @@ let breadthLeg = null;
 if (frac) {
   breadthLeg = RC.breadthLegSeries(frac);
   legs.push(breadthLeg); legKeys.push("breadth_book_200d");
-  info.push({ key: "breadth_book_200d", label: "Breadth (book >200d)", type: "breadth", val: null, macro: false, series: breadthLeg, last: breadthLeg[breadthLeg.length - 1] });
+  info.push({ key: "breadth_book_200d", label: "Breadth (book >200d)", type: "breadth", val: null, macro: false, series: breadthLeg, last: breadthLeg[breadthLeg.length - 1], cont: frac });
 }
 
 const comp = RC.compositeSeries(legs);
@@ -94,7 +87,7 @@ const out = {
     state_last: comp.state[last], score_last: comp.sum[last],
     active_legs: active, macro_legs: macroCount,
   },
-  legs: info.map((x) => ({ key: x.key, label: x.label, type: x.type, val: x.val, macro: x.macro, series: x.series, last: x.last })),
+  legs: info.map((x) => ({ key: x.key, label: x.label, type: x.type, val: x.val, macro: x.macro, series: x.series, last: x.last, cont: x.cont })),
   breadth: frac == null ? null : { frac, leg: breadthLeg, pool_size: book.length, pool: "BOOK", pool_tickers: book },
   ladder: { rows: ladderRows, divergence: lad.divergence },
   receipts,

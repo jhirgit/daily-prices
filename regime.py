@@ -418,6 +418,9 @@ REG_ETFS = [
     {"t": "IWM", "name": "Small caps", "side": "offense"},
     {"t": "IGV", "name": "Software", "side": "offense"},
     {"t": "ARTY", "name": "AI basket", "side": "offense"},
+    {"t": "DTCR", "name": "Data centers", "side": "offense"},
+    {"t": "DRAM", "name": "Memory", "side": "offense"},
+    {"t": "GRID", "name": "Grid infra", "side": "offense"},
     {"t": "SPY", "name": "S&P 500", "side": None},
     {"t": "EWY", "name": "Korea", "side": None},
     {"t": "ICOP", "name": "Copper miners", "side": None},
@@ -571,7 +574,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         legs.append(s)
         leg_info.append({"key": key, "label": label, "type": "ratio",
                          "val": nm + "÷" + dn, "series": s, "last": s[-1],
-                         "macro": bool(macro)})
+                         "cont": cont, "macro": bool(macro)})
 
     def add_trend(label, key, tick_list, invert, macro):
         t = _first_present(series, tick_list)
@@ -581,7 +584,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         legs.append(s)
         leg_info.append({"key": key, "label": label, "type": "trend",
                          "val": ("↓" if invert else "↑") + t, "series": s,
-                         "last": s[-1], "macro": bool(macro)})
+                         "last": s[-1], "cont": series[t], "macro": bool(macro)})
 
     # ORDER matters for parity with the client: macro ratios, then the trend,
     # then the equity ratios, then breadth (exactly the addRatio/addTrend order
@@ -601,7 +604,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         legs.append(breadth_leg)
         leg_info.append({"key": "breadth_book_200d", "label": "Breadth (book >200d)",
                          "type": "breadth", "series": breadth_leg,
-                         "last": breadth_leg[-1], "macro": False})
+                         "last": breadth_leg[-1], "cont": frac, "macro": False})
 
     if not legs:
         return {"dates": dates, "asof": dates[-1] if dates else None,
@@ -645,6 +648,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         "key": x["key"], "label": x["label"], "type": x["type"],
         "val": x.get("val"), "macro": x.get("macro", False),
         "series": x["series"], "last": x["last"],
+        "cont": [_r(v) for v in x["cont"]],  # continuous underlying, for the per-metric sparklines
     } for x in leg_info]
 
     return {
