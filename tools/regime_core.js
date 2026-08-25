@@ -12,7 +12,7 @@
 // any behavior change must stay logic-identical to the inline copy, and the Node
 // test suite (test/test_regime.js) is the guardrail that proves it.
 //
-// v56: sectorLadder additionally carries r21 (21-session ≈ 1-month return) and
+// v58 (jr-dash): sectorLadder additionally carries r21 (21-session ≈ 1-month return) and
 // third21 (last-bar third of the field by 21d return) — the ladder's short-term
 // trend read. Added ORACLE-FIRST (no inline index.html copy exists since #8
 // Phase 3); daily-prices/regime.py ports it and the parity fixtures pin it.
