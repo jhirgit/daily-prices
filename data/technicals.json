@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-25T05:19:03Z",
+  "generated_at": "2026-08-25T13:55:04Z",
   "method": {
     "regime_gate": "Over the last 90 sessions: trending if log-price R^2 >= 0.85; mean_reverting if R^2 < 0.35 and SMA20 crossings <= 7.0 per 100 sessions; else neither.",
     "regime_calibration": "Thresholds are Monte-Carlo calibrated against a random-walk null (2,000 draws, 90-session windows). R^2 >= 0.85 is the p90 of that null -- note that R^2 >= 0.50 would be met by 44.7% of pure random walks, which is why the common 'it looks trendy' threshold is useless. The Lo-MacKinlay variance ratio is reported as a diagnostic but does NOT classify: a sinusoid is locally smooth, so cyclical data returns VR of 3.9-11.3, far above 1, not below it.",
@@ -120,7 +120,7 @@
       "Survivorship-biased by construction: these are names that earned their way onto the watchlist. A description of their past, not an expectation."
     ]
   },
-  "count": 114,
+  "count": 115,
   "skipped": [
     {
       "ticker": "6981.T",
@@ -317,7 +317,7 @@
         "vs_200dma": 0.254838,
         "vs_50dma": -0.0858,
         "tsmom_12m": 1,
-        "rank_universe": 0.912,
+        "rank_universe": 0.913,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.074353
       },
@@ -521,7 +521,7 @@
         "vs_200dma": 0.607609,
         "vs_50dma": 0.014762,
         "tsmom_12m": 1,
-        "rank_universe": 0.947,
+        "rank_universe": 0.948,
         "rank_group": 0.952,
         "rs_126_vs_proxy": 1.121584
       },
@@ -623,7 +623,7 @@
         "vs_200dma": 0.179917,
         "vs_50dma": 0.343257,
         "tsmom_12m": 1,
-        "rank_universe": 0.211,
+        "rank_universe": 0.217,
         "rank_group": 0.125,
         "rs_126_vs_proxy": -0.030799
       },
@@ -725,7 +725,7 @@
         "vs_200dma": 0.079697,
         "vs_50dma": 0.192343,
         "tsmom_12m": 1,
-        "rank_universe": 0.719,
+        "rank_universe": 0.722,
         "rank_group": 0.938,
         "rs_126_vs_proxy": -0.223295
       },
@@ -827,7 +827,7 @@
         "vs_200dma": -0.015272,
         "vs_50dma": 0.210268,
         "tsmom_12m": 1,
-        "rank_universe": 0.184,
+        "rank_universe": 0.191,
         "rank_group": 0.062,
         "rs_126_vs_proxy": -0.177046
       },
@@ -929,7 +929,7 @@
         "vs_200dma": 0.265597,
         "vs_50dma": -0.20506,
         "tsmom_12m": 1,
-        "rank_universe": 0.632,
+        "rank_universe": 0.635,
         "rank_group": 0.381,
         "rs_126_vs_proxy": 0.634112
       },
@@ -1031,7 +1031,7 @@
         "vs_200dma": 0.380325,
         "vs_50dma": -0.103719,
         "tsmom_12m": 1,
-        "rank_universe": 0.895,
+        "rank_universe": 0.896,
         "rank_group": 0.857,
         "rs_126_vs_proxy": 0.754226
       },
@@ -1235,7 +1235,7 @@
         "vs_200dma": -0.115332,
         "vs_50dma": -0.279368,
         "tsmom_12m": -1,
-        "rank_universe": 0.237,
+        "rank_universe": 0.243,
         "rank_group": 0.095,
         "rs_126_vs_proxy": -0.104893
       },
@@ -1337,7 +1337,7 @@
         "vs_200dma": 0.239682,
         "vs_50dma": 0.004294,
         "tsmom_12m": 1,
-        "rank_universe": 0.596,
+        "rank_universe": 0.6,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.256557
       },
@@ -1439,7 +1439,7 @@
         "vs_200dma": 0.200023,
         "vs_50dma": -0.021492,
         "tsmom_12m": 1,
-        "rank_universe": 0.851,
+        "rank_universe": 0.852,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.112701
       },
@@ -1541,7 +1541,7 @@
         "vs_200dma": 0.288356,
         "vs_50dma": 0.378871,
         "tsmom_12m": 1,
-        "rank_universe": 0.561,
+        "rank_universe": 0.565,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.090409
       },
@@ -1643,7 +1643,7 @@
         "vs_200dma": -0.028362,
         "vs_50dma": -0.075281,
         "tsmom_12m": 1,
-        "rank_universe": 0.421,
+        "rank_universe": 0.426,
         "rank_group": 0.19,
         "rs_126_vs_proxy": -0.176933
       },
@@ -2051,7 +2051,7 @@
         "vs_200dma": -0.044938,
         "vs_50dma": -0.033378,
         "tsmom_12m": 1,
-        "rank_universe": 0.167,
+        "rank_universe": 0.174,
         "rank_group": 0.25,
         "rs_126_vs_proxy": -0.196422
       },
@@ -2153,8 +2153,8 @@
         "vs_200dma": 0.14017,
         "vs_50dma": 0.203324,
         "tsmom_12m": -1,
-        "rank_universe": 0.079,
-        "rank_group": 0.111,
+        "rank_universe": 0.078,
+        "rank_group": 0.105,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -2255,8 +2255,8 @@
         "vs_200dma": 0.113242,
         "vs_50dma": 0.102381,
         "tsmom_12m": 1,
-        "rank_universe": 0.474,
-        "rank_group": 0.778,
+        "rank_universe": 0.478,
+        "rank_group": 0.789,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -2357,7 +2357,7 @@
         "vs_200dma": 0.06375,
         "vs_50dma": -0.102671,
         "tsmom_12m": 1,
-        "rank_universe": 0.789,
+        "rank_universe": 0.791,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.18742
       },
@@ -2459,7 +2459,7 @@
         "vs_200dma": 0.119568,
         "vs_50dma": 0.239934,
         "tsmom_12m": 1,
-        "rank_universe": 0.404,
+        "rank_universe": 0.409,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.088572
       },
@@ -2561,7 +2561,7 @@
         "vs_200dma": 0.006261,
         "vs_50dma": -0.114584,
         "tsmom_12m": 1,
-        "rank_universe": 0.956,
+        "rank_universe": 0.957,
         "rank_group": 0.833,
         "rs_126_vs_proxy": -0.185554
       },
@@ -2765,8 +2765,8 @@
         "vs_200dma": 0.103012,
         "vs_50dma": 0.033046,
         "tsmom_12m": 1,
-        "rank_universe": 0.447,
-        "rank_group": 0.722,
+        "rank_universe": 0.452,
+        "rank_group": 0.737,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -2867,7 +2867,7 @@
         "vs_200dma": 0.371041,
         "vs_50dma": -0.01457,
         "tsmom_12m": 1,
-        "rank_universe": 0.693,
+        "rank_universe": 0.696,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.634732
       },
@@ -3071,7 +3071,7 @@
         "vs_200dma": 0.292992,
         "vs_50dma": -0.094211,
         "tsmom_12m": 1,
-        "rank_universe": 0.737,
+        "rank_universe": 0.739,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.652016
       },
@@ -3173,7 +3173,7 @@
         "vs_200dma": 0.073846,
         "vs_50dma": -0.033865,
         "tsmom_12m": 1,
-        "rank_universe": 0.553,
+        "rank_universe": 0.557,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.015974
       },
@@ -3275,7 +3275,7 @@
         "vs_200dma": 0.110419,
         "vs_50dma": 0.002091,
         "tsmom_12m": 1,
-        "rank_universe": 0.5,
+        "rank_universe": 0.504,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.007213
       },
@@ -3377,8 +3377,8 @@
         "vs_200dma": 0.232822,
         "vs_50dma": 0.281139,
         "tsmom_12m": -1,
-        "rank_universe": 0.053,
-        "rank_group": 0.056,
+        "rank_universe": 0.052,
+        "rank_group": 0.053,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -3479,7 +3479,7 @@
         "vs_200dma": 0.060575,
         "vs_50dma": 0.336006,
         "tsmom_12m": -1,
-        "rank_universe": 0.018,
+        "rank_universe": 0.017,
         "rank_group": 0.1,
         "rs_126_vs_proxy": 0.180794
       },
@@ -3581,7 +3581,7 @@
         "vs_200dma": 0.209558,
         "vs_50dma": -0.030245,
         "tsmom_12m": 1,
-        "rank_universe": 0.833,
+        "rank_universe": 0.835,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.108249
       },
@@ -3683,7 +3683,7 @@
         "vs_200dma": 0.111088,
         "vs_50dma": 0.236441,
         "tsmom_12m": 1,
-        "rank_universe": 0.465,
+        "rank_universe": 0.47,
         "rank_group": 0.688,
         "rs_126_vs_proxy": -0.11699
       },
@@ -3785,7 +3785,7 @@
         "vs_200dma": 0.150549,
         "vs_50dma": -0.182345,
         "tsmom_12m": 1,
-        "rank_universe": 0.842,
+        "rank_universe": 0.843,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.272192
       },
@@ -3887,7 +3887,7 @@
         "vs_200dma": 0.177026,
         "vs_50dma": 0.225857,
         "tsmom_12m": 1,
-        "rank_universe": 0.298,
+        "rank_universe": 0.304,
         "rank_group": 0.312,
         "rs_126_vs_proxy": 0.066255
       },
@@ -3989,8 +3989,8 @@
         "vs_200dma": 0.046818,
         "vs_50dma": 0.126795,
         "tsmom_12m": 1,
-        "rank_universe": 0.316,
-        "rank_group": 0.556,
+        "rank_universe": 0.322,
+        "rank_group": 0.579,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -4091,7 +4091,7 @@
         "vs_200dma": 0.167049,
         "vs_50dma": 0.279339,
         "tsmom_12m": 1,
-        "rank_universe": 0.386,
+        "rank_universe": 0.391,
         "rank_group": 0.286,
         "rs_126_vs_proxy": 0.0
       },
@@ -4193,7 +4193,7 @@
         "vs_200dma": 0.145216,
         "vs_50dma": 0.266483,
         "tsmom_12m": 1,
-        "rank_universe": 0.43,
+        "rank_universe": 0.435,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.029676
       },
@@ -4295,7 +4295,7 @@
         "vs_200dma": 0.082839,
         "vs_50dma": -0.090423,
         "tsmom_12m": 1,
-        "rank_universe": 0.64,
+        "rank_universe": 0.643,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.143731
       },
@@ -4397,8 +4397,8 @@
         "vs_200dma": 0.031189,
         "vs_50dma": 0.11165,
         "tsmom_12m": 1,
-        "rank_universe": 0.325,
-        "rank_group": 0.611,
+        "rank_universe": 0.33,
+        "rank_group": 0.632,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -4499,7 +4499,7 @@
         "vs_200dma": 0.032757,
         "vs_50dma": -0.161035,
         "tsmom_12m": 1,
-        "rank_universe": 0.825,
+        "rank_universe": 0.826,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.240782
       },
@@ -4601,7 +4601,7 @@
         "vs_200dma": 0.09105,
         "vs_50dma": 0.088501,
         "tsmom_12m": 1,
-        "rank_universe": 0.684,
+        "rank_universe": 0.687,
         "rank_group": 0.875,
         "rs_126_vs_proxy": -0.139471
       },
@@ -4703,7 +4703,7 @@
         "vs_200dma": 0.028098,
         "vs_50dma": -0.032944,
         "tsmom_12m": 1,
-        "rank_universe": 0.368,
+        "rank_universe": 0.374,
         "rank_group": 0.45,
         "rs_126_vs_proxy": -0.085824
       },
@@ -4907,7 +4907,7 @@
         "vs_200dma": 0.167604,
         "vs_50dma": -0.070166,
         "tsmom_12m": 1,
-        "rank_universe": 0.649,
+        "rank_universe": 0.652,
         "rank_group": 0.429,
         "rs_126_vs_proxy": 0.357023
       },
@@ -5009,7 +5009,7 @@
         "vs_200dma": 0.091443,
         "vs_50dma": 0.25929,
         "tsmom_12m": 1,
-        "rank_universe": 0.754,
+        "rank_universe": 0.757,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.093822
       },
@@ -5213,8 +5213,8 @@
         "vs_200dma": -0.005646,
         "vs_50dma": 0.000485,
         "tsmom_12m": 1,
-        "rank_universe": 0.175,
-        "rank_group": 0.278,
+        "rank_universe": 0.183,
+        "rank_group": 0.316,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -5315,7 +5315,7 @@
         "vs_200dma": 0.039726,
         "vs_50dma": 0.22447,
         "tsmom_12m": -1,
-        "rank_universe": 0.044,
+        "rank_universe": 0.043,
         "rank_group": 0.15,
         "rs_126_vs_proxy": 0.085865
       },
@@ -5417,7 +5417,7 @@
         "vs_200dma": 0.207287,
         "vs_50dma": 0.155509,
         "tsmom_12m": 1,
-        "rank_universe": 0.614,
+        "rank_universe": 0.617,
         "rank_group": 0.8,
         "rs_126_vs_proxy": -0.030026
       },
@@ -5519,7 +5519,7 @@
         "vs_200dma": 0.051044,
         "vs_50dma": -0.190499,
         "tsmom_12m": 1,
-        "rank_universe": 0.658,
+        "rank_universe": 0.661,
         "rank_group": 0.476,
         "rs_126_vs_proxy": -0.114618
       },
@@ -5621,7 +5621,7 @@
         "vs_200dma": 0.211099,
         "vs_50dma": -0.051946,
         "tsmom_12m": 1,
-        "rank_universe": 0.702,
+        "rank_universe": 0.704,
         "rank_group": 0.85,
         "rs_126_vs_proxy": 0.266944
       },
@@ -5723,7 +5723,7 @@
         "vs_200dma": 0.092521,
         "vs_50dma": 0.080657,
         "tsmom_12m": -1,
-        "rank_universe": 0.105,
+        "rank_universe": 0.104,
         "rank_group": 0.2,
         "rs_126_vs_proxy": 0.184077
       },
@@ -5825,7 +5825,7 @@
         "vs_200dma": 0.216013,
         "vs_50dma": -0.188938,
         "tsmom_12m": 1,
-        "rank_universe": 0.921,
+        "rank_universe": 0.922,
         "rank_group": 0.905,
         "rs_126_vs_proxy": 0.510168
       },
@@ -5927,7 +5927,7 @@
         "vs_200dma": 0.094088,
         "vs_50dma": 0.019425,
         "tsmom_12m": 1,
-        "rank_universe": 0.158,
+        "rank_universe": 0.165,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.079187
       },
@@ -6029,7 +6029,7 @@
         "vs_200dma": -0.143485,
         "vs_50dma": -0.07892,
         "tsmom_12m": 1,
-        "rank_universe": 0.728,
+        "rank_universe": 0.73,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.290371
       },
@@ -6131,7 +6131,7 @@
         "vs_200dma": 0.10281,
         "vs_50dma": 0.00384,
         "tsmom_12m": 1,
-        "rank_universe": 0.412,
+        "rank_universe": 0.417,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.021231
       },
@@ -6233,7 +6233,7 @@
         "vs_200dma": 0.126727,
         "vs_50dma": 0.033616,
         "tsmom_12m": 1,
-        "rank_universe": 0.351,
+        "rank_universe": 0.357,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.074727
       },
@@ -6335,7 +6335,7 @@
         "vs_200dma": 0.130488,
         "vs_50dma": 0.298906,
         "tsmom_12m": 1,
-        "rank_universe": 0.342,
+        "rank_universe": 0.348,
         "rank_group": 0.438,
         "rs_126_vs_proxy": -0.008664
       },
@@ -6539,8 +6539,8 @@
         "vs_200dma": -0.028456,
         "vs_50dma": -0.010998,
         "tsmom_12m": 1,
-        "rank_universe": 0.149,
-        "rank_group": 0.222,
+        "rank_universe": 0.157,
+        "rank_group": 0.263,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -6641,7 +6641,7 @@
         "vs_200dma": 0.219382,
         "vs_50dma": -0.077514,
         "tsmom_12m": 1,
-        "rank_universe": 0.886,
+        "rank_universe": 0.887,
         "rank_group": 0.81,
         "rs_126_vs_proxy": -0.031451
       },
@@ -6743,7 +6743,7 @@
         "vs_200dma": 0.039116,
         "vs_50dma": -0.064425,
         "tsmom_12m": 1,
-        "rank_universe": 0.623,
+        "rank_universe": 0.626,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.181781
       },
@@ -6845,7 +6845,7 @@
         "vs_200dma": 0.276821,
         "vs_50dma": -0.202101,
         "tsmom_12m": 1,
-        "rank_universe": 0.877,
+        "rank_universe": 0.878,
         "rank_group": 0.762,
         "rs_126_vs_proxy": 0.401115
       },
@@ -6947,7 +6947,7 @@
         "vs_200dma": 1.817103,
         "vs_50dma": 1.001628,
         "tsmom_12m": 1,
-        "rank_universe": 0.763,
+        "rank_universe": 0.765,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 1.455434
       },
@@ -7049,7 +7049,7 @@
         "vs_200dma": 0.572857,
         "vs_50dma": -0.015164,
         "tsmom_12m": 1,
-        "rank_universe": 0.86,
+        "rank_universe": 0.861,
         "rank_group": 0.714,
         "rs_126_vs_proxy": 1.227313
       },
@@ -7151,7 +7151,7 @@
         "vs_200dma": 0.584568,
         "vs_50dma": -0.054474,
         "tsmom_12m": 1,
-        "rank_universe": 0.982,
+        "rank_universe": 0.983,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.633955
       },
@@ -7253,7 +7253,7 @@
         "vs_200dma": 0.408436,
         "vs_50dma": -0.053676,
         "tsmom_12m": 1,
-        "rank_universe": 0.868,
+        "rank_universe": 0.87,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.582892
       },
@@ -7355,7 +7355,7 @@
         "vs_200dma": 0.236525,
         "vs_50dma": 0.289729,
         "tsmom_12m": 1,
-        "rank_universe": 0.439,
+        "rank_universe": 0.443,
         "rank_group": 0.562,
         "rs_126_vs_proxy": 0.135193
       },
@@ -7457,7 +7457,7 @@
         "vs_200dma": 0.053077,
         "vs_50dma": -0.114005,
         "tsmom_12m": 1,
-        "rank_universe": 0.798,
+        "rank_universe": 0.8,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.006521
       },
@@ -7661,7 +7661,7 @@
         "vs_200dma": 0.067287,
         "vs_50dma": 0.004001,
         "tsmom_12m": 1,
-        "rank_universe": 0.281,
+        "rank_universe": 0.287,
         "rank_group": 0.143,
         "rs_126_vs_proxy": -0.177176
       },
@@ -7763,7 +7763,7 @@
         "vs_200dma": 0.011007,
         "vs_50dma": -0.01501,
         "tsmom_12m": -1,
-        "rank_universe": 0.132,
+        "rank_universe": 0.13,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.091227
       },
@@ -7865,7 +7865,7 @@
         "vs_200dma": -0.042215,
         "vs_50dma": -0.169987,
         "tsmom_12m": 1,
-        "rank_universe": 0.667,
+        "rank_universe": 0.67,
         "rank_group": 0.524,
         "rs_126_vs_proxy": 0.137276
       },
@@ -7967,7 +7967,7 @@
         "vs_200dma": 0.03872,
         "vs_50dma": 0.155182,
         "tsmom_12m": 1,
-        "rank_universe": 0.456,
+        "rank_universe": 0.461,
         "rank_group": 0.625,
         "rs_126_vs_proxy": -0.118384
       },
@@ -8069,7 +8069,7 @@
         "vs_200dma": 0.547981,
         "vs_50dma": 0.040425,
         "tsmom_12m": 1,
-        "rank_universe": 0.675,
+        "rank_universe": 0.678,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.827922
       },
@@ -8171,7 +8171,7 @@
         "vs_200dma": 0.435748,
         "vs_50dma": -0.176677,
         "tsmom_12m": 1,
-        "rank_universe": 0.816,
+        "rank_universe": 0.817,
         "rank_group": 0.619,
         "rs_126_vs_proxy": 0.987931
       },
@@ -8273,7 +8273,7 @@
         "vs_200dma": -0.043955,
         "vs_50dma": -0.230836,
         "tsmom_12m": 1,
-        "rank_universe": 0.509,
+        "rank_universe": 0.513,
         "rank_group": 0.286,
         "rs_126_vs_proxy": -0.112702
       },
@@ -8375,7 +8375,7 @@
         "vs_200dma": 0.199437,
         "vs_50dma": 0.176376,
         "tsmom_12m": -1,
-        "rank_universe": 0.123,
+        "rank_universe": 0.122,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.252794
       },
@@ -8477,7 +8477,7 @@
         "vs_200dma": 0.081297,
         "vs_50dma": -0.009682,
         "tsmom_12m": 1,
-        "rank_universe": 0.333,
+        "rank_universe": 0.339,
         "rank_group": 0.4,
         "rs_126_vs_proxy": 0.046632
       },
@@ -8579,7 +8579,7 @@
         "vs_200dma": 0.137686,
         "vs_50dma": -0.035428,
         "tsmom_12m": 1,
-        "rank_universe": 0.57,
+        "rank_universe": 0.574,
         "rank_group": 0.65,
         "rs_126_vs_proxy": 0.137328
       },
@@ -8681,7 +8681,7 @@
         "vs_200dma": -0.134431,
         "vs_50dma": -0.115289,
         "tsmom_12m": -1,
-        "rank_universe": 0.088,
+        "rank_universe": 0.087,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.047018
       },
@@ -8783,7 +8783,7 @@
         "vs_200dma": 0.132109,
         "vs_50dma": 0.248705,
         "tsmom_12m": 1,
-        "rank_universe": 0.254,
+        "rank_universe": 0.261,
         "rank_group": 0.25,
         "rs_126_vs_proxy": -0.010819
       },
@@ -8885,7 +8885,7 @@
         "vs_200dma": 0.193238,
         "vs_50dma": 0.305148,
         "tsmom_12m": 1,
-        "rank_universe": 0.395,
+        "rank_universe": 0.4,
         "rank_group": 0.429,
         "rs_126_vs_proxy": 0.035734
       },
@@ -8987,7 +8987,7 @@
         "vs_200dma": 0.104831,
         "vs_50dma": 0.042449,
         "tsmom_12m": 1,
-        "rank_universe": 0.202,
+        "rank_universe": 0.209,
         "rank_group": 0.3,
         "rs_126_vs_proxy": 0.04522
       },
@@ -9089,7 +9089,7 @@
         "vs_200dma": 0.181149,
         "vs_50dma": 0.281984,
         "tsmom_12m": 1,
-        "rank_universe": 0.36,
+        "rank_universe": 0.365,
         "rank_group": 0.143,
         "rs_126_vs_proxy": 0.018515
       },
@@ -9191,7 +9191,7 @@
         "vs_200dma": 0.138845,
         "vs_50dma": 0.176112,
         "tsmom_12m": 1,
-        "rank_universe": 0.114,
+        "rank_universe": 0.113,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.040938
       },
@@ -9293,8 +9293,8 @@
         "vs_200dma": -0.03209,
         "vs_50dma": 0.121665,
         "tsmom_12m": 1,
-        "rank_universe": 0.535,
-        "rank_group": 0.833,
+        "rank_universe": 0.539,
+        "rank_group": 0.842,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -9395,7 +9395,7 @@
         "vs_200dma": 0.119838,
         "vs_50dma": 0.034331,
         "tsmom_12m": 1,
-        "rank_universe": 0.228,
+        "rank_universe": 0.235,
         "rank_group": 0.2,
         "rs_126_vs_proxy": -0.131041
       },
@@ -9497,7 +9497,7 @@
         "vs_200dma": 0.138783,
         "vs_50dma": 0.234846,
         "tsmom_12m": 1,
-        "rank_universe": 0.482,
+        "rank_universe": 0.487,
         "rank_group": 0.714,
         "rs_126_vs_proxy": -0.028222
       },
@@ -9599,7 +9599,7 @@
         "vs_200dma": 0.090621,
         "vs_50dma": 0.191274,
         "tsmom_12m": 1,
-        "rank_universe": 0.526,
+        "rank_universe": 0.53,
         "rank_group": 0.857,
         "rs_126_vs_proxy": -0.072196
       },
@@ -9701,7 +9701,7 @@
         "vs_200dma": -0.037887,
         "vs_50dma": 0.117439,
         "tsmom_12m": 1,
-        "rank_universe": 0.544,
+        "rank_universe": 0.548,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.177672
       },
@@ -9803,7 +9803,7 @@
         "vs_200dma": 0.16808,
         "vs_50dma": -0.070142,
         "tsmom_12m": 1,
-        "rank_universe": 0.746,
+        "rank_universe": 0.748,
         "rank_group": 0.9,
         "rs_126_vs_proxy": 0.177453
       },
@@ -10007,7 +10007,7 @@
         "vs_200dma": 0.199991,
         "vs_50dma": -0.091496,
         "tsmom_12m": 1,
-        "rank_universe": 0.807,
+        "rank_universe": 0.809,
         "rank_group": 0.95,
         "rs_126_vs_proxy": 0.262607
       },
@@ -10109,7 +10109,7 @@
         "vs_200dma": 0.078369,
         "vs_50dma": 0.014897,
         "tsmom_12m": 1,
-        "rank_universe": 0.272,
+        "rank_universe": 0.278,
         "rank_group": 0.35,
         "rs_126_vs_proxy": 0.0
       },
@@ -10211,7 +10211,7 @@
         "vs_200dma": 0.411713,
         "vs_50dma": 0.310244,
         "tsmom_12m": 1,
-        "rank_universe": 0.579,
+        "rank_universe": 0.583,
         "rank_group": 0.812,
         "rs_126_vs_proxy": 0.357329
       },
@@ -10313,7 +10313,7 @@
         "vs_200dma": 0.05095,
         "vs_50dma": 0.158211,
         "tsmom_12m": 1,
-        "rank_universe": 0.219,
+        "rank_universe": 0.226,
         "rank_group": 0.188,
         "rs_126_vs_proxy": -0.043046
       },
@@ -10415,7 +10415,7 @@
         "vs_200dma": 0.222667,
         "vs_50dma": 0.012423,
         "tsmom_12m": 1,
-        "rank_universe": 0.518,
+        "rank_universe": 0.522,
         "rank_group": 0.55,
         "rs_126_vs_proxy": 0.28405
       },
@@ -10476,6 +10476,108 @@
         }
       }
     },
+    "TLT": {
+      "ticker": "TLT",
+      "group": "Macro / benchmarks",
+      "proxy": null,
+      "bars": 2513,
+      "first_date": "2016-08-25",
+      "last_date": "2026-08-25",
+      "close": 83.04,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.5481,
+        "r2_vs_null_pct": 55,
+        "vr": 0.8501,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.3819,
+        "macd_signal": -0.5425,
+        "macd_hist": 0.1606,
+        "macd_hist_prev": 0.1116,
+        "rsi": 51.32,
+        "mfi": 54.68,
+        "vpvma": -1.411305,
+        "vpvma_signal": -0.219618
+      },
+      "momentum": {
+        "mom_12_1": 0.002103,
+        "mom_6_1": -0.050915,
+        "ret_12m": -0.00239,
+        "ret_3m": -0.01279,
+        "ret_1m": -0.004483,
+        "dist_52w_high": -0.09798,
+        "dist_52w_low": 0.020774,
+        "vs_200dma": -0.040297,
+        "vs_50dma": -0.011948,
+        "tsmom_12m": -1,
+        "rank_universe": 0.139,
+        "rank_group": 0.158,
+        "rs_126_vs_proxy": null
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": -0.0187,
+        "swing": "LH/LL",
+        "close_pos_20": 0.426,
+        "atr_pct": 0.8,
+        "atr_pct_rank_1y": 0.738,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.9,
+        "vol_10v50": 1.01,
+        "rvol": 0.12,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.0051,
+          "buy_hold_return": -0.4033,
+          "excess_vs_hold": 0.3983,
+          "beat_hold": true,
+          "n_trades": 94,
+          "win_rate": 0.372
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.1028,
+          "buy_hold_return": -0.4033,
+          "excess_vs_hold": 0.3005,
+          "beat_hold": true,
+          "n_trades": 10,
+          "win_rate": 0.2
+        },
+        "macd_rsi": {
+          "strategy_return": -0.3094,
+          "buy_hold_return": -0.4033,
+          "excess_vs_hold": 0.0939,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 0.0
+        },
+        "macd_mfi": {
+          "strategy_return": -0.4026,
+          "buy_hold_return": -0.4033,
+          "excess_vs_hold": 0.0007,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 0.0
+        },
+        "vpvma": {
+          "strategy_return": 0.0882,
+          "buy_hold_return": -0.4033,
+          "excess_vs_hold": 0.4915,
+          "beat_hold": true,
+          "n_trades": 211,
+          "win_rate": 0.512
+        }
+      }
+    },
     "TSM": {
       "ticker": "TSM",
       "group": "Semiconductors: compute, design, analog/power",
@@ -10517,7 +10619,7 @@
         "vs_200dma": 0.117629,
         "vs_50dma": -0.03342,
         "tsmom_12m": 1,
-        "rank_universe": 0.711,
+        "rank_universe": 0.713,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.158807
       },
@@ -10619,7 +10721,7 @@
         "vs_200dma": 0.102036,
         "vs_50dma": -0.105231,
         "tsmom_12m": 1,
-        "rank_universe": 0.491,
+        "rank_universe": 0.496,
         "rank_group": 0.238,
         "rs_126_vs_proxy": -0.101605
       },
@@ -10721,8 +10823,8 @@
         "vs_200dma": 0.008225,
         "vs_50dma": -0.011015,
         "tsmom_12m": 1,
-        "rank_universe": 0.193,
-        "rank_group": 0.333,
+        "rank_universe": 0.2,
+        "rank_group": 0.368,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -10823,7 +10925,7 @@
         "vs_200dma": 0.261093,
         "vs_50dma": 0.335754,
         "tsmom_12m": 1,
-        "rank_universe": 0.307,
+        "rank_universe": 0.313,
         "rank_group": 0.375,
         "rs_126_vs_proxy": 0.098157
       },
@@ -10925,7 +11027,7 @@
         "vs_200dma": 0.151448,
         "vs_50dma": -0.055687,
         "tsmom_12m": 1,
-        "rank_universe": 0.588,
+        "rank_universe": 0.591,
         "rank_group": 0.7,
         "rs_126_vs_proxy": 0.186719
       },
@@ -11027,8 +11129,8 @@
         "vs_200dma": 0.052706,
         "vs_50dma": 0.018202,
         "tsmom_12m": 1,
-        "rank_universe": 0.246,
-        "rank_group": 0.389,
+        "rank_universe": 0.252,
+        "rank_group": 0.421,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -11129,8 +11231,8 @@
         "vs_200dma": 0.077848,
         "vs_50dma": 0.014132,
         "tsmom_12m": 1,
-        "rank_universe": 0.263,
-        "rank_group": 0.444,
+        "rank_universe": 0.27,
+        "rank_group": 0.474,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -11231,8 +11333,8 @@
         "vs_200dma": 0.012029,
         "vs_50dma": 0.052586,
         "tsmom_12m": 1,
-        "rank_universe": 0.14,
-        "rank_group": 0.167,
+        "rank_universe": 0.148,
+        "rank_group": 0.211,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -11333,8 +11435,8 @@
         "vs_200dma": 0.071127,
         "vs_50dma": 0.001012,
         "tsmom_12m": 1,
-        "rank_universe": 0.289,
-        "rank_group": 0.5,
+        "rank_universe": 0.296,
+        "rank_group": 0.526,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -11435,8 +11537,8 @@
         "vs_200dma": 0.165845,
         "vs_50dma": -0.055728,
         "tsmom_12m": 1,
-        "rank_universe": 0.772,
-        "rank_group": 0.944,
+        "rank_universe": 0.774,
+        "rank_group": 0.947,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -11537,8 +11639,8 @@
         "vs_200dma": 0.133377,
         "vs_50dma": -0.019925,
         "tsmom_12m": 1,
-        "rank_universe": 0.605,
-        "rank_group": 0.889,
+        "rank_universe": 0.609,
+        "rank_group": 0.895,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -11639,7 +11741,7 @@
         "vs_200dma": 0.185158,
         "vs_50dma": -0.086033,
         "tsmom_12m": 1,
-        "rank_universe": 0.781,
+        "rank_universe": 0.783,
         "rank_group": 1.0,
         "rs_126_vs_proxy": null
       },
@@ -11741,8 +11843,8 @@
         "vs_200dma": -0.140327,
         "vs_50dma": -0.048871,
         "tsmom_12m": 1,
-        "rank_universe": 0.377,
-        "rank_group": 0.667,
+        "rank_universe": 0.383,
+        "rank_group": 0.684,
         "rs_126_vs_proxy": null
       },
       "setup": {
@@ -54990,294 +55092,294 @@
     },
     "receipts": {
       "000660.KS": {
-        "rank": 0.948454,
+        "rank": 0.94898,
         "tier": "top",
         "streak": 203,
         "sinceRet": 1.997428,
         "entryIdx": 2317
       },
       "005930.KS": {
-        "rank": 0.907216,
+        "rank": 0.908163,
         "tier": "top",
         "streak": 121,
         "sinceRet": 0.321455,
         "entryIdx": 2399
       },
       "AAOI": {
-        "rank": 0.917526,
+        "rank": 0.918367,
         "tier": "top",
         "streak": 102,
         "sinceRet": 0.263411,
         "entryIdx": 2418
       },
       "AEHR": {
-        "rank": 0.886598,
+        "rank": 0.887755,
         "tier": "top",
         "streak": 106,
         "sinceRet": 1.460577,
         "entryIdx": 2414
       },
       "AEM": {
-        "rank": 0.247423,
+        "rank": 0.255102,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AG": {
-        "rank": 0.690722,
+        "rank": 0.693878,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AGI": {
-        "rank": 0.237113,
+        "rank": 0.244898,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ALAB": {
-        "rank": 0.804124,
+        "rank": 0.806122,
         "tier": "top",
         "streak": 33,
         "sinceRet": -0.335178,
         "entryIdx": 2487
       },
       "AMD": {
-        "rank": 0.876289,
+        "rank": 0.877551,
         "tier": "top",
         "streak": 66,
         "sinceRet": 0.020477,
         "entryIdx": 2454
       },
       "AMSC": {
-        "rank": 0.092784,
+        "rank": 0.091837,
         "tier": "bottom",
         "streak": 19,
         "sinceRet": 0.085586,
         "entryIdx": 2501
       },
       "AOSL": {
-        "rank": 0.206186,
+        "rank": 0.214286,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ASML": {
-        "rank": 0.814433,
+        "rank": 0.816327,
         "tier": "top",
         "streak": 2,
         "sinceRet": -0.013398,
         "entryIdx": 2518
       },
       "AU": {
-        "rank": 0.628866,
+        "rank": 0.632653,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AVGO": {
-        "rank": 0.443299,
+        "rank": 0.44898,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AXTI": {
-        "rank": 0.989691,
+        "rank": 0.989796,
         "tier": "top",
         "streak": 188,
         "sinceRet": 6.323628,
         "entryIdx": 2332
       },
       "BE": {
-        "rank": 0.958763,
+        "rank": 0.959184,
         "tier": "top",
         "streak": 274,
         "sinceRet": 6.587207,
         "entryIdx": 2246
       },
       "BMNR": {
-        "rank": 0.010309,
+        "rank": 0.010204,
         "tier": "bottom",
         "streak": 17,
         "sinceRet": 0.396991,
         "entryIdx": 2503
       },
       "BOTZ": {
-        "rank": 0.154639,
+        "rank": 0.153061,
         "tier": "bottom",
         "streak": 6,
         "sinceRet": -0.067953,
         "entryIdx": 2514
       },
       "BTC-USD": {
-        "rank": 0.061856,
+        "rank": 0.061224,
         "tier": "bottom",
-        "streak": 138,
-        "sinceRet": 0.256234,
-        "entryIdx": 2382
+        "streak": 169,
+        "sinceRet": -0.105954,
+        "entryIdx": 2351
       },
       "BZ=F": {
-        "rank": 0.463918,
+        "rank": 0.469388,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CAT": {
-        "rank": 0.742268,
+        "rank": 0.744898,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CDE": {
-        "rank": 0.597938,
+        "rank": 0.602041,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CIEN": {
-        "rank": 0.938144,
+        "rank": 0.938776,
         "tier": "top",
         "streak": 123,
         "sinceRet": 0.066676,
         "entryIdx": 2397
       },
       "COHR": {
-        "rank": 0.845361,
+        "rank": 0.846939,
         "tier": "top",
         "streak": 108,
         "sinceRet": 0.086188,
         "entryIdx": 2412
       },
       "CPER": {
-        "rank": 0.195876,
-        "tier": "bottom",
-        "streak": 2,
-        "sinceRet": 0.002,
-        "entryIdx": 2518
+        "rank": 0.204082,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
       },
       "CRWD": {
-        "rank": 0.587629,
+        "rank": 0.591837,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CRWV": {
-        "rank": 0.082474,
+        "rank": 0.081633,
         "tier": "bottom",
         "streak": 45,
         "sinceRet": -0.224998,
         "entryIdx": 2475
       },
       "DDOG": {
-        "rank": 0.659794,
+        "rank": 0.663265,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "EQIX": {
-        "rank": 0.453608,
+        "rank": 0.459184,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ETH-USD": {
-        "rank": 0.030928,
+        "rank": 0.030612,
         "tier": "bottom",
-        "streak": 53,
-        "sinceRet": 0.513287,
-        "entryIdx": 2467
+        "streak": 52,
+        "sinceRet": 0.529697,
+        "entryIdx": 2468
       },
       "ETHA": {
-        "rank": 0.051546,
+        "rank": 0.05102,
         "tier": "bottom",
         "streak": 52,
         "sinceRet": 0.519544,
         "entryIdx": 2468
       },
       "EXK": {
-        "rank": 0.42268,
+        "rank": 0.428571,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "FLEX": {
-        "rank": 0.783505,
+        "rank": 0.785714,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "FNV": {
-        "rank": 0.412371,
+        "rank": 0.418367,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GC=F": {
-        "rank": 0.319588,
+        "rank": 0.326531,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GEV": {
-        "rank": 0.608247,
+        "rank": 0.612245,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GLD": {
-        "rank": 0.309278,
+        "rank": 0.316327,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GLW": {
-        "rank": 0.835052,
+        "rank": 0.836735,
         "tier": "top",
         "streak": 31,
         "sinceRet": -0.205123,
         "entryIdx": 2489
       },
       "GOLD": {
-        "rank": 0.680412,
+        "rank": 0.683673,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "HIMS": {
-        "rank": 0.020619,
+        "rank": 0.020408,
         "tier": "bottom",
-        "streak": 125,
-        "sinceRet": 0.964602,
-        "entryIdx": 2395
+        "streak": 128,
+        "sinceRet": 0.988484,
+        "entryIdx": 2392
       },
       "HIMX": {
-        "rank": 0.402062,
+        "rank": 0.408163,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "HL": {
-        "rank": 0.793814,
+        "rank": 0.795918,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
@@ -55286,271 +55388,271 @@
       "HUBS": {
         "rank": 0.0,
         "tier": "bottom",
-        "streak": 246,
-        "sinceRet": -0.482186,
-        "entryIdx": 2274
+        "streak": 242,
+        "sinceRet": -0.51022,
+        "entryIdx": 2278
       },
       "HYG": {
-        "rank": 0.185567,
+        "rank": 0.193878,
         "tier": "bottom",
         "streak": 80,
         "sinceRet": 0.011368,
         "entryIdx": 2440
       },
       "IBIT": {
-        "rank": 0.072165,
+        "rank": 0.071429,
         "tier": "bottom",
         "streak": 138,
         "sinceRet": 0.236565,
         "entryIdx": 2382
       },
       "IFNNY": {
-        "rank": 0.649485,
+        "rank": 0.653061,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "IGPT": {
-        "rank": 0.670103,
+        "rank": 0.673469,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "INTC": {
-        "rank": 0.927835,
+        "rank": 0.928571,
         "tier": "top",
         "streak": 70,
         "sinceRet": -0.247304,
         "entryIdx": 2450
       },
       "INVH": {
-        "rank": 0.134021,
+        "rank": 0.132653,
         "tier": "bottom",
         "streak": 271,
         "sinceRet": 0.018841,
         "entryIdx": 2249
       },
       "IREN": {
-        "rank": 0.71134,
+        "rank": 0.714286,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "JPM": {
-        "rank": 0.350515,
+        "rank": 0.357143,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "KGC": {
-        "rank": 0.484536,
+        "rank": 0.489796,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "LITE": {
-        "rank": 0.969072,
+        "rank": 0.969388,
         "tier": "top",
         "streak": 305,
         "sinceRet": 9.191137,
         "entryIdx": 2215
       },
       "LQD": {
-        "rank": 0.164948,
+        "rank": 0.173469,
         "tier": "bottom",
         "streak": 80,
         "sinceRet": -0.009268,
         "entryIdx": 2440
       },
       "LRCX": {
-        "rank": 0.85567,
+        "rank": 0.857143,
         "tier": "top",
         "streak": 92,
         "sinceRet": 0.139417,
         "entryIdx": 2428
       },
       "MPWR": {
-        "rank": 0.701031,
+        "rank": 0.704082,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "MRAAY": {
-        "rank": 0.865979,
+        "rank": 0.867347,
         "tier": "top",
         "streak": 42,
         "sinceRet": -0.384249,
         "entryIdx": 2478
       },
       "MRNA": {
-        "rank": 0.556701,
+        "rank": 0.561224,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "MRVL": {
-        "rank": 0.824742,
+        "rank": 0.826531,
         "tier": "top",
         "streak": 37,
         "sinceRet": -0.064998,
         "entryIdx": 2483
       },
       "MU": {
-        "rank": 0.979381,
+        "rank": 0.979592,
         "tier": "top",
-        "streak": 184,
-        "sinceRet": 2.85369,
-        "entryIdx": 2336
+        "streak": 185,
+        "sinceRet": 2.957789,
+        "entryIdx": 2335
       },
       "NBIS": {
-        "rank": 0.896907,
+        "rank": 0.897959,
         "tier": "top",
         "streak": 99,
         "sinceRet": 0.938155,
         "entryIdx": 2421
       },
       "NEM": {
-        "rank": 0.536082,
+        "rank": 0.540816,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NOK": {
-        "rank": 0.721649,
+        "rank": 0.72449,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NOW": {
-        "rank": 0.041237,
+        "rank": 0.040816,
         "tier": "bottom",
         "streak": 211,
         "sinceRet": -0.319968,
         "entryIdx": 2309
       },
       "NVDA": {
-        "rank": 0.340206,
+        "rank": 0.346939,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NVO": {
-        "rank": 0.103093,
+        "rank": 0.102041,
         "tier": "bottom",
         "streak": 397,
         "sinceRet": -0.431834,
         "entryIdx": 2123
       },
       "NVTS": {
-        "rank": 0.381443,
+        "rank": 0.387755,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PAAS": {
-        "rank": 0.525773,
+        "rank": 0.530612,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PANW": {
-        "rank": 0.618557,
+        "rank": 0.622449,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PENG": {
-        "rank": 0.773196,
+        "rank": 0.77551,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "POWI": {
-        "rank": 0.360825,
+        "rank": 0.367347,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PYPL": {
-        "rank": 0.113402,
+        "rank": 0.112245,
         "tier": "bottom",
         "streak": 234,
         "sinceRet": -0.092029,
         "entryIdx": 2286
       },
       "QTUM": {
-        "rank": 0.494845,
+        "rank": 0.5,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "RDDT": {
-        "rank": 0.257732,
+        "rank": 0.265306,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "RGLD": {
-        "rank": 0.391753,
+        "rank": 0.397959,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ROBT": {
-        "rank": 0.175258,
+        "rank": 0.183673,
         "tier": "bottom",
-        "streak": 3,
-        "sinceRet": -0.0063,
-        "entryIdx": 2517
+        "streak": 2,
+        "sinceRet": -0.017418,
+        "entryIdx": 2518
       },
       "SGDM": {
-        "rank": 0.43299,
+        "rank": 0.438776,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SHOP": {
-        "rank": 0.123711,
+        "rank": 0.122449,
         "tier": "bottom",
-        "streak": 8,
-        "sinceRet": -0.055068,
-        "entryIdx": 2512
+        "streak": 6,
+        "sinceRet": 0.007736,
+        "entryIdx": 2514
       },
       "SI=F": {
-        "rank": 0.505155,
+        "rank": 0.510204,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SIEGY": {
-        "rank": 0.226804,
+        "rank": 0.234694,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SIL": {
-        "rank": 0.515464,
+        "rank": 0.520408,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
@@ -55564,112 +55666,119 @@
         "entryIdx": 2410
       },
       "SSRM": {
-        "rank": 0.762887,
+        "rank": 0.765306,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "TFPM": {
-        "rank": 0.371134,
+        "rank": 0.377551,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "THNQ": {
-        "rank": 0.474227,
+        "rank": 0.479592,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "TLT": {
+        "rank": 0.163265,
+        "tier": "bottom",
+        "streak": 99,
+        "sinceRet": -0.034055,
+        "entryIdx": 2421
+      },
       "TSM": {
-        "rank": 0.639175,
+        "rank": 0.642857,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "TXN": {
-        "rank": 0.546392,
+        "rank": 0.55102,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "UUP": {
-        "rank": 0.216495,
+        "rank": 0.22449,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "WPM": {
-        "rank": 0.278351,
+        "rank": 0.285714,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "WTAI": {
-        "rank": 0.56701,
+        "rank": 0.571429,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^FTSE": {
-        "rank": 0.28866,
+        "rank": 0.295918,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^GSPC": {
-        "rank": 0.268041,
+        "rank": 0.27551,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^HSI": {
-        "rank": 0.14433,
+        "rank": 0.142857,
         "tier": "bottom",
         "streak": 71,
         "sinceRet": -0.014362,
         "entryIdx": 2449
       },
       "^IXIC": {
-        "rank": 0.298969,
+        "rank": 0.306122,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^KS11": {
-        "rank": 0.752577,
+        "rank": 0.755102,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^N225": {
-        "rank": 0.57732,
+        "rank": 0.581633,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^SOX": {
-        "rank": 0.731959,
+        "rank": 0.734694,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^VIX": {
-        "rank": 0.329897,
+        "rank": 0.336735,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,

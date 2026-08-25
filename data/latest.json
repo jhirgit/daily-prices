@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-24T22:31:24Z",
+  "generated_at": "2026-08-25T13:54:58Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
-  "count": 122,
+  "count": 125,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -470,6 +470,21 @@
       "dma200_n": 99
     },
     {
+      "ticker": "DTCR",
+      "date": "2026-08-24",
+      "open": 28.18,
+      "high": 28.3,
+      "low": 27.665,
+      "close": 28.01,
+      "adj_close": 28.01,
+      "volume": 834800,
+      "spot_price": 28.01,
+      "spot_captured_at": "2026-08-25T04:36:23Z",
+      "currency": "USD",
+      "dma200": 26.0838,
+      "dma200_n": 200
+    },
+    {
       "ticker": "ENPH",
       "date": "2026-08-24",
       "open": 38.03,
@@ -692,6 +707,21 @@
       "spot_captured_at": "2026-08-24T22:29:41Z",
       "currency": "USD",
       "dma200": 41.9779,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "GRID",
+      "date": "2026-08-24",
+      "open": 179.45,
+      "high": 179.56,
+      "low": 177.31,
+      "close": 178.2,
+      "adj_close": 178.2,
+      "volume": 385200,
+      "spot_price": 178.2,
+      "spot_captured_at": "2026-08-25T04:36:25Z",
+      "currency": "USD",
+      "dma200": 173.3297,
       "dma200_n": 200
     },
     {
@@ -1607,6 +1637,21 @@
       "spot_captured_at": "2026-08-24T22:30:44Z",
       "currency": "USD",
       "dma200": 72.6929,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "TLT",
+      "date": "2026-08-25",
+      "open": 83.11,
+      "high": 83.12,
+      "low": 83.02,
+      "close": 83.04,
+      "adj_close": 83.04,
+      "volume": 3466149,
+      "spot_price": 83.04,
+      "spot_captured_at": "2026-08-25T13:54:54Z",
+      "currency": "USD",
+      "dma200": 86.5267,
       "dma200_n": 200
     },
     {
