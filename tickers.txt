@@ -152,6 +152,7 @@ CPER       # copper (US Copper Index Fund) - industrial-demand read
 HYG        # US high-yield credit (iShares iBoxx HY) - credit-risk read
 LQD        # US investment-grade credit (iShares iBoxx IG)
 UUP        # US dollar bullish (Invesco DB USD Index) - dollar read
+TLT        # 20+yr Treasuries (iShares) - stocks-bonds correlation leg (regime #3 improvement)
 BTC-USD    # Bitcoin
 ETH-USD    # Ethereum
 
