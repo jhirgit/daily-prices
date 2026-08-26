@@ -28,3 +28,14 @@ jobs:
           git add data/insiders.json data/insiders_12m.json
           git diff --cached --quiet || git commit -m "insiders: weekly [skip ci]"
           git push
+
+  # A silent cron is the failure mode this repo actually has: nothing here
+  # reported a broken run until someone noticed stale prices downstream.
+  alert:
+    needs: fetch
+    if: failure()
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Weekly Insiders
+    permissions:
+      issues: write

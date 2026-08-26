@@ -45,3 +45,14 @@ jobs:
             git commit -m "overnight: $(date -u +'%Y-%m-%d %H:%M UTC') [skip ci]"
             git push
           fi
+
+  # A silent cron is the failure mode this repo actually has: nothing here
+  # reported a broken run until someone noticed stale prices downstream.
+  alert:
+    needs: snapshot
+    if: failure()
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Overnight Snapshot
+    permissions:
+      issues: write

@@ -1,0 +1,85 @@
+name: Alert on cron failure
+
+# Opens (or updates) a GitHub issue when one of this repo's scheduled data jobs
+# fails.
+#
+# WHY THIS EXISTS. All four crons here used to fail completely silently. A
+# stopped cron surfaced only as "why are prices stale?" — a question someone had
+# to think to ask, usually days later. The dashboard now shouts when the marks
+# themselves go stale; this is the other half of that pair, so the repo says
+# something the moment a run breaks rather than when a human notices the
+# downstream symptom.
+#
+# NOTE: this repository is PUBLIC. The issue body carries only the workflow name,
+# the run URL, the trigger and a timestamp — never prices, tickers, or anything
+# derived from the book.
+
+on:
+  workflow_call:
+    inputs:
+      workflow:
+        description: "Human-readable name of the job that failed"
+        required: true
+        type: string
+
+jobs:
+  open-issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v7
+        env:
+          WORKFLOW_NAME: ${{ inputs.workflow }}
+        with:
+          script: |
+            const wf = process.env.WORKFLOW_NAME;
+            const title = `cron failure: ${wf}`;
+            const { owner, repo } = context.repo;
+            const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+            const when = new Date().toISOString().replace('T', ' ').slice(0, 16) + ' UTC';
+            const body = [
+              `**${wf}** failed.`,
+              '',
+              `- run: ${runUrl}`,
+              `- when: ${when}`,
+              `- trigger: ${context.eventName}`,
+              '',
+              'While this job is broken the payloads it publishes stop updating, so the',
+              'dashboard keeps rendering older marks. Close this issue once a run succeeds.',
+            ].join('\n');
+
+            // Best-effort label; issue creation must not depend on it existing.
+            try {
+              await github.rest.issues.createLabel({
+                owner, repo, name: 'cron-failure', color: 'd73a4a',
+                description: 'A scheduled data job failed',
+              });
+            } catch (e) { /* already exists */ }
+
+            // Dedupe by title so a persistent outage does not open one issue per
+            // run — intraday alone fires three times an hour.
+            const open = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'open', per_page: 100,
+            });
+            const hit = open.find((i) => i.title === title && !i.pull_request);
+
+            if (!hit) {
+              const made = await github.rest.issues.create({
+                owner, repo, title, body, labels: ['cron-failure'],
+              });
+              core.notice(`opened issue #${made.data.number} for ${wf}`);
+              return;
+            }
+
+            // Re-comment at most every 6 hours: enough to show the outage is
+            // ongoing, quiet enough not to bury the issue in noise.
+            const ageHours = (Date.now() - Date.parse(hit.updated_at)) / 3600000;
+            if (ageHours < 6) {
+              core.notice(`issue #${hit.number} already open (updated ${ageHours.toFixed(1)}h ago) — not commenting`);
+              return;
+            }
+            await github.rest.issues.createComment({
+              owner, repo, issue_number: hit.number, body: `Still failing.\n\n${body}`,
+            });
+            core.notice(`commented on issue #${hit.number} for ${wf}`);

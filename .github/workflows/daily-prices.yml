@@ -64,3 +64,14 @@ jobs:
             git commit -m "prices: $(date -u +'%Y-%m-%d %H:%M UTC')"
             git push
           fi
+
+  # A silent cron is the failure mode this repo actually has: nothing here
+  # reported a broken run until someone noticed stale prices downstream.
+  alert:
+    needs: fetch
+    if: failure()
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Daily Prices
+    permissions:
+      issues: write
