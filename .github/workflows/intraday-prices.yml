@@ -14,8 +14,17 @@ on:
     # off-peak minute marks: GitHub skips/delays busy slots like :00/:20/:40.
     # Ends at 19:43 UTC (3:43pm EDT) so the last snapshot freezes ~15 min
     # before the close - a stable pre-close mark until the EOD job publishes.
-    # NOTE: if this cron goes quiet after a schedule edit, touch this file
-    # (any commit) to force GitHub to re-register the schedule.
+    # NOTE: this cron can go silent while the workflow still reports "active"
+    # and the run queue is empty - GitHub drops the schedule registration and
+    # does not restore it on its own. Seen 2026-08-27 after the 8/26-8/27
+    # Actions incidents: no scheduled run fired repo-wide for ~12h.
+    # Pushing a commit does NOT re-register it - a data commit landed 03:02
+    # UTC and the next four slots (11:30 overnight, 13:03/13:23/13:43 here)
+    # all still missed. Recovery, in order: (1) gh workflow run
+    # intraday-prices.yml to backfill the data immediately, (2) gh workflow
+    # disable then enable to force re-registration, (3) edit the cron: line
+    # below and push. Confirm recovery by seeing a run whose event is
+    # "schedule" - the "active" state stays green throughout and proves nothing.
     - cron: "3,23,43 13-19 * * 1-5"
 
 permissions:
