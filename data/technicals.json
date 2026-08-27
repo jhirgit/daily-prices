@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27T20:22:01Z",
+  "generated_at": "2026-08-27T22:04:25Z",
   "method": {
     "regime_gate": "Over the last 90 sessions: trending if log-price R^2 >= 0.85; mean_reverting if R^2 < 0.35 and SMA20 crossings <= 7.0 per 100 sessions; else neither.",
     "regime_calibration": "Thresholds are Monte-Carlo calibrated against a random-walk null (2,000 draws, 90-session windows). R^2 >= 0.85 is the p90 of that null -- note that R^2 >= 0.50 would be met by 44.7% of pure random walks, which is why the common 'it looks trendy' threshold is useless. The Lo-MacKinlay variance ratio is reported as a diagnostic but does NOT classify: a sinusoid is locally smooth, so cyclical data returns VR of 3.9-11.3, far above 1, not below it.",
@@ -124,7 +124,7 @@
   "skipped": [
     {
       "ticker": "6981.T",
-      "bars": 16,
+      "bars": 17,
       "reason": "insufficient_history"
     },
     {
@@ -181,12 +181,12 @@
       "bars": 2455,
       "first_date": "2016-08-16",
       "last_date": "2026-08-27",
-      "close": 1748000.0,
+      "close": 1730000.0,
       "regime": {
         "regime": "neither",
-        "r2": 0.0125,
+        "r2": 0.0124,
         "r2_vs_null_pct": 5,
-        "vr": 0.8709,
+        "vr": 0.8718,
         "cross_rate": 11.27,
         "slope": "up",
         "trend_ok": false,
@@ -195,81 +195,81 @@
         "window": 90
       },
       "indicators": {
-        "macd": -40080.1819,
-        "macd_signal": -84038.1784,
-        "macd_hist": 43957.9965,
+        "macd": -41516.0793,
+        "macd_signal": -84325.3579,
+        "macd_hist": 42809.2785,
         "macd_hist_prev": 42350.4517,
-        "rsi": 52.06,
-        "mfi": 59.61,
-        "vpvma": -30786700250.30667,
-        "vpvma_signal": -37954468174.17928
+        "rsi": 51.35,
+        "mfi": 60.71,
+        "vpvma": -30476198058.320724,
+        "vpvma_signal": -37919967930.62528
       },
       "momentum": {
         "mom_12_1": 4.78616,
         "mom_6_1": 0.633144,
-        "ret_12m": 5.525295,
-        "ret_3m": -0.220556,
-        "ret_1m": 0.127742,
-        "dist_52w_high": -0.401165,
-        "dist_52w_low": 6.134694,
-        "vs_200dma": 0.371066,
-        "vs_50dma": -0.111536,
+        "ret_12m": 5.456701,
+        "ret_3m": -0.22875,
+        "ret_1m": 0.115887,
+        "dist_52w_high": -0.407331,
+        "dist_52w_low": 6.061224,
+        "vs_200dma": 0.357044,
+        "vs_50dma": -0.120524,
         "tsmom_12m": 1,
         "rank_universe": 0.976,
         "rank_group": 0.5,
-        "rs_126_vs_proxy": 0.324303
+        "rs_126_vs_proxy": 0.310382
       },
       "setup": {
         "stack": "mixed",
-        "ema200_slope_63d": 0.583,
+        "ema200_slope_63d": 0.5828,
         "swing": "HH/HL",
-        "close_pos_20": 0.408,
-        "atr_pct": 8.85,
+        "close_pos_20": 0.396,
+        "atr_pct": 8.95,
         "atr_pct_rank_1y": 0.849,
         "vol_state": "expanded",
-        "ud_vol_50d": 1.03,
-        "vol_10v50": 0.71,
-        "rvol": 0.31,
+        "ud_vol_50d": 1.04,
+        "vol_10v50": 0.73,
+        "rvol": 0.56,
         "obv_63d": "bullish_divergence",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
-          "strategy_return": 9.6621,
-          "buy_hold_return": 50.8694,
-          "excess_vs_hold": -41.2073,
+          "strategy_return": 9.5523,
+          "buy_hold_return": 50.3353,
+          "excess_vs_hold": -40.783,
           "beat_hold": false,
           "n_trades": 94,
           "win_rate": 0.415
         },
         "macd_sig_above_zero": {
-          "strategy_return": 13.2959,
-          "buy_hold_return": 50.8694,
-          "excess_vs_hold": -37.5735,
+          "strategy_return": 13.1487,
+          "buy_hold_return": 50.3353,
+          "excess_vs_hold": -37.1866,
           "beat_hold": false,
           "n_trades": 10,
           "win_rate": 0.8
         },
         "macd_rsi": {
           "strategy_return": 0.0,
-          "buy_hold_return": 50.8694,
-          "excess_vs_hold": -50.8694,
+          "buy_hold_return": 50.3353,
+          "excess_vs_hold": -50.3353,
           "beat_hold": false,
           "n_trades": 0,
           "win_rate": null
         },
         "macd_mfi": {
           "strategy_return": 0.0,
-          "buy_hold_return": 50.8694,
-          "excess_vs_hold": -50.8694,
+          "buy_hold_return": 50.3353,
+          "excess_vs_hold": -50.3353,
           "beat_hold": false,
           "n_trades": 0,
           "win_rate": null
         },
         "vpvma": {
           "strategy_return": 19.4394,
-          "buy_hold_return": 50.8694,
-          "excess_vs_hold": -31.4301,
+          "buy_hold_return": 50.3353,
+          "excess_vs_hold": -30.8959,
           "beat_hold": false,
           "n_trades": 159,
           "win_rate": 0.484
@@ -283,12 +283,12 @@
       "bars": 2455,
       "first_date": "2016-08-16",
       "last_date": "2026-08-27",
-      "close": 268500.0,
+      "close": 266000.0,
       "regime": {
         "regime": "neither",
         "r2": 0.0006,
         "r2_vs_null_pct": 0,
-        "vr": 0.6461,
+        "vr": 0.6471,
         "cross_rate": 11.27,
         "slope": "up",
         "trend_ok": false,
@@ -297,81 +297,81 @@
         "window": 90
       },
       "indicators": {
-        "macd": 335.9832,
-        "macd_signal": -2981.1814,
-        "macd_hist": 3317.1646,
+        "macd": 136.553,
+        "macd_signal": -3021.0674,
+        "macd_hist": 3157.6205,
         "macd_hist_prev": 3357.3674,
-        "rsi": 52.53,
-        "mfi": 66.7,
-        "vpvma": -330139499.952071,
-        "vpvma_signal": -387345509.43676
+        "rsi": 51.83,
+        "mfi": 67.51,
+        "vpvma": -328056955.408307,
+        "vpvma_signal": -387114115.598564
       },
       "momentum": {
         "mom_12_1": 2.133063,
         "mom_6_1": 0.143515,
-        "ret_12m": 2.823761,
-        "ret_3m": -0.124443,
-        "ret_1m": 0.220455,
-        "dist_52w_high": -0.25931,
-        "dist_52w_low": 2.971893,
-        "vs_200dma": 0.296295,
-        "vs_50dma": -0.030021,
+        "ret_12m": 2.788158,
+        "ret_3m": -0.132595,
+        "ret_1m": 0.209091,
+        "dist_52w_high": -0.266207,
+        "dist_52w_low": 2.934911,
+        "vs_200dma": 0.284303,
+        "vs_50dma": -0.038878,
         "tsmom_12m": 1,
         "rank_universe": 0.935,
         "rank_group": 0.25,
-        "rs_126_vs_proxy": 0.003499
+        "rs_126_vs_proxy": -0.005845
       },
       "setup": {
         "stack": "mixed",
-        "ema200_slope_63d": 0.3481,
+        "ema200_slope_63d": 0.348,
         "swing": "HH/HL",
-        "close_pos_20": 0.495,
-        "atr_pct": 7.3,
-        "atr_pct_rank_1y": 0.833,
+        "close_pos_20": 0.48,
+        "atr_pct": 7.37,
+        "atr_pct_rank_1y": 0.837,
         "vol_state": "expanded",
-        "ud_vol_50d": 1.01,
-        "vol_10v50": 0.81,
-        "rvol": 0.3,
+        "ud_vol_50d": 1.02,
+        "vol_10v50": 0.83,
+        "rvol": 0.56,
         "obv_63d": "bullish_divergence",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
-          "strategy_return": 3.9529,
-          "buy_hold_return": 7.5619,
-          "excess_vs_hold": -3.609,
+          "strategy_return": 3.9068,
+          "buy_hold_return": 7.4821,
+          "excess_vs_hold": -3.5754,
           "beat_hold": false,
           "n_trades": 96,
           "win_rate": 0.396
         },
         "macd_sig_above_zero": {
-          "strategy_return": 4.8848,
-          "buy_hold_return": 7.5619,
-          "excess_vs_hold": -2.6771,
+          "strategy_return": 4.83,
+          "buy_hold_return": 7.4821,
+          "excess_vs_hold": -2.6522,
           "beat_hold": false,
           "n_trades": 10,
           "win_rate": 0.5
         },
         "macd_rsi": {
-          "strategy_return": 3.5586,
-          "buy_hold_return": 7.5619,
-          "excess_vs_hold": -4.0033,
+          "strategy_return": 3.5161,
+          "buy_hold_return": 7.4821,
+          "excess_vs_hold": -3.966,
           "beat_hold": false,
           "n_trades": 1,
           "win_rate": 1.0
         },
         "macd_mfi": {
           "strategy_return": 0.0,
-          "buy_hold_return": 7.5619,
-          "excess_vs_hold": -7.5619,
+          "buy_hold_return": 7.4821,
+          "excess_vs_hold": -7.4821,
           "beat_hold": false,
           "n_trades": 0,
           "win_rate": null
         },
         "vpvma": {
           "strategy_return": 0.9279,
-          "buy_hold_return": 7.5619,
-          "excess_vs_hold": -6.6339,
+          "buy_hold_return": 7.4821,
+          "excess_vs_hold": -6.5542,
           "beat_hold": false,
           "n_trades": 156,
           "win_rate": 0.455
@@ -404,9 +404,9 @@
         "macd_hist": -2.1004,
         "macd_hist_prev": -1.9585,
         "rsi": 45.43,
-        "mfi": 43.03,
-        "vpvma": -90.573111,
-        "vpvma_signal": -10.252969
+        "mfi": 43.11,
+        "vpvma": -90.58816,
+        "vpvma_signal": -10.254641
       },
       "momentum": {
         "mom_12_1": 2.052254,
@@ -433,7 +433,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.77,
         "vol_10v50": 0.99,
-        "rvol": 0.53,
+        "rvol": 0.55,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -506,9 +506,9 @@
         "macd_hist": -3.9797,
         "macd_hist_prev": -3.6306,
         "rsi": 44.16,
-        "mfi": 53.82,
-        "vpvma": 44.074162,
-        "vpvma_signal": 111.313449
+        "mfi": 53.84,
+        "vpvma": 44.274079,
+        "vpvma_signal": 111.335662
       },
       "momentum": {
         "mom_12_1": 1.526072,
@@ -608,9 +608,9 @@
         "macd_hist": 2.9297,
         "macd_hist_prev": 3.7899,
         "rsi": 72.81,
-        "mfi": 69.95,
-        "vpvma": 148.878446,
-        "vpvma_signal": 98.4152
+        "mfi": 69.92,
+        "vpvma": 148.87887,
+        "vpvma_signal": 98.415247
       },
       "momentum": {
         "mom_12_1": 0.043768,
@@ -711,8 +711,8 @@
         "macd_hist_prev": 0.2605,
         "rsi": 67.96,
         "mfi": 75.98,
-        "vpvma": 1.300883,
-        "vpvma_signal": 0.62351
+        "vpvma": 1.300886,
+        "vpvma_signal": 0.623511
       },
       "momentum": {
         "mom_12_1": 0.691198,
@@ -813,8 +813,8 @@
         "macd_hist_prev": 0.6526,
         "rsi": 67.3,
         "mfi": 73.6,
-        "vpvma": 1.538155,
-        "vpvma_signal": 0.65216
+        "vpvma": 1.551269,
+        "vpvma_signal": 0.653617
       },
       "momentum": {
         "mom_12_1": -0.022599,
@@ -835,7 +835,7 @@
         "stack": "mixed",
         "ema200_slope_63d": -0.0733,
         "swing": "LH/LL",
-        "close_pos_20": 0.519,
+        "close_pos_20": 0.518,
         "atr_pct": 3.74,
         "atr_pct_rank_1y": 0.238,
         "vol_state": "normal",
@@ -914,9 +914,9 @@
         "macd_hist": -0.2322,
         "macd_hist_prev": -1.7866,
         "rsi": 47.97,
-        "mfi": 36.15,
-        "vpvma": -959.377813,
-        "vpvma_signal": -811.886263
+        "mfi": 36.16,
+        "vpvma": -964.268408,
+        "vpvma_signal": -812.429662
       },
       "momentum": {
         "mom_12_1": 0.398634,
@@ -1016,9 +1016,9 @@
         "macd_hist": 0.2109,
         "macd_hist_prev": -0.102,
         "rsi": 47.43,
-        "mfi": 51.26,
-        "vpvma": -1124.401763,
-        "vpvma_signal": -1059.422712
+        "mfi": 51.25,
+        "vpvma": -1120.217396,
+        "vpvma_signal": -1058.957783
       },
       "momentum": {
         "mom_12_1": 1.578082,
@@ -1119,8 +1119,8 @@
         "macd_hist_prev": 0.0238,
         "rsi": 41.26,
         "mfi": 31.53,
-        "vpvma": -7.419907,
-        "vpvma_signal": -8.339587
+        "vpvma": -7.496019,
+        "vpvma_signal": -8.348044
       },
       "momentum": {
         "mom_12_1": -0.490241,
@@ -1221,7 +1221,7 @@
         "macd_hist_prev": -0.3873,
         "rsi": 36.64,
         "mfi": 29.27,
-        "vpvma": -9.90351,
+        "vpvma": -9.903511,
         "vpvma_signal": -9.416282
       },
       "momentum": {
@@ -1323,7 +1323,7 @@
         "macd_hist_prev": -0.015,
         "rsi": 57.35,
         "mfi": 64.93,
-        "vpvma": -8.942517,
+        "vpvma": -8.942518,
         "vpvma_signal": -8.329613
       },
       "momentum": {
@@ -1424,9 +1424,9 @@
         "macd_hist": -4.917,
         "macd_hist_prev": -3.5989,
         "rsi": 47.57,
-        "mfi": 52.19,
-        "vpvma": -6581.53666,
-        "vpvma_signal": -6284.737996
+        "mfi": 52.14,
+        "vpvma": -6550.373321,
+        "vpvma_signal": -6281.275403
       },
       "momentum": {
         "mom_12_1": 1.045209,
@@ -1453,7 +1453,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.91,
         "vol_10v50": 0.61,
-        "rvol": 0.53,
+        "rvol": 0.54,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -1526,9 +1526,9 @@
         "macd_hist": 2.0848,
         "macd_hist_prev": 2.599,
         "rsi": 71.93,
-        "mfi": 60.22,
-        "vpvma": 34.869118,
-        "vpvma_signal": 29.167403
+        "mfi": 59.94,
+        "vpvma": 34.869686,
+        "vpvma_signal": 29.167466
       },
       "momentum": {
         "mom_12_1": 0.461595,
@@ -1554,8 +1554,8 @@
         "atr_pct_rank_1y": 0.222,
         "vol_state": "normal",
         "ud_vol_50d": 1.16,
-        "vol_10v50": 1.0,
-        "rvol": 0.78,
+        "vol_10v50": 1.01,
+        "rvol": 0.83,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -1628,9 +1628,9 @@
         "macd_hist": -4.473,
         "macd_hist_prev": -5.9936,
         "rsi": 43.89,
-        "mfi": 19.89,
-        "vpvma": -223.687281,
-        "vpvma_signal": -116.645882
+        "mfi": 20.12,
+        "vpvma": -223.425829,
+        "vpvma_signal": -116.616832
       },
       "momentum": {
         "mom_12_1": 0.251748,
@@ -1656,8 +1656,8 @@
         "atr_pct_rank_1y": 0.357,
         "vol_state": "normal",
         "ud_vol_50d": 1.02,
-        "vol_10v50": 0.99,
-        "rvol": 0.91,
+        "vol_10v50": 1.0,
+        "rvol": 0.94,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -1730,9 +1730,9 @@
         "macd_hist": -1.5062,
         "macd_hist_prev": -1.42,
         "rsi": 47.99,
-        "mfi": 35.52,
-        "vpvma": -12.381967,
-        "vpvma_signal": 15.160571
+        "mfi": 35.56,
+        "vpvma": -12.484696,
+        "vpvma_signal": 15.149157
       },
       "momentum": {
         "mom_12_1": 12.346571,
@@ -1758,8 +1758,8 @@
         "atr_pct_rank_1y": 0.71,
         "vol_state": "normal",
         "ud_vol_50d": 1.0,
-        "vol_10v50": 0.93,
-        "rvol": 0.63,
+        "vol_10v50": 0.94,
+        "rvol": 0.64,
         "obv_63d": "bullish_divergence",
         "in_setup": false
       },
@@ -1832,9 +1832,9 @@
         "macd_hist": 1.3087,
         "macd_hist_prev": 0.9781,
         "rsi": 49.23,
-        "mfi": 40.97,
-        "vpvma": -403.348848,
-        "vpvma_signal": -485.081139
+        "mfi": 41.06,
+        "vpvma": -403.351335,
+        "vpvma_signal": -485.081416
       },
       "momentum": {
         "mom_12_1": 2.278935,
@@ -1861,7 +1861,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.7,
         "vol_10v50": 0.77,
-        "rvol": 0.72,
+        "rvol": 0.74,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -1934,9 +1934,9 @@
         "macd_hist": 0.6899,
         "macd_hist_prev": 0.6744,
         "rsi": 79.8,
-        "mfi": 83.54,
-        "vpvma": 2.661463,
-        "vpvma_signal": 1.404113
+        "mfi": 83.55,
+        "vpvma": 2.661636,
+        "vpvma_signal": 1.404132
       },
       "momentum": {
         "mom_12_1": -0.66777,
@@ -1963,7 +1963,7 @@
         "vol_state": "contracted",
         "ud_vol_50d": 1.74,
         "vol_10v50": 1.3,
-        "rvol": 1.45,
+        "rvol": 1.46,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -2036,9 +2036,9 @@
         "macd_hist": -0.1359,
         "macd_hist_prev": -0.1708,
         "rsi": 48.33,
-        "mfi": 39.3,
-        "vpvma": -1.103897,
-        "vpvma_signal": -1.167882
+        "mfi": 39.38,
+        "vpvma": -1.098403,
+        "vpvma_signal": -1.167272
       },
       "momentum": {
         "mom_12_1": 0.005119,
@@ -2065,7 +2065,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.9,
         "vol_10v50": 0.77,
-        "rvol": 0.77,
+        "rvol": 0.78,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -2119,12 +2119,12 @@
       "bars": 3667,
       "first_date": "2016-08-13",
       "last_date": "2026-08-27",
-      "close": 80084.3594,
+      "close": 80308.8125,
       "regime": {
         "regime": "neither",
-        "r2": 0.1672,
+        "r2": 0.1674,
         "r2_vs_null_pct": 25,
-        "vr": 1.6657,
+        "vr": 1.6634,
         "cross_rate": 21.13,
         "slope": "up",
         "trend_ok": false,
@@ -2133,25 +2133,25 @@
         "window": 90
       },
       "indicators": {
-        "macd": 4145.2913,
-        "macd_signal": 2844.1022,
-        "macd_hist": 1301.1891,
+        "macd": 4163.1964,
+        "macd_signal": 2847.6832,
+        "macd_hist": 1315.5132,
         "macd_hist_prev": 1420.8894,
-        "rsi": 82.12,
-        "mfi": 80.43,
-        "vpvma": 14950736.184094,
-        "vpvma_signal": 20046510.723219
+        "rsi": 82.36,
+        "mfi": 80.42,
+        "vpvma": 15200380.356955,
+        "vpvma_signal": 20074248.964648
       },
       "momentum": {
         "mom_12_1": -0.248067,
         "mom_6_1": -0.178958,
-        "ret_12m": -0.06293,
-        "ret_3m": 0.34096,
-        "ret_1m": 0.246214,
-        "dist_52w_high": -0.173786,
-        "dist_52w_low": 0.367587,
-        "vs_200dma": 0.156892,
-        "vs_50dma": 0.205626,
+        "ret_12m": -0.060304,
+        "ret_3m": 0.344718,
+        "ret_1m": 0.249707,
+        "dist_52w_high": -0.17147,
+        "dist_52w_low": 0.37142,
+        "vs_200dma": 0.160116,
+        "vs_50dma": 0.208923,
         "tsmom_12m": -1,
         "rank_universe": 0.089,
         "rank_group": 0.105,
@@ -2161,53 +2161,53 @@
         "stack": "mixed",
         "ema200_slope_63d": -0.0674,
         "swing": "mixed",
-        "close_pos_20": 0.542,
-        "atr_pct": 2.8,
+        "close_pos_20": 0.547,
+        "atr_pct": 2.79,
         "atr_pct_rank_1y": 0.373,
         "vol_state": "normal",
         "ud_vol_50d": 1.4,
         "vol_10v50": 1.65,
-        "rvol": 1.33,
+        "rvol": 1.32,
         "obv_63d": "confirms",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
-          "strategy_return": 173.7529,
-          "buy_hold_return": 135.7589,
-          "excess_vs_hold": 37.994,
+          "strategy_return": 174.2426,
+          "buy_hold_return": 136.1422,
+          "excess_vs_hold": 38.1005,
           "beat_hold": true,
           "n_trades": 127,
           "win_rate": 0.504
         },
         "macd_sig_above_zero": {
-          "strategy_return": 154.418,
-          "buy_hold_return": 135.7589,
-          "excess_vs_hold": 18.6591,
+          "strategy_return": 154.8536,
+          "buy_hold_return": 136.1422,
+          "excess_vs_hold": 18.7114,
           "beat_hold": true,
           "n_trades": 14,
           "win_rate": 0.5
         },
         "macd_rsi": {
-          "strategy_return": 7.0693,
-          "buy_hold_return": 135.7589,
-          "excess_vs_hold": -128.6895,
+          "strategy_return": 7.092,
+          "buy_hold_return": 136.1422,
+          "excess_vs_hold": -129.0502,
           "beat_hold": false,
           "n_trades": 3,
           "win_rate": 1.0
         },
         "macd_mfi": {
           "strategy_return": -0.2253,
-          "buy_hold_return": 135.7589,
-          "excess_vs_hold": -135.9841,
+          "buy_hold_return": 136.1422,
+          "excess_vs_hold": -136.3674,
           "beat_hold": false,
           "n_trades": 1,
           "win_rate": 0.0
         },
         "vpvma": {
-          "strategy_return": 31.5497,
-          "buy_hold_return": 135.7589,
-          "excess_vs_hold": -104.2092,
+          "strategy_return": 31.6409,
+          "buy_hold_return": 136.1422,
+          "excess_vs_hold": -104.5013,
           "beat_hold": false,
           "n_trades": 229,
           "win_rate": 0.502
@@ -2221,12 +2221,12 @@
       "bars": 2526,
       "first_date": "2016-08-15",
       "last_date": "2026-08-27",
-      "close": 88.6,
+      "close": 88.56,
       "regime": {
         "regime": "neither",
-        "r2": 0.2999,
+        "r2": 0.3,
         "r2_vs_null_pct": 35,
-        "vr": 1.0769,
+        "vr": 1.0771,
         "cross_rate": 12.68,
         "slope": "down",
         "trend_ok": false,
@@ -2235,25 +2235,25 @@
         "window": 90
       },
       "indicators": {
-        "macd": 1.1855,
-        "macd_signal": 1.3812,
-        "macd_hist": -0.1958,
+        "macd": 1.1823,
+        "macd_signal": 1.3806,
+        "macd_hist": -0.1983,
         "macd_hist_prev": -0.0472,
-        "rsi": 50.46,
-        "mfi": 77.62,
-        "vpvma": -2.914245,
-        "vpvma_signal": -14.479972
+        "rsi": 50.39,
+        "mfi": 77.65,
+        "vpvma": -2.979144,
+        "vpvma_signal": -14.487183
       },
       "momentum": {
         "mom_12_1": 0.322355,
         "mom_6_1": 0.167224,
-        "ret_12m": 0.291169,
-        "ret_3m": -0.067172,
-        "ret_1m": -0.023584,
-        "dist_52w_high": -0.251373,
-        "dist_52w_low": 0.503734,
-        "vs_200dma": 0.066625,
-        "vs_50dma": 0.054079,
+        "ret_12m": 0.290586,
+        "ret_3m": -0.067593,
+        "ret_1m": -0.024025,
+        "dist_52w_high": -0.251711,
+        "dist_52w_low": 0.503055,
+        "vs_200dma": 0.066146,
+        "vs_50dma": 0.053613,
         "tsmom_12m": 1,
         "rank_universe": 0.5,
         "rank_group": 0.684,
@@ -2263,53 +2263,53 @@
         "stack": "mixed",
         "ema200_slope_63d": 0.0104,
         "swing": "mixed",
-        "close_pos_20": 0.605,
+        "close_pos_20": 0.604,
         "atr_pct": 4.4,
         "atr_pct_rank_1y": 0.548,
         "vol_state": "normal",
         "ud_vol_50d": 1.74,
         "vol_10v50": 0.69,
-        "rvol": 1.03,
+        "rvol": 1.04,
         "obv_63d": "bullish_divergence",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
-          "strategy_return": 0.2632,
-          "buy_hold_return": 0.8325,
-          "excess_vs_hold": -0.5693,
+          "strategy_return": 0.2626,
+          "buy_hold_return": 0.8316,
+          "excess_vs_hold": -0.5691,
           "beat_hold": false,
           "n_trades": 99,
           "win_rate": 0.444
         },
         "macd_sig_above_zero": {
-          "strategy_return": 0.3407,
-          "buy_hold_return": 0.8325,
-          "excess_vs_hold": -0.4918,
+          "strategy_return": 0.3401,
+          "buy_hold_return": 0.8316,
+          "excess_vs_hold": -0.4916,
           "beat_hold": false,
           "n_trades": 13,
           "win_rate": 0.385
         },
         "macd_rsi": {
-          "strategy_return": 1.9593,
-          "buy_hold_return": 0.8325,
-          "excess_vs_hold": 1.1268,
+          "strategy_return": 1.9579,
+          "buy_hold_return": 0.8316,
+          "excess_vs_hold": 1.1263,
           "beat_hold": true,
           "n_trades": 1,
           "win_rate": 1.0
         },
         "macd_mfi": {
-          "strategy_return": 0.434,
-          "buy_hold_return": 0.8325,
-          "excess_vs_hold": -0.3984,
+          "strategy_return": 0.4334,
+          "buy_hold_return": 0.8316,
+          "excess_vs_hold": -0.3983,
           "beat_hold": false,
           "n_trades": 2,
           "win_rate": 1.0
         },
         "vpvma": {
-          "strategy_return": 0.7591,
-          "buy_hold_return": 0.8325,
-          "excess_vs_hold": -0.0734,
+          "strategy_return": 0.7583,
+          "buy_hold_return": 0.8316,
+          "excess_vs_hold": -0.0733,
           "beat_hold": false,
           "n_trades": 192,
           "win_rate": 0.568
@@ -2342,9 +2342,9 @@
         "macd_hist": -0.1389,
         "macd_hist_prev": -0.412,
         "rsi": 41.79,
-        "mfi": 45.76,
-        "vpvma": -1785.742385,
-        "vpvma_signal": -1768.156538
+        "mfi": 45.74,
+        "vpvma": -1785.756161,
+        "vpvma_signal": -1768.158069
       },
       "momentum": {
         "mom_12_1": 0.831275,
@@ -2371,7 +2371,7 @@
         "vol_state": "expanded",
         "ud_vol_50d": 0.87,
         "vol_10v50": 0.73,
-        "rvol": 0.54,
+        "rvol": 0.55,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -2444,9 +2444,9 @@
         "macd_hist": 0.3259,
         "macd_hist_prev": 0.3322,
         "rsi": 71.12,
-        "mfi": 78.53,
-        "vpvma": 1.46075,
-        "vpvma_signal": 0.817525
+        "mfi": 78.54,
+        "vpvma": 1.460762,
+        "vpvma_signal": 0.817527
       },
       "momentum": {
         "mom_12_1": 0.190767,
@@ -2546,9 +2546,9 @@
         "macd_hist": -0.4172,
         "macd_hist_prev": -0.9294,
         "rsi": 62.33,
-        "mfi": 54.92,
-        "vpvma": 13.99241,
-        "vpvma_signal": 4.993867
+        "mfi": 54.94,
+        "vpvma": 14.068367,
+        "vpvma_signal": 5.002306
       },
       "momentum": {
         "mom_12_1": 0.235873,
@@ -2648,9 +2648,9 @@
         "macd_hist": 0.0874,
         "macd_hist_prev": -0.3063,
         "rsi": 48.49,
-        "mfi": 47.25,
-        "vpvma": -424.759381,
-        "vpvma_signal": -368.881689
+        "mfi": 47.26,
+        "vpvma": -424.761282,
+        "vpvma_signal": -368.881901
       },
       "momentum": {
         "mom_12_1": 2.610996,
@@ -2750,9 +2750,9 @@
         "macd_hist": -2.4727,
         "macd_hist_prev": -3.163,
         "rsi": 47.06,
-        "mfi": 38.77,
-        "vpvma": -544.620429,
-        "vpvma_signal": -206.444756
+        "mfi": 38.8,
+        "vpvma": -544.632917,
+        "vpvma_signal": -206.446144
       },
       "momentum": {
         "mom_12_1": 1.424656,
@@ -2779,7 +2779,7 @@
         "vol_state": "expanded",
         "ud_vol_50d": 1.18,
         "vol_10v50": 1.1,
-        "rvol": 0.78,
+        "rvol": 0.79,
         "obv_63d": "bullish_divergence",
         "in_setup": false
       },
@@ -2954,9 +2954,9 @@
         "macd_hist": -1.3879,
         "macd_hist_prev": -4.1232,
         "rsi": 64.05,
-        "mfi": 41.73,
-        "vpvma": 193.286603,
-        "vpvma_signal": 64.487719
+        "mfi": 41.76,
+        "vpvma": 193.294813,
+        "vpvma_signal": 64.488632
       },
       "momentum": {
         "mom_12_1": 0.718199,
@@ -3056,9 +3056,9 @@
         "macd_hist": -0.9839,
         "macd_hist_prev": -0.8549,
         "rsi": 47.26,
-        "mfi": 55.15,
-        "vpvma": -16.171013,
-        "vpvma_signal": -2.767973
+        "mfi": 55.2,
+        "vpvma": -16.440326,
+        "vpvma_signal": -2.797897
       },
       "momentum": {
         "mom_12_1": -0.3345,
@@ -3084,8 +3084,8 @@
         "atr_pct_rank_1y": 0.385,
         "vol_state": "normal",
         "ud_vol_50d": 0.58,
-        "vol_10v50": 0.81,
-        "rvol": 0.65,
+        "vol_10v50": 0.82,
+        "rvol": 0.67,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -3158,9 +3158,9 @@
         "macd_hist": -1.8422,
         "macd_hist_prev": -3.2581,
         "rsi": 49.46,
-        "mfi": 47.39,
-        "vpvma": -76.650529,
-        "vpvma_signal": -54.06771
+        "mfi": 47.46,
+        "vpvma": -83.944925,
+        "vpvma_signal": -54.878198
       },
       "momentum": {
         "mom_12_1": 1.091679,
@@ -3187,7 +3187,7 @@
         "vol_state": "expanded",
         "ud_vol_50d": 0.99,
         "vol_10v50": 0.78,
-        "rvol": 0.95,
+        "rvol": 0.96,
         "obv_63d": "bearish_divergence",
         "in_setup": false
       },
@@ -3260,7 +3260,7 @@
         "macd_hist": 0.0323,
         "macd_hist_prev": 0.0302,
         "rsi": 50.36,
-        "mfi": 52.14,
+        "mfi": 52.15,
         "vpvma": -0.909644,
         "vpvma_signal": -1.025398
       },
@@ -3362,9 +3362,9 @@
         "macd_hist": 0.2624,
         "macd_hist_prev": 0.4572,
         "rsi": 54.21,
-        "mfi": 52.74,
-        "vpvma": 866.018879,
-        "vpvma_signal": 356.765566
+        "mfi": 53.34,
+        "vpvma": 866.075079,
+        "vpvma_signal": 356.771811
       },
       "momentum": {
         "mom_12_1": 0.310703,
@@ -3390,8 +3390,8 @@
         "atr_pct_rank_1y": 0.952,
         "vol_state": "expanded",
         "ud_vol_50d": 0.7,
-        "vol_10v50": 0.84,
-        "rvol": 0.69,
+        "vol_10v50": 0.85,
+        "rvol": 0.84,
         "obv_63d": "bearish_divergence",
         "in_setup": false
       },
@@ -3445,12 +3445,12 @@
       "bars": 3214,
       "first_date": "2017-11-09",
       "last_date": "2026-08-27",
-      "close": 2503.3999,
+      "close": 2510.8799,
       "regime": {
         "regime": "neither",
-        "r2": 0.4861,
+        "r2": 0.486,
         "r2_vs_null_pct": 50,
-        "vr": 1.3554,
+        "vr": 1.3558,
         "cross_rate": 12.68,
         "slope": "up",
         "trend_ok": false,
@@ -3459,25 +3459,25 @@
         "window": 90
       },
       "indicators": {
-        "macd": 168.6775,
-        "macd_signal": 126.0484,
-        "macd_hist": 42.6291,
+        "macd": 169.2742,
+        "macd_signal": 126.1677,
+        "macd_hist": 43.1065,
         "macd_hist_prev": 49.4251,
-        "rsi": 77.28,
-        "mfi": 69.83,
-        "vpvma": 21186.111369,
-        "vpvma_signal": 31512.727416
+        "rsi": 77.76,
+        "mfi": 69.76,
+        "vpvma": 21092.345217,
+        "vpvma_signal": 31502.308955
       },
       "momentum": {
         "mom_12_1": -0.327198,
         "mom_6_1": -0.184196,
-        "ret_12m": -0.114489,
-        "ret_3m": 0.599804,
-        "ret_1m": 0.316154,
-        "dist_52w_high": -0.253768,
-        "dist_52w_low": 0.599804,
-        "vs_200dma": 0.24155,
-        "vs_50dma": 0.265995,
+        "ret_12m": -0.111843,
+        "ret_3m": 0.604584,
+        "ret_1m": 0.320086,
+        "dist_52w_high": -0.251539,
+        "dist_52w_low": 0.604584,
+        "vs_200dma": 0.245237,
+        "vs_50dma": 0.269681,
         "tsmom_12m": -1,
         "rank_universe": 0.081,
         "rank_group": 0.053,
@@ -3485,55 +3485,55 @@
       },
       "setup": {
         "stack": "mixed",
-        "ema200_slope_63d": -0.0751,
+        "ema200_slope_63d": -0.075,
         "swing": "HH/HL",
-        "close_pos_20": 0.534,
-        "atr_pct": 3.7,
-        "atr_pct_rank_1y": 0.317,
+        "close_pos_20": 0.539,
+        "atr_pct": 3.69,
+        "atr_pct_rank_1y": 0.31,
         "vol_state": "normal",
-        "ud_vol_50d": 1.66,
+        "ud_vol_50d": 1.91,
         "vol_10v50": 1.93,
-        "rvol": 1.63,
+        "rvol": 1.58,
         "obv_63d": "confirms",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
-          "strategy_return": 6.7066,
-          "buy_hold_return": 6.8016,
-          "excess_vs_hold": -0.0949,
+          "strategy_return": 6.7297,
+          "buy_hold_return": 6.8249,
+          "excess_vs_hold": -0.0952,
           "beat_hold": false,
           "n_trades": 115,
           "win_rate": 0.4
         },
         "macd_sig_above_zero": {
-          "strategy_return": 16.5727,
-          "buy_hold_return": 6.8016,
-          "excess_vs_hold": 9.7711,
+          "strategy_return": 16.6252,
+          "buy_hold_return": 6.8249,
+          "excess_vs_hold": 9.8003,
           "beat_hold": true,
           "n_trades": 12,
           "win_rate": 0.667
         },
         "macd_rsi": {
-          "strategy_return": 11.3212,
-          "buy_hold_return": 6.8016,
-          "excess_vs_hold": 4.5196,
+          "strategy_return": 11.358,
+          "buy_hold_return": 6.8249,
+          "excess_vs_hold": 4.5331,
           "beat_hold": true,
           "n_trades": 2,
           "win_rate": 1.0
         },
         "macd_mfi": {
-          "strategy_return": 4.5009,
-          "buy_hold_return": 6.8016,
-          "excess_vs_hold": -2.3007,
+          "strategy_return": 4.5173,
+          "buy_hold_return": 6.8249,
+          "excess_vs_hold": -2.3076,
           "beat_hold": false,
           "n_trades": 2,
           "win_rate": 1.0
         },
         "vpvma": {
-          "strategy_return": 1.556,
-          "buy_hold_return": 6.8016,
-          "excess_vs_hold": -5.2456,
+          "strategy_return": 1.5636,
+          "buy_hold_return": 6.8249,
+          "excess_vs_hold": -5.2612,
           "beat_hold": false,
           "n_trades": 174,
           "win_rate": 0.534
@@ -3566,9 +3566,9 @@
         "macd_hist": 0.4445,
         "macd_hist_prev": 0.4694,
         "rsi": 83.76,
-        "mfi": 74.55,
-        "vpvma": 0.441487,
-        "vpvma_signal": 0.430332
+        "mfi": 74.57,
+        "vpvma": 0.441808,
+        "vpvma_signal": 0.430367
       },
       "momentum": {
         "mom_12_1": -0.59104,
@@ -3595,7 +3595,7 @@
         "vol_state": "contracted",
         "ud_vol_50d": 1.71,
         "vol_10v50": 1.63,
-        "rvol": 1.73,
+        "rvol": 1.74,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -3649,12 +3649,12 @@
       "bars": 2523,
       "first_date": "2016-08-15",
       "last_date": "2026-08-27",
-      "close": 182.12,
+      "close": 182.14,
       "regime": {
         "regime": "neither",
         "r2": 0.0069,
         "r2_vs_null_pct": 5,
-        "vr": 0.7274,
+        "vr": 0.7273,
         "cross_rate": 16.9,
         "slope": "up",
         "trend_ok": false,
@@ -3663,72 +3663,72 @@
         "window": 90
       },
       "indicators": {
-        "macd": 2.0633,
-        "macd_signal": 0.6392,
-        "macd_hist": 1.4241,
+        "macd": 2.0649,
+        "macd_signal": 0.6396,
+        "macd_hist": 1.4254,
         "macd_hist_prev": 1.3847,
-        "rsi": 55.81,
-        "mfi": 71.9,
-        "vpvma": -80.214379,
-        "vpvma_signal": -74.834105
+        "rsi": 55.82,
+        "mfi": 71.91,
+        "vpvma": -80.191646,
+        "vpvma_signal": -74.831579
       },
       "momentum": {
         "mom_12_1": 1.03687,
         "mom_6_1": -0.041221,
-        "ret_12m": 1.572323,
-        "ret_3m": -0.117678,
-        "ret_1m": 0.26288,
-        "dist_52w_high": -0.169161,
-        "dist_52w_low": 1.532258,
-        "vs_200dma": 0.257265,
-        "vs_50dma": 0.025517,
+        "ret_12m": 1.572606,
+        "ret_3m": -0.117582,
+        "ret_1m": 0.263019,
+        "dist_52w_high": -0.169069,
+        "dist_52w_low": 1.532536,
+        "vs_200dma": 0.257402,
+        "vs_50dma": 0.025628,
         "tsmom_12m": 1,
         "rank_universe": 0.839,
         "rank_group": 1.0,
-        "rs_126_vs_proxy": 0.076655
+        "rs_126_vs_proxy": 0.076773
       },
       "setup": {
         "stack": "aligned_up",
         "ema200_slope_63d": 0.2232,
         "swing": "mixed",
-        "close_pos_20": 0.47,
+        "close_pos_20": 0.471,
         "atr_pct": 4.16,
         "atr_pct_rank_1y": 0.599,
         "vol_state": "normal",
         "ud_vol_50d": 0.84,
         "vol_10v50": 0.7,
-        "rvol": 0.46,
+        "rvol": 0.47,
         "obv_63d": "confirms",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
-          "strategy_return": 0.7418,
-          "buy_hold_return": 2.1487,
-          "excess_vs_hold": -1.4068,
+          "strategy_return": 0.742,
+          "buy_hold_return": 2.149,
+          "excess_vs_hold": -1.407,
           "beat_hold": false,
           "n_trades": 100,
           "win_rate": 0.39
         },
         "macd_sig_above_zero": {
-          "strategy_return": 4.358,
-          "buy_hold_return": 2.1487,
-          "excess_vs_hold": 2.2093,
+          "strategy_return": 4.3586,
+          "buy_hold_return": 2.149,
+          "excess_vs_hold": 2.2095,
           "beat_hold": true,
           "n_trades": 10,
           "win_rate": 0.6
         },
         "macd_rsi": {
           "strategy_return": 0.0,
-          "buy_hold_return": 2.1487,
-          "excess_vs_hold": -2.1487,
+          "buy_hold_return": 2.149,
+          "excess_vs_hold": -2.149,
           "beat_hold": false,
           "n_trades": 0,
           "win_rate": null
         },
         "macd_mfi": {
-          "strategy_return": 2.2767,
-          "buy_hold_return": 2.1487,
+          "strategy_return": 2.2771,
+          "buy_hold_return": 2.149,
           "excess_vs_hold": 0.128,
           "beat_hold": true,
           "n_trades": 1,
@@ -3736,8 +3736,8 @@
         },
         "vpvma": {
           "strategy_return": 0.8416,
-          "buy_hold_return": 2.1487,
-          "excess_vs_hold": -1.3071,
+          "buy_hold_return": 2.149,
+          "excess_vs_hold": -1.3074,
           "beat_hold": false,
           "n_trades": 189,
           "win_rate": 0.577
@@ -3873,8 +3873,8 @@
         "macd_hist_prev": -0.7492,
         "rsi": 45.98,
         "mfi": 50.85,
-        "vpvma": -83.431576,
-        "vpvma_signal": -75.104796
+        "vpvma": -83.431582,
+        "vpvma_signal": -75.104797
       },
       "momentum": {
         "mom_12_1": 0.926328,
@@ -3975,8 +3975,8 @@
         "macd_hist_prev": 3.4142,
         "rsi": 73.29,
         "mfi": 62.05,
-        "vpvma": 74.970093,
-        "vpvma_signal": 63.986452
+        "vpvma": 74.970107,
+        "vpvma_signal": 63.986454
       },
       "momentum": {
         "mom_12_1": 0.157876,
@@ -4076,9 +4076,9 @@
         "macd_hist": 0.3597,
         "macd_hist_prev": -0.9202,
         "rsi": 64.73,
-        "mfi": 58.95,
-        "vpvma": 42.613017,
-        "vpvma_signal": -14.749839
+        "mfi": 59.0,
+        "vpvma": 42.629073,
+        "vpvma_signal": -14.748055
       },
       "momentum": {
         "mom_12_1": 0.973213,
@@ -4105,7 +4105,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.43,
         "vol_10v50": 0.72,
-        "rvol": 1.03,
+        "rvol": 1.05,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -4159,12 +4159,12 @@
       "bars": 2524,
       "first_date": "2016-08-15",
       "last_date": "2026-08-27",
-      "close": 4659.3999,
+      "close": 4654.7998,
       "regime": {
         "regime": "neither",
-        "r2": 0.204,
+        "r2": 0.2045,
         "r2_vs_null_pct": 25,
-        "vr": 1.055,
+        "vr": 1.0557,
         "cross_rate": 9.86,
         "slope": "down",
         "trend_ok": false,
@@ -4173,25 +4173,25 @@
         "window": 90
       },
       "indicators": {
-        "macd": 128.6086,
-        "macd_signal": 102.6533,
-        "macd_hist": 25.9553,
+        "macd": 128.2416,
+        "macd_signal": 102.5799,
+        "macd_hist": 25.6617,
         "macd_hist_prev": 28.2646,
-        "rsi": 72.38,
-        "mfi": 97.35,
-        "vpvma": -3242.677872,
-        "vpvma_signal": 7825.264924
+        "rsi": 72.19,
+        "mfi": 97.36,
+        "vpvma": -3268.733856,
+        "vpvma_signal": 7822.369815
       },
       "momentum": {
         "mom_12_1": 0.17568,
         "mom_6_1": -0.237931,
-        "ret_12m": 0.357713,
-        "ret_3m": 0.04116,
-        "ret_1m": 0.154832,
-        "dist_52w_high": -0.123909,
-        "dist_52w_low": 0.341336,
-        "vs_200dma": 0.032549,
-        "vs_50dma": 0.108606,
+        "ret_12m": 0.356373,
+        "ret_3m": 0.040132,
+        "ret_1m": 0.153692,
+        "dist_52w_high": -0.124774,
+        "dist_52w_low": 0.340012,
+        "vs_200dma": 0.031534,
+        "vs_50dma": 0.107536,
         "tsmom_12m": 1,
         "rank_universe": 0.355,
         "rank_group": 0.526,
@@ -4199,55 +4199,55 @@
       },
       "setup": {
         "stack": "aligned_up",
-        "ema200_slope_63d": -0.0131,
+        "ema200_slope_63d": -0.0132,
         "swing": "mixed",
-        "close_pos_20": 0.522,
+        "close_pos_20": 0.519,
         "atr_pct": 1.61,
         "atr_pct_rank_1y": 0.31,
         "vol_state": "normal",
-        "ud_vol_50d": 1.28,
-        "vol_10v50": 1.77,
-        "rvol": 16.92,
+        "ud_vol_50d": 1.29,
+        "vol_10v50": 1.78,
+        "rvol": 17.0,
         "obv_63d": "confirms",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
-          "strategy_return": 0.9045,
-          "buy_hold_return": 2.4764,
-          "excess_vs_hold": -1.5719,
+          "strategy_return": 0.9026,
+          "buy_hold_return": 2.473,
+          "excess_vs_hold": -1.5703,
           "beat_hold": false,
           "n_trades": 99,
           "win_rate": 0.485
         },
         "macd_sig_above_zero": {
           "strategy_return": 1.4782,
-          "buy_hold_return": 2.4764,
-          "excess_vs_hold": -0.9982,
+          "buy_hold_return": 2.473,
+          "excess_vs_hold": -0.9948,
           "beat_hold": false,
           "n_trades": 10,
           "win_rate": 0.7
         },
         "macd_rsi": {
-          "strategy_return": 3.0282,
-          "buy_hold_return": 2.4764,
-          "excess_vs_hold": 0.5518,
+          "strategy_return": 3.0242,
+          "buy_hold_return": 2.473,
+          "excess_vs_hold": 0.5513,
           "beat_hold": true,
           "n_trades": 1,
           "win_rate": 1.0
         },
         "macd_mfi": {
-          "strategy_return": 0.7749,
-          "buy_hold_return": 2.4764,
-          "excess_vs_hold": -1.7014,
+          "strategy_return": 0.7732,
+          "buy_hold_return": 2.473,
+          "excess_vs_hold": -1.6998,
           "beat_hold": false,
           "n_trades": 13,
           "win_rate": 0.692
         },
         "vpvma": {
           "strategy_return": 1.0911,
-          "buy_hold_return": 2.4764,
-          "excess_vs_hold": -1.3852,
+          "buy_hold_return": 2.473,
+          "excess_vs_hold": -1.3818,
           "beat_hold": false,
           "n_trades": 186,
           "win_rate": 0.57
@@ -4280,9 +4280,9 @@
         "macd_hist": 1.2438,
         "macd_hist_prev": 1.4858,
         "rsi": 71.3,
-        "mfi": 70.92,
-        "vpvma": 16.89,
-        "vpvma_signal": 12.321707
+        "mfi": 70.97,
+        "vpvma": 16.890928,
+        "vpvma_signal": 12.32181
       },
       "momentum": {
         "mom_12_1": 0.202992,
@@ -4308,8 +4308,8 @@
         "atr_pct_rank_1y": 0.234,
         "vol_state": "normal",
         "ud_vol_50d": 1.14,
-        "vol_10v50": 1.11,
-        "rvol": 0.71,
+        "vol_10v50": 1.12,
+        "rvol": 0.73,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -4383,8 +4383,8 @@
         "macd_hist_prev": 1.7583,
         "rsi": 70.74,
         "mfi": 79.2,
-        "vpvma": 26.143489,
-        "vpvma_signal": 18.742626
+        "vpvma": 26.143499,
+        "vpvma_signal": 18.742627
       },
       "momentum": {
         "mom_12_1": 0.253137,
@@ -4484,9 +4484,9 @@
         "macd_hist": -6.8582,
         "macd_hist_prev": -7.9928,
         "rsi": 42.51,
-        "mfi": 59.47,
-        "vpvma": -1514.916557,
-        "vpvma_signal": -2026.316648
+        "mfi": 59.48,
+        "vpvma": -1514.938682,
+        "vpvma_signal": -2026.319106
       },
       "momentum": {
         "mom_12_1": 0.44162,
@@ -4513,7 +4513,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.96,
         "vol_10v50": 0.77,
-        "rvol": 0.58,
+        "rvol": 0.59,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -4586,9 +4586,9 @@
         "macd_hist": 2.1132,
         "macd_hist_prev": 2.6824,
         "rsi": 66.68,
-        "mfi": 69.26,
-        "vpvma": 68.538639,
-        "vpvma_signal": 57.720761
+        "mfi": 69.25,
+        "vpvma": 68.538691,
+        "vpvma_signal": 57.720767
       },
       "momentum": {
         "mom_12_1": 0.189054,
@@ -4669,7 +4669,7 @@
       "bars": 2523,
       "first_date": "2016-08-15",
       "last_date": "2026-08-27",
-      "close": 152.79,
+      "close": 152.8,
       "regime": {
         "regime": "neither",
         "r2": 0.1658,
@@ -4683,29 +4683,29 @@
         "window": 90
       },
       "indicators": {
-        "macd": -3.8401,
-        "macd_signal": -4.0252,
-        "macd_hist": 0.185,
+        "macd": -3.8393,
+        "macd_signal": -4.025,
+        "macd_hist": 0.1857,
         "macd_hist_prev": 0.0071,
-        "rsi": 46.77,
-        "mfi": 42.35,
-        "vpvma": -136.811546,
-        "vpvma_signal": -159.898339
+        "rsi": 46.78,
+        "mfi": 42.67,
+        "vpvma": -136.837678,
+        "vpvma_signal": -159.901242
       },
       "momentum": {
         "mom_12_1": 0.860624,
         "mom_6_1": -0.171843,
-        "ret_12m": 1.291694,
-        "ret_3m": -0.163665,
-        "ret_1m": 0.231681,
-        "dist_52w_high": -0.40244,
-        "dist_52w_low": 1.279427,
-        "vs_200dma": 0.076782,
-        "vs_50dma": -0.109886,
+        "ret_12m": 1.291845,
+        "ret_3m": -0.16361,
+        "ret_1m": 0.231761,
+        "dist_52w_high": -0.402401,
+        "dist_52w_low": 1.279576,
+        "vs_200dma": 0.076853,
+        "vs_50dma": -0.109829,
         "tsmom_12m": 1,
         "rank_universe": 0.79,
         "rank_group": 0.167,
-        "rs_126_vs_proxy": -0.266561
+        "rs_126_vs_proxy": -0.266513
       },
       "setup": {
         "stack": "mixed",
@@ -4717,47 +4717,47 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.7,
         "vol_10v50": 0.63,
-        "rvol": 0.51,
+        "rvol": 0.56,
         "obv_63d": "confirms",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
           "strategy_return": 2.4013,
-          "buy_hold_return": 5.6229,
-          "excess_vs_hold": -3.2216,
+          "buy_hold_return": 5.6233,
+          "excess_vs_hold": -3.222,
           "beat_hold": false,
           "n_trades": 94,
           "win_rate": 0.447
         },
         "macd_sig_above_zero": {
           "strategy_return": 3.5518,
-          "buy_hold_return": 5.6229,
-          "excess_vs_hold": -2.071,
+          "buy_hold_return": 5.6233,
+          "excess_vs_hold": -2.0715,
           "beat_hold": false,
           "n_trades": 9,
           "win_rate": 0.556
         },
         "macd_rsi": {
           "strategy_return": 1.3565,
-          "buy_hold_return": 5.6229,
-          "excess_vs_hold": -4.2664,
+          "buy_hold_return": 5.6233,
+          "excess_vs_hold": -4.2669,
           "beat_hold": false,
           "n_trades": 1,
           "win_rate": 1.0
         },
         "macd_mfi": {
           "strategy_return": 0.0,
-          "buy_hold_return": 5.6229,
-          "excess_vs_hold": -5.6229,
+          "buy_hold_return": 5.6233,
+          "excess_vs_hold": -5.6233,
           "beat_hold": false,
           "n_trades": 0,
           "win_rate": null
         },
         "vpvma": {
           "strategy_return": 2.4068,
-          "buy_hold_return": 5.6229,
-          "excess_vs_hold": -3.2161,
+          "buy_hold_return": 5.6233,
+          "excess_vs_hold": -3.2166,
           "beat_hold": false,
           "n_trades": 158,
           "win_rate": 0.532
@@ -4791,7 +4791,7 @@
         "macd_hist_prev": 0.2068,
         "rsi": 58.08,
         "mfi": 44.79,
-        "vpvma": 4.445231,
+        "vpvma": 4.445232,
         "vpvma_signal": 4.290792
       },
       "momentum": {
@@ -4893,8 +4893,8 @@
         "macd_hist_prev": -0.6526,
         "rsi": 47.77,
         "mfi": 50.03,
-        "vpvma": -25.451147,
-        "vpvma_signal": -25.861745
+        "vpvma": -25.213028,
+        "vpvma_signal": -25.835288
       },
       "momentum": {
         "mom_12_1": 0.171731,
@@ -4995,8 +4995,8 @@
         "macd_hist_prev": 0.2221,
         "rsi": 52.12,
         "mfi": 47.58,
-        "vpvma": -2.032159,
-        "vpvma_signal": -3.220101
+        "vpvma": -2.032154,
+        "vpvma_signal": -3.2201
       },
       "momentum": {
         "mom_12_1": -0.448732,
@@ -5097,8 +5097,8 @@
         "macd_hist_prev": -0.034,
         "rsi": 49.76,
         "mfi": 54.0,
-        "vpvma": -0.897306,
-        "vpvma_signal": -0.94672
+        "vpvma": -0.881255,
+        "vpvma_signal": -0.944937
       },
       "momentum": {
         "mom_12_1": 0.448028,
@@ -5125,7 +5125,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.0,
         "vol_10v50": 0.5,
-        "rvol": 0.4,
+        "rvol": 0.41,
         "obv_63d": "bullish_divergence",
         "in_setup": false
       },
@@ -5199,7 +5199,7 @@
         "macd_hist_prev": 0.3143,
         "rsi": 70.8,
         "mfi": 80.38,
-        "vpvma": 1.482089,
+        "vpvma": 1.482092,
         "vpvma_signal": 0.99986
       },
       "momentum": {
@@ -5227,7 +5227,7 @@
         "vol_state": "contracted",
         "ud_vol_50d": 1.19,
         "vol_10v50": 1.01,
-        "rvol": 0.86,
+        "rvol": 0.87,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -5300,9 +5300,9 @@
         "macd_hist": 1.5284,
         "macd_hist_prev": 0.5999,
         "rsi": 60.29,
-        "mfi": 63.71,
-        "vpvma": -54.230191,
-        "vpvma_signal": 34.761806
+        "mfi": 63.72,
+        "vpvma": -54.222979,
+        "vpvma_signal": 34.762607
       },
       "momentum": {
         "mom_12_1": -0.450888,
@@ -5504,9 +5504,9 @@
         "macd_hist": 0.9545,
         "macd_hist_prev": 0.9776,
         "rsi": 80.96,
-        "mfi": 71.17,
-        "vpvma": 1.871137,
-        "vpvma_signal": 1.565766
+        "mfi": 71.18,
+        "vpvma": 1.874129,
+        "vpvma_signal": 1.566098
       },
       "momentum": {
         "mom_12_1": -0.429477,
@@ -5606,9 +5606,9 @@
         "macd_hist": 0.5174,
         "macd_hist_prev": 0.5668,
         "rsi": 68.52,
-        "mfi": 66.63,
-        "vpvma": 2.602131,
-        "vpvma_signal": 2.085013
+        "mfi": 66.62,
+        "vpvma": 2.379957,
+        "vpvma_signal": 2.060327
       },
       "momentum": {
         "mom_12_1": 0.53588,
@@ -5912,9 +5912,9 @@
         "macd_hist": 0.1051,
         "macd_hist_prev": -0.367,
         "rsi": 70.43,
-        "mfi": 48.06,
-        "vpvma": 17.705879,
-        "vpvma_signal": 1.167186
+        "mfi": 48.15,
+        "vpvma": 17.707797,
+        "vpvma_signal": 1.167399
       },
       "momentum": {
         "mom_12_1": -0.133083,
@@ -5941,7 +5941,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.44,
         "vol_10v50": 0.7,
-        "rvol": 1.68,
+        "rvol": 1.7,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -6014,9 +6014,9 @@
         "macd_hist": -0.4353,
         "macd_hist_prev": -0.7465,
         "rsi": 44.28,
-        "mfi": 31.35,
-        "vpvma": -51.900823,
-        "vpvma_signal": -56.912208
+        "mfi": 31.38,
+        "vpvma": -51.948163,
+        "vpvma_signal": -56.917468
       },
       "momentum": {
         "mom_12_1": 2.362628,
@@ -6043,7 +6043,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.85,
         "vol_10v50": 0.83,
-        "rvol": 0.87,
+        "rvol": 0.88,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -6116,9 +6116,9 @@
         "macd_hist": -0.0713,
         "macd_hist_prev": -0.0148,
         "rsi": 39.86,
-        "mfi": 32.48,
-        "vpvma": -0.131736,
-        "vpvma_signal": -0.417549
+        "mfi": 32.03,
+        "vpvma": -0.132088,
+        "vpvma_signal": -0.417588
       },
       "momentum": {
         "mom_12_1": 0.024861,
@@ -6143,9 +6143,9 @@
         "atr_pct": 1.72,
         "atr_pct_rank_1y": 0.131,
         "vol_state": "contracted",
-        "ud_vol_50d": 1.0,
-        "vol_10v50": 0.7,
-        "rvol": 1.26,
+        "ud_vol_50d": 0.99,
+        "vol_10v50": 0.71,
+        "rvol": 1.39,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -6218,9 +6218,9 @@
         "macd_hist": 0.0084,
         "macd_hist_prev": 0.0764,
         "rsi": 48.36,
-        "mfi": 62.89,
-        "vpvma": -9.168709,
-        "vpvma_signal": -8.51408
+        "mfi": 63.07,
+        "vpvma": -9.159821,
+        "vpvma_signal": -8.513093
       },
       "momentum": {
         "mom_12_1": 0.274902,
@@ -6245,9 +6245,9 @@
         "atr_pct": 8.73,
         "atr_pct_rank_1y": 0.345,
         "vol_state": "normal",
-        "ud_vol_50d": 0.57,
-        "vol_10v50": 0.93,
-        "rvol": 0.9,
+        "ud_vol_50d": 0.58,
+        "vol_10v50": 0.94,
+        "rvol": 0.97,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -6320,9 +6320,9 @@
         "macd_hist": -0.4796,
         "macd_hist_prev": -0.5252,
         "rsi": 52.41,
-        "mfi": 61.83,
-        "vpvma": -64.555671,
-        "vpvma_signal": -67.337123
+        "mfi": 61.85,
+        "vpvma": -64.555861,
+        "vpvma_signal": -67.337144
       },
       "momentum": {
         "mom_12_1": 0.244524,
@@ -6348,8 +6348,8 @@
         "atr_pct_rank_1y": 0.004,
         "vol_state": "contracted",
         "ud_vol_50d": 0.95,
-        "vol_10v50": 0.74,
-        "rvol": 0.64,
+        "vol_10v50": 0.75,
+        "rvol": 0.65,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -6422,9 +6422,9 @@
         "macd_hist": -1.5871,
         "macd_hist_prev": -1.5488,
         "rsi": 50.92,
-        "mfi": 32.07,
-        "vpvma": -53.259641,
-        "vpvma_signal": -34.663948
+        "mfi": 32.02,
+        "vpvma": -53.262031,
+        "vpvma_signal": -34.664213
       },
       "momentum": {
         "mom_12_1": 0.176624,
@@ -6451,7 +6451,7 @@
         "vol_state": "contracted",
         "ud_vol_50d": 1.58,
         "vol_10v50": 0.68,
-        "rvol": 0.6,
+        "rvol": 0.62,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -6524,9 +6524,9 @@
         "macd_hist": 0.5373,
         "macd_hist_prev": 0.6451,
         "rsi": 71.7,
-        "mfi": 63.23,
-        "vpvma": 2.160126,
-        "vpvma_signal": 1.622143
+        "mfi": 62.95,
+        "vpvma": 2.155733,
+        "vpvma_signal": 1.621655
       },
       "momentum": {
         "mom_12_1": 0.150315,
@@ -6551,9 +6551,9 @@
         "atr_pct": 3.67,
         "atr_pct_rank_1y": 0.202,
         "vol_state": "normal",
-        "ud_vol_50d": 0.97,
-        "vol_10v50": 0.99,
-        "rvol": 0.76,
+        "ud_vol_50d": 0.98,
+        "vol_10v50": 1.0,
+        "rvol": 0.82,
         "obv_63d": "bearish_divergence",
         "in_setup": false
       },
@@ -6626,9 +6626,9 @@
         "macd_hist": 6.6305,
         "macd_hist_prev": 3.7048,
         "rsi": 58.53,
-        "mfi": 58.56,
-        "vpvma": 565.692196,
-        "vpvma_signal": 1340.987038
+        "mfi": 58.57,
+        "vpvma": 564.287748,
+        "vpvma_signal": 1340.830989
       },
       "momentum": {
         "mom_12_1": 3.833494,
@@ -6655,7 +6655,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.27,
         "vol_10v50": 0.89,
-        "rvol": 0.83,
+        "rvol": 0.84,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -6830,9 +6830,9 @@
         "macd_hist": 0.6091,
         "macd_hist_prev": 0.4002,
         "rsi": 50.41,
-        "mfi": 54.9,
-        "vpvma": -415.706148,
-        "vpvma_signal": -413.854013
+        "mfi": 55.0,
+        "vpvma": -416.474444,
+        "vpvma_signal": -413.939379
       },
       "momentum": {
         "mom_12_1": 1.448583,
@@ -6859,7 +6859,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.9,
         "vol_10v50": 0.65,
-        "rvol": 0.55,
+        "rvol": 0.57,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -6932,9 +6932,9 @@
         "macd_hist": -5.6134,
         "macd_hist_prev": -6.8861,
         "rsi": 45.65,
-        "mfi": 55.91,
-        "vpvma": -7185.782824,
-        "vpvma_signal": -5197.709393
+        "mfi": 55.95,
+        "vpvma": -7185.856634,
+        "vpvma_signal": -5197.717594
       },
       "momentum": {
         "mom_12_1": 0.478296,
@@ -6961,7 +6961,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.86,
         "vol_10v50": 0.61,
-        "rvol": 0.47,
+        "rvol": 0.48,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -7137,8 +7137,8 @@
         "macd_hist_prev": 9.5125,
         "rsi": 65.57,
         "mfi": 67.47,
-        "vpvma": 333.175604,
-        "vpvma_signal": 323.959077
+        "vpvma": 333.188479,
+        "vpvma_signal": 323.960507
       },
       "momentum": {
         "mom_12_1": 1.203397,
@@ -7165,7 +7165,7 @@
         "vol_state": "expanded",
         "ud_vol_50d": 1.72,
         "vol_10v50": 3.16,
-        "rvol": 1.49,
+        "rvol": 1.5,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -7238,9 +7238,9 @@
         "macd_hist": 3.319,
         "macd_hist_prev": 3.8189,
         "rsi": 56.28,
-        "mfi": 70.62,
-        "vpvma": -70.874911,
-        "vpvma_signal": -161.918518
+        "mfi": 70.96,
+        "vpvma": -70.973014,
+        "vpvma_signal": -161.929418
       },
       "momentum": {
         "mom_12_1": 1.205065,
@@ -7265,9 +7265,9 @@
         "atr_pct": 7.14,
         "atr_pct_rank_1y": 0.778,
         "vol_state": "normal",
-        "ud_vol_50d": 1.38,
+        "ud_vol_50d": 1.37,
         "vol_10v50": 0.79,
-        "rvol": 1.01,
+        "rvol": 1.12,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -7340,9 +7340,9 @@
         "macd_hist": 2.877,
         "macd_hist_prev": 4.0892,
         "rsi": 50.99,
-        "mfi": 63.22,
-        "vpvma": -3091.226138,
-        "vpvma_signal": -4069.425363
+        "mfi": 63.25,
+        "vpvma": -3091.812401,
+        "vpvma_signal": -4069.490504
       },
       "momentum": {
         "mom_12_1": 5.353529,
@@ -7369,7 +7369,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.89,
         "vol_10v50": 0.61,
-        "rvol": 0.64,
+        "rvol": 0.65,
         "obv_63d": "bearish_divergence",
         "in_setup": false
       },
@@ -7442,9 +7442,9 @@
         "macd_hist": -1.8558,
         "macd_hist_prev": -1.6817,
         "rsi": 49.73,
-        "mfi": 62.39,
-        "vpvma": -246.094336,
-        "vpvma_signal": -106.499796
+        "mfi": 62.4,
+        "vpvma": -246.28743,
+        "vpvma_signal": -106.521251
       },
       "momentum": {
         "mom_12_1": 1.103008,
@@ -7544,9 +7544,9 @@
         "macd_hist": 1.4009,
         "macd_hist_prev": 1.7615,
         "rsi": 71.95,
-        "mfi": 78.41,
-        "vpvma": 31.090844,
-        "vpvma_signal": 24.11754
+        "mfi": 78.51,
+        "vpvma": 31.093211,
+        "vpvma_signal": 24.117803
       },
       "momentum": {
         "mom_12_1": 0.274488,
@@ -7573,7 +7573,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.04,
         "vol_10v50": 0.97,
-        "rvol": 0.66,
+        "rvol": 0.72,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -7646,9 +7646,9 @@
         "macd_hist": -2.7005,
         "macd_hist_prev": -4.5087,
         "rsi": 57.91,
-        "mfi": 48.02,
-        "vpvma": 254.492817,
-        "vpvma_signal": 208.509929
+        "mfi": 48.13,
+        "vpvma": 249.196441,
+        "vpvma_signal": 207.921442
       },
       "momentum": {
         "mom_12_1": 0.361773,
@@ -7675,7 +7675,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.25,
         "vol_10v50": 0.84,
-        "rvol": 1.18,
+        "rvol": 1.21,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -7748,8 +7748,8 @@
         "macd_hist": 0.1477,
         "macd_hist_prev": 0.1437,
         "rsi": 53.35,
-        "mfi": 61.0,
-        "vpvma": -0.490821,
+        "mfi": 61.03,
+        "vpvma": -0.490822,
         "vpvma_signal": -0.548957
       },
       "momentum": {
@@ -7777,7 +7777,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.86,
         "vol_10v50": 0.78,
-        "rvol": 0.78,
+        "rvol": 0.79,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -7850,9 +7850,9 @@
         "macd_hist": 0.4559,
         "macd_hist_prev": -0.1573,
         "rsi": 69.01,
-        "mfi": 59.74,
-        "vpvma": 41.168719,
-        "vpvma_signal": 23.88985
+        "mfi": 59.8,
+        "vpvma": 41.176678,
+        "vpvma_signal": 23.890734
       },
       "momentum": {
         "mom_12_1": -0.330604,
@@ -7879,7 +7879,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.19,
         "vol_10v50": 0.75,
-        "rvol": 1.23,
+        "rvol": 1.25,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -7952,9 +7952,9 @@
         "macd_hist": -0.478,
         "macd_hist_prev": -1.5317,
         "rsi": 61.32,
-        "mfi": 47.07,
-        "vpvma": 18.740244,
-        "vpvma_signal": -42.070549
+        "mfi": 47.19,
+        "vpvma": 19.780477,
+        "vpvma_signal": -41.954968
       },
       "momentum": {
         "mom_12_1": 0.046724,
@@ -7981,7 +7981,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.94,
         "vol_10v50": 0.97,
-        "rvol": 2.21,
+        "rvol": 2.23,
         "obv_63d": "bearish_divergence",
         "in_setup": false
       },
@@ -8055,7 +8055,7 @@
         "macd_hist_prev": 0.1655,
         "rsi": 46.4,
         "mfi": 54.55,
-        "vpvma": -2.646652,
+        "vpvma": -2.646653,
         "vpvma_signal": -1.76013
       },
       "momentum": {
@@ -8156,9 +8156,9 @@
         "macd_hist": 0.0492,
         "macd_hist_prev": 0.0693,
         "rsi": 45.12,
-        "mfi": 48.72,
-        "vpvma": -1.512838,
-        "vpvma_signal": -2.070474
+        "mfi": 48.73,
+        "vpvma": -1.515856,
+        "vpvma_signal": -2.07081
       },
       "momentum": {
         "mom_12_1": 0.598522,
@@ -8258,9 +8258,9 @@
         "macd_hist": 0.4972,
         "macd_hist_prev": -2.2419,
         "rsi": 70.39,
-        "mfi": 53.55,
-        "vpvma": 75.676422,
-        "vpvma_signal": 23.429877
+        "mfi": 53.62,
+        "vpvma": 75.706952,
+        "vpvma_signal": 23.43327
       },
       "momentum": {
         "mom_12_1": 0.495304,
@@ -8287,7 +8287,7 @@
         "vol_state": "expanded",
         "ud_vol_50d": 1.48,
         "vol_10v50": 1.36,
-        "rvol": 4.89,
+        "rvol": 4.91,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -8361,8 +8361,8 @@
         "macd_hist_prev": 0.488,
         "rsi": 65.1,
         "mfi": 78.54,
-        "vpvma": 4.352837,
-        "vpvma_signal": 1.90704
+        "vpvma": 4.352859,
+        "vpvma_signal": 1.907042
       },
       "momentum": {
         "mom_12_1": 0.292702,
@@ -8462,9 +8462,9 @@
         "macd_hist": -3.2634,
         "macd_hist_prev": -5.9346,
         "rsi": 60.44,
-        "mfi": 47.88,
-        "vpvma": 438.543998,
-        "vpvma_signal": 169.233061
+        "mfi": 47.89,
+        "vpvma": 437.821291,
+        "vpvma_signal": 169.15276
       },
       "momentum": {
         "mom_12_1": 0.705205,
@@ -8565,8 +8565,8 @@
         "macd_hist_prev": -0.5268,
         "rsi": 44.46,
         "mfi": 61.34,
-        "vpvma": -32.969799,
-        "vpvma_signal": -35.782665
+        "vpvma": -32.969823,
+        "vpvma_signal": -35.782668
       },
       "momentum": {
         "mom_12_1": 0.788784,
@@ -8667,7 +8667,7 @@
         "macd_hist_prev": -0.3159,
         "rsi": 38.16,
         "mfi": 41.41,
-        "vpvma": -23.866679,
+        "vpvma": -23.86668,
         "vpvma_signal": -22.462906
       },
       "momentum": {
@@ -8768,8 +8768,8 @@
         "macd_hist": -0.2894,
         "macd_hist_prev": -0.2337,
         "rsi": 65.54,
-        "mfi": 61.56,
-        "vpvma": 0.478466,
+        "mfi": 61.66,
+        "vpvma": 0.478462,
         "vpvma_signal": 3.590973
       },
       "momentum": {
@@ -8797,7 +8797,7 @@
         "vol_state": "contracted",
         "ud_vol_50d": 1.9,
         "vol_10v50": 0.7,
-        "rvol": 0.57,
+        "rvol": 0.59,
         "obv_63d": "confirms",
         "in_setup": true
       },
@@ -8870,9 +8870,9 @@
         "macd_hist": -1.7803,
         "macd_hist_prev": -2.3548,
         "rsi": 64.18,
-        "mfi": 43.97,
-        "vpvma": 56.136549,
-        "vpvma_signal": 47.732958
+        "mfi": 44.0,
+        "vpvma": 56.136099,
+        "vpvma_signal": 47.732908
       },
       "momentum": {
         "mom_12_1": 0.027683,
@@ -8899,7 +8899,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.3,
         "vol_10v50": 0.69,
-        "rvol": 1.18,
+        "rvol": 1.19,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -8972,9 +8972,9 @@
         "macd_hist": -0.5791,
         "macd_hist_prev": -1.1922,
         "rsi": 54.76,
-        "mfi": 50.72,
-        "vpvma": -486.902704,
-        "vpvma_signal": -535.293162
+        "mfi": 50.77,
+        "vpvma": -487.351418,
+        "vpvma_signal": -535.343019
       },
       "momentum": {
         "mom_12_1": 0.161204,
@@ -9000,8 +9000,8 @@
         "atr_pct_rank_1y": 0.361,
         "vol_state": "normal",
         "ud_vol_50d": 0.73,
-        "vol_10v50": 0.79,
-        "rvol": 0.72,
+        "vol_10v50": 0.8,
+        "rvol": 0.73,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -9075,8 +9075,8 @@
         "macd_hist_prev": -0.481,
         "rsi": 51.06,
         "mfi": 60.85,
-        "vpvma": -44.172224,
-        "vpvma_signal": -40.621219
+        "vpvma": -44.172946,
+        "vpvma_signal": -40.621299
       },
       "momentum": {
         "mom_12_1": 0.414527,
@@ -9176,9 +9176,9 @@
         "macd_hist": 0.3701,
         "macd_hist_prev": 0.4318,
         "rsi": 45.07,
-        "mfi": 34.14,
-        "vpvma": -73.094022,
-        "vpvma_signal": -74.827947
+        "mfi": 34.13,
+        "vpvma": -73.095779,
+        "vpvma_signal": -74.828142
       },
       "momentum": {
         "mom_12_1": -0.188853,
@@ -9204,8 +9204,8 @@
         "atr_pct_rank_1y": 0.639,
         "vol_state": "normal",
         "ud_vol_50d": 0.62,
-        "vol_10v50": 1.65,
-        "rvol": 0.43,
+        "vol_10v50": 1.66,
+        "rvol": 0.44,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -9278,9 +9278,9 @@
         "macd_hist": 3.4816,
         "macd_hist_prev": 3.8107,
         "rsi": 77.37,
-        "mfi": 86.07,
-        "vpvma": 93.302083,
-        "vpvma_signal": 75.78789
+        "mfi": 86.12,
+        "vpvma": 93.320586,
+        "vpvma_signal": 75.789946
       },
       "momentum": {
         "mom_12_1": 0.108365,
@@ -9306,8 +9306,8 @@
         "atr_pct_rank_1y": 0.139,
         "vol_state": "contracted",
         "ud_vol_50d": 0.84,
-        "vol_10v50": 0.94,
-        "rvol": 0.9,
+        "vol_10v50": 0.95,
+        "rvol": 0.94,
         "obv_63d": "bearish_divergence",
         "in_setup": false
       },
@@ -9584,9 +9584,9 @@
         "macd_hist": -0.1935,
         "macd_hist_prev": -0.3294,
         "rsi": 61.58,
-        "mfi": 49.66,
-        "vpvma": 1.251687,
-        "vpvma_signal": 1.229158
+        "mfi": 50.11,
+        "vpvma": 1.251798,
+        "vpvma_signal": 1.22917
       },
       "momentum": {
         "mom_12_1": 0.127893,
@@ -9611,9 +9611,9 @@
         "atr_pct": 4.66,
         "atr_pct_rank_1y": 0.635,
         "vol_state": "normal",
-        "ud_vol_50d": 1.48,
-        "vol_10v50": 1.08,
-        "rvol": 2.52,
+        "ud_vol_50d": 1.49,
+        "vol_10v50": 1.09,
+        "rvol": 2.64,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -9789,8 +9789,8 @@
         "macd_hist_prev": -0.5725,
         "rsi": 63.11,
         "mfi": 45.18,
-        "vpvma": 16.614416,
-        "vpvma_signal": 13.712035
+        "vpvma": 17.032021,
+        "vpvma_signal": 13.758436
       },
       "momentum": {
         "mom_12_1": -0.082925,
@@ -9871,12 +9871,12 @@
       "bars": 2524,
       "first_date": "2016-08-15",
       "last_date": "2026-08-27",
-      "close": 70.185,
+      "close": 70.065,
       "regime": {
         "regime": "neither",
-        "r2": 0.4557,
+        "r2": 0.4561,
         "r2_vs_null_pct": 50,
-        "vr": 1.2212,
+        "vr": 1.2226,
         "cross_rate": 7.04,
         "slope": "down",
         "trend_ok": false,
@@ -9885,25 +9885,25 @@
         "window": 90
       },
       "indicators": {
-        "macd": 2.2004,
-        "macd_signal": 1.6797,
-        "macd_hist": 0.5207,
+        "macd": 2.1908,
+        "macd_signal": 1.6778,
+        "macd_hist": 0.5131,
         "macd_hist_prev": 0.5058,
-        "rsi": 66.8,
+        "rsi": 66.57,
         "mfi": 99.91,
-        "vpvma": 9.558889,
-        "vpvma_signal": 4.842872
+        "vpvma": 9.400604,
+        "vpvma_signal": 4.825284
       },
       "momentum": {
         "mom_12_1": 0.476474,
         "mom_6_1": -0.344581,
-        "ret_12m": 0.790891,
-        "ret_3m": -0.064287,
-        "ret_1m": 0.212951,
-        "dist_52w_high": -0.39012,
-        "dist_52w_low": 0.745895,
-        "vs_200dma": -0.019847,
-        "vs_50dma": 0.140628,
+        "ret_12m": 0.787829,
+        "ret_3m": -0.065887,
+        "ret_1m": 0.210877,
+        "dist_52w_high": -0.391163,
+        "dist_52w_low": 0.74291,
+        "vs_200dma": -0.021515,
+        "vs_50dma": 0.138722,
         "tsmom_12m": 1,
         "rank_universe": 0.629,
         "rank_group": 0.842,
@@ -9913,53 +9913,53 @@
         "stack": "mixed",
         "ema200_slope_63d": -0.03,
         "swing": "mixed",
-        "close_pos_20": 0.4,
+        "close_pos_20": 0.397,
         "atr_pct": 2.52,
         "atr_pct_rank_1y": 0.159,
         "vol_state": "contracted",
-        "ud_vol_50d": 3.74,
-        "vol_10v50": 2.12,
-        "rvol": 21.16,
+        "ud_vol_50d": 3.76,
+        "vol_10v50": 2.13,
+        "rvol": 21.28,
         "obv_63d": "bullish_divergence",
         "in_setup": false
       },
       "backtest": {
         "macd_crossover_sig": {
-          "strategy_return": 0.2732,
-          "buy_hold_return": 2.5409,
-          "excess_vs_hold": -2.2677,
+          "strategy_return": 0.2711,
+          "buy_hold_return": 2.5349,
+          "excess_vs_hold": -2.2638,
           "beat_hold": false,
           "n_trades": 102,
           "win_rate": 0.392
         },
         "macd_sig_above_zero": {
           "strategy_return": 0.2666,
-          "buy_hold_return": 2.5409,
-          "excess_vs_hold": -2.2743,
+          "buy_hold_return": 2.5349,
+          "excess_vs_hold": -2.2683,
           "beat_hold": false,
           "n_trades": 18,
           "win_rate": 0.444
         },
         "macd_rsi": {
-          "strategy_return": 2.7764,
-          "buy_hold_return": 2.5409,
-          "excess_vs_hold": 0.2355,
+          "strategy_return": 2.77,
+          "buy_hold_return": 2.5349,
+          "excess_vs_hold": 0.2351,
           "beat_hold": true,
           "n_trades": 1,
           "win_rate": 1.0
         },
         "macd_mfi": {
-          "strategy_return": 0.3247,
-          "buy_hold_return": 2.5409,
-          "excess_vs_hold": -2.2163,
+          "strategy_return": 0.3224,
+          "buy_hold_return": 2.5349,
+          "excess_vs_hold": -2.2125,
           "beat_hold": false,
           "n_trades": 16,
           "win_rate": 0.688
         },
         "vpvma": {
-          "strategy_return": 0.8218,
-          "buy_hold_return": 2.5409,
-          "excess_vs_hold": -1.7192,
+          "strategy_return": 0.8187,
+          "buy_hold_return": 2.5349,
+          "excess_vs_hold": -1.7162,
           "beat_hold": false,
           "n_trades": 171,
           "win_rate": 0.515
@@ -10095,8 +10095,8 @@
         "macd_hist_prev": 1.3274,
         "rsi": 72.18,
         "mfi": 82.56,
-        "vpvma": 18.919407,
-        "vpvma_signal": 11.447066
+        "vpvma": 18.919507,
+        "vpvma_signal": 11.447077
       },
       "momentum": {
         "mom_12_1": 0.325201,
@@ -10123,7 +10123,7 @@
         "vol_state": "contracted",
         "ud_vol_50d": 1.2,
         "vol_10v50": 1.2,
-        "rvol": 0.78,
+        "rvol": 0.79,
         "obv_63d": "confirms",
         "in_setup": true
       },
@@ -10196,9 +10196,9 @@
         "macd_hist": 0.3131,
         "macd_hist_prev": 0.3264,
         "rsi": 70.57,
-        "mfi": 75.3,
-        "vpvma": 2.167783,
-        "vpvma_signal": 1.020582
+        "mfi": 75.31,
+        "vpvma": 2.167796,
+        "vpvma_signal": 1.020584
       },
       "momentum": {
         "mom_12_1": 0.384468,
@@ -10298,9 +10298,9 @@
         "macd_hist": 0.4459,
         "macd_hist_prev": 0.4893,
         "rsi": 64.83,
-        "mfi": 63.04,
-        "vpvma": 3.381443,
-        "vpvma_signal": 1.425868
+        "mfi": 63.05,
+        "vpvma": 3.381456,
+        "vpvma_signal": 1.425869
       },
       "momentum": {
         "mom_12_1": 0.478298,
@@ -10400,9 +10400,9 @@
         "macd_hist": -0.2853,
         "macd_hist_prev": -1.4741,
         "rsi": 51.37,
-        "mfi": 44.91,
-        "vpvma": -765.155688,
-        "vpvma_signal": -799.529485
+        "mfi": 44.92,
+        "vpvma": -763.500045,
+        "vpvma_signal": -799.345524
       },
       "momentum": {
         "mom_12_1": 0.704428,
@@ -10502,9 +10502,9 @@
         "macd_hist": 12.3467,
         "macd_hist_prev": 18.2219,
         "rsi": 49.32,
-        "mfi": 57.86,
-        "vpvma": -15785.170701,
-        "vpvma_signal": -18894.932045
+        "mfi": 57.94,
+        "vpvma": -15818.674358,
+        "vpvma_signal": -18898.654673
       },
       "momentum": {
         "mom_12_1": 20.454911,
@@ -10529,9 +10529,9 @@
         "atr_pct": 9.6,
         "atr_pct_rank_1y": 0.762,
         "vol_state": "normal",
-        "ud_vol_50d": 0.76,
+        "ud_vol_50d": 0.75,
         "vol_10v50": 0.92,
-        "rvol": 0.58,
+        "rvol": 0.6,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -10604,9 +10604,9 @@
         "macd_hist": -0.6466,
         "macd_hist_prev": -1.4364,
         "rsi": 48.06,
-        "mfi": 42.18,
-        "vpvma": -930.280935,
-        "vpvma_signal": -912.059365
+        "mfi": 42.24,
+        "vpvma": -930.287592,
+        "vpvma_signal": -912.060105
       },
       "momentum": {
         "mom_12_1": 0.862347,
@@ -10633,7 +10633,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 0.97,
         "vol_10v50": 0.72,
-        "rvol": 0.93,
+        "rvol": 0.94,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -10706,9 +10706,9 @@
         "macd_hist": -1.0452,
         "macd_hist_prev": -1.3781,
         "rsi": 58.59,
-        "mfi": 55.18,
-        "vpvma": -308.725443,
-        "vpvma_signal": -333.560877
+        "mfi": 55.35,
+        "vpvma": -308.727394,
+        "vpvma_signal": -333.561093
       },
       "momentum": {
         "mom_12_1": 0.143193,
@@ -10735,7 +10735,7 @@
         "vol_state": "contracted",
         "ud_vol_50d": 0.95,
         "vol_10v50": 0.74,
-        "rvol": 0.67,
+        "rvol": 0.71,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -10809,7 +10809,7 @@
         "macd_hist_prev": 0.7764,
         "rsi": 72.18,
         "mfi": 83.52,
-        "vpvma": 2.759192,
+        "vpvma": 2.759193,
         "vpvma_signal": 1.262413
       },
       "momentum": {
@@ -10910,9 +10910,9 @@
         "macd_hist": -0.1957,
         "macd_hist_prev": -0.4819,
         "rsi": 57.11,
-        "mfi": 59.85,
-        "vpvma": -0.241053,
-        "vpvma_signal": -1.117204
+        "mfi": 59.86,
+        "vpvma": -0.241045,
+        "vpvma_signal": -1.117203
       },
       "momentum": {
         "mom_12_1": 0.064953,
@@ -11013,7 +11013,7 @@
         "macd_hist_prev": 0.3618,
         "rsi": 67.72,
         "mfi": 65.27,
-        "vpvma": 1.618981,
+        "vpvma": 1.618982,
         "vpvma_signal": 0.615521
       },
       "momentum": {
@@ -11217,8 +11217,8 @@
         "macd_hist_prev": 0.2202,
         "rsi": 51.51,
         "mfi": 46.2,
-        "vpvma": -1.145039,
-        "vpvma_signal": -0.159137
+        "vpvma": -1.148984,
+        "vpvma_signal": -0.159575
       },
       "momentum": {
         "mom_12_1": -0.005237,
@@ -11318,9 +11318,9 @@
         "macd_hist": 0.6102,
         "macd_hist_prev": -0.049,
         "rsi": 55.19,
-        "mfi": 71.13,
-        "vpvma": -342.421283,
-        "vpvma_signal": -390.598203
+        "mfi": 71.14,
+        "vpvma": -342.421009,
+        "vpvma_signal": -390.598173
       },
       "momentum": {
         "mom_12_1": 0.586853,
@@ -11420,9 +11420,9 @@
         "macd_hist": -0.6865,
         "macd_hist_prev": -1.218,
         "rsi": 43.2,
-        "mfi": 31.34,
-        "vpvma": -191.264686,
-        "vpvma_signal": -142.022946
+        "mfi": 31.8,
+        "vpvma": -191.276468,
+        "vpvma_signal": -142.024255
       },
       "momentum": {
         "mom_12_1": 0.344345,
@@ -11448,8 +11448,8 @@
         "atr_pct_rank_1y": 0.75,
         "vol_state": "normal",
         "ud_vol_50d": 0.84,
-        "vol_10v50": 0.68,
-        "rvol": 0.62,
+        "vol_10v50": 0.69,
+        "rvol": 0.68,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -11625,7 +11625,7 @@
         "macd_hist_prev": -0.1854,
         "rsi": 70.79,
         "mfi": 70.82,
-        "vpvma": 2.888741,
+        "vpvma": 2.888743,
         "vpvma_signal": 1.23862
       },
       "momentum": {
@@ -11727,8 +11727,8 @@
         "macd_hist_prev": 2.7542,
         "rsi": 71.24,
         "mfi": 70.5,
-        "vpvma": 72.508192,
-        "vpvma_signal": 44.879273
+        "vpvma": 72.508217,
+        "vpvma_signal": 44.879275
       },
       "momentum": {
         "mom_12_1": 0.135441,
@@ -11755,7 +11755,7 @@
         "vol_state": "normal",
         "ud_vol_50d": 1.35,
         "vol_10v50": 1.28,
-        "rvol": 0.8,
+        "rvol": 0.81,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -11930,9 +11930,9 @@
         "macd_hist": -1.065,
         "macd_hist_prev": -1.8511,
         "rsi": 63.05,
-        "mfi": 57.75,
-        "vpvma": 156.357101,
-        "vpvma_signal": 92.983199
+        "mfi": 57.76,
+        "vpvma": 156.184161,
+        "vpvma_signal": 92.963983
       },
       "momentum": {
         "mom_12_1": -0.425545,
@@ -12134,9 +12134,9 @@
         "macd_hist": -10.6361,
         "macd_hist_prev": -14.2753,
         "rsi": 58.47,
-        "mfi": 56.45,
-        "vpvma": -31349.055113,
-        "vpvma_signal": -31687.620129
+        "mfi": 56.5,
+        "vpvma": -31349.113952,
+        "vpvma_signal": -31687.626667
       },
       "momentum": {
         "mom_12_1": 0.131491,
@@ -12163,7 +12163,7 @@
         "vol_state": "contracted",
         "ud_vol_50d": 0.9,
         "vol_10v50": 0.83,
-        "rvol": 0.53,
+        "rvol": 0.55,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -12338,9 +12338,9 @@
         "macd_hist": -27.7715,
         "macd_hist_prev": -53.9995,
         "rsi": 56.79,
-        "mfi": 35.38,
-        "vpvma": -533443.516379,
-        "vpvma_signal": -614850.002994
+        "mfi": 35.48,
+        "vpvma": -533444.018535,
+        "vpvma_signal": -614850.058789
       },
       "momentum": {
         "mom_12_1": 0.134545,
@@ -12366,8 +12366,8 @@
         "atr_pct_rank_1y": 0.222,
         "vol_state": "normal",
         "ud_vol_50d": 0.71,
-        "vol_10v50": 0.82,
-        "rvol": 0.69,
+        "vol_10v50": 0.83,
+        "rvol": 0.71,
         "obv_63d": "confirms",
         "in_setup": false
       },
@@ -12727,10 +12727,10 @@
       "bars": 2526,
       "first_date": "2016-08-15",
       "last_date": "2026-08-27",
-      "close": 14.52,
+      "close": 14.51,
       "regime": {
         "regime": "neither",
-        "r2": 0.2136,
+        "r2": 0.2137,
         "r2_vs_null_pct": 30,
         "vr": 0.5201,
         "cross_rate": 16.9,
@@ -12741,25 +12741,25 @@
         "window": 90
       },
       "indicators": {
-        "macd": -0.4607,
-        "macd_signal": -0.4839,
-        "macd_hist": 0.0232,
+        "macd": -0.4615,
+        "macd_signal": -0.484,
+        "macd_hist": 0.0225,
         "macd_hist_prev": 0.0726,
-        "rsi": 43.35,
+        "rsi": 43.31,
         "mfi": 100.0,
-        "vpvma": -2.294512,
-        "vpvma_signal": -2.597456
+        "vpvma": -2.291908,
+        "vpvma_signal": -2.597166
       },
       "momentum": {
         "mom_12_1": 0.345052,
         "mom_6_1": -0.123462,
-        "ret_12m": -0.054687,
-        "ret_3m": -0.095327,
-        "ret_1m": -0.297193,
-        "dist_52w_high": -0.532367,
-        "dist_52w_low": 0.077951,
-        "vs_200dma": -0.210921,
-        "vs_50dma": -0.122287,
+        "ret_12m": -0.055339,
+        "ret_3m": -0.09595,
+        "ret_1m": -0.297677,
+        "dist_52w_high": -0.532689,
+        "dist_52w_low": 0.077209,
+        "vs_200dma": -0.211462,
+        "vs_50dma": -0.122881,
         "tsmom_12m": -1,
         "rank_universe": 0.524,
         "rank_group": 0.737,
@@ -12769,7 +12769,7 @@
         "stack": "aligned_down",
         "ema200_slope_63d": -0.0564,
         "swing": "mixed",
-        "close_pos_20": 0.316,
+        "close_pos_20": 0.315,
         "atr_pct": 8.61,
         "atr_pct_rank_1y": 0.147,
         "vol_state": "contracted",
@@ -12782,40 +12782,40 @@
       "backtest": {
         "macd_crossover_sig": {
           "strategy_return": -0.9897,
-          "buy_hold_return": 0.2295,
-          "excess_vs_hold": -1.2191,
+          "buy_hold_return": 0.2286,
+          "excess_vs_hold": -1.2183,
           "beat_hold": false,
           "n_trades": 119,
           "win_rate": 0.286
         },
         "macd_sig_above_zero": {
           "strategy_return": -0.9983,
-          "buy_hold_return": 0.2295,
-          "excess_vs_hold": -1.2278,
+          "buy_hold_return": 0.2286,
+          "excess_vs_hold": -1.227,
           "beat_hold": false,
           "n_trades": 20,
           "win_rate": 0.05
         },
         "macd_rsi": {
           "strategy_return": 0.0,
-          "buy_hold_return": 0.2295,
-          "excess_vs_hold": -0.2295,
+          "buy_hold_return": 0.2286,
+          "excess_vs_hold": -0.2286,
           "beat_hold": false,
           "n_trades": 0,
           "win_rate": null
         },
         "macd_mfi": {
           "strategy_return": 0.0,
-          "buy_hold_return": 0.2295,
-          "excess_vs_hold": -0.2295,
+          "buy_hold_return": 0.2286,
+          "excess_vs_hold": -0.2286,
           "beat_hold": false,
           "n_trades": 0,
           "win_rate": null
         },
         "vpvma": {
           "strategy_return": -0.9163,
-          "buy_hold_return": 0.2295,
-          "excess_vs_hold": -1.1457,
+          "buy_hold_return": 0.2286,
+          "excess_vs_hold": -1.1449,
           "beat_hold": false,
           "n_trades": 121,
           "win_rate": 0.421
@@ -73766,10 +73766,10 @@
           "t": "EWY",
           "name": "Korea",
           "side": null,
-          "r21": 0.26288,
-          "r63": -0.117678,
-          "r126": 0.210824,
-          "blend": 0.046573,
+          "r21": 0.263019,
+          "r63": -0.117582,
+          "r126": 0.210957,
+          "blend": 0.046688,
           "third": "bottom",
           "third21": "top",
           "streak": 8,
@@ -73861,14 +73861,14 @@
         "rank": 0.962264,
         "tier": "top",
         "streak": 220,
-        "sinceRet": 3.223549,
+        "sinceRet": 3.179151,
         "entryIdx": 2303
       },
       "005930.KS": {
         "rank": 0.90566,
         "tier": "top",
         "streak": 131,
-        "sinceRet": 0.416899,
+        "sinceRet": 0.403706,
         "entryIdx": 2392
       },
       "AAOI": {
@@ -73987,7 +73987,7 @@
         "rank": 0.066038,
         "tier": "bottom",
         "streak": 135,
-        "sinceRet": 0.163039,
+        "sinceRet": 0.166299,
         "entryIdx": 2388
       },
       "BZ=F": {
@@ -74064,7 +74064,7 @@
         "rank": 0.037736,
         "tier": "bottom",
         "streak": 55,
-        "sinceRet": 0.545177,
+        "sinceRet": 0.549794,
         "entryIdx": 2468
       },
       "ETHA": {
@@ -74127,7 +74127,7 @@
         "rank": 0.849057,
         "tier": "top",
         "streak": 96,
-        "sinceRet": -0.126425,
+        "sinceRet": -0.126368,
         "entryIdx": 2427
       },
       "GOLD": {
