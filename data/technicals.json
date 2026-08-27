@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27T03:02:49Z",
+  "generated_at": "2026-08-27T20:16:26Z",
   "method": {
     "regime_gate": "Over the last 90 sessions: trending if log-price R^2 >= 0.85; mean_reverting if R^2 < 0.35 and SMA20 crossings <= 7.0 per 100 sessions; else neither.",
     "regime_calibration": "Thresholds are Monte-Carlo calibrated against a random-walk null (2,000 draws, 90-session windows). R^2 >= 0.85 is the p90 of that null -- note that R^2 >= 0.50 would be met by 44.7% of pure random walks, which is why the common 'it looks trendy' threshold is useless. The Lo-MacKinlay variance ratio is reported as a diagnostic but does NOT classify: a sinusoid is locally smooth, so cyclical data returns VR of 3.9-11.3, far above 1, not below it.",
@@ -120,7 +120,7 @@
       "Survivorship-biased by construction: these are names that earned their way onto the watchlist. A description of their past, not an expectation."
     ]
   },
-  "count": 115,
+  "count": 124,
   "skipped": [
     {
       "ticker": "6981.T",
@@ -215,7 +215,7 @@
         "vs_200dma": 0.371066,
         "vs_50dma": -0.111536,
         "tsmom_12m": 1,
-        "rank_universe": 0.974,
+        "rank_universe": 0.976,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.41225
       },
@@ -317,7 +317,7 @@
         "vs_200dma": 0.296295,
         "vs_50dma": -0.030021,
         "tsmom_12m": 1,
-        "rank_universe": 0.922,
+        "rank_universe": 0.927,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.070142
       },
@@ -419,7 +419,7 @@
         "vs_200dma": 0.153277,
         "vs_50dma": -0.089359,
         "tsmom_12m": 1,
-        "rank_universe": 0.948,
+        "rank_universe": 0.952,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.500865
       },
@@ -521,7 +521,7 @@
         "vs_200dma": 0.501897,
         "vs_50dma": -0.03346,
         "tsmom_12m": 1,
-        "rank_universe": 0.913,
+        "rank_universe": 0.919,
         "rank_group": 0.905,
         "rs_126_vs_proxy": 0.684428
       },
@@ -623,7 +623,7 @@
         "vs_200dma": 0.15534,
         "vs_50dma": 0.302863,
         "tsmom_12m": 1,
-        "rank_universe": 0.209,
+        "rank_universe": 0.218,
         "rank_group": 0.125,
         "rs_126_vs_proxy": -0.030162
       },
@@ -725,7 +725,7 @@
         "vs_200dma": 0.082196,
         "vs_50dma": 0.19374,
         "tsmom_12m": 1,
-        "rank_universe": 0.73,
+        "rank_universe": 0.742,
         "rank_group": 0.938,
         "rs_126_vs_proxy": -0.224493
       },
@@ -827,7 +827,7 @@
         "vs_200dma": -0.036933,
         "vs_50dma": 0.183162,
         "tsmom_12m": 1,
-        "rank_universe": 0.165,
+        "rank_universe": 0.161,
         "rank_group": 0.062,
         "rs_126_vs_proxy": -0.18359
       },
@@ -929,7 +929,7 @@
         "vs_200dma": 0.316978,
         "vs_50dma": -0.159654,
         "tsmom_12m": 1,
-        "rank_universe": 0.6,
+        "rank_universe": 0.613,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.737025
       },
@@ -1031,7 +1031,7 @@
         "vs_200dma": 0.44325,
         "vs_50dma": -0.05259,
         "tsmom_12m": 1,
-        "rank_universe": 0.904,
+        "rank_universe": 0.911,
         "rank_group": 0.857,
         "rs_126_vs_proxy": 0.748901
       },
@@ -1133,7 +1133,7 @@
         "vs_200dma": -0.181937,
         "vs_50dma": -0.141275,
         "tsmom_12m": -1,
-        "rank_universe": 0.043,
+        "rank_universe": 0.048,
         "rank_group": 0.048,
         "rs_126_vs_proxy": -0.347961
       },
@@ -1235,7 +1235,7 @@
         "vs_200dma": -0.105666,
         "vs_50dma": -0.254237,
         "tsmom_12m": -1,
-        "rank_universe": 0.191,
+        "rank_universe": 0.185,
         "rank_group": 0.095,
         "rs_126_vs_proxy": -0.112243
       },
@@ -1337,7 +1337,7 @@
         "vs_200dma": 0.2766,
         "vs_50dma": 0.035937,
         "tsmom_12m": 1,
-        "rank_universe": 0.67,
+        "rank_universe": 0.685,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.313832
       },
@@ -1439,7 +1439,7 @@
         "vs_200dma": 0.19797,
         "vs_50dma": -0.015444,
         "tsmom_12m": 1,
-        "rank_universe": 0.826,
+        "rank_universe": 0.839,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.120083
       },
@@ -1541,7 +1541,7 @@
         "vs_200dma": 0.255956,
         "vs_50dma": 0.332667,
         "tsmom_12m": 1,
-        "rank_universe": 0.609,
+        "rank_universe": 0.629,
         "rank_group": 0.812,
         "rs_126_vs_proxy": 0.059692
       },
@@ -1643,7 +1643,7 @@
         "vs_200dma": -0.036918,
         "vs_50dma": -0.080433,
         "tsmom_12m": 1,
-        "rank_universe": 0.461,
+        "rank_universe": 0.476,
         "rank_group": 0.238,
         "rs_126_vs_proxy": -0.176468
       },
@@ -1745,7 +1745,7 @@
         "vs_200dma": 0.232214,
         "vs_50dma": -0.014679,
         "tsmom_12m": 1,
-        "rank_universe": 0.991,
+        "rank_universe": 0.992,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.219905
       },
@@ -1847,7 +1847,7 @@
         "vs_200dma": 0.162322,
         "vs_50dma": -0.088335,
         "tsmom_12m": 1,
-        "rank_universe": 0.93,
+        "rank_universe": 0.935,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.042618
       },
@@ -1949,7 +1949,7 @@
         "vs_200dma": 0.093902,
         "vs_50dma": 0.453801,
         "tsmom_12m": -1,
-        "rank_universe": 0.009,
+        "rank_universe": 0.008,
         "rank_group": 0.05,
         "rs_126_vs_proxy": 0.042765
       },
@@ -2051,7 +2051,7 @@
         "vs_200dma": -0.034271,
         "vs_50dma": -0.021401,
         "tsmom_12m": 1,
-        "rank_universe": 0.139,
+        "rank_universe": 0.137,
         "rank_group": 0.25,
         "rs_126_vs_proxy": -0.177552
       },
@@ -2153,7 +2153,7 @@
         "vs_200dma": 0.138016,
         "vs_50dma": 0.191593,
         "tsmom_12m": -1,
-        "rank_universe": 0.087,
+        "rank_universe": 0.089,
         "rank_group": 0.105,
         "rs_126_vs_proxy": null
       },
@@ -2255,7 +2255,7 @@
         "vs_200dma": 0.039181,
         "vs_50dma": 0.027951,
         "tsmom_12m": 1,
-        "rank_universe": 0.391,
+        "rank_universe": 0.403,
         "rank_group": 0.684,
         "rs_126_vs_proxy": null
       },
@@ -2357,7 +2357,7 @@
         "vs_200dma": 0.074577,
         "vs_50dma": -0.086329,
         "tsmom_12m": 1,
-        "rank_universe": 0.791,
+        "rank_universe": 0.798,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.174782
       },
@@ -2459,7 +2459,7 @@
         "vs_200dma": 0.145174,
         "vs_50dma": 0.262439,
         "tsmom_12m": 1,
-        "rank_universe": 0.374,
+        "rank_universe": 0.387,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.052635
       },
@@ -2520,6 +2520,108 @@
         }
       }
     },
+    "CIBR": {
+      "ticker": "CIBR",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 2513,
+      "first_date": "2016-08-29",
+      "last_date": "2026-08-27",
+      "close": 100.79,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.7776,
+        "r2_vs_null_pct": 80,
+        "vr": 1.2403,
+        "cross_rate": 14.08,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 0.9776,
+        "macd_signal": 1.3949,
+        "macd_hist": -0.4172,
+        "macd_hist_prev": -0.9294,
+        "rsi": 62.33,
+        "mfi": 54.92,
+        "vpvma": 13.99241,
+        "vpvma_signal": 4.993867
+      },
+      "momentum": {
+        "mom_12_1": 0.235873,
+        "mom_6_1": 0.393782,
+        "ret_12m": 0.402902,
+        "ret_3m": 0.205505,
+        "ret_1m": 0.13515,
+        "dist_52w_high": -0.013796,
+        "dist_52w_low": 0.659368,
+        "vs_200dma": 0.31304,
+        "vs_50dma": 0.091094,
+        "tsmom_12m": 1,
+        "rank_universe": 0.411,
+        "rank_group": 0.667,
+        "rs_126_vs_proxy": 0.249078
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.1449,
+        "swing": "HH/HL",
+        "close_pos_20": 0.557,
+        "atr_pct": 2.82,
+        "atr_pct_rank_1y": 0.861,
+        "vol_state": "expanded",
+        "ud_vol_50d": 0.95,
+        "vol_10v50": 1.07,
+        "rvol": 1.26,
+        "obv_63d": "bearish_divergence",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 1.2058,
+          "buy_hold_return": 4.3131,
+          "excess_vs_hold": -3.1073,
+          "beat_hold": false,
+          "n_trades": 96,
+          "win_rate": 0.417
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 1.3753,
+          "buy_hold_return": 4.3131,
+          "excess_vs_hold": -2.9379,
+          "beat_hold": false,
+          "n_trades": 9,
+          "win_rate": 0.667
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 4.3131,
+          "excess_vs_hold": -4.3131,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.3055,
+          "buy_hold_return": 4.3131,
+          "excess_vs_hold": -4.0076,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "vpvma": {
+          "strategy_return": 1.5923,
+          "buy_hold_return": 4.3131,
+          "excess_vs_hold": -2.7208,
+          "beat_hold": false,
+          "n_trades": 178,
+          "win_rate": 0.551
+        }
+      }
+    },
     "CIEN": {
       "ticker": "CIEN",
       "group": "Optics / networking",
@@ -2561,7 +2663,7 @@
         "vs_200dma": 0.087249,
         "vs_50dma": -0.032799,
         "tsmom_12m": 1,
-        "rank_universe": 0.957,
+        "rank_universe": 0.96,
         "rank_group": 0.833,
         "rs_126_vs_proxy": -0.12318
       },
@@ -2663,7 +2765,7 @@
         "vs_200dma": 0.082203,
         "vs_50dma": -0.090004,
         "tsmom_12m": 1,
-        "rank_universe": 0.896,
+        "rank_universe": 0.903,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.157445
       },
@@ -2765,7 +2867,7 @@
         "vs_200dma": 0.099844,
         "vs_50dma": 0.031926,
         "tsmom_12m": 1,
-        "rank_universe": 0.513,
+        "rank_universe": 0.532,
         "rank_group": 0.789,
         "rs_126_vs_proxy": null
       },
@@ -2867,7 +2969,7 @@
         "vs_200dma": 0.354999,
         "vs_50dma": -0.025408,
         "tsmom_12m": 1,
-        "rank_universe": 0.704,
+        "rank_universe": 0.718,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.644367
       },
@@ -2969,7 +3071,7 @@
         "vs_200dma": -0.038983,
         "vs_50dma": -0.012253,
         "tsmom_12m": -1,
-        "rank_universe": 0.078,
+        "rank_universe": 0.081,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.311444
       },
@@ -3071,7 +3173,7 @@
         "vs_200dma": 0.29997,
         "vs_50dma": -0.085684,
         "tsmom_12m": 1,
-        "rank_universe": 0.783,
+        "rank_universe": 0.79,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.629121
       },
@@ -3173,7 +3275,7 @@
         "vs_200dma": 0.083968,
         "vs_50dma": -0.018127,
         "tsmom_12m": 1,
-        "rank_universe": 0.548,
+        "rank_universe": 0.565,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.004878
       },
@@ -3275,7 +3377,7 @@
         "vs_200dma": 0.133057,
         "vs_50dma": 0.024634,
         "tsmom_12m": 1,
-        "rank_universe": 0.478,
+        "rank_universe": 0.492,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.021468
       },
@@ -3377,7 +3479,7 @@
         "vs_200dma": 0.238352,
         "vs_50dma": 0.271333,
         "tsmom_12m": -1,
-        "rank_universe": 0.061,
+        "rank_universe": 0.065,
         "rank_group": 0.053,
         "rs_126_vs_proxy": null
       },
@@ -3479,7 +3581,7 @@
         "vs_200dma": 0.064189,
         "vs_50dma": 0.314732,
         "tsmom_12m": -1,
-        "rank_universe": 0.017,
+        "rank_universe": 0.016,
         "rank_group": 0.1,
         "rs_126_vs_proxy": 0.070493
       },
@@ -3581,7 +3683,7 @@
         "vs_200dma": 0.240837,
         "vs_50dma": 0.006266,
         "tsmom_12m": 1,
-        "rank_universe": 0.835,
+        "rank_universe": 0.847,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.083117
       },
@@ -3683,7 +3785,7 @@
         "vs_200dma": 0.120232,
         "vs_50dma": 0.23919,
         "tsmom_12m": 1,
-        "rank_universe": 0.487,
+        "rank_universe": 0.5,
         "rank_group": 0.688,
         "rs_126_vs_proxy": -0.107304
       },
@@ -3785,7 +3887,7 @@
         "vs_200dma": 0.200335,
         "vs_50dma": -0.13235,
         "tsmom_12m": 1,
-        "rank_universe": 0.843,
+        "rank_universe": 0.855,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.30566
       },
@@ -3887,7 +3989,7 @@
         "vs_200dma": 0.160869,
         "vs_50dma": 0.201626,
         "tsmom_12m": 1,
-        "rank_universe": 0.287,
+        "rank_universe": 0.306,
         "rank_group": 0.375,
         "rs_126_vs_proxy": 0.056442
       },
@@ -3948,6 +4050,108 @@
         }
       }
     },
+    "FTNT": {
+      "ticker": "FTNT",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 2513,
+      "first_date": "2016-08-29",
+      "last_date": "2026-08-27",
+      "close": 172.78,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.6851,
+        "r2_vs_null_pct": 70,
+        "vr": 1.1284,
+        "cross_rate": 5.63,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 0.8368,
+        "macd_signal": 0.4771,
+        "macd_hist": 0.3597,
+        "macd_hist_prev": -0.9202,
+        "rsi": 64.73,
+        "mfi": 58.95,
+        "vpvma": 42.613017,
+        "vpvma_signal": -14.749839
+      },
+      "momentum": {
+        "mom_12_1": 0.973213,
+        "mom_6_1": 0.934596,
+        "ret_12m": 1.225113,
+        "ret_3m": 0.332151,
+        "ret_1m": 0.12766,
+        "dist_52w_high": 0.0,
+        "dist_52w_low": 1.29669,
+        "vs_200dma": 0.604386,
+        "vs_50dma": 0.100459,
+        "tsmom_12m": 1,
+        "rank_universe": 0.815,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": 0.722302
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.3419,
+        "swing": "mixed",
+        "close_pos_20": 0.51,
+        "atr_pct": 3.91,
+        "atr_pct_rank_1y": 0.79,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.43,
+        "vol_10v50": 0.72,
+        "rvol": 1.03,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 2.8944,
+          "buy_hold_return": 23.2192,
+          "excess_vs_hold": -20.3248,
+          "beat_hold": false,
+          "n_trades": 103,
+          "win_rate": 0.476
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 2.7815,
+          "buy_hold_return": 23.2192,
+          "excess_vs_hold": -20.4377,
+          "beat_hold": false,
+          "n_trades": 11,
+          "win_rate": 0.545
+        },
+        "macd_rsi": {
+          "strategy_return": 0.3095,
+          "buy_hold_return": 23.2192,
+          "excess_vs_hold": -22.9097,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 23.2192,
+          "excess_vs_hold": -23.2192,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 11.3074,
+          "buy_hold_return": 23.2192,
+          "excess_vs_hold": -11.9119,
+          "beat_hold": false,
+          "n_trades": 153,
+          "win_rate": 0.569
+        }
+      }
+    },
     "GC=F": {
       "ticker": "GC=F",
       "group": "Macro / benchmarks",
@@ -3989,7 +4193,7 @@
         "vs_200dma": 0.038295,
         "vs_50dma": 0.11606,
         "tsmom_12m": 1,
-        "rank_universe": 0.322,
+        "rank_universe": 0.339,
         "rank_group": 0.579,
         "rs_126_vs_proxy": null
       },
@@ -4091,7 +4295,7 @@
         "vs_200dma": 0.150114,
         "vs_50dma": 0.252305,
         "tsmom_12m": 1,
-        "rank_universe": 0.4,
+        "rank_universe": 0.419,
         "rank_group": 0.286,
         "rs_126_vs_proxy": 0.0
       },
@@ -4193,7 +4397,7 @@
         "vs_200dma": 0.134743,
         "vs_50dma": 0.247212,
         "tsmom_12m": 1,
-        "rank_universe": 0.452,
+        "rank_universe": 0.468,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.024703
       },
@@ -4295,7 +4499,7 @@
         "vs_200dma": 0.090645,
         "vs_50dma": -0.079103,
         "tsmom_12m": 1,
-        "rank_universe": 0.661,
+        "rank_universe": 0.677,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.164807
       },
@@ -4397,7 +4601,7 @@
         "vs_200dma": 0.016776,
         "vs_50dma": 0.093881,
         "tsmom_12m": 1,
-        "rank_universe": 0.339,
+        "rank_universe": 0.355,
         "rank_group": 0.632,
         "rs_126_vs_proxy": null
       },
@@ -4499,7 +4703,7 @@
         "vs_200dma": 0.079272,
         "vs_50dma": -0.112491,
         "tsmom_12m": 1,
-        "rank_universe": 0.765,
+        "rank_universe": 0.774,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.267288
       },
@@ -4601,7 +4805,7 @@
         "vs_200dma": 0.078206,
         "vs_50dma": 0.078852,
         "tsmom_12m": 1,
-        "rank_universe": 0.713,
+        "rank_universe": 0.726,
         "rank_group": 0.875,
         "rs_126_vs_proxy": -0.116732
       },
@@ -4703,7 +4907,7 @@
         "vs_200dma": 0.041832,
         "vs_50dma": -0.016406,
         "tsmom_12m": 1,
-        "rank_universe": 0.365,
+        "rank_universe": 0.379,
         "rank_group": 0.45,
         "rs_126_vs_proxy": -0.084626
       },
@@ -4805,7 +5009,7 @@
         "vs_200dma": 0.038895,
         "vs_50dma": -0.072698,
         "tsmom_12m": -1,
-        "rank_universe": 0.07,
+        "rank_universe": 0.073,
         "rank_group": 0.167,
         "rs_126_vs_proxy": 0.697063
       },
@@ -4907,7 +5111,7 @@
         "vs_200dma": 0.196885,
         "vs_50dma": -0.031721,
         "tsmom_12m": 1,
-        "rank_universe": 0.652,
+        "rank_universe": 0.669,
         "rank_group": 0.476,
         "rs_126_vs_proxy": 0.400672
       },
@@ -5009,7 +5213,7 @@
         "vs_200dma": 0.102786,
         "vs_50dma": 0.262734,
         "tsmom_12m": 1,
-        "rank_universe": 0.748,
+        "rank_universe": 0.758,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.035777
       },
@@ -5111,7 +5315,7 @@
         "vs_200dma": -0.106578,
         "vs_50dma": 0.113693,
         "tsmom_12m": -1,
-        "rank_universe": 0.026,
+        "rank_universe": 0.024,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.238218
       },
@@ -5213,7 +5417,7 @@
         "vs_200dma": -0.003109,
         "vs_50dma": 0.003035,
         "tsmom_12m": 1,
-        "rank_universe": 0.2,
+        "rank_universe": 0.202,
         "rank_group": 0.316,
         "rs_126_vs_proxy": null
       },
@@ -5315,7 +5519,7 @@
         "vs_200dma": 0.0388,
         "vs_50dma": 0.209315,
         "tsmom_12m": -1,
-        "rank_universe": 0.035,
+        "rank_universe": 0.04,
         "rank_group": 0.15,
         "rs_126_vs_proxy": 0.020005
       },
@@ -5417,7 +5621,7 @@
         "vs_200dma": 0.207003,
         "vs_50dma": 0.155858,
         "tsmom_12m": 1,
-        "rank_universe": 0.635,
+        "rank_universe": 0.653,
         "rank_group": 0.75,
         "rs_126_vs_proxy": -0.056311
       },
@@ -5519,7 +5723,7 @@
         "vs_200dma": 0.063883,
         "vs_50dma": -0.164891,
         "tsmom_12m": 1,
-        "rank_universe": 0.643,
+        "rank_universe": 0.661,
         "rank_group": 0.429,
         "rs_126_vs_proxy": -0.113375
       },
@@ -5621,7 +5825,7 @@
         "vs_200dma": 0.232606,
         "vs_50dma": -0.030796,
         "tsmom_12m": 1,
-        "rank_universe": 0.722,
+        "rank_universe": 0.734,
         "rank_group": 0.85,
         "rs_126_vs_proxy": 0.294243
       },
@@ -5825,7 +6029,7 @@
         "vs_200dma": 0.221153,
         "vs_50dma": -0.167965,
         "tsmom_12m": 1,
-        "rank_universe": 0.939,
+        "rank_universe": 0.944,
         "rank_group": 0.952,
         "rs_126_vs_proxy": 0.443296
       },
@@ -5927,7 +6131,7 @@
         "vs_200dma": 0.07286,
         "vs_50dma": -0.000488,
         "tsmom_12m": 1,
-        "rank_universe": 0.174,
+        "rank_universe": 0.169,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.073699
       },
@@ -6029,7 +6233,7 @@
         "vs_200dma": -0.142755,
         "vs_50dma": -0.067486,
         "tsmom_12m": 1,
-        "rank_universe": 0.565,
+        "rank_universe": 0.581,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.310706
       },
@@ -6131,7 +6335,7 @@
         "vs_200dma": 0.104052,
         "vs_50dma": 0.006357,
         "tsmom_12m": 1,
-        "rank_universe": 0.426,
+        "rank_universe": 0.444,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.021097
       },
@@ -6233,7 +6437,7 @@
         "vs_200dma": 0.125507,
         "vs_50dma": 0.029571,
         "tsmom_12m": 1,
-        "rank_universe": 0.383,
+        "rank_universe": 0.395,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.068089
       },
@@ -6335,7 +6539,7 @@
         "vs_200dma": 0.104464,
         "vs_50dma": 0.260127,
         "tsmom_12m": 1,
-        "rank_universe": 0.348,
+        "rank_universe": 0.363,
         "rank_group": 0.438,
         "rs_126_vs_proxy": -0.024139
       },
@@ -6437,7 +6641,7 @@
         "vs_200dma": 0.417213,
         "vs_50dma": 0.15624,
         "tsmom_12m": 1,
-        "rank_universe": 0.965,
+        "rank_universe": 0.968,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.00463
       },
@@ -6539,7 +6743,7 @@
         "vs_200dma": -0.022625,
         "vs_50dma": -0.004601,
         "tsmom_12m": 1,
-        "rank_universe": 0.157,
+        "rank_universe": 0.153,
         "rank_group": 0.211,
         "rs_126_vs_proxy": null
       },
@@ -6641,7 +6845,7 @@
         "vs_200dma": 0.222818,
         "vs_50dma": -0.062304,
         "tsmom_12m": 1,
-        "rank_universe": 0.887,
+        "rank_universe": 0.895,
         "rank_group": 0.81,
         "rs_126_vs_proxy": -0.036514
       },
@@ -6743,7 +6947,7 @@
         "vs_200dma": 0.051596,
         "vs_50dma": -0.042031,
         "tsmom_12m": 1,
-        "rank_universe": 0.617,
+        "rank_universe": 0.637,
         "rank_group": 0.381,
         "rs_126_vs_proxy": -0.185574
       },
@@ -6845,7 +7049,7 @@
         "vs_200dma": 0.295406,
         "vs_50dma": -0.176526,
         "tsmom_12m": 1,
-        "rank_universe": 0.878,
+        "rank_universe": 0.887,
         "rank_group": 0.762,
         "rs_126_vs_proxy": 0.252315
       },
@@ -6947,7 +7151,7 @@
         "vs_200dma": 1.957391,
         "vs_50dma": 1.035706,
         "tsmom_12m": 1,
-        "rank_universe": 0.852,
+        "rank_universe": 0.863,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 1.622089
       },
@@ -7049,7 +7253,7 @@
         "vs_200dma": 0.664295,
         "vs_50dma": 0.062191,
         "tsmom_12m": 1,
-        "rank_universe": 0.861,
+        "rank_universe": 0.871,
         "rank_group": 0.714,
         "rs_126_vs_proxy": 1.32438
       },
@@ -7151,7 +7355,7 @@
         "vs_200dma": 0.613652,
         "vs_50dma": -0.021397,
         "tsmom_12m": 1,
-        "rank_universe": 0.983,
+        "rank_universe": 0.984,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.678253
       },
@@ -7253,7 +7457,7 @@
         "vs_200dma": 0.418681,
         "vs_50dma": -0.035232,
         "tsmom_12m": 1,
-        "rank_universe": 0.87,
+        "rank_universe": 0.879,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.545795
       },
@@ -7355,7 +7559,7 @@
         "vs_200dma": 0.228365,
         "vs_50dma": 0.27227,
         "tsmom_12m": 1,
-        "rank_universe": 0.443,
+        "rank_universe": 0.46,
         "rank_group": 0.562,
         "rs_126_vs_proxy": 0.149005
       },
@@ -7416,6 +7620,108 @@
         }
       }
     },
+    "NET": {
+      "ticker": "NET",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 1748,
+      "first_date": "2019-09-13",
+      "last_date": "2026-08-27",
+      "close": 308.27,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.7435,
+        "r2_vs_null_pct": 75,
+        "vr": 1.0222,
+        "cross_rate": 18.31,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 4.749,
+        "macd_signal": 7.447,
+        "macd_hist": -2.6979,
+        "macd_hist_prev": -4.5087,
+        "rsi": 57.92,
+        "mfi": 48.08,
+        "vpvma": 249.461249,
+        "vpvma_signal": 207.950866
+      },
+      "momentum": {
+        "mom_12_1": 0.361773,
+        "mom_6_1": 0.548036,
+        "ret_12m": 0.552606,
+        "ret_3m": 0.351409,
+        "ret_1m": 0.140136,
+        "dist_52w_high": -0.068192,
+        "dist_52w_low": 0.924402,
+        "vs_200dma": 0.398996,
+        "vs_50dma": 0.130919,
+        "tsmom_12m": 1,
+        "rank_universe": 0.508,
+        "rank_group": 0.778,
+        "rs_126_vs_proxy": 0.39341
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.1813,
+        "swing": "HH/HL",
+        "close_pos_20": 0.45,
+        "atr_pct": 5.46,
+        "atr_pct_rank_1y": 0.663,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.25,
+        "vol_10v50": 0.84,
+        "rvol": 1.19,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0131,
+          "buy_hold_return": 16.1261,
+          "excess_vs_hold": -16.113,
+          "beat_hold": false,
+          "n_trades": 74,
+          "win_rate": 0.446
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 4.0911,
+          "buy_hold_return": 16.1261,
+          "excess_vs_hold": -12.035,
+          "beat_hold": false,
+          "n_trades": 7,
+          "win_rate": 0.429
+        },
+        "macd_rsi": {
+          "strategy_return": 4.4999,
+          "buy_hold_return": 16.1261,
+          "excess_vs_hold": -11.6262,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_mfi": {
+          "strategy_return": 0.4598,
+          "buy_hold_return": 16.1261,
+          "excess_vs_hold": -15.6663,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "vpvma": {
+          "strategy_return": 13.6075,
+          "buy_hold_return": 16.1261,
+          "excess_vs_hold": -2.5186,
+          "beat_hold": false,
+          "n_trades": 73,
+          "win_rate": 0.603
+        }
+      }
+    },
     "NOK": {
       "ticker": "NOK",
       "group": "Optics / networking",
@@ -7457,7 +7763,7 @@
         "vs_200dma": 0.096597,
         "vs_50dma": -0.059145,
         "tsmom_12m": 1,
-        "rank_universe": 0.817,
+        "rank_universe": 0.831,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.054466
       },
@@ -7559,7 +7865,7 @@
         "vs_200dma": 0.051981,
         "vs_50dma": 0.140007,
         "tsmom_12m": -1,
-        "rank_universe": 0.052,
+        "rank_universe": 0.056,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.04714
       },
@@ -7661,7 +7967,7 @@
         "vs_200dma": 0.072246,
         "vs_50dma": 0.009191,
         "tsmom_12m": 1,
-        "rank_universe": 0.243,
+        "rank_universe": 0.258,
         "rank_group": 0.143,
         "rs_126_vs_proxy": -0.176919
       },
@@ -7763,7 +8069,7 @@
         "vs_200dma": 0.016729,
         "vs_50dma": -0.012679,
         "tsmom_12m": -1,
-        "rank_universe": 0.13,
+        "rank_universe": 0.129,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.153813
       },
@@ -7865,7 +8171,7 @@
         "vs_200dma": -0.010243,
         "vs_50dma": -0.113645,
         "tsmom_12m": 1,
-        "rank_universe": 0.678,
+        "rank_universe": 0.694,
         "rank_group": 0.524,
         "rs_126_vs_proxy": -0.016675
       },
@@ -7926,6 +8232,108 @@
         }
       }
     },
+    "OKTA": {
+      "ticker": "OKTA",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 2360,
+      "first_date": "2017-04-07",
+      "last_date": "2026-08-27",
+      "close": 172.91,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.7859,
+        "r2_vs_null_pct": 80,
+        "vr": 0.9136,
+        "cross_rate": 8.45,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 1.4211,
+        "macd_signal": 0.9239,
+        "macd_hist": 0.4972,
+        "macd_hist_prev": -2.2419,
+        "rsi": 70.39,
+        "mfi": 53.55,
+        "vpvma": 75.676422,
+        "vpvma_signal": 23.429877
+      },
+      "momentum": {
+        "mom_12_1": 0.495304,
+        "mom_6_1": 0.819402,
+        "ret_12m": 0.888489,
+        "ret_3m": 0.825486,
+        "ret_1m": 0.262946,
+        "dist_52w_high": 0.0,
+        "dist_52w_low": 1.747656,
+        "vs_200dma": 0.740837,
+        "vs_50dma": 0.236831,
+        "tsmom_12m": 1,
+        "rank_universe": 0.621,
+        "rank_group": 0.889,
+        "rs_126_vs_proxy": 0.814073
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.292,
+        "swing": "LH/LL",
+        "close_pos_20": 0.457,
+        "atr_pct": 5.38,
+        "atr_pct_rank_1y": 0.825,
+        "vol_state": "expanded",
+        "ud_vol_50d": 1.48,
+        "vol_10v50": 1.36,
+        "rvol": 4.89,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0814,
+          "buy_hold_return": 6.3547,
+          "excess_vs_hold": -6.2733,
+          "beat_hold": false,
+          "n_trades": 93,
+          "win_rate": 0.452
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.7706,
+          "buy_hold_return": 6.3547,
+          "excess_vs_hold": -5.5841,
+          "beat_hold": false,
+          "n_trades": 12,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 1.1292,
+          "buy_hold_return": 6.3547,
+          "excess_vs_hold": -5.2256,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0266,
+          "buy_hold_return": 6.3547,
+          "excess_vs_hold": -6.3281,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "vpvma": {
+          "strategy_return": 2.8516,
+          "buy_hold_return": 6.3547,
+          "excess_vs_hold": -3.5031,
+          "beat_hold": false,
+          "n_trades": 129,
+          "win_rate": 0.581
+        }
+      }
+    },
     "PAAS": {
       "ticker": "PAAS",
       "group": "Precious-metals miners & royalty",
@@ -7967,7 +8375,7 @@
         "vs_200dma": 0.015493,
         "vs_50dma": 0.129879,
         "tsmom_12m": 1,
-        "rank_universe": 0.47,
+        "rank_universe": 0.484,
         "rank_group": 0.625,
         "rs_126_vs_proxy": -0.106398
       },
@@ -8069,7 +8477,7 @@
         "vs_200dma": 0.488492,
         "vs_50dma": -0.000757,
         "tsmom_12m": 1,
-        "rank_universe": 0.696,
+        "rank_universe": 0.71,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.849478
       },
@@ -8171,7 +8579,7 @@
         "vs_200dma": 0.457117,
         "vs_50dma": -0.150396,
         "tsmom_12m": 1,
-        "rank_universe": 0.8,
+        "rank_universe": 0.806,
         "rank_group": 0.619,
         "rs_126_vs_proxy": 0.922913
       },
@@ -8273,7 +8681,7 @@
         "vs_200dma": -0.01599,
         "vs_50dma": -0.193795,
         "tsmom_12m": 1,
-        "rank_universe": 0.435,
+        "rank_universe": 0.452,
         "rank_group": 0.19,
         "rs_126_vs_proxy": -0.128871
       },
@@ -8375,7 +8783,7 @@
         "vs_200dma": 0.203163,
         "vs_50dma": 0.161113,
         "tsmom_12m": -1,
-        "rank_universe": 0.104,
+        "rank_universe": 0.105,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.183062
       },
@@ -8436,6 +8844,108 @@
         }
       }
     },
+    "QLYS": {
+      "ticker": "QLYS",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 2513,
+      "first_date": "2016-08-29",
+      "last_date": "2026-08-27",
+      "close": 188.59,
+      "regime": {
+        "regime": "trending",
+        "r2": 0.9213,
+        "r2_vs_null_pct": 100,
+        "vr": 1.5337,
+        "cross_rate": 8.45,
+        "slope": "up",
+        "trend_ok": true,
+        "oscillator_ok": false,
+        "false_positive_rate": 0.1,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 8.3355,
+        "macd_signal": 10.1158,
+        "macd_hist": -1.7803,
+        "macd_hist_prev": -2.3548,
+        "rsi": 64.18,
+        "mfi": 43.97,
+        "vpvma": 56.136549,
+        "vpvma_signal": 47.732958
+      },
+      "momentum": {
+        "mom_12_1": 0.027683,
+        "mom_6_1": 0.442464,
+        "ret_12m": 0.434253,
+        "ret_3m": 0.878948,
+        "ret_1m": 0.395619,
+        "dist_52w_high": -0.037217,
+        "dist_52w_low": 1.474934,
+        "vs_200dma": 0.52386,
+        "vs_50dma": 0.211537,
+        "tsmom_12m": 1,
+        "rank_universe": 0.194,
+        "rank_group": 0.222,
+        "rs_126_vs_proxy": 0.589325
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.1593,
+        "swing": "mixed",
+        "close_pos_20": 0.631,
+        "atr_pct": 4.73,
+        "atr_pct_rank_1y": 0.591,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.3,
+        "vol_10v50": 0.69,
+        "rvol": 1.18,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.1857,
+          "buy_hold_return": 4.3945,
+          "excess_vs_hold": -4.5802,
+          "beat_hold": false,
+          "n_trades": 97,
+          "win_rate": 0.392
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.8632,
+          "buy_hold_return": 4.3945,
+          "excess_vs_hold": -3.5313,
+          "beat_hold": false,
+          "n_trades": 12,
+          "win_rate": 0.25
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 4.3945,
+          "excess_vs_hold": -4.3945,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 4.3945,
+          "excess_vs_hold": -4.3945,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 1.9248,
+          "buy_hold_return": 4.3945,
+          "excess_vs_hold": -2.4697,
+          "beat_hold": false,
+          "n_trades": 146,
+          "win_rate": 0.589
+        }
+      }
+    },
     "QQQ": {
       "ticker": "QQQ",
       "group": "Broad / thematic / crypto ETFs",
@@ -8477,7 +8987,7 @@
         "vs_200dma": 0.087471,
         "vs_50dma": -0.001391,
         "tsmom_12m": 1,
-        "rank_universe": 0.33,
+        "rank_universe": 0.347,
         "rank_group": 0.4,
         "rs_126_vs_proxy": 0.040666
       },
@@ -8579,7 +9089,7 @@
         "vs_200dma": 0.148582,
         "vs_50dma": -0.019258,
         "tsmom_12m": 1,
-        "rank_universe": 0.583,
+        "rank_universe": 0.597,
         "rank_group": 0.65,
         "rs_126_vs_proxy": 0.135122
       },
@@ -8681,7 +9191,7 @@
         "vs_200dma": -0.1178,
         "vs_50dma": -0.09714,
         "tsmom_12m": -1,
-        "rank_universe": 0.096,
+        "rank_universe": 0.097,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.065766
       },
@@ -8783,7 +9293,7 @@
         "vs_200dma": 0.137706,
         "vs_50dma": 0.246937,
         "tsmom_12m": 1,
-        "rank_universe": 0.261,
+        "rank_universe": 0.282,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.009129
       },
@@ -8885,7 +9395,7 @@
         "vs_200dma": 0.176795,
         "vs_50dma": 0.277595,
         "tsmom_12m": 1,
-        "rank_universe": 0.409,
+        "rank_universe": 0.427,
         "rank_group": 0.429,
         "rs_126_vs_proxy": 0.035715
       },
@@ -8987,7 +9497,7 @@
         "vs_200dma": 0.108929,
         "vs_50dma": 0.045038,
         "tsmom_12m": 1,
-        "rank_universe": 0.226,
+        "rank_universe": 0.242,
         "rank_group": 0.3,
         "rs_126_vs_proxy": 0.027416
       },
@@ -9048,6 +9558,108 @@
         }
       }
     },
+    "S": {
+      "ticker": "S",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 1296,
+      "first_date": "2021-06-30",
+      "last_date": "2026-08-27",
+      "close": 22.71,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.6733,
+        "r2_vs_null_pct": 70,
+        "vr": 0.9955,
+        "cross_rate": 14.08,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 0.6127,
+        "macd_signal": 0.8062,
+        "macd_hist": -0.1935,
+        "macd_hist_prev": -0.3294,
+        "rsi": 61.58,
+        "mfi": 49.34,
+        "vpvma": 1.303747,
+        "vpvma_signal": 1.234942
+      },
+      "momentum": {
+        "mom_12_1": 0.127893,
+        "mom_6_1": 0.373887,
+        "ret_12m": 0.383069,
+        "ret_3m": 0.260266,
+        "ret_1m": 0.226242,
+        "dist_52w_high": -0.047399,
+        "dist_52w_low": 0.90201,
+        "vs_200dma": 0.427409,
+        "vs_50dma": 0.186149,
+        "tsmom_12m": 1,
+        "rank_universe": 0.266,
+        "rank_group": 0.556,
+        "rs_126_vs_proxy": 0.330051
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.0901,
+        "swing": "HH/HL",
+        "close_pos_20": 0.63,
+        "atr_pct": 4.66,
+        "atr_pct_rank_1y": 0.635,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.48,
+        "vol_10v50": 1.07,
+        "rvol": 2.43,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.8304,
+          "buy_hold_return": -0.4656,
+          "excess_vs_hold": -0.3647,
+          "beat_hold": false,
+          "n_trades": 53,
+          "win_rate": 0.302
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.5178,
+          "buy_hold_return": -0.4656,
+          "excess_vs_hold": -0.0522,
+          "beat_hold": false,
+          "n_trades": 6,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": -0.4656,
+          "excess_vs_hold": 0.4656,
+          "beat_hold": true,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": -0.4656,
+          "excess_vs_hold": 0.4656,
+          "beat_hold": true,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.6955,
+          "buy_hold_return": -0.4656,
+          "excess_vs_hold": -0.2299,
+          "beat_hold": false,
+          "n_trades": 77,
+          "win_rate": 0.442
+        }
+      }
+    },
     "SGDM": {
       "ticker": "SGDM",
       "group": "Metals ETFs",
@@ -9089,7 +9701,7 @@
         "vs_200dma": 0.168929,
         "vs_50dma": 0.259995,
         "tsmom_12m": 1,
-        "rank_universe": 0.357,
+        "rank_universe": 0.371,
         "rank_group": 0.143,
         "rs_126_vs_proxy": 0.014163
       },
@@ -9191,7 +9803,7 @@
         "vs_200dma": 0.143213,
         "vs_50dma": 0.164699,
         "tsmom_12m": 1,
-        "rank_universe": 0.122,
+        "rank_universe": 0.121,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.01379
       },
@@ -9293,7 +9905,7 @@
         "vs_200dma": -0.032015,
         "vs_50dma": 0.126013,
         "tsmom_12m": 1,
-        "rank_universe": 0.591,
+        "rank_universe": 0.605,
         "rank_group": 0.895,
         "rs_126_vs_proxy": null
       },
@@ -9395,7 +10007,7 @@
         "vs_200dma": 0.147526,
         "vs_50dma": 0.058538,
         "tsmom_12m": 1,
-        "rank_universe": 0.252,
+        "rank_universe": 0.274,
         "rank_group": 0.2,
         "rs_126_vs_proxy": -0.112328
       },
@@ -9497,7 +10109,7 @@
         "vs_200dma": 0.136713,
         "vs_50dma": 0.227533,
         "tsmom_12m": 1,
-        "rank_universe": 0.496,
+        "rank_universe": 0.516,
         "rank_group": 0.714,
         "rs_126_vs_proxy": -0.03445
       },
@@ -9599,7 +10211,7 @@
         "vs_200dma": 0.09787,
         "vs_50dma": 0.196048,
         "tsmom_12m": 1,
-        "rank_universe": 0.53,
+        "rank_universe": 0.548,
         "rank_group": 0.857,
         "rs_126_vs_proxy": -0.075551
       },
@@ -9701,7 +10313,7 @@
         "vs_200dma": -0.05002,
         "vs_50dma": 0.106818,
         "tsmom_12m": 1,
-        "rank_universe": 0.574,
+        "rank_universe": 0.589,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.164845
       },
@@ -9803,7 +10415,7 @@
         "vs_200dma": 0.182179,
         "vs_50dma": -0.049864,
         "tsmom_12m": 1,
-        "rank_universe": 0.739,
+        "rank_universe": 0.75,
         "rank_group": 0.9,
         "rs_126_vs_proxy": 0.173745
       },
@@ -10007,7 +10619,7 @@
         "vs_200dma": 0.215703,
         "vs_50dma": -0.068419,
         "tsmom_12m": 1,
-        "rank_universe": 0.809,
+        "rank_universe": 0.823,
         "rank_group": 0.95,
         "rs_126_vs_proxy": 0.26189
       },
@@ -10109,7 +10721,7 @@
         "vs_200dma": 0.080651,
         "vs_50dma": 0.017408,
         "tsmom_12m": 1,
-        "rank_universe": 0.304,
+        "rank_universe": 0.323,
         "rank_group": 0.35,
         "rs_126_vs_proxy": 0.0
       },
@@ -10211,7 +10823,7 @@
         "vs_200dma": 0.383082,
         "vs_50dma": 0.274322,
         "tsmom_12m": 1,
-        "rank_universe": 0.539,
+        "rank_universe": 0.556,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.355868
       },
@@ -10272,6 +10884,108 @@
         }
       }
     },
+    "TENB": {
+      "ticker": "TENB",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 2033,
+      "first_date": "2018-07-26",
+      "last_date": "2026-08-27",
+      "close": 37.62,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.7413,
+        "r2_vs_null_pct": 75,
+        "vr": 1.5472,
+        "cross_rate": 11.27,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 0.03,
+        "macd_signal": 0.2257,
+        "macd_hist": -0.1957,
+        "macd_hist_prev": -0.4819,
+        "rsi": 57.11,
+        "mfi": 59.85,
+        "vpvma": -0.241053,
+        "vpvma_signal": -1.117204
+      },
+      "momentum": {
+        "mom_12_1": 0.064953,
+        "mom_6_1": 0.624355,
+        "ret_12m": 0.272666,
+        "ret_3m": 0.449711,
+        "ret_1m": 0.195044,
+        "dist_52w_high": -0.117937,
+        "dist_52w_low": 1.345386,
+        "vs_200dma": 0.457919,
+        "vs_50dma": 0.071258,
+        "tsmom_12m": 1,
+        "rank_universe": 0.226,
+        "rank_group": 0.444,
+        "rs_126_vs_proxy": 0.53252
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.1836,
+        "swing": "mixed",
+        "close_pos_20": 0.564,
+        "atr_pct": 6.17,
+        "atr_pct_rank_1y": 0.853,
+        "vol_state": "expanded",
+        "ud_vol_50d": 1.68,
+        "vol_10v50": 0.73,
+        "rvol": 2.4,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.7503,
+          "buy_hold_return": 0.2436,
+          "excess_vs_hold": -0.9939,
+          "beat_hold": false,
+          "n_trades": 83,
+          "win_rate": 0.373
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.0366,
+          "buy_hold_return": 0.2436,
+          "excess_vs_hold": -0.2802,
+          "beat_hold": false,
+          "n_trades": 9,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.6931,
+          "buy_hold_return": 0.2436,
+          "excess_vs_hold": 0.4494,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2436,
+          "excess_vs_hold": -0.2436,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.4933,
+          "buy_hold_return": 0.2436,
+          "excess_vs_hold": -0.7369,
+          "beat_hold": false,
+          "n_trades": 120,
+          "win_rate": 0.508
+        }
+      }
+    },
     "TFPM": {
       "ticker": "TFPM",
       "group": "Precious-metals miners & royalty",
@@ -10313,7 +11027,7 @@
         "vs_200dma": 0.057005,
         "vs_50dma": 0.159215,
         "tsmom_12m": 1,
-        "rank_universe": 0.235,
+        "rank_universe": 0.25,
         "rank_group": 0.188,
         "rs_126_vs_proxy": -0.045173
       },
@@ -10415,7 +11129,7 @@
         "vs_200dma": 0.236014,
         "vs_50dma": 0.025822,
         "tsmom_12m": 1,
-        "rank_universe": 0.522,
+        "rank_universe": 0.54,
         "rank_group": 0.55,
         "rs_126_vs_proxy": 0.270398
       },
@@ -10517,7 +11231,7 @@
         "vs_200dma": -0.036956,
         "vs_50dma": -0.008385,
         "tsmom_12m": 1,
-        "rank_universe": 0.148,
+        "rank_universe": 0.145,
         "rank_group": 0.158,
         "rs_126_vs_proxy": null
       },
@@ -10619,7 +11333,7 @@
         "vs_200dma": 0.13436,
         "vs_50dma": -0.014174,
         "tsmom_12m": 1,
-        "rank_universe": 0.687,
+        "rank_universe": 0.702,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.16969
       },
@@ -10721,7 +11435,7 @@
         "vs_200dma": 0.109433,
         "vs_50dma": -0.089624,
         "tsmom_12m": 1,
-        "rank_universe": 0.504,
+        "rank_universe": 0.524,
         "rank_group": 0.286,
         "rs_126_vs_proxy": -0.052006
       },
@@ -10823,7 +11537,7 @@
         "vs_200dma": 0.010489,
         "vs_50dma": -0.00892,
         "tsmom_12m": 1,
-        "rank_universe": 0.217,
+        "rank_universe": 0.234,
         "rank_group": 0.368,
         "rs_126_vs_proxy": null
       },
@@ -10884,6 +11598,108 @@
         }
       }
     },
+    "WCLD": {
+      "ticker": "WCLD",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 1753,
+      "first_date": "2019-09-06",
+      "last_date": "2026-08-27",
+      "close": 43.1,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.826,
+        "r2_vs_null_pct": 85,
+        "vr": 1.0653,
+        "cross_rate": 5.63,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 1.6546,
+        "macd_signal": 1.683,
+        "macd_hist": -0.0284,
+        "macd_hist_prev": -0.1854,
+        "rsi": 70.79,
+        "mfi": 70.82,
+        "vpvma": 2.888741,
+        "vpvma_signal": 1.23862
+      },
+      "momentum": {
+        "mom_12_1": 0.040493,
+        "mom_6_1": 0.273707,
+        "ret_12m": 0.264671,
+        "ret_3m": 0.412189,
+        "ret_1m": 0.215454,
+        "dist_52w_high": 0.0,
+        "dist_52w_low": 0.789124,
+        "vs_200dma": 0.351469,
+        "vs_50dma": 0.212596,
+        "tsmom_12m": 1,
+        "rank_universe": 0.21,
+        "rank_group": 0.333,
+        "rs_126_vs_proxy": 0.222219
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.0668,
+        "swing": "HH/HL",
+        "close_pos_20": 0.588,
+        "atr_pct": 3.18,
+        "atr_pct_rank_1y": 0.452,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.34,
+        "vol_10v50": 0.66,
+        "rvol": 1.18,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.2792,
+          "buy_hold_return": 0.7022,
+          "excess_vs_hold": -0.9814,
+          "beat_hold": false,
+          "n_trades": 71,
+          "win_rate": 0.338
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.3983,
+          "buy_hold_return": 0.7022,
+          "excess_vs_hold": -0.3039,
+          "beat_hold": false,
+          "n_trades": 8,
+          "win_rate": 0.25
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.7022,
+          "excess_vs_hold": -0.7022,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0509,
+          "buy_hold_return": 0.7022,
+          "excess_vs_hold": -0.6513,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "vpvma": {
+          "strategy_return": 0.9018,
+          "buy_hold_return": 0.7022,
+          "excess_vs_hold": 0.1995,
+          "beat_hold": true,
+          "n_trades": 110,
+          "win_rate": 0.555
+        }
+      }
+    },
     "WPM": {
       "ticker": "WPM",
       "group": "Precious-metals miners & royalty",
@@ -10925,7 +11741,7 @@
         "vs_200dma": 0.222157,
         "vs_50dma": 0.283917,
         "tsmom_12m": 1,
-        "rank_universe": 0.27,
+        "rank_universe": 0.29,
         "rank_group": 0.312,
         "rs_126_vs_proxy": 0.078928
       },
@@ -11027,7 +11843,7 @@
         "vs_200dma": 0.171548,
         "vs_50dma": -0.035777,
         "tsmom_12m": 1,
-        "rank_universe": 0.626,
+        "rank_universe": 0.645,
         "rank_group": 0.7,
         "rs_126_vs_proxy": 0.221667
       },
@@ -11088,6 +11904,108 @@
         }
       }
     },
+    "ZS": {
+      "ticker": "ZS",
+      "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
+      "proxy": "IGV",
+      "bars": 2124,
+      "first_date": "2018-03-16",
+      "last_date": "2026-08-27",
+      "close": 187.3,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.246,
+        "r2_vs_null_pct": 30,
+        "vr": 0.6289,
+        "cross_rate": 11.27,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 7.035,
+        "macd_signal": 8.1,
+        "macd_hist": -1.065,
+        "macd_hist_prev": -1.8511,
+        "rsi": 63.05,
+        "mfi": 57.75,
+        "vpvma": 156.357101,
+        "vpvma_signal": 92.983199
+      },
+      "momentum": {
+        "mom_12_1": -0.425545,
+        "mom_6_1": -0.081202,
+        "ret_12m": -0.300284,
+        "ret_3m": 0.440326,
+        "ret_1m": 0.218053,
+        "dist_52w_high": -0.443007,
+        "dist_52w_low": 0.586616,
+        "vs_200dma": 0.061208,
+        "vs_50dma": 0.211949,
+        "tsmom_12m": -1,
+        "rank_universe": 0.032,
+        "rank_group": 0.111,
+        "rs_126_vs_proxy": -0.116458
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": -0.1031,
+        "swing": "HH/HL",
+        "close_pos_20": 0.573,
+        "atr_pct": 4.85,
+        "atr_pct_rank_1y": 0.5,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.97,
+        "vol_10v50": 0.81,
+        "rvol": 1.46,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.3821,
+          "buy_hold_return": 4.6758,
+          "excess_vs_hold": -5.0578,
+          "beat_hold": false,
+          "n_trades": 84,
+          "win_rate": 0.476
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 3.5308,
+          "buy_hold_return": 4.6758,
+          "excess_vs_hold": -1.1449,
+          "beat_hold": false,
+          "n_trades": 7,
+          "win_rate": 0.571
+        },
+        "macd_rsi": {
+          "strategy_return": 4.2877,
+          "buy_hold_return": 4.6758,
+          "excess_vs_hold": -0.3881,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.667
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 4.6758,
+          "excess_vs_hold": -4.6758,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 2.6957,
+          "buy_hold_return": 4.6758,
+          "excess_vs_hold": -1.98,
+          "beat_hold": false,
+          "n_trades": 106,
+          "win_rate": 0.538
+        }
+      }
+    },
     "^FTSE": {
       "ticker": "^FTSE",
       "group": "Macro / benchmarks",
@@ -11129,7 +12047,7 @@
         "vs_200dma": 0.05384,
         "vs_50dma": 0.018977,
         "tsmom_12m": 1,
-        "rank_universe": 0.313,
+        "rank_universe": 0.331,
         "rank_group": 0.526,
         "rs_126_vs_proxy": null
       },
@@ -11231,7 +12149,7 @@
         "vs_200dma": 0.079668,
         "vs_50dma": 0.016169,
         "tsmom_12m": 1,
-        "rank_universe": 0.278,
+        "rank_universe": 0.298,
         "rank_group": 0.421,
         "rs_126_vs_proxy": null
       },
@@ -11333,7 +12251,7 @@
         "vs_200dma": -0.006245,
         "vs_50dma": 0.029825,
         "tsmom_12m": 1,
-        "rank_universe": 0.183,
+        "rank_universe": 0.177,
         "rank_group": 0.263,
         "rs_126_vs_proxy": null
       },
@@ -11435,7 +12353,7 @@
         "vs_200dma": 0.076041,
         "vs_50dma": 0.007018,
         "tsmom_12m": 1,
-        "rank_universe": 0.296,
+        "rank_universe": 0.315,
         "rank_group": 0.474,
         "rs_126_vs_proxy": null
       },
@@ -11537,7 +12455,7 @@
         "vs_200dma": 0.159661,
         "vs_50dma": -0.036547,
         "tsmom_12m": 1,
-        "rank_universe": 0.757,
+        "rank_universe": 0.766,
         "rank_group": 0.947,
         "rs_126_vs_proxy": null
       },
@@ -11639,7 +12557,7 @@
         "vs_200dma": 0.130051,
         "vs_50dma": -0.016226,
         "tsmom_12m": 1,
-        "rank_universe": 0.557,
+        "rank_universe": 0.573,
         "rank_group": 0.842,
         "rs_126_vs_proxy": null
       },
@@ -11741,7 +12659,7 @@
         "vs_200dma": 0.199078,
         "vs_50dma": -0.064591,
         "tsmom_12m": 1,
-        "rank_universe": 0.774,
+        "rank_universe": 0.782,
         "rank_group": 1.0,
         "rs_126_vs_proxy": null
       },
@@ -11843,7 +12761,7 @@
         "vs_200dma": -0.174094,
         "vs_50dma": -0.082663,
         "tsmom_12m": 1,
-        "rank_universe": 0.417,
+        "rank_universe": 0.435,
         "rank_group": 0.737,
         "rs_126_vs_proxy": null
       },
@@ -72678,6 +73596,19 @@
     "ladder": {
       "rows": [
         {
+          "t": "CIBR",
+          "name": "Cybersecurity",
+          "side": "offense",
+          "r21": 0.049059,
+          "r63": 0.14262,
+          "r126": 0.497425,
+          "blend": 0.320023,
+          "third": "top",
+          "third21": "bottom",
+          "streak": 72,
+          "twin_of": null
+        },
+        {
           "t": "ARTY",
           "name": "AI basket",
           "side": "offense",
@@ -72685,9 +73616,9 @@
           "r63": 0.052383,
           "r126": 0.427201,
           "blend": 0.239792,
-          "third": "top",
+          "third": "mid",
           "third21": "mid",
-          "streak": 20,
+          "streak": 0,
           "twin_of": null
         },
         {
@@ -72700,7 +73631,7 @@
           "blend": 0.18362,
           "third": "top",
           "third21": "mid",
-          "streak": 23,
+          "streak": 4,
           "twin_of": null
         },
         {
@@ -72725,7 +73656,7 @@
           "r126": 0.304135,
           "blend": 0.118709,
           "third": "bottom",
-          "third21": "bottom",
+          "third21": "mid",
           "streak": 5,
           "twin_of": null
         },
@@ -72765,7 +73696,7 @@
           "blend": 0.081076,
           "third": "top",
           "third21": "top",
-          "streak": 7,
+          "streak": 6,
           "twin_of": null
         },
         {
@@ -72903,298 +73834,305 @@
     },
     "receipts": {
       "000660.KS": {
-        "rank": 0.959184,
+        "rank": 0.962264,
         "tier": "top",
-        "streak": 205,
-        "sinceRet": 2.027923,
-        "entryIdx": 2317
+        "streak": 219,
+        "sinceRet": 3.078576,
+        "entryIdx": 2303
       },
       "005930.KS": {
-        "rank": 0.918367,
+        "rank": 0.924528,
         "tier": "top",
-        "streak": 123,
-        "sinceRet": 0.344594,
-        "entryIdx": 2399
+        "streak": 130,
+        "sinceRet": 0.379959,
+        "entryIdx": 2392
       },
       "AAOI": {
-        "rank": 0.897959,
+        "rank": 0.90566,
         "tier": "top",
         "streak": 104,
         "sinceRet": 0.335368,
         "entryIdx": 2418
       },
       "AEHR": {
-        "rank": 0.887755,
+        "rank": 0.896226,
         "tier": "top",
-        "streak": 108,
-        "sinceRet": 1.325083,
-        "entryIdx": 2414
+        "streak": 116,
+        "sinceRet": 1.420186,
+        "entryIdx": 2406
       },
       "AEM": {
-        "rank": 0.265306,
+        "rank": 0.292453,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AG": {
-        "rank": 0.693878,
+        "rank": 0.716981,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AGI": {
-        "rank": 0.234694,
+        "rank": 0.264151,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ALAB": {
-        "rank": 0.785714,
-        "tier": "mid",
-        "streak": 0,
-        "sinceRet": null,
-        "entryIdx": null
+        "rank": 0.801887,
+        "tier": "top",
+        "streak": 39,
+        "sinceRet": -0.285714,
+        "entryIdx": 2483
       },
       "AMD": {
-        "rank": 0.857143,
+        "rank": 0.867925,
         "tier": "top",
-        "streak": 68,
-        "sinceRet": 0.074512,
-        "entryIdx": 2454
+        "streak": 69,
+        "sinceRet": 0.161526,
+        "entryIdx": 2453
       },
       "AMSC": {
-        "rank": 0.091837,
+        "rank": 0.09434,
         "tier": "bottom",
-        "streak": 21,
-        "sinceRet": 0.106982,
-        "entryIdx": 2501
+        "streak": 18,
+        "sinceRet": -0.048403,
+        "entryIdx": 2504
       },
       "AOSL": {
-        "rank": 0.204082,
+        "rank": 0.235849,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ASML": {
-        "rank": 0.795918,
-        "tier": "mid",
-        "streak": 0,
-        "sinceRet": null,
-        "entryIdx": null
+        "rank": 0.811321,
+        "tier": "top",
+        "streak": 8,
+        "sinceRet": -0.073006,
+        "entryIdx": 2514
       },
       "AU": {
-        "rank": 0.653061,
+        "rank": 0.679245,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AVGO": {
-        "rank": 0.44898,
+        "rank": 0.462264,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AXTI": {
-        "rank": 0.989796,
+        "rank": 0.990566,
         "tier": "top",
-        "streak": 190,
-        "sinceRet": 6.298992,
-        "entryIdx": 2332
+        "streak": 192,
+        "sinceRet": 5.447082,
+        "entryIdx": 2330
       },
       "BE": {
-        "rank": 0.94898,
+        "rank": 0.95283,
         "tier": "top",
         "streak": 276,
         "sinceRet": 7.114913,
         "entryIdx": 2246
       },
       "BMNR": {
-        "rank": 0.010204,
+        "rank": 0.009434,
         "tier": "bottom",
         "streak": 19,
         "sinceRet": 0.441551,
         "entryIdx": 2503
       },
       "BOTZ": {
-        "rank": 0.132653,
+        "rank": 0.169811,
         "tier": "bottom",
-        "streak": 8,
-        "sinceRet": -0.057906,
-        "entryIdx": 2514
+        "streak": 3,
+        "sinceRet": 0.01078,
+        "entryIdx": 2519
       },
       "BTC-USD": {
-        "rank": 0.05102,
+        "rank": 0.056604,
         "tier": "bottom",
-        "streak": 171,
-        "sinceRet": -0.108264,
-        "entryIdx": 2351
+        "streak": 134,
+        "sinceRet": 0.140974,
+        "entryIdx": 2388
       },
       "BZ=F": {
-        "rank": 0.397959,
+        "rank": 0.415094,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CAT": {
-        "rank": 0.755102,
+        "rank": 0.773585,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CDE": {
-        "rank": 0.612245,
+        "rank": 0.641509,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CIEN": {
-        "rank": 0.928571,
+        "rank": 0.933962,
         "tier": "top",
         "streak": 125,
         "sinceRet": 0.158675,
         "entryIdx": 2397
       },
       "COHR": {
-        "rank": 0.846939,
+        "rank": 0.858491,
         "tier": "top",
         "streak": 110,
         "sinceRet": 0.160628,
         "entryIdx": 2412
       },
       "CPER": {
-        "rank": 0.214286,
+        "rank": 0.245283,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CRWD": {
-        "rank": 0.591837,
+        "rank": 0.622642,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CRWV": {
-        "rank": 0.081633,
+        "rank": 0.084906,
         "tier": "bottom",
-        "streak": 47,
-        "sinceRet": -0.209183,
-        "entryIdx": 2475
+        "streak": 39,
+        "sinceRet": 0.076641,
+        "entryIdx": 2483
       },
       "DDOG": {
-        "rank": 0.673469,
+        "rank": 0.698113,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "EQIX": {
-        "rank": 0.438776,
+        "rank": 0.45283,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ETH-USD": {
-        "rank": 0.030612,
+        "rank": 0.028302,
         "tier": "bottom",
         "streak": 54,
         "sinceRet": 0.507995,
         "entryIdx": 2468
       },
       "ETHA": {
-        "rank": 0.040816,
+        "rank": 0.037736,
         "tier": "bottom",
         "streak": 54,
         "sinceRet": 0.51873,
         "entryIdx": 2468
       },
       "EXK": {
-        "rank": 0.469388,
+        "rank": 0.5,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "FLEX": {
-        "rank": 0.806122,
+        "rank": 0.820755,
         "tier": "top",
-        "streak": 2,
-        "sinceRet": 0.023524,
-        "entryIdx": 2520
+        "streak": 4,
+        "sinceRet": 0.012404,
+        "entryIdx": 2518
       },
       "FNV": {
-        "rank": 0.428571,
+        "rank": 0.443396,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "FTNT": {
+        "rank": 0.518868,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GC=F": {
-        "rank": 0.357143,
+        "rank": 0.377358,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GEV": {
-        "rank": 0.510204,
+        "rank": 0.54717,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GLD": {
-        "rank": 0.346939,
+        "rank": 0.367925,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GLW": {
-        "rank": 0.816327,
+        "rank": 0.830189,
         "tier": "top",
-        "streak": 33,
-        "sinceRet": -0.165638,
-        "entryIdx": 2489
+        "streak": 95,
+        "sinceRet": -0.126482,
+        "entryIdx": 2427
       },
       "GOLD": {
-        "rank": 0.704082,
+        "rank": 0.726415,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "HIMS": {
-        "rank": 0.020408,
+        "rank": 0.018868,
         "tier": "bottom",
-        "streak": 130,
-        "sinceRet": 0.908509,
-        "entryIdx": 2392
+        "streak": 123,
+        "sinceRet": 0.885588,
+        "entryIdx": 2399
       },
       "HIMX": {
-        "rank": 0.418367,
+        "rank": 0.433962,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "HL": {
-        "rank": 0.836735,
+        "rank": 0.849057,
         "tier": "top",
-        "streak": 2,
-        "sinceRet": -0.010327,
-        "entryIdx": 2520
+        "streak": 14,
+        "sinceRet": 0.228487,
+        "entryIdx": 2508
       },
       "HUBS": {
         "rank": 0.0,
@@ -73204,266 +74142,294 @@
         "entryIdx": 2278
       },
       "HYG": {
-        "rank": 0.173469,
-        "tier": "bottom",
-        "streak": 82,
-        "sinceRet": 0.013906,
-        "entryIdx": 2440
+        "rank": 0.207547,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
       },
       "IBIT": {
-        "rank": 0.061224,
+        "rank": 0.066038,
         "tier": "bottom",
-        "streak": 140,
-        "sinceRet": 0.231579,
-        "entryIdx": 2382
+        "streak": 134,
+        "sinceRet": 0.140878,
+        "entryIdx": 2388
       },
       "IFNNY": {
-        "rank": 0.642857,
+        "rank": 0.669811,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "IGPT": {
-        "rank": 0.663265,
+        "rank": 0.688679,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "INTC": {
-        "rank": 0.938776,
+        "rank": 0.943396,
         "tier": "top",
-        "streak": 72,
-        "sinceRet": -0.238851,
-        "entryIdx": 2450
+        "streak": 73,
+        "sinceRet": -0.266439,
+        "entryIdx": 2449
       },
       "INVH": {
-        "rank": 0.122449,
+        "rank": 0.150943,
         "tier": "bottom",
-        "streak": 273,
-        "sinceRet": -0.000224,
-        "entryIdx": 2249
+        "streak": 103,
+        "sinceRet": 0.215116,
+        "entryIdx": 2419
       },
       "IREN": {
-        "rank": 0.734694,
+        "rank": 0.754717,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "JPM": {
-        "rank": 0.377551,
+        "rank": 0.396226,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "KGC": {
-        "rank": 0.520408,
+        "rank": 0.556604,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "LITE": {
-        "rank": 0.969388,
+        "rank": 0.971698,
         "tier": "top",
         "streak": 307,
         "sinceRet": 10.527499,
         "entryIdx": 2215
       },
       "LQD": {
-        "rank": 0.163265,
+        "rank": 0.198113,
         "tier": "bottom",
-        "streak": 82,
-        "sinceRet": -0.003669,
-        "entryIdx": 2440
+        "streak": 2,
+        "sinceRet": -0.000749,
+        "entryIdx": 2520
       },
       "LRCX": {
-        "rank": 0.867347,
+        "rank": 0.877358,
         "tier": "top",
         "streak": 94,
         "sinceRet": 0.149372,
         "entryIdx": 2428
       },
       "MPWR": {
-        "rank": 0.683673,
+        "rank": 0.707547,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "MRAAY": {
-        "rank": 0.877551,
+        "rank": 0.886792,
         "tier": "top",
         "streak": 44,
         "sinceRet": -0.371076,
         "entryIdx": 2478
       },
       "MRNA": {
-        "rank": 0.632653,
+        "rank": 0.660377,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "MRVL": {
-        "rank": 0.826531,
+        "rank": 0.839623,
         "tier": "top",
-        "streak": 39,
-        "sinceRet": -0.000487,
-        "entryIdx": 2483
+        "streak": 40,
+        "sinceRet": -0.098804,
+        "entryIdx": 2482
       },
       "MU": {
-        "rank": 0.979592,
+        "rank": 0.981132,
         "tier": "top",
         "streak": 187,
         "sinceRet": 3.07938,
         "entryIdx": 2335
       },
       "NBIS": {
-        "rank": 0.908163,
+        "rank": 0.915094,
         "tier": "top",
         "streak": 101,
         "sinceRet": 0.965907,
         "entryIdx": 2421
       },
       "NEM": {
-        "rank": 0.479592,
+        "rank": 0.509434,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "NET": {
+        "rank": 0.471698,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NOK": {
-        "rank": 0.77551,
+        "rank": 0.792453,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NOW": {
-        "rank": 0.071429,
+        "rank": 0.075472,
         "tier": "bottom",
-        "streak": 213,
-        "sinceRet": -0.331917,
-        "entryIdx": 2309
+        "streak": 203,
+        "sinceRet": -0.291324,
+        "entryIdx": 2319
       },
       "NVDA": {
-        "rank": 0.244898,
+        "rank": 0.273585,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NVO": {
-        "rank": 0.102041,
+        "rank": 0.103774,
         "tier": "bottom",
         "streak": 399,
         "sinceRet": -0.428565,
         "entryIdx": 2123
       },
       "NVTS": {
-        "rank": 0.255102,
+        "rank": 0.283019,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "OKTA": {
+        "rank": 0.490566,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PAAS": {
-        "rank": 0.540816,
+        "rank": 0.575472,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PANW": {
-        "rank": 0.602041,
+        "rank": 0.632075,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PENG": {
-        "rank": 0.72449,
+        "rank": 0.745283,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "POWI": {
-        "rank": 0.285714,
+        "rank": 0.311321,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PYPL": {
-        "rank": 0.112245,
+        "rank": 0.113208,
         "tier": "bottom",
         "streak": 236,
         "sinceRet": -0.090115,
         "entryIdx": 2286
       },
+      "QLYS": {
+        "rank": 0.160377,
+        "tier": "bottom",
+        "streak": 6,
+        "sinceRet": -0.053621,
+        "entryIdx": 2516
+      },
       "QTUM": {
-        "rank": 0.530612,
+        "rank": 0.566038,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "RDDT": {
-        "rank": 0.336735,
+        "rank": 0.358491,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "RGLD": {
-        "rank": 0.408163,
+        "rank": 0.424528,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ROBT": {
-        "rank": 0.193878,
+        "rank": 0.226415,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "S": {
+        "rank": 0.122642,
         "tier": "bottom",
-        "streak": 4,
-        "sinceRet": -0.012777,
-        "entryIdx": 2518
+        "streak": 5,
+        "sinceRet": -0.020535,
+        "entryIdx": 2517
       },
       "SGDM": {
-        "rank": 0.459184,
+        "rank": 0.481132,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SHOP": {
-        "rank": 0.183673,
-        "tier": "bottom",
-        "streak": 8,
-        "sinceRet": 0.011033,
-        "entryIdx": 2514
+        "rank": 0.216981,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
       },
       "SI=F": {
-        "rank": 0.561224,
+        "rank": 0.59434,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SIEGY": {
-        "rank": 0.27551,
+        "rank": 0.301887,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SIL": {
-        "rank": 0.55102,
+        "rank": 0.584906,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
@@ -73477,119 +74443,140 @@
         "entryIdx": 2410
       },
       "SSRM": {
-        "rank": 0.765306,
+        "rank": 0.783019,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "TENB": {
+        "rank": 0.132075,
+        "tier": "bottom",
+        "streak": 6,
+        "sinceRet": -0.045918,
+        "entryIdx": 2516
+      },
       "TFPM": {
-        "rank": 0.367347,
+        "rank": 0.386792,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "THNQ": {
-        "rank": 0.489796,
+        "rank": 0.528302,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "TLT": {
-        "rank": 0.153061,
+        "rank": 0.188679,
         "tier": "bottom",
-        "streak": 101,
-        "sinceRet": -0.025397,
-        "entryIdx": 2421
+        "streak": 82,
+        "sinceRet": -0.012079,
+        "entryIdx": 2440
       },
       "TSM": {
-        "rank": 0.622449,
+        "rank": 0.650943,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "TXN": {
-        "rank": 0.581633,
+        "rank": 0.613208,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "UUP": {
-        "rank": 0.22449,
+        "rank": 0.254717,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "WCLD": {
+        "rank": 0.141509,
+        "tier": "bottom",
+        "streak": 186,
+        "sinceRet": 0.182247,
+        "entryIdx": 2336
+      },
       "WPM": {
-        "rank": 0.306122,
+        "rank": 0.330189,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "WTAI": {
-        "rank": 0.5,
+        "rank": 0.537736,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "ZS": {
+        "rank": 0.04717,
+        "tier": "bottom",
+        "streak": 104,
+        "sinceRet": 0.240784,
+        "entryIdx": 2418
+      },
       "^FTSE": {
-        "rank": 0.326531,
+        "rank": 0.349057,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^GSPC": {
-        "rank": 0.295918,
+        "rank": 0.320755,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^HSI": {
-        "rank": 0.142857,
+        "rank": 0.179245,
         "tier": "bottom",
-        "streak": 73,
-        "sinceRet": -0.027871,
-        "entryIdx": 2449
+        "streak": 37,
+        "sinceRet": 0.09176,
+        "entryIdx": 2485
       },
       "^IXIC": {
-        "rank": 0.316327,
+        "rank": 0.339623,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^KS11": {
-        "rank": 0.714286,
+        "rank": 0.735849,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^N225": {
-        "rank": 0.571429,
+        "rank": 0.603774,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^SOX": {
-        "rank": 0.744898,
+        "rank": 0.764151,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^VIX": {
-        "rank": 0.387755,
+        "rank": 0.40566,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,

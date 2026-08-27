@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-27T03:02:42Z",
+  "generated_at": "2026-08-27T20:16:19Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
-  "count": 125,
+  "count": 134,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -365,6 +365,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "CIBR",
+      "date": "2026-08-27",
+      "open": 96.845,
+      "high": 100.97,
+      "low": 96.655,
+      "close": 100.79,
+      "adj_close": 100.79,
+      "volume": 1946098,
+      "spot_price": 100.79,
+      "spot_captured_at": "2026-08-27T20:16:01Z",
+      "currency": "USD",
+      "dma200": 76.7608,
+      "dma200_n": 200
+    },
+    {
       "ticker": "CIEN",
       "date": "2026-08-26",
       "open": 387.23,
@@ -602,6 +617,21 @@
       "spot_captured_at": "2026-08-27T03:01:14Z",
       "currency": "USD",
       "dma200": 230.3188,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "FTNT",
+      "date": "2026-08-27",
+      "open": 160.24,
+      "high": 173.8899,
+      "low": 159.875,
+      "close": 172.78,
+      "adj_close": 172.78,
+      "volume": 5666518,
+      "spot_price": 172.78,
+      "spot_captured_at": "2026-08-27T20:16:08Z",
+      "currency": "USD",
+      "dma200": 107.6923,
       "dma200_n": 200
     },
     {
@@ -1145,6 +1175,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "NET",
+      "date": "2026-08-27",
+      "open": 290.29,
+      "high": 309.49,
+      "low": 291.0,
+      "close": 308.27,
+      "adj_close": 308.27,
+      "volume": 4204651,
+      "spot_price": 308.27,
+      "spot_captured_at": "2026-08-27T20:16:11Z",
+      "currency": "USD",
+      "dma200": 220.3508,
+      "dma200_n": 200
+    },
+    {
       "ticker": "NLST",
       "date": "2026-08-26",
       "open": 5.09,
@@ -1235,6 +1280,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "OKTA",
+      "date": "2026-08-27",
+      "open": 166.15,
+      "high": 174.85,
+      "low": 156.5,
+      "close": 172.91,
+      "adj_close": 172.91,
+      "volume": 16253441,
+      "spot_price": 172.91,
+      "spot_captured_at": "2026-08-27T20:16:09Z",
+      "currency": "USD",
+      "dma200": 99.3258,
+      "dma200_n": 200
+    },
+    {
       "ticker": "PAAS",
       "date": "2026-08-26",
       "open": 52.72,
@@ -1307,6 +1367,21 @@
       "spot_captured_at": "2026-08-27T03:01:40Z",
       "currency": "USD",
       "dma200": 51.3729,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "QLYS",
+      "date": "2026-08-27",
+      "open": 182.02,
+      "high": 190.99,
+      "low": 180.0,
+      "close": 188.59,
+      "adj_close": 188.59,
+      "volume": 931012,
+      "spot_price": 188.59,
+      "spot_captured_at": "2026-08-27T20:16:14Z",
+      "currency": "USD",
+      "dma200": 123.758,
       "dma200_n": 200
     },
     {
@@ -1397,6 +1472,21 @@
       "spot_captured_at": "2026-08-27T03:02:07Z",
       "currency": "USD",
       "dma200": 53.074,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "S",
+      "date": "2026-08-27",
+      "open": 21.8,
+      "high": 22.945,
+      "low": 21.42,
+      "close": 22.71,
+      "adj_close": 22.71,
+      "volume": 17025782,
+      "spot_price": 22.71,
+      "spot_captured_at": "2026-08-27T20:16:06Z",
+      "currency": "USD",
+      "dma200": 15.9099,
       "dma200_n": 200
     },
     {
@@ -1610,6 +1700,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "TENB",
+      "date": "2026-08-27",
+      "open": 36.35,
+      "high": 38.36,
+      "low": 35.87,
+      "close": 37.62,
+      "adj_close": 37.62,
+      "volume": 8230713,
+      "spot_price": 37.62,
+      "spot_captured_at": "2026-08-27T20:16:13Z",
+      "currency": "USD",
+      "dma200": 25.8039,
+      "dma200_n": 200
+    },
+    {
       "ticker": "TFPM",
       "date": "2026-08-26",
       "open": 35.1,
@@ -1715,6 +1820,21 @@
       "dma200_n": 9
     },
     {
+      "ticker": "WCLD",
+      "date": "2026-08-27",
+      "open": 41.39,
+      "high": 43.21,
+      "low": 41.33,
+      "close": 43.1,
+      "adj_close": 43.1,
+      "volume": 1053059,
+      "spot_price": 43.1,
+      "spot_captured_at": "2026-08-27T20:16:03Z",
+      "currency": "USD",
+      "dma200": 31.8912,
+      "dma200_n": 200
+    },
+    {
       "ticker": "WOLF",
       "date": "2026-08-26",
       "open": 25.5,
@@ -1757,6 +1877,21 @@
       "spot_captured_at": "2026-08-27T03:02:02Z",
       "currency": "USD",
       "dma200": 34.8513,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "ZS",
+      "date": "2026-08-27",
+      "open": 179.12,
+      "high": 189.91,
+      "low": 177.04,
+      "close": 187.3,
+      "adj_close": 187.3,
+      "volume": 3972946,
+      "spot_price": 187.3,
+      "spot_captured_at": "2026-08-27T20:16:05Z",
+      "currency": "USD",
+      "dma200": 176.4971,
       "dma200_n": 200
     },
     {
