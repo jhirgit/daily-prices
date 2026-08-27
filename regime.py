@@ -750,6 +750,15 @@ REG_ETFS = [
     {"t": "QQQ", "name": "Nasdaq 100", "side": "offense"},
     {"t": "IWM", "name": "Small caps", "side": "offense"},
     {"t": "IGV", "name": "Software", "side": "offense"},
+    # Cybersecurity as its OWN sled, deliberately NOT a `grp` twin of IGV. The
+    # grp mechanism is for near-duplicates (SMH/SOXX, GDX/GDXJ/RING); cybersec
+    # vs general software is an economic distinction, the same call already made
+    # for SLV vs SILJ. Added 8/27/26, when IGV +7.8% could not be told apart
+    # from CIBR +7.7% by an engine carrying only one software row -- and the
+    # single-name prints under it (CRWD +20, OKTA +29, PANW +14) were the whole
+    # story. NOTE: adding a row re-thirds the WHOLE field, so streaks on every
+    # other sled reset relative to the pre-8/27 series. That is intended.
+    {"t": "CIBR", "name": "Cybersecurity", "side": "offense"},
     {"t": "ARTY", "name": "AI basket", "side": "offense"},
     {"t": "DTCR", "name": "Data centers", "side": "offense"},
     {"t": "DRAM", "name": "Memory", "side": "offense"},

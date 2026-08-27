@@ -99,6 +99,28 @@ DDOG       # Datadog
 CRWD       # CrowdStrike
 PANW       # Palo Alto Networks
 
+# --- SaaS & cybersecurity software sleds + peers (added 8/27/26, not held) ---
+# WHY: the rotation ladder carries ONE software row (IGV), and IGV is megacap-
+# heavy (MSFT/ORCL/CRM), so it cannot separate "high-multiple SaaS re-rating"
+# from "cybersecurity re-rating" from "megacap software drift". On 8/27/26 the
+# three baskets moved within 7 bps of each other (IGV +7.79 / CIBR +7.72 /
+# WCLD +7.76) while the single-name prints (CRWD, OKTA, PANW) added 6-21pp on
+# top -- a distinction the engine could not see with IGV alone.
+# Header wording is load-bearing: technicals.GROUP_PROXY matches /software/ and
+# assigns proxy IGV. Do NOT add the words network/optic/memory/storage/broad/
+# thematic/crypto here -- earlier patterns in that list would win and mis-proxy
+# the whole block to SMH or SPY.
+# CYBR is deliberately absent: delisted into the PANW acquisition (Yahoo 404).
+CIBR       # cybersecurity ETF (First Trust Nasdaq) - the missing ladder sled
+WCLD       # high-multiple SaaS ETF (WisdomTree Cloud) - IGV without the megacaps
+ZS         # Zscaler
+S          # SentinelOne (purest read on whether CRWD is taking share)
+FTNT       # Fortinet (the other firewall incumbent vs PANW)
+OKTA       # Okta (identity)
+NET        # Cloudflare
+TENB       # Tenable
+QLYS       # Qualys
+
 # --- Other equities ---
 JPM        # JPMorgan
 NVO        # Novo Nordisk (ADR)
