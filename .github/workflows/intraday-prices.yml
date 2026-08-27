@@ -14,17 +14,22 @@ on:
     # off-peak minute marks: GitHub skips/delays busy slots like :00/:20/:40.
     # Ends at 19:43 UTC (3:43pm EDT) so the last snapshot freezes ~15 min
     # before the close - a stable pre-close mark until the EOD job publishes.
-    # NOTE: this cron can go silent while the workflow still reports "active"
-    # and the run queue is empty - GitHub drops the schedule registration and
-    # does not restore it on its own. Seen 2026-08-27 after the 8/26-8/27
-    # Actions incidents: no scheduled run fired repo-wide for ~12h.
-    # Pushing a commit does NOT re-register it - a data commit landed 03:02
-    # UTC and the next four slots (11:30 overnight, 13:03/13:23/13:43 here)
-    # all still missed. Recovery, in order: (1) gh workflow run
-    # intraday-prices.yml to backfill the data immediately, (2) gh workflow
-    # disable then enable to force re-registration, (3) edit the cron: line
-    # below and push. Confirm recovery by seeing a run whose event is
-    # "schedule" - the "active" state stays green throughout and proves nothing.
+    # NOTE: this cron can go silent while the workflow still reports "active",
+    # the run queue is empty, and workflow_dispatch works perfectly - GitHub
+    # just stops creating scheduled runs. Delivery degrades progressively
+    # before it stops: ~15 scheduled runs/day on 8/24-8/25, 6 on 8/26, 1 on
+    # 8/27, then 12h+ of nothing.
+    # Nothing repo-side fixes this. Disproven on 2026-08-27, in this order:
+    #   - pushing a commit to main (data commit at 03:02 UTC, next four slots
+    #     still missed) - so the old "any commit re-registers it" advice is wrong
+    #   - gh workflow disable + enable
+    #   - editing this file and pushing
+    # After all three, the 15:03 and 15:23 slots still never fired. Context was
+    # the 8/26-8/27 Actions incidents plus an unresolved GitHub billing
+    # incident; cause was never confirmed as repo-side.
+    # So: don't chase re-registration. Check githubstatus.com, and keep the
+    # data fresh with `gh workflow run intraday-prices.yml` - dispatch has
+    # never failed - until scheduled delivery resumes on GitHub's side.
     - cron: "3,23,43 13-19 * * 1-5"
 
 permissions:
