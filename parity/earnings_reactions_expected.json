@@ -1,0 +1,54 @@
+{
+  "source": "backlog #26 (_ENGINEERING-BACKLOG-2026-08-27-r04.md), 'The missing idea' bullet",
+  "why": "#26 published reaction numbers for five prints before any emitter existed. They are frozen here as an oracle: they pinned down the day-0 convention (base = last settled session STRICTLY BEFORE the print date) empirically, since anchoring on the print-date close instead reproduces none of the fourteen. Any future edit to the convention that changes these numbers is a silent regression, and --verify is what makes it loud.",
+  "convention": "base = last session < print_date; dN = close N sessions after base; return = (close/base - 1) * 100",
+  "tolerance_pp": 0.05,
+  "note_on_benchmark": "The d5_vs_smh column is #26's own, which benchmarked EVERY print against SMH. The shipped emitter benchmarks against the per-name GROUP_PROXY (Jake's decision, 2026-08-27), so for DDOG (IGV) and RDDT (SPY) the DISPLAYED excess will differ from this column by design. SMH excess is asserted here anyway to prove the divergence is a deliberate benchmark change and not an arithmetic drift.",
+  "cases": [
+    {
+      "ticker": "AEHR",
+      "date": "2026-07-15",
+      "verdict_label": "AVOID STRENGTHENED",
+      "d1": 21.9,
+      "d5": 37.4,
+      "d10": -2.8,
+      "d5_vs_smh": 40.1
+    },
+    {
+      "ticker": "NBIS",
+      "date": "2026-08-12",
+      "verdict_label": "BEAT — GATES 2+4 FAIL",
+      "d1": 34.1,
+      "d5": 28.6,
+      "d10": 14.9,
+      "d5_vs_smh": 29.1
+    },
+    {
+      "ticker": "DDOG",
+      "date": "2026-08-06",
+      "verdict_label": "BEAT + RAISE — 1 CUSTOMER CUT",
+      "d1": -19.0,
+      "d5": -14.9,
+      "d10": -17.5,
+      "d5_vs_smh": -17.6
+    },
+    {
+      "ticker": "RDDT",
+      "date": "2026-07-30",
+      "verdict_label": "BULL NUMBERS — TELL DIVERGED",
+      "d1": 0.0,
+      "d5": -12.8,
+      "d10": -13.8,
+      "d5_vs_smh": -25.8
+    },
+    {
+      "ticker": "AOSL",
+      "date": "2026-08-12",
+      "verdict_label": "BRANCH A FIRED — GUIDE BROKE IT",
+      "d1": 4.1,
+      "d5": -18.5,
+      "d10": null,
+      "d5_vs_smh": null
+    }
+  ]
+}
