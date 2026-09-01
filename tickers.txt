@@ -130,6 +130,19 @@ HIMS       # Hims & Hers
 RDDT       # Reddit
 SPCX       # SpaceX (IPO 2026-06-12)
 
+# --- Mega-cap platforms / hyperscalers (coverage init 9/1/26, not held) ---
+# Coverage-only: the AI-compute DEMAND / capex side — hyperscaler capex funds the
+# NVDA / TSM / EQIX / power cohort, so these anchor the Jin capex adjudication.
+# Header wording is LOAD-BEARING (see the software block): it deliberately carries
+# NONE of the technicals.GROUP_PROXY trigger words (semiconduct / memory / storage /
+# optic / network / "ai compute" / datacenter / power / energy / miner / royalty /
+# metals / software / macro / benchmark / broad / thematic / crypto), so all four
+# fall to the SPY default. Do NOT add any of those words to this header.
+GOOGL      # Alphabet (Search + ads, Google Cloud, TPU capex)
+AAPL       # Apple (hardware + Services; on-device AI)
+AMZN       # Amazon (AWS value driver + retail/ads; heavy AI capex)
+META       # Meta (ad core funding AI-infra capex + Reality Labs)
+
 # --- Real estate / REITs ---
 INVH       # Invitation Homes (single-family rental REIT; state file + DCF 8/21)
 EQIX       # Equinix (data-center REIT; state file + DCF 8/21)
