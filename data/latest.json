@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-02T04:07:25Z",
+  "generated_at": "2026-09-02T13:38:41Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
-  "count": 139,
+  "count": 166,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -215,6 +215,51 @@
       "dma200_n": 200
     },
     {
+      "ticker": "APLD",
+      "date": "2026-09-02",
+      "open": 23.954,
+      "high": 24.17,
+      "low": 23.83,
+      "close": 24.17,
+      "adj_close": 24.17,
+      "volume": 871871,
+      "spot_price": 24.17,
+      "spot_captured_at": "2026-09-02T13:38:33Z",
+      "currency": "USD",
+      "dma200": 32.1685,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "ARKX",
+      "date": "2026-09-02",
+      "open": 31.97,
+      "high": 31.87,
+      "low": 31.73,
+      "close": 31.73,
+      "adj_close": 31.73,
+      "volume": 15488,
+      "spot_price": 31.73,
+      "spot_captured_at": "2026-09-02T13:38:16Z",
+      "currency": "USD",
+      "dma200": 31.9722,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "ARQQ",
+      "date": "2026-09-02",
+      "open": 18.6,
+      "high": 18.78,
+      "low": 18.6,
+      "close": 18.725,
+      "adj_close": 18.725,
+      "volume": 5903,
+      "spot_price": 18.725,
+      "spot_captured_at": "2026-09-02T13:38:25Z",
+      "currency": "USD",
+      "dma200": 19.552,
+      "dma200_n": 200
+    },
+    {
       "ticker": "ARTY",
       "date": "2026-09-01",
       "open": 73.62,
@@ -395,6 +440,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "CEG",
+      "date": "2026-09-02",
+      "open": 280.31,
+      "high": 280.35,
+      "low": 277.88,
+      "close": 279.3,
+      "adj_close": 279.3,
+      "volume": 72693,
+      "spot_price": 279.3,
+      "spot_captured_at": "2026-09-02T13:38:06Z",
+      "currency": "USD",
+      "dma200": 296.7736,
+      "dma200_n": 200
+    },
+    {
       "ticker": "CIBR",
       "date": "2026-09-01",
       "open": 98.83,
@@ -437,6 +497,21 @@
       "spot_captured_at": "2026-09-02T04:05:05Z",
       "currency": "USD",
       "dma200": 274.4527,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "CORZ",
+      "date": "2026-09-02",
+      "open": 15.88,
+      "high": 16.065,
+      "low": 15.79,
+      "close": 16.0,
+      "adj_close": 16.0,
+      "volume": 138988,
+      "spot_price": 16.0,
+      "spot_captured_at": "2026-09-02T13:38:35Z",
+      "currency": "USD",
+      "dma200": 19.6591,
       "dma200_n": 200
     },
     {
@@ -590,6 +665,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "ETN",
+      "date": "2026-09-02",
+      "open": 397.99,
+      "high": 390.65,
+      "low": 386.04,
+      "close": 388.12,
+      "adj_close": 388.12,
+      "volume": 51385,
+      "spot_price": 388.12,
+      "spot_captured_at": "2026-09-02T13:38:10Z",
+      "currency": "USD",
+      "dma200": 380.4568,
+      "dma200_n": 200
+    },
+    {
       "ticker": "EWY",
       "date": "2026-09-01",
       "open": 178.16,
@@ -632,6 +722,21 @@
       "spot_captured_at": "2026-09-02T04:05:23Z",
       "currency": "USD",
       "dma200": 94.1133,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "FN",
+      "date": "2026-09-02",
+      "open": 410.4,
+      "high": 399.5732,
+      "low": 394.2,
+      "close": 396.89,
+      "adj_close": 396.89,
+      "volume": 30638,
+      "spot_price": 396.89,
+      "spot_captured_at": "2026-09-02T13:38:26Z",
+      "currency": "USD",
+      "dma200": 536.2535,
       "dma200_n": 200
     },
     {
@@ -890,6 +995,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "IBB",
+      "date": "2026-09-02",
+      "open": 212.12,
+      "high": 215.2599,
+      "low": 211.7,
+      "close": 214.97,
+      "adj_close": 214.97,
+      "volume": 44592,
+      "spot_price": 214.97,
+      "spot_captured_at": "2026-09-02T13:38:19Z",
+      "currency": "USD",
+      "dma200": 177.0619,
+      "dma200_n": 200
+    },
+    {
       "ticker": "IBIT",
       "date": "2026-09-01",
       "open": 44.075,
@@ -995,6 +1115,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "IONQ",
+      "date": "2026-09-02",
+      "open": 37.865,
+      "high": 37.4423,
+      "low": 36.86,
+      "close": 36.905,
+      "adj_close": 36.905,
+      "volume": 1588971,
+      "spot_price": 36.88,
+      "spot_captured_at": "2026-09-02T13:38:20Z",
+      "currency": "USD",
+      "dma200": 44.2973,
+      "dma200_n": 200
+    },
+    {
       "ticker": "IREN",
       "date": "2026-09-01",
       "open": 36.08,
@@ -1052,6 +1187,21 @@
       "spot_captured_at": "2026-09-02T04:05:32Z",
       "currency": "USD",
       "dma200": 29.3768,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "KRE",
+      "date": "2026-09-02",
+      "open": 73.355,
+      "high": 73.325,
+      "low": 72.95,
+      "close": 73.28,
+      "adj_close": 73.28,
+      "volume": 664553,
+      "spot_price": 73.28,
+      "spot_captured_at": "2026-09-02T13:38:14Z",
+      "currency": "USD",
+      "dma200": 69.6492,
       "dma200_n": 200
     },
     {
@@ -1205,6 +1355,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "MSFT",
+      "date": "2026-09-02",
+      "open": 500.17,
+      "high": 500.27,
+      "low": 495.317,
+      "close": 495.6,
+      "adj_close": 495.6,
+      "volume": 1588815,
+      "spot_price": 495.6,
+      "spot_captured_at": "2026-09-02T13:38:31Z",
+      "currency": "USD",
+      "dma200": 431.0796,
+      "dma200_n": 200
+    },
+    {
       "ticker": "MU",
       "date": "2026-09-01",
       "open": 941.13,
@@ -1310,6 +1475,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "NRG",
+      "date": "2026-09-02",
+      "open": 109.5,
+      "high": 110.2,
+      "low": 109.09,
+      "close": 109.465,
+      "adj_close": 109.465,
+      "volume": 35516,
+      "spot_price": 109.465,
+      "spot_captured_at": "2026-09-02T13:38:07Z",
+      "currency": "USD",
+      "dma200": 147.1611,
+      "dma200_n": 200
+    },
+    {
       "ticker": "NVDA",
       "date": "2026-09-01",
       "open": 216.75,
@@ -1367,6 +1547,36 @@
       "spot_captured_at": "2026-09-02T04:06:10Z",
       "currency": "USD",
       "dma200": 100.5743,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "ON",
+      "date": "2026-09-02",
+      "open": 72.86,
+      "high": 73.24,
+      "low": 72.71,
+      "close": 73.085,
+      "adj_close": 73.085,
+      "volume": 288520,
+      "spot_price": 73.085,
+      "spot_captured_at": "2026-09-02T13:38:27Z",
+      "currency": "USD",
+      "dma200": 78.0775,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "ORCL",
+      "date": "2026-09-02",
+      "open": 146.75,
+      "high": 142.93,
+      "low": 139.72,
+      "close": 141.6619,
+      "adj_close": 141.6619,
+      "volume": 1678049,
+      "spot_price": 141.6619,
+      "spot_captured_at": "2026-09-02T13:38:32Z",
+      "currency": "USD",
+      "dma200": 169.414,
       "dma200_n": 200
     },
     {
@@ -1445,6 +1655,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "QBTS",
+      "date": "2026-09-02",
+      "open": 16.279,
+      "high": 16.375,
+      "low": 16.24,
+      "close": 16.335,
+      "adj_close": 16.335,
+      "volume": 1067576,
+      "spot_price": 16.335,
+      "spot_captured_at": "2026-09-02T13:38:22Z",
+      "currency": "USD",
+      "dma200": 21.5814,
+      "dma200_n": 200
+    },
+    {
       "ticker": "QLYS",
       "date": "2026-09-01",
       "open": 183.25,
@@ -1490,6 +1715,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "QUBT",
+      "date": "2026-09-02",
+      "open": 7.812,
+      "high": 7.88,
+      "low": 7.8,
+      "close": 7.845,
+      "adj_close": 7.845,
+      "volume": 391344,
+      "spot_price": 7.845,
+      "spot_captured_at": "2026-09-02T13:38:24Z",
+      "currency": "USD",
+      "dma200": 9.5412,
+      "dma200_n": 200
+    },
+    {
       "ticker": "RDDT",
       "date": "2026-09-01",
       "open": 144.79,
@@ -1517,6 +1757,21 @@
       "spot_captured_at": "2026-09-02T04:05:45Z",
       "currency": "USD",
       "dma200": 235.4565,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "RGTI",
+      "date": "2026-09-02",
+      "open": 14.82,
+      "high": 14.83,
+      "low": 14.595,
+      "close": 14.66,
+      "adj_close": 14.66,
+      "volume": 1119504,
+      "spot_price": 14.66,
+      "spot_captured_at": "2026-09-02T13:38:21Z",
+      "currency": "USD",
+      "dma200": 19.389,
       "dma200_n": 200
     },
     {
@@ -1775,6 +2030,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "STM",
+      "date": "2026-09-02",
+      "open": 49.52,
+      "high": 50.31,
+      "low": 49.99,
+      "close": 50.215,
+      "adj_close": 50.215,
+      "volume": 608635,
+      "spot_price": 50.205,
+      "spot_captured_at": "2026-09-02T13:38:30Z",
+      "currency": "USD",
+      "dma200": 45.013,
+      "dma200_n": 200
+    },
+    {
       "ticker": "TENB",
       "date": "2026-09-01",
       "open": 37.26,
@@ -1817,6 +2087,21 @@
       "spot_captured_at": "2026-09-02T04:06:42Z",
       "currency": "USD",
       "dma200": 73.4129,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "TLN",
+      "date": "2026-09-02",
+      "open": 292.15,
+      "high": 295.963,
+      "low": 291.51,
+      "close": 293.75,
+      "adj_close": 293.75,
+      "volume": 12957,
+      "spot_price": 293.75,
+      "spot_captured_at": "2026-09-02T13:38:09Z",
+      "currency": "USD",
+      "dma200": 358.5449,
       "dma200_n": 200
     },
     {
@@ -1865,6 +2150,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "UFO",
+      "date": "2026-09-02",
+      "open": 42.96,
+      "high": 42.99,
+      "low": 42.8022,
+      "close": 42.8022,
+      "adj_close": 42.8022,
+      "volume": 9994,
+      "spot_price": 42.8022,
+      "spot_captured_at": "2026-09-02T13:38:15Z",
+      "currency": "USD",
+      "dma200": 46.4325,
+      "dma200_n": 200
+    },
+    {
       "ticker": "UUP",
       "date": "2026-09-01",
       "open": 28.16,
@@ -1877,6 +2177,21 @@
       "spot_captured_at": "2026-09-02T04:07:17Z",
       "currency": "USD",
       "dma200": 27.7287,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "VICR",
+      "date": "2026-09-02",
+      "open": 176.27,
+      "high": 177.93,
+      "low": 175.23,
+      "close": 176.88,
+      "adj_close": 176.88,
+      "volume": 18073,
+      "spot_price": 176.88,
+      "spot_captured_at": "2026-09-02T13:38:28Z",
+      "currency": "USD",
+      "dma200": 201.4033,
       "dma200_n": 200
     },
     {
@@ -1893,6 +2208,36 @@
       "currency": "USD",
       "dma200": null,
       "dma200_n": 13
+    },
+    {
+      "ticker": "VRT",
+      "date": "2026-09-02",
+      "open": 255.22,
+      "high": 255.97,
+      "low": 251.5,
+      "close": 255.72,
+      "adj_close": 255.72,
+      "volume": 224884,
+      "spot_price": 255.72,
+      "spot_captured_at": "2026-09-02T13:38:11Z",
+      "currency": "USD",
+      "dma200": 256.3393,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "VST",
+      "date": "2026-09-02",
+      "open": 136.5,
+      "high": 138.145,
+      "low": 136.99,
+      "close": 137.35,
+      "adj_close": 137.35,
+      "volume": 201060,
+      "spot_price": 137.35,
+      "spot_captured_at": "2026-09-02T13:38:05Z",
+      "currency": "USD",
+      "dma200": 158.0137,
+      "dma200_n": 200
     },
     {
       "ticker": "WCLD",
@@ -1952,6 +2297,66 @@
       "spot_captured_at": "2026-09-02T04:06:45Z",
       "currency": "USD",
       "dma200": 35.0532,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "WULF",
+      "date": "2026-09-02",
+      "open": 14.455,
+      "high": 14.535,
+      "low": 14.27,
+      "close": 14.535,
+      "adj_close": 14.535,
+      "volume": 1694849,
+      "spot_price": 14.535,
+      "spot_captured_at": "2026-09-02T13:38:36Z",
+      "currency": "USD",
+      "dma200": 17.8168,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "XBI",
+      "date": "2026-09-02",
+      "open": 161.75,
+      "high": 168.06,
+      "low": 164.26,
+      "close": 167.6292,
+      "adj_close": 167.6292,
+      "volume": 633186,
+      "spot_price": 167.6292,
+      "spot_captured_at": "2026-09-02T13:38:17Z",
+      "currency": "USD",
+      "dma200": 134.8841,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "XLF",
+      "date": "2026-09-02",
+      "open": 57.61,
+      "high": 57.585,
+      "low": 57.38,
+      "close": 57.495,
+      "adj_close": 57.495,
+      "volume": 1093548,
+      "spot_price": 57.495,
+      "spot_captured_at": "2026-09-02T13:38:12Z",
+      "currency": "USD",
+      "dma200": 53.4231,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "XLU",
+      "date": "2026-09-02",
+      "open": 42.3,
+      "high": 42.47,
+      "low": 42.06,
+      "close": 42.21,
+      "adj_close": 42.21,
+      "volume": 1288422,
+      "spot_price": 42.21,
+      "spot_captured_at": "2026-09-02T13:38:04Z",
+      "currency": "USD",
+      "dma200": 44.676,
       "dma200_n": 200
     },
     {

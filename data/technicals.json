@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T04:07:33Z",
+  "generated_at": "2026-09-02T13:38:49Z",
   "method": {
     "regime_gate": "Over the last 90 sessions: trending if log-price R^2 >= 0.85; mean_reverting if R^2 < 0.35 and SMA20 crossings <= 7.0 per 100 sessions; else neither.",
     "regime_calibration": "Thresholds are Monte-Carlo calibrated against a random-walk null (2,000 draws, 90-session windows). R^2 >= 0.85 is the p90 of that null -- note that R^2 >= 0.50 would be met by 44.7% of pure random walks, which is why the common 'it looks trendy' threshold is useless. The Lo-MacKinlay variance ratio is reported as a diagnostic but does NOT classify: a sinusoid is locally smooth, so cyclical data returns VR of 3.9-11.3, far above 1, not below it.",
@@ -120,7 +120,7 @@
       "Survivorship-biased by construction: these are names that earned their way onto the watchlist. A description of their past, not an expectation."
     ]
   },
-  "count": 124,
+  "count": 151,
   "skipped": [
     {
       "ticker": "6981.T",
@@ -240,7 +240,7 @@
         "vs_200dma": 0.258104,
         "vs_50dma": -0.133516,
         "tsmom_12m": 1,
-        "rank_universe": 0.976,
+        "rank_universe": 0.98,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.102765
       },
@@ -342,7 +342,7 @@
         "vs_200dma": 0.196191,
         "vs_50dma": -0.065125,
         "tsmom_12m": 1,
-        "rank_universe": 0.919,
+        "rank_universe": 0.927,
         "rank_group": 0.25,
         "rs_126_vs_proxy": -0.16415
       },
@@ -444,8 +444,8 @@
         "vs_200dma": 0.03096,
         "vs_50dma": -0.139207,
         "tsmom_12m": 1,
-        "rank_universe": 0.96,
-        "rank_group": 0.833,
+        "rank_universe": 0.967,
+        "rank_group": 0.857,
         "rs_126_vs_proxy": -0.222187
       },
       "setup": {
@@ -546,8 +546,8 @@
         "vs_200dma": 0.238752,
         "vs_50dma": -0.166552,
         "tsmom_12m": 1,
-        "rank_universe": 0.927,
-        "rank_group": 0.905,
+        "rank_universe": 0.934,
+        "rank_group": 0.875,
         "rs_126_vs_proxy": 0.319268
       },
       "setup": {
@@ -648,7 +648,7 @@
         "vs_200dma": 0.0401,
         "vs_50dma": 0.158421,
         "tsmom_12m": 1,
-        "rank_universe": 0.185,
+        "rank_universe": 0.212,
         "rank_group": 0.125,
         "rs_126_vs_proxy": -0.080719
       },
@@ -750,7 +750,7 @@
         "vs_200dma": 0.014741,
         "vs_50dma": 0.117702,
         "tsmom_12m": 1,
-        "rank_universe": 0.685,
+        "rank_universe": 0.709,
         "rank_group": 0.938,
         "rs_126_vs_proxy": -0.221101
       },
@@ -852,7 +852,7 @@
         "vs_200dma": -0.106257,
         "vs_50dma": 0.098873,
         "tsmom_12m": 1,
-        "rank_universe": 0.137,
+        "rank_universe": 0.159,
         "rank_group": 0.062,
         "rs_126_vs_proxy": -0.255552
       },
@@ -954,8 +954,8 @@
         "vs_200dma": 0.255437,
         "vs_50dma": -0.169405,
         "tsmom_12m": 1,
-        "rank_universe": 0.702,
-        "rank_group": 0.476,
+        "rank_universe": 0.722,
+        "rank_group": 0.458,
         "rs_126_vs_proxy": 0.828469
       },
       "setup": {
@@ -1056,8 +1056,8 @@
         "vs_200dma": 0.360919,
         "vs_50dma": -0.086084,
         "tsmom_12m": 1,
-        "rank_universe": 0.887,
-        "rank_group": 0.81,
+        "rank_universe": 0.901,
+        "rank_group": 0.792,
         "rs_126_vs_proxy": 0.7264
       },
       "setup": {
@@ -1158,8 +1158,8 @@
         "vs_200dma": -0.20435,
         "vs_50dma": -0.141497,
         "tsmom_12m": -1,
-        "rank_universe": 0.048,
-        "rank_group": 0.048,
+        "rank_universe": 0.046,
+        "rank_group": 0.042,
         "rs_126_vs_proxy": -0.341116
       },
       "setup": {
@@ -1260,8 +1260,8 @@
         "vs_200dma": -0.195932,
         "vs_50dma": -0.292228,
         "tsmom_12m": -1,
-        "rank_universe": 0.242,
-        "rank_group": 0.095,
+        "rank_universe": 0.265,
+        "rank_group": 0.083,
         "rs_126_vs_proxy": -0.172483
       },
       "setup": {
@@ -1321,6 +1321,312 @@
         }
       }
     },
+    "APLD": {
+      "ticker": "APLD",
+      "group": "AI compute / datacenter operators",
+      "proxy": "SMH",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 24.17,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.5854,
+        "r2_vs_null_pct": 60,
+        "vr": 0.9579,
+        "cross_rate": 7.04,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -1.5006,
+        "macd_signal": -1.1588,
+        "macd_hist": -0.3417,
+        "macd_hist_prev": -0.3049,
+        "rsi": 35.91,
+        "mfi": 29.35,
+        "vpvma": -7.15198,
+        "vpvma_signal": -5.555948
+      },
+      "momentum": {
+        "mom_12_1": 1.049148,
+        "mom_6_1": 0.091449,
+        "ret_12m": 0.583879,
+        "ret_3m": -0.459405,
+        "ret_1m": -0.227055,
+        "dist_52w_high": -0.513192,
+        "dist_52w_low": 0.740101,
+        "vs_200dma": -0.248643,
+        "vs_50dma": -0.19083,
+        "tsmom_12m": 1,
+        "rank_universe": 0.808,
+        "rank_group": 0.833,
+        "rs_126_vs_proxy": -0.394905
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": 0.0376,
+        "swing": "mixed",
+        "close_pos_20": 0.439,
+        "atr_pct": 8.34,
+        "atr_pct_rank_1y": 0.258,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.64,
+        "vol_10v50": 0.73,
+        "rvol": 0.05,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 1.0586,
+          "buy_hold_return": 6.673,
+          "excess_vs_hold": -5.6144,
+          "beat_hold": false,
+          "n_trades": 18,
+          "win_rate": 0.444
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.0459,
+          "buy_hold_return": 6.673,
+          "excess_vs_hold": -6.7189,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 6.673,
+          "excess_vs_hold": -6.673,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 6.673,
+          "excess_vs_hold": -6.673,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.1249,
+          "buy_hold_return": 6.673,
+          "excess_vs_hold": -6.5481,
+          "beat_hold": false,
+          "n_trades": 14,
+          "win_rate": 0.429
+        }
+      }
+    },
+    "ARKX": {
+      "ticker": "ARKX",
+      "group": "Space (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 31.73,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.1506,
+        "r2_vs_null_pct": 20,
+        "vr": 1.0208,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.1533,
+        "macd_signal": 0.0883,
+        "macd_hist": -0.2416,
+        "macd_hist_prev": -0.2291,
+        "rsi": 40.3,
+        "mfi": 21.73,
+        "vpvma": -1.751008,
+        "vpvma_signal": -1.122972
+      },
+      "momentum": {
+        "mom_12_1": 0.276923,
+        "mom_6_1": 0.034268,
+        "ret_12m": 0.220385,
+        "ret_3m": -0.114676,
+        "ret_1m": -0.044277,
+        "dist_52w_high": -0.159248,
+        "dist_52w_low": 0.244802,
+        "vs_200dma": -0.007575,
+        "vs_50dma": -0.020999,
+        "tsmom_12m": 1,
+        "rank_universe": 0.457,
+        "rank_group": 0.5,
+        "rs_126_vs_proxy": -0.121881
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0366,
+        "swing": "mixed",
+        "close_pos_20": 0.461,
+        "atr_pct": 2.1,
+        "atr_pct_rank_1y": 0.079,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.92,
+        "vol_10v50": 0.54,
+        "rvol": 0.02,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.74,
+          "buy_hold_return": 1.1324,
+          "excess_vs_hold": -0.3924,
+          "beat_hold": false,
+          "n_trades": 17,
+          "win_rate": 0.588
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.4476,
+          "buy_hold_return": 1.1324,
+          "excess_vs_hold": -0.6848,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 1.0
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.1324,
+          "excess_vs_hold": -1.1324,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.1324,
+          "excess_vs_hold": -1.1324,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.4691,
+          "buy_hold_return": 1.1324,
+          "excess_vs_hold": -0.6633,
+          "beat_hold": false,
+          "n_trades": 24,
+          "win_rate": 0.625
+        }
+      }
+    },
+    "ARQQ": {
+      "ticker": "ARQQ",
+      "group": "Quantum computing basket constituents (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 18.725,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.3596,
+        "r2_vs_null_pct": 40,
+        "vr": 1.1791,
+        "cross_rate": 7.04,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.2556,
+        "macd_signal": 0.1857,
+        "macd_hist": -0.4413,
+        "macd_hist_prev": -0.4096,
+        "rsi": 41.6,
+        "mfi": 40.01,
+        "vpvma": -2.383141,
+        "vpvma_signal": -1.604954
+      },
+      "momentum": {
+        "mom_12_1": -0.207642,
+        "mom_6_1": 0.319328,
+        "ret_12m": -0.324982,
+        "ret_3m": 0.27903,
+        "ret_1m": -0.148089,
+        "dist_52w_high": -0.678651,
+        "dist_52w_low": 0.589559,
+        "vs_200dma": -0.0423,
+        "vs_50dma": -0.106751,
+        "tsmom_12m": -1,
+        "rank_universe": 0.099,
+        "rank_group": 0.4,
+        "rs_126_vs_proxy": -0.00153
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": -0.009,
+        "swing": "mixed",
+        "close_pos_20": 0.503,
+        "atr_pct": 8.7,
+        "atr_pct_rank_1y": 0.298,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.62,
+        "vol_10v50": 0.49,
+        "rvol": 0.01,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 1.2818,
+          "buy_hold_return": 1.4638,
+          "excess_vs_hold": -0.182,
+          "beat_hold": false,
+          "n_trades": 19,
+          "win_rate": 0.474
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.6156,
+          "buy_hold_return": 1.4638,
+          "excess_vs_hold": -0.8482,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.35,
+          "buy_hold_return": 1.4638,
+          "excess_vs_hold": -1.1138,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.4638,
+          "excess_vs_hold": -1.4638,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.1066,
+          "buy_hold_return": 1.4638,
+          "excess_vs_hold": -1.5704,
+          "beat_hold": false,
+          "n_trades": 13,
+          "win_rate": 0.538
+        }
+      }
+    },
     "ARTY": {
       "ticker": "ARTY",
       "group": "Broad / thematic / crypto ETFs",
@@ -1362,7 +1668,7 @@
         "vs_200dma": 0.238939,
         "vs_50dma": 0.014258,
         "tsmom_12m": 1,
-        "rank_universe": 0.661,
+        "rank_universe": 0.675,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.256343
       },
@@ -1464,7 +1770,7 @@
         "vs_200dma": 0.132325,
         "vs_50dma": -0.052959,
         "tsmom_12m": 1,
-        "rank_universe": 0.847,
+        "rank_universe": 0.868,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.119372
       },
@@ -1566,7 +1872,7 @@
         "vs_200dma": 0.141091,
         "vs_50dma": 0.19575,
         "tsmom_12m": 1,
-        "rank_universe": 0.597,
+        "rank_universe": 0.609,
         "rank_group": 0.812,
         "rs_126_vs_proxy": 0.076509
       },
@@ -1668,8 +1974,8 @@
         "vs_200dma": 0.000358,
         "vs_50dma": -0.039389,
         "tsmom_12m": 1,
-        "rank_universe": 0.492,
-        "rank_group": 0.19,
+        "rank_universe": 0.503,
+        "rank_group": 0.167,
         "rs_126_vs_proxy": -0.152019
       },
       "setup": {
@@ -1770,7 +2076,7 @@
         "vs_200dma": 0.040986,
         "vs_50dma": -0.119887,
         "tsmom_12m": 1,
-        "rank_universe": 0.992,
+        "rank_universe": 0.993,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.036279
       },
@@ -1872,7 +2178,7 @@
         "vs_200dma": 0.128301,
         "vs_50dma": -0.077237,
         "tsmom_12m": 1,
-        "rank_universe": 0.944,
+        "rank_universe": 0.947,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.001349
       },
@@ -1974,7 +2280,7 @@
         "vs_200dma": 0.040767,
         "vs_50dma": 0.311551,
         "tsmom_12m": -1,
-        "rank_universe": 0.008,
+        "rank_universe": 0.007,
         "rank_group": 0.05,
         "rs_126_vs_proxy": 0.060855
       },
@@ -2076,7 +2382,7 @@
         "vs_200dma": -0.047034,
         "vs_50dma": -0.029702,
         "tsmom_12m": 1,
-        "rank_universe": 0.21,
+        "rank_universe": 0.232,
         "rank_group": 0.25,
         "rs_126_vs_proxy": -0.181948
       },
@@ -2178,7 +2484,7 @@
         "vs_200dma": 0.113813,
         "vs_50dma": 0.136314,
         "tsmom_12m": -1,
-        "rank_universe": 0.081,
+        "rank_universe": 0.079,
         "rank_group": 0.105,
         "rs_126_vs_proxy": null
       },
@@ -2280,7 +2586,7 @@
         "vs_200dma": 0.133629,
         "vs_50dma": 0.115445,
         "tsmom_12m": 1,
-        "rank_universe": 0.427,
+        "rank_universe": 0.437,
         "rank_group": 0.737,
         "rs_126_vs_proxy": null
       },
@@ -2382,7 +2688,7 @@
         "vs_200dma": 0.012577,
         "vs_50dma": -0.11987,
         "tsmom_12m": 1,
-        "rank_universe": 0.766,
+        "rank_universe": 0.781,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.223246
       },
@@ -2484,7 +2790,7 @@
         "vs_200dma": 0.072093,
         "vs_50dma": 0.171463,
         "tsmom_12m": 1,
-        "rank_universe": 0.331,
+        "rank_universe": 0.351,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.06797
       },
@@ -2545,6 +2851,108 @@
         }
       }
     },
+    "CEG": {
+      "ticker": "CEG",
+      "group": "Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 279.3,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.1379,
+        "r2_vs_null_pct": 20,
+        "vr": 1.2838,
+        "cross_rate": 18.31,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 3.3387,
+        "macd_signal": 3.395,
+        "macd_hist": -0.0562,
+        "macd_hist_prev": -0.0458,
+        "rsi": 55.99,
+        "mfi": 50.93,
+        "vpvma": -45.663706,
+        "vpvma_signal": -50.391449
+      },
+      "momentum": {
+        "mom_12_1": -0.126497,
+        "mom_6_1": -0.169819,
+        "ret_12m": -0.085708,
+        "ret_3m": 0.046735,
+        "ret_1m": 0.046695,
+        "dist_52w_high": -0.308578,
+        "dist_52w_low": 0.180972,
+        "vs_200dma": -0.058879,
+        "vs_50dma": 0.052941,
+        "tsmom_12m": -1,
+        "rank_universe": 0.139,
+        "rank_group": 0.429,
+        "rs_126_vs_proxy": -0.228064
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": -0.0611,
+        "swing": "mixed",
+        "close_pos_20": 0.429,
+        "atr_pct": 3.08,
+        "atr_pct_rank_1y": 0.004,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.91,
+        "vol_10v50": 0.69,
+        "rvol": 0.03,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.1452,
+          "buy_hold_return": 0.571,
+          "excess_vs_hold": -0.4259,
+          "beat_hold": false,
+          "n_trades": 17,
+          "win_rate": 0.353
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.0971,
+          "buy_hold_return": 0.571,
+          "excess_vs_hold": -0.474,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.571,
+          "excess_vs_hold": -0.571,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": -0.0325,
+          "buy_hold_return": 0.571,
+          "excess_vs_hold": -0.6035,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 0.0
+        },
+        "vpvma": {
+          "strategy_return": -0.0656,
+          "buy_hold_return": 0.571,
+          "excess_vs_hold": -0.6367,
+          "beat_hold": false,
+          "n_trades": 26,
+          "win_rate": 0.538
+        }
+      }
+    },
     "CIBR": {
       "ticker": "CIBR",
       "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
@@ -2586,7 +2994,7 @@
         "vs_200dma": 0.247939,
         "vs_50dma": 0.031897,
         "tsmom_12m": 1,
-        "rank_universe": 0.46,
+        "rank_universe": 0.47,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.195389
       },
@@ -2688,8 +3096,8 @@
         "vs_200dma": -0.039351,
         "vs_50dma": -0.127632,
         "tsmom_12m": 1,
-        "rank_universe": 0.952,
-        "rank_group": 0.667,
+        "rank_universe": 0.954,
+        "rank_group": 0.714,
         "rs_126_vs_proxy": -0.224045
       },
       "setup": {
@@ -2790,8 +3198,8 @@
         "vs_200dma": -0.008827,
         "vs_50dma": -0.134874,
         "tsmom_12m": 1,
-        "rank_universe": 0.911,
-        "rank_group": 0.5,
+        "rank_universe": 0.921,
+        "rank_group": 0.571,
         "rs_126_vs_proxy": -0.305174
       },
       "setup": {
@@ -2851,6 +3259,108 @@
         }
       }
     },
+    "CORZ": {
+      "ticker": "CORZ",
+      "group": "AI compute / datacenter operators",
+      "proxy": "SMH",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 16.0,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.3399,
+        "r2_vs_null_pct": 40,
+        "vr": 0.7866,
+        "cross_rate": 12.68,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -1.5004,
+        "macd_signal": -1.345,
+        "macd_hist": -0.1554,
+        "macd_hist_prev": -0.1699,
+        "rsi": 32.47,
+        "mfi": 24.9,
+        "vpvma": -3.851111,
+        "vpvma_signal": -3.471356
+      },
+      "momentum": {
+        "mom_12_1": 0.629286,
+        "mom_6_1": 0.440025,
+        "ret_12m": 0.142857,
+        "ret_3m": -0.446941,
+        "ret_1m": -0.298553,
+        "dist_52w_high": -0.451303,
+        "dist_52w_low": 0.179072,
+        "vs_200dma": -0.186128,
+        "vs_50dma": -0.245977,
+        "tsmom_12m": 1,
+        "rank_universe": 0.669,
+        "rank_group": 0.5,
+        "rs_126_vs_proxy": -0.275503
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0944,
+        "swing": "LH/LL",
+        "close_pos_20": 0.365,
+        "atr_pct": 7.79,
+        "atr_pct_rank_1y": 0.73,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.5,
+        "vol_10v50": 0.82,
+        "rvol": 0.01,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.6614,
+          "buy_hold_return": 0.7021,
+          "excess_vs_hold": -1.3636,
+          "beat_hold": false,
+          "n_trades": 24,
+          "win_rate": 0.208
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.2249,
+          "buy_hold_return": 0.7021,
+          "excess_vs_hold": -0.927,
+          "beat_hold": false,
+          "n_trades": 4,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.7021,
+          "excess_vs_hold": -0.7021,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.7021,
+          "excess_vs_hold": -0.7021,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.5702,
+          "buy_hold_return": 0.7021,
+          "excess_vs_hold": -1.2723,
+          "beat_hold": false,
+          "n_trades": 14,
+          "win_rate": 0.429
+        }
+      }
+    },
     "CPER": {
       "ticker": "CPER",
       "group": "Macro / benchmarks",
@@ -2892,7 +3402,7 @@
         "vs_200dma": 0.067739,
         "vs_50dma": 0.004944,
         "tsmom_12m": 1,
-        "rank_universe": 0.556,
+        "rank_universe": 0.57,
         "rank_group": 0.842,
         "rs_126_vs_proxy": null
       },
@@ -2994,7 +3504,7 @@
         "vs_200dma": 0.521773,
         "vs_50dma": 0.084313,
         "tsmom_12m": 1,
-        "rank_universe": 0.75,
+        "rank_universe": 0.762,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.740892
       },
@@ -3096,8 +3606,8 @@
         "vs_200dma": -0.104013,
         "vs_50dma": -0.055151,
         "tsmom_12m": -1,
-        "rank_universe": 0.113,
-        "rank_group": 0.333,
+        "rank_universe": 0.126,
+        "rank_group": 0.167,
         "rs_126_vs_proxy": -0.204296
       },
       "setup": {
@@ -3198,7 +3708,7 @@
         "vs_200dma": 0.272251,
         "vs_50dma": -0.103849,
         "tsmom_12m": 1,
-        "rank_universe": 0.782,
+        "rank_universe": 0.795,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.586308
       },
@@ -3300,7 +3810,7 @@
         "vs_200dma": 0.046417,
         "vs_50dma": -0.037556,
         "tsmom_12m": 1,
-        "rank_universe": 0.581,
+        "rank_universe": 0.596,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.016829
       },
@@ -3402,7 +3912,7 @@
         "vs_200dma": 0.073347,
         "vs_50dma": -0.021092,
         "tsmom_12m": 1,
-        "rank_universe": 0.5,
+        "rank_universe": 0.51,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.05169
       },
@@ -3504,7 +4014,7 @@
         "vs_200dma": 0.188615,
         "vs_50dma": 0.174047,
         "tsmom_12m": -1,
-        "rank_universe": 0.065,
+        "rank_universe": 0.06,
         "rank_group": 0.053,
         "rs_126_vs_proxy": null
       },
@@ -3606,7 +4116,7 @@
         "vs_200dma": 0.049434,
         "vs_50dma": 0.247076,
         "tsmom_12m": -1,
-        "rank_universe": 0.016,
+        "rank_universe": 0.013,
         "rank_group": 0.1,
         "rs_126_vs_proxy": 0.084714
       },
@@ -3667,6 +4177,108 @@
         }
       }
     },
+    "ETN": {
+      "ticker": "ETN",
+      "group": "Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 388.12,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.0788,
+        "r2_vs_null_pct": 15,
+        "vr": 0.7984,
+        "cross_rate": 28.17,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -6.8197,
+        "macd_signal": -1.107,
+        "macd_hist": -5.7127,
+        "macd_hist_prev": -5.5015,
+        "rsi": 35.98,
+        "mfi": 36.64,
+        "vpvma": -87.900897,
+        "vpvma_signal": -60.57402
+      },
+      "momentum": {
+        "mom_12_1": 0.305091,
+        "mom_6_1": 0.262173,
+        "ret_12m": 0.141665,
+        "ret_3m": -0.076292,
+        "ret_1m": -0.125222,
+        "dist_52w_high": -0.156187,
+        "dist_52w_low": 0.228928,
+        "vs_200dma": 0.020142,
+        "vs_50dma": -0.066116,
+        "tsmom_12m": 1,
+        "rank_universe": 0.49,
+        "rank_group": 0.857,
+        "rs_126_vs_proxy": -0.019145
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0571,
+        "swing": "mixed",
+        "close_pos_20": 0.297,
+        "atr_pct": 3.58,
+        "atr_pct_rank_1y": 0.599,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.07,
+        "vol_10v50": 0.74,
+        "rvol": 0.02,
+        "obv_63d": "bullish_divergence",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0827,
+          "buy_hold_return": 0.3396,
+          "excess_vs_hold": -0.2568,
+          "beat_hold": false,
+          "n_trades": 19,
+          "win_rate": 0.368
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.4387,
+          "buy_hold_return": 0.3396,
+          "excess_vs_hold": -0.7782,
+          "beat_hold": false,
+          "n_trades": 6,
+          "win_rate": 0.0
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.3396,
+          "excess_vs_hold": -0.3396,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.3396,
+          "excess_vs_hold": -0.3396,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.3233,
+          "buy_hold_return": 0.3396,
+          "excess_vs_hold": -0.6629,
+          "beat_hold": false,
+          "n_trades": 21,
+          "win_rate": 0.333
+        }
+      }
+    },
     "EWY": {
       "ticker": "EWY",
       "group": "Broad / thematic / crypto ETFs",
@@ -3708,7 +4320,7 @@
         "vs_200dma": 0.203251,
         "vs_50dma": 0.001938,
         "tsmom_12m": 1,
-        "rank_universe": 0.855,
+        "rank_universe": 0.874,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.180092
       },
@@ -3810,7 +4422,7 @@
         "vs_200dma": 0.046922,
         "vs_50dma": 0.145183,
         "tsmom_12m": 1,
-        "rank_universe": 0.419,
+        "rank_universe": 0.43,
         "rank_group": 0.562,
         "rs_126_vs_proxy": -0.042615
       },
@@ -3912,7 +4524,7 @@
         "vs_200dma": 0.13544,
         "vs_50dma": -0.150863,
         "tsmom_12m": 1,
-        "rank_universe": 0.831,
+        "rank_universe": 0.854,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.215053
       },
@@ -3973,6 +4585,108 @@
         }
       }
     },
+    "FN": {
+      "ticker": "FN",
+      "group": "Optics / networking",
+      "proxy": "SMH",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 396.89,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.7376,
+        "r2_vs_null_pct": 75,
+        "vr": 0.8417,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -29.4402,
+        "macd_signal": -20.7551,
+        "macd_hist": -8.6851,
+        "macd_hist_prev": -9.1965,
+        "rsi": 34.88,
+        "mfi": 28.92,
+        "vpvma": -1313.345413,
+        "vpvma_signal": -912.563426
+      },
+      "momentum": {
+        "mom_12_1": 0.581859,
+        "mom_6_1": -0.05824,
+        "ret_12m": 0.182276,
+        "ret_3m": -0.452565,
+        "ret_1m": -0.252603,
+        "dist_52w_high": -0.468311,
+        "dist_52w_low": 0.175866,
+        "vs_200dma": -0.259884,
+        "vs_50dma": -0.188905,
+        "tsmom_12m": 1,
+        "rank_universe": 0.636,
+        "rank_group": 0.143,
+        "rs_126_vs_proxy": -0.495149
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": -0.0073,
+        "swing": "mixed",
+        "close_pos_20": 0.41,
+        "atr_pct": 7.7,
+        "atr_pct_rank_1y": 0.766,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.59,
+        "vol_10v50": 0.88,
+        "rvol": 0.03,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.5834,
+          "buy_hold_return": 0.7972,
+          "excess_vs_hold": -1.3806,
+          "beat_hold": false,
+          "n_trades": 24,
+          "win_rate": 0.333
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.4737,
+          "buy_hold_return": 0.7972,
+          "excess_vs_hold": -0.3235,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.7972,
+          "excess_vs_hold": -0.7972,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.7972,
+          "excess_vs_hold": -0.7972,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0557,
+          "buy_hold_return": 0.7972,
+          "excess_vs_hold": -0.7415,
+          "beat_hold": false,
+          "n_trades": 19,
+          "win_rate": 0.474
+        }
+      }
+    },
     "FNV": {
       "ticker": "FNV",
       "group": "Precious-metals miners & royalty",
@@ -4014,7 +4728,7 @@
         "vs_200dma": 0.102411,
         "vs_50dma": 0.13175,
         "tsmom_12m": 1,
-        "rank_universe": 0.306,
+        "rank_universe": 0.331,
         "rank_group": 0.438,
         "rs_126_vs_proxy": 0.086126
       },
@@ -4116,7 +4830,7 @@
         "vs_200dma": 0.485601,
         "vs_50dma": 0.022441,
         "tsmom_12m": 1,
-        "rank_universe": 0.798,
+        "rank_universe": 0.815,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.580764
       },
@@ -4218,7 +4932,7 @@
         "vs_200dma": -0.037237,
         "vs_50dma": 0.030969,
         "tsmom_12m": 1,
-        "rank_universe": 0.266,
+        "rank_universe": 0.291,
         "rank_group": 0.474,
         "rs_126_vs_proxy": null
       },
@@ -4320,7 +5034,7 @@
         "vs_200dma": 0.057621,
         "vs_50dma": 0.140539,
         "tsmom_12m": 1,
-        "rank_universe": 0.395,
+        "rank_universe": 0.404,
         "rank_group": 0.286,
         "rs_126_vs_proxy": 0.0
       },
@@ -4422,7 +5136,7 @@
         "vs_200dma": 0.038896,
         "vs_50dma": 0.131696,
         "tsmom_12m": 1,
-        "rank_universe": 0.435,
+        "rank_universe": 0.444,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.03744
       },
@@ -4524,7 +5238,7 @@
         "vs_200dma": 0.020293,
         "vs_50dma": -0.121538,
         "tsmom_12m": 1,
-        "rank_universe": 0.669,
+        "rank_universe": 0.689,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.233739
       },
@@ -4626,7 +5340,7 @@
         "vs_200dma": -0.043951,
         "vs_50dma": 0.025896,
         "tsmom_12m": 1,
-        "rank_universe": 0.315,
+        "rank_universe": 0.338,
         "rank_group": 0.526,
         "rs_126_vs_proxy": null
       },
@@ -4728,8 +5442,8 @@
         "vs_200dma": 0.019443,
         "vs_50dma": -0.138264,
         "tsmom_12m": 1,
-        "rank_universe": 0.839,
-        "rank_group": 0.333,
+        "rank_universe": 0.861,
+        "rank_group": 0.429,
         "rs_126_vs_proxy": -0.291433
       },
       "setup": {
@@ -4830,7 +5544,7 @@
         "vs_200dma": 0.013973,
         "vs_50dma": 0.019165,
         "tsmom_12m": 1,
-        "rank_universe": 0.734,
+        "rank_universe": 0.748,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.144698
       },
@@ -4932,7 +5646,7 @@
         "vs_200dma": 0.008274,
         "vs_50dma": -0.039226,
         "tsmom_12m": 1,
-        "rank_universe": 0.452,
+        "rank_universe": 0.464,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.074783
       },
@@ -5034,7 +5748,7 @@
         "vs_200dma": -0.00216,
         "vs_50dma": -0.108229,
         "tsmom_12m": -1,
-        "rank_universe": 0.089,
+        "rank_universe": 0.086,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.597024
       },
@@ -5136,8 +5850,8 @@
         "vs_200dma": 0.148077,
         "vs_50dma": -0.040937,
         "tsmom_12m": 1,
-        "rank_universe": 0.645,
-        "rank_group": 0.333,
+        "rank_universe": 0.656,
+        "rank_group": 0.292,
         "rs_126_vs_proxy": 0.338937
       },
       "setup": {
@@ -5238,7 +5952,7 @@
         "vs_200dma": 0.012257,
         "vs_50dma": 0.143326,
         "tsmom_12m": 1,
-        "rank_universe": 0.677,
+        "rank_universe": 0.702,
         "rank_group": 0.875,
         "rs_126_vs_proxy": -0.020611
       },
@@ -5340,7 +6054,7 @@
         "vs_200dma": -0.043878,
         "vs_50dma": 0.145109,
         "tsmom_12m": -1,
-        "rank_universe": 0.024,
+        "rank_universe": 0.02,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.277692
       },
@@ -5442,7 +6156,7 @@
         "vs_200dma": -0.012867,
         "vs_50dma": -0.006711,
         "tsmom_12m": 1,
-        "rank_universe": 0.202,
+        "rank_universe": 0.225,
         "rank_group": 0.368,
         "rs_126_vs_proxy": null
       },
@@ -5503,6 +6217,108 @@
         }
       }
     },
+    "IBB": {
+      "ticker": "IBB",
+      "group": "Biotech (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 214.97,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.8491,
+        "r2_vs_null_pct": 90,
+        "vr": 0.841,
+        "cross_rate": 12.68,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 5.6426,
+        "macd_signal": 5.8454,
+        "macd_hist": -0.2028,
+        "macd_hist_prev": -0.2777,
+        "rsi": 65.18,
+        "mfi": 52.08,
+        "vpvma": 24.14766,
+        "vpvma_signal": 26.629254
+      },
+      "momentum": {
+        "mom_12_1": 0.357695,
+        "mom_6_1": 0.100281,
+        "ret_12m": 0.534913,
+        "ret_3m": 0.283583,
+        "ret_1m": 0.130529,
+        "dist_52w_high": -0.009172,
+        "dist_52w_low": 0.545768,
+        "vs_200dma": 0.214095,
+        "vs_50dma": 0.092933,
+        "tsmom_12m": 1,
+        "rank_universe": 0.53,
+        "rank_group": 0.5,
+        "rs_126_vs_proxy": 0.105029
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.0886,
+        "swing": "mixed",
+        "close_pos_20": 0.66,
+        "atr_pct": 1.92,
+        "atr_pct_rank_1y": 0.56,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.46,
+        "vol_10v50": 0.94,
+        "rvol": 0.03,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0038,
+          "buy_hold_return": 0.4758,
+          "excess_vs_hold": -0.472,
+          "beat_hold": false,
+          "n_trades": 23,
+          "win_rate": 0.391
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.1915,
+          "buy_hold_return": 0.4758,
+          "excess_vs_hold": -0.2843,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.667
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.4758,
+          "excess_vs_hold": -0.4758,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.4758,
+          "excess_vs_hold": -0.4758,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.2407,
+          "buy_hold_return": 0.4758,
+          "excess_vs_hold": -0.2351,
+          "beat_hold": false,
+          "n_trades": 36,
+          "win_rate": 0.667
+        }
+      }
+    },
     "IBIT": {
       "ticker": "IBIT",
       "group": "Broad / thematic / crypto ETFs",
@@ -5544,7 +6360,7 @@
         "vs_200dma": 0.029345,
         "vs_50dma": 0.169928,
         "tsmom_12m": -1,
-        "rank_universe": 0.04,
+        "rank_universe": 0.033,
         "rank_group": 0.15,
         "rs_126_vs_proxy": 0.004511
       },
@@ -5646,7 +6462,7 @@
         "vs_200dma": 0.127107,
         "vs_50dma": 0.081092,
         "tsmom_12m": 1,
-        "rank_universe": 0.629,
+        "rank_universe": 0.642,
         "rank_group": 0.7,
         "rs_126_vs_proxy": -0.048671
       },
@@ -5748,8 +6564,8 @@
         "vs_200dma": 0.047336,
         "vs_50dma": -0.146398,
         "tsmom_12m": 1,
-        "rank_universe": 0.694,
-        "rank_group": 0.429,
+        "rank_universe": 0.715,
+        "rank_group": 0.417,
         "rs_126_vs_proxy": -0.067923
       },
       "setup": {
@@ -5850,7 +6666,7 @@
         "vs_200dma": 0.207893,
         "vs_50dma": -0.035876,
         "tsmom_12m": 1,
-        "rank_universe": 0.71,
+        "rank_universe": 0.728,
         "rank_group": 0.85,
         "rs_126_vs_proxy": 0.254015
       },
@@ -5952,7 +6768,7 @@
         "vs_200dma": 0.133686,
         "vs_50dma": 0.096883,
         "tsmom_12m": -1,
-        "rank_universe": 0.129,
+        "rank_universe": 0.146,
         "rank_group": 0.2,
         "rs_126_vs_proxy": 0.121536
       },
@@ -6054,8 +6870,8 @@
         "vs_200dma": 0.213811,
         "vs_50dma": -0.13615,
         "tsmom_12m": 1,
-        "rank_universe": 0.935,
-        "rank_group": 0.952,
+        "rank_universe": 0.94,
+        "rank_group": 0.917,
         "rs_126_vs_proxy": 0.480601
       },
       "setup": {
@@ -6156,7 +6972,7 @@
         "vs_200dma": 0.044992,
         "vs_50dma": -0.027463,
         "tsmom_12m": -1,
-        "rank_universe": 0.161,
+        "rank_universe": 0.192,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.006903
       },
@@ -6217,6 +7033,108 @@
         }
       }
     },
+    "IONQ": {
+      "ticker": "IONQ",
+      "group": "Quantum computing basket constituents (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 36.905,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.3593,
+        "r2_vs_null_pct": 40,
+        "vr": 1.0085,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.9098,
+        "macd_signal": -0.2997,
+        "macd_hist": -0.6101,
+        "macd_hist_prev": -0.4904,
+        "rsi": 40.66,
+        "mfi": 35.64,
+        "vpvma": -5.614653,
+        "vpvma_signal": -3.252674
+      },
+      "momentum": {
+        "mom_12_1": -0.029542,
+        "mom_6_1": 0.12362,
+        "ret_12m": -0.141545,
+        "ret_3m": -0.459109,
+        "ret_1m": -0.115412,
+        "dist_52w_high": -0.550432,
+        "dist_52w_low": 0.387928,
+        "vs_200dma": -0.16688,
+        "vs_50dma": -0.115215,
+        "tsmom_12m": -1,
+        "rank_universe": 0.166,
+        "rank_group": 0.6,
+        "rs_126_vs_proxy": -0.117025
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": -0.0057,
+        "swing": "LH/LL",
+        "close_pos_20": 0.426,
+        "atr_pct": 7.4,
+        "atr_pct_rank_1y": 0.278,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.58,
+        "vol_10v50": 0.84,
+        "rvol": 0.08,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 1.5348,
+          "buy_hold_return": 4.3024,
+          "excess_vs_hold": -2.7676,
+          "beat_hold": false,
+          "n_trades": 20,
+          "win_rate": 0.45
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.424,
+          "buy_hold_return": 4.3024,
+          "excess_vs_hold": -4.7264,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 4.3024,
+          "excess_vs_hold": -4.3024,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 4.3024,
+          "excess_vs_hold": -4.3024,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.3061,
+          "buy_hold_return": 4.3024,
+          "excess_vs_hold": -3.9964,
+          "beat_hold": false,
+          "n_trades": 17,
+          "win_rate": 0.588
+        }
+      }
+    },
     "IREN": {
       "ticker": "IREN",
       "group": "AI compute / datacenter operators",
@@ -6258,8 +7176,8 @@
         "vs_200dma": -0.195061,
         "vs_50dma": -0.09667,
         "tsmom_12m": 1,
-        "rank_universe": 0.605,
-        "rank_group": 0.667,
+        "rank_universe": 0.616,
+        "rank_group": 0.333,
         "rs_126_vs_proxy": -0.320226
       },
       "setup": {
@@ -6360,7 +7278,7 @@
         "vs_200dma": 0.069098,
         "vs_50dma": -0.022072,
         "tsmom_12m": 1,
-        "rank_universe": 0.444,
+        "rank_universe": 0.45,
         "rank_group": 0.45,
         "rs_126_vs_proxy": -0.000137
       },
@@ -6462,7 +7380,7 @@
         "vs_200dma": 0.117867,
         "vs_50dma": 0.019119,
         "tsmom_12m": 1,
-        "rank_universe": 0.371,
+        "rank_universe": 0.384,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.060296
       },
@@ -6564,7 +7482,7 @@
         "vs_200dma": 0.001813,
         "vs_50dma": 0.133615,
         "tsmom_12m": 1,
-        "rank_universe": 0.274,
+        "rank_universe": 0.298,
         "rank_group": 0.312,
         "rs_126_vs_proxy": -0.029536
       },
@@ -6625,6 +7543,108 @@
         }
       }
     },
+    "KRE": {
+      "ticker": "KRE",
+      "group": "Financials & banks (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 73.28,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.6787,
+        "r2_vs_null_pct": 70,
+        "vr": 0.7992,
+        "cross_rate": 15.49,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.6552,
+        "macd_signal": -0.2767,
+        "macd_hist": -0.3786,
+        "macd_hist_prev": -0.4142,
+        "rsi": 37.46,
+        "mfi": 30.43,
+        "vpvma": -2.893696,
+        "vpvma_signal": -1.374915
+      },
+      "momentum": {
+        "mom_12_1": 0.225117,
+        "mom_6_1": 0.166666,
+        "ret_12m": 0.153348,
+        "ret_3m": 0.085866,
+        "ret_1m": -0.058582,
+        "dist_52w_high": -0.059669,
+        "dist_52w_low": 0.260406,
+        "vs_200dma": 0.05213,
+        "vs_50dma": -0.030454,
+        "tsmom_12m": 1,
+        "rank_universe": 0.411,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": -0.024298
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0629,
+        "swing": "mixed",
+        "close_pos_20": 0.407,
+        "atr_pct": 1.44,
+        "atr_pct_rank_1y": 0.02,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.79,
+        "vol_10v50": 0.87,
+        "rvol": 0.05,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.3026,
+          "buy_hold_return": 0.2836,
+          "excess_vs_hold": 0.019,
+          "beat_hold": true,
+          "n_trades": 19,
+          "win_rate": 0.579
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.1775,
+          "buy_hold_return": 0.2836,
+          "excess_vs_hold": -0.4611,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.667
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2836,
+          "excess_vs_hold": -0.2836,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2836,
+          "excess_vs_hold": -0.2836,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.0491,
+          "buy_hold_return": 0.2836,
+          "excess_vs_hold": -0.3327,
+          "beat_hold": false,
+          "n_trades": 33,
+          "win_rate": 0.485
+        }
+      }
+    },
     "LITE": {
       "ticker": "LITE",
       "group": "Optics / networking",
@@ -6666,7 +7686,7 @@
         "vs_200dma": 0.285938,
         "vs_50dma": 0.066128,
         "tsmom_12m": 1,
-        "rank_universe": 0.968,
+        "rank_universe": 0.974,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.102493
       },
@@ -6768,7 +7788,7 @@
         "vs_200dma": -0.036053,
         "vs_50dma": -0.017086,
         "tsmom_12m": 1,
-        "rank_universe": 0.153,
+        "rank_universe": 0.185,
         "rank_group": 0.211,
         "rs_126_vs_proxy": null
       },
@@ -6870,8 +7890,8 @@
         "vs_200dma": 0.121774,
         "vs_50dma": -0.112729,
         "tsmom_12m": 1,
-        "rank_universe": 0.879,
-        "rank_group": 0.762,
+        "rank_universe": 0.894,
+        "rank_group": 0.75,
         "rs_126_vs_proxy": -0.040168
       },
       "setup": {
@@ -6972,8 +7992,8 @@
         "vs_200dma": -0.016062,
         "vs_50dma": -0.086017,
         "tsmom_12m": 1,
-        "rank_universe": 0.653,
-        "rank_group": 0.381,
+        "rank_universe": 0.662,
+        "rank_group": 0.333,
         "rs_126_vs_proxy": -0.178659
       },
       "setup": {
@@ -7074,8 +8094,8 @@
         "vs_200dma": 0.259226,
         "vs_50dma": -0.154809,
         "tsmom_12m": 1,
-        "rank_universe": 0.871,
-        "rank_group": 0.714,
+        "rank_universe": 0.887,
+        "rank_group": 0.708,
         "rs_126_vs_proxy": 0.357195
       },
       "setup": {
@@ -7176,7 +8196,7 @@
         "vs_200dma": 1.912394,
         "vs_50dma": 0.923211,
         "tsmom_12m": 1,
-        "rank_universe": 0.863,
+        "rank_universe": 0.881,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 1.750292
       },
@@ -7278,8 +8298,8 @@
         "vs_200dma": 0.40389,
         "vs_50dma": -0.063386,
         "tsmom_12m": 1,
-        "rank_universe": 0.895,
-        "rank_group": 0.857,
+        "rank_universe": 0.907,
+        "rank_group": 0.833,
         "rs_126_vs_proxy": 0.948334
       },
       "setup": {
@@ -7339,6 +8359,108 @@
         }
       }
     },
+    "MSFT": {
+      "ticker": "MSFT",
+      "group": "Mega-cap platforms / hyperscalers (coverage init 9/1/26, not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 495.6,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.2789,
+        "r2_vs_null_pct": 35,
+        "vr": 1.3964,
+        "cross_rate": 8.45,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 16.3329,
+        "macd_signal": 18.6892,
+        "macd_hist": -2.3563,
+        "macd_hist_prev": -1.6238,
+        "rsi": 60.04,
+        "mfi": 53.15,
+        "vpvma": 51.686711,
+        "vpvma_signal": 90.920984
+      },
+      "momentum": {
+        "mom_12_1": -0.018191,
+        "mom_6_1": 0.218848,
+        "ret_12m": -0.010774,
+        "ret_3m": 0.161915,
+        "ret_1m": 0.007555,
+        "dist_52w_high": -0.085727,
+        "dist_52w_low": 0.404643,
+        "vs_200dma": 0.149672,
+        "vs_50dma": 0.130688,
+        "tsmom_12m": -1,
+        "rank_universe": 0.172,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": 0.090954
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.0003,
+        "swing": "HH/HL",
+        "close_pos_20": 0.492,
+        "atr_pct": 2.26,
+        "atr_pct_rank_1y": 0.401,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.98,
+        "vol_10v50": 0.57,
+        "rvol": 0.04,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.0553,
+          "buy_hold_return": 0.2104,
+          "excess_vs_hold": -0.2658,
+          "beat_hold": false,
+          "n_trades": 18,
+          "win_rate": 0.278
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.0384,
+          "buy_hold_return": 0.2104,
+          "excess_vs_hold": -0.1721,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2104,
+          "excess_vs_hold": -0.2104,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2104,
+          "excess_vs_hold": -0.2104,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.3937,
+          "buy_hold_return": 0.2104,
+          "excess_vs_hold": -0.6041,
+          "beat_hold": false,
+          "n_trades": 35,
+          "win_rate": 0.343
+        }
+      }
+    },
     "MU": {
       "ticker": "MU",
       "group": "Memory & storage",
@@ -7380,7 +8502,7 @@
         "vs_200dma": 0.56761,
         "vs_50dma": -0.013214,
         "tsmom_12m": 1,
-        "rank_universe": 0.984,
+        "rank_universe": 0.987,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.764369
       },
@@ -7482,7 +8604,7 @@
         "vs_200dma": 0.305262,
         "vs_50dma": -0.076574,
         "tsmom_12m": 1,
-        "rank_universe": 0.903,
+        "rank_universe": 0.914,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.648853
       },
@@ -7584,7 +8706,7 @@
         "vs_200dma": 0.136455,
         "vs_50dma": 0.165436,
         "tsmom_12m": 1,
-        "rank_universe": 0.468,
+        "rank_universe": 0.477,
         "rank_group": 0.625,
         "rs_126_vs_proxy": 0.152886
       },
@@ -7686,7 +8808,7 @@
         "vs_200dma": 0.290166,
         "vs_50dma": 0.0307,
         "tsmom_12m": 1,
-        "rank_universe": 0.508,
+        "rank_universe": 0.517,
         "rank_group": 0.778,
         "rs_126_vs_proxy": 0.264043
       },
@@ -7788,8 +8910,8 @@
         "vs_200dma": 0.038844,
         "vs_50dma": -0.077755,
         "tsmom_12m": 1,
-        "rank_universe": 0.815,
-        "rank_group": 0.167,
+        "rank_universe": 0.834,
+        "rank_group": 0.286,
         "rs_126_vs_proxy": -0.117434
       },
       "setup": {
@@ -7890,7 +9012,7 @@
         "vs_200dma": 0.200828,
         "vs_50dma": 0.252041,
         "tsmom_12m": -1,
-        "rank_universe": 0.056,
+        "rank_universe": 0.053,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -2e-06
       },
@@ -7951,6 +9073,108 @@
         }
       }
     },
+    "NRG": {
+      "ticker": "NRG",
+      "group": "Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 109.465,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.5088,
+        "r2_vs_null_pct": 55,
+        "vr": 0.7154,
+        "cross_rate": 8.45,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -5.0686,
+        "macd_signal": -4.8384,
+        "macd_hist": -0.2302,
+        "macd_hist_prev": -0.2709,
+        "rsi": 37.04,
+        "mfi": 31.79,
+        "vpvma": -83.474399,
+        "vpvma_signal": -63.33016
+      },
+      "momentum": {
+        "mom_12_1": -0.183473,
+        "mom_6_1": -0.279594,
+        "ret_12m": -0.236319,
+        "ret_3m": -0.178726,
+        "ret_1m": -0.064722,
+        "dist_52w_high": -0.405179,
+        "dist_52w_low": 0.0,
+        "vs_200dma": -0.256155,
+        "vs_50dma": -0.148925,
+        "tsmom_12m": -1,
+        "rank_universe": 0.106,
+        "rank_group": 0.286,
+        "rs_126_vs_proxy": -0.401442
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": -0.0692,
+        "swing": "LH/LL",
+        "close_pos_20": 0.299,
+        "atr_pct": 4.52,
+        "atr_pct_rank_1y": 0.718,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.66,
+        "vol_10v50": 0.89,
+        "rvol": 0.01,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.1387,
+          "buy_hold_return": 0.3726,
+          "excess_vs_hold": -0.5113,
+          "beat_hold": false,
+          "n_trades": 22,
+          "win_rate": 0.409
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.042,
+          "buy_hold_return": 0.3726,
+          "excess_vs_hold": -0.4146,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.3726,
+          "excess_vs_hold": -0.3726,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.3726,
+          "excess_vs_hold": -0.3726,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.322,
+          "buy_hold_return": 0.3726,
+          "excess_vs_hold": -0.6946,
+          "beat_hold": false,
+          "n_trades": 26,
+          "win_rate": 0.346
+        }
+      }
+    },
     "NVDA": {
       "ticker": "NVDA",
       "group": "Semiconductors: compute, design, analog/power",
@@ -7992,8 +9216,8 @@
         "vs_200dma": 0.108927,
         "vs_50dma": 0.041391,
         "tsmom_12m": 1,
-        "rank_universe": 0.355,
-        "rank_group": 0.143,
+        "rank_universe": 0.371,
+        "rank_group": 0.125,
         "rs_126_vs_proxy": -0.132744
       },
       "setup": {
@@ -8094,7 +9318,7 @@
         "vs_200dma": -0.026957,
         "vs_50dma": -0.058423,
         "tsmom_12m": -1,
-        "rank_universe": 0.121,
+        "rank_universe": 0.132,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.133463
       },
@@ -8196,8 +9420,8 @@
         "vs_200dma": -0.149153,
         "vs_50dma": -0.18249,
         "tsmom_12m": 1,
-        "rank_universe": 0.758,
-        "rank_group": 0.571,
+        "rank_universe": 0.775,
+        "rank_group": 0.542,
         "rs_126_vs_proxy": -0.118344
       },
       "setup": {
@@ -8298,7 +9522,7 @@
         "vs_200dma": 0.654797,
         "vs_50dma": 0.164015,
         "tsmom_12m": 1,
-        "rank_universe": 0.613,
+        "rank_universe": 0.623,
         "rank_group": 0.889,
         "rs_126_vs_proxy": 0.817812
       },
@@ -8359,6 +9583,210 @@
         }
       }
     },
+    "ON": {
+      "ticker": "ON",
+      "group": "Semiconductors: compute, design, analog/power",
+      "proxy": "SMH",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 73.085,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.6402,
+        "r2_vs_null_pct": 65,
+        "vr": 0.7066,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -3.8917,
+        "macd_signal": -4.164,
+        "macd_hist": 0.2723,
+        "macd_hist_prev": 0.1996,
+        "rsi": 38.54,
+        "mfi": 39.11,
+        "vpvma": -42.321375,
+        "vpvma_signal": -40.944542
+      },
+      "momentum": {
+        "mom_12_1": 0.650593,
+        "mom_6_1": 0.29186,
+        "ret_12m": 0.493359,
+        "ret_3m": -0.454304,
+        "ret_1m": -0.095259,
+        "dist_52w_high": -0.454304,
+        "dist_52w_low": 0.627728,
+        "vs_200dma": -0.063943,
+        "vs_50dma": -0.142902,
+        "tsmom_12m": 1,
+        "rank_universe": 0.695,
+        "rank_group": 0.375,
+        "rs_126_vs_proxy": -0.161677
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.1104,
+        "swing": "LH/LL",
+        "close_pos_20": 0.414,
+        "atr_pct": 4.58,
+        "atr_pct_rank_1y": 0.552,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.71,
+        "vol_10v50": 0.55,
+        "rvol": 0.03,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.1318,
+          "buy_hold_return": 0.0329,
+          "excess_vs_hold": 0.099,
+          "beat_hold": true,
+          "n_trades": 30,
+          "win_rate": 0.4
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.2481,
+          "buy_hold_return": 0.0329,
+          "excess_vs_hold": -0.281,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.4541,
+          "buy_hold_return": 0.0329,
+          "excess_vs_hold": 0.4213,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.0329,
+          "excess_vs_hold": -0.0329,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.4623,
+          "buy_hold_return": 0.0329,
+          "excess_vs_hold": 0.4295,
+          "beat_hold": true,
+          "n_trades": 23,
+          "win_rate": 0.609
+        }
+      }
+    },
+    "ORCL": {
+      "ticker": "ORCL",
+      "group": "Mega-cap platforms / hyperscalers (coverage init 9/1/26, not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 141.6619,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.4705,
+        "r2_vs_null_pct": 50,
+        "vr": 1.5605,
+        "cross_rate": 4.23,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 0.8739,
+        "macd_signal": 1.2017,
+        "macd_hist": -0.3278,
+        "macd_hist_prev": 0.0601,
+        "rsi": 46.73,
+        "mfi": 44.47,
+        "vpvma": -16.706152,
+        "vpvma_signal": -36.158696
+      },
+      "momentum": {
+        "mom_12_1": -0.345756,
+        "mom_6_1": -0.036833,
+        "ret_12m": -0.364063,
+        "ret_3m": -0.382821,
+        "ret_1m": -0.027982,
+        "dist_52w_high": -0.568538,
+        "dist_52w_low": 0.23195,
+        "vs_200dma": -0.163812,
+        "vs_50dma": 0.014042,
+        "tsmom_12m": -1,
+        "rank_universe": 0.066,
+        "rank_group": 0.5,
+        "rs_126_vs_proxy": -0.168305
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": -0.1011,
+        "swing": "HH/HL",
+        "close_pos_20": 0.48,
+        "atr_pct": 4.43,
+        "atr_pct_rank_1y": 0.111,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.7,
+        "vol_10v50": 0.54,
+        "rvol": 0.05,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.3068,
+          "buy_hold_return": 0.0155,
+          "excess_vs_hold": -0.3223,
+          "beat_hold": false,
+          "n_trades": 16,
+          "win_rate": 0.25
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.6873,
+          "buy_hold_return": 0.0155,
+          "excess_vs_hold": -0.7028,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.0
+        },
+        "macd_rsi": {
+          "strategy_return": 0.1801,
+          "buy_hold_return": 0.0155,
+          "excess_vs_hold": 0.1646,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.0155,
+          "excess_vs_hold": -0.0155,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.4939,
+          "buy_hold_return": 0.0155,
+          "excess_vs_hold": -0.5094,
+          "beat_hold": false,
+          "n_trades": 23,
+          "win_rate": 0.435
+        }
+      }
+    },
     "PAAS": {
       "ticker": "PAAS",
       "group": "Precious-metals miners & royalty",
@@ -8400,7 +9828,7 @@
         "vs_200dma": -0.040944,
         "vs_50dma": 0.069107,
         "tsmom_12m": 1,
-        "rank_universe": 0.476,
+        "rank_universe": 0.483,
         "rank_group": 0.688,
         "rs_126_vs_proxy": -0.094586
       },
@@ -8502,7 +9930,7 @@
         "vs_200dma": 0.566383,
         "vs_50dma": 0.044041,
         "tsmom_12m": 1,
-        "rank_universe": 0.726,
+        "rank_universe": 0.742,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.837454
       },
@@ -8604,8 +10032,8 @@
         "vs_200dma": 0.316278,
         "vs_50dma": -0.205639,
         "tsmom_12m": 1,
-        "rank_universe": 0.823,
-        "rank_group": 0.619,
+        "rank_universe": 0.848,
+        "rank_group": 0.625,
         "rs_126_vs_proxy": 0.801267
       },
       "setup": {
@@ -8706,8 +10134,8 @@
         "vs_200dma": -0.113001,
         "vs_50dma": -0.240765,
         "tsmom_12m": 1,
-        "rank_universe": 0.516,
-        "rank_group": 0.238,
+        "rank_universe": 0.523,
+        "rank_group": 0.208,
         "rs_126_vs_proxy": -0.254309
       },
       "setup": {
@@ -8808,7 +10236,7 @@
         "vs_200dma": 0.024667,
         "vs_50dma": -0.033669,
         "tsmom_12m": -1,
-        "rank_universe": 0.105,
+        "rank_universe": 0.119,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.010022
       },
@@ -8869,6 +10297,108 @@
         }
       }
     },
+    "QBTS": {
+      "ticker": "QBTS",
+      "group": "Quantum computing basket constituents (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 16.335,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.2606,
+        "r2_vs_null_pct": 30,
+        "vr": 0.844,
+        "cross_rate": 12.68,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.8284,
+        "macd_signal": -0.4864,
+        "macd_hist": -0.342,
+        "macd_hist_prev": -0.3296,
+        "rsi": 38.5,
+        "mfi": 18.27,
+        "vpvma": -2.273932,
+        "vpvma_signal": -1.354024
+      },
+      "momentum": {
+        "mom_12_1": 0.377287,
+        "mom_6_1": 0.154416,
+        "ret_12m": 0.030599,
+        "ret_3m": -0.407078,
+        "ret_1m": -0.251718,
+        "dist_52w_high": -0.635217,
+        "dist_52w_low": 0.258475,
+        "vs_200dma": -0.243099,
+        "vs_50dma": -0.164121,
+        "tsmom_12m": 1,
+        "rank_universe": 0.543,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": -0.232611
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": -0.0103,
+        "swing": "mixed",
+        "close_pos_20": 0.476,
+        "atr_pct": 7.56,
+        "atr_pct_rank_1y": 0.179,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.82,
+        "vol_10v50": 0.85,
+        "rvol": 0.06,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 9.6891,
+          "buy_hold_return": 16.3592,
+          "excess_vs_hold": -6.6701,
+          "beat_hold": false,
+          "n_trades": 13,
+          "win_rate": 0.462
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 5.3539,
+          "buy_hold_return": 16.3592,
+          "excess_vs_hold": -11.0053,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 16.3592,
+          "excess_vs_hold": -16.3592,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 16.3592,
+          "excess_vs_hold": -16.3592,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.0648,
+          "buy_hold_return": 16.3592,
+          "excess_vs_hold": -16.424,
+          "beat_hold": false,
+          "n_trades": 13,
+          "win_rate": 0.308
+        }
+      }
+    },
     "QLYS": {
       "ticker": "QLYS",
       "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
@@ -8910,7 +10440,7 @@
         "vs_200dma": 0.424859,
         "vs_50dma": 0.106133,
         "tsmom_12m": 1,
-        "rank_universe": 0.298,
+        "rank_universe": 0.325,
         "rank_group": 0.556,
         "rs_126_vs_proxy": 0.439655
       },
@@ -9012,7 +10542,7 @@
         "vs_200dma": 0.078584,
         "vs_50dma": -0.004699,
         "tsmom_12m": 1,
-        "rank_universe": 0.411,
+        "rank_universe": 0.424,
         "rank_group": 0.4,
         "rs_126_vs_proxy": 0.047446
       },
@@ -9114,7 +10644,7 @@
         "vs_200dma": 0.109709,
         "vs_50dma": -0.038249,
         "tsmom_12m": 1,
-        "rank_universe": 0.621,
+        "rank_universe": 0.629,
         "rank_group": 0.65,
         "rs_126_vs_proxy": 0.147157
       },
@@ -9172,6 +10702,108 @@
           "beat_hold": false,
           "n_trades": 126,
           "win_rate": 0.587
+        }
+      }
+    },
+    "QUBT": {
+      "ticker": "QUBT",
+      "group": "Quantum computing basket constituents (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 7.845,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.3971,
+        "r2_vs_null_pct": 45,
+        "vr": 0.6494,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.1645,
+        "macd_signal": -0.0895,
+        "macd_hist": -0.075,
+        "macd_hist_prev": -0.0615,
+        "rsi": 41.8,
+        "mfi": 36.55,
+        "vpvma": -0.325748,
+        "vpvma_signal": -0.169407
+      },
+      "momentum": {
+        "mom_12_1": -0.386711,
+        "mom_6_1": 0.132515,
+        "ret_12m": -0.478738,
+        "ret_3m": -0.299554,
+        "ret_1m": -0.150054,
+        "dist_52w_high": -0.681357,
+        "dist_52w_low": 0.243265,
+        "vs_200dma": -0.177774,
+        "vs_50dma": -0.082113,
+        "tsmom_12m": -1,
+        "rank_universe": 0.04,
+        "rank_group": 0.2,
+        "rs_126_vs_proxy": -0.144887
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": -0.0801,
+        "swing": "LH/LL",
+        "close_pos_20": 0.473,
+        "atr_pct": 6.06,
+        "atr_pct_rank_1y": 0.008,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.89,
+        "vol_10v50": 0.73,
+        "rvol": 0.04,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 8.9257,
+          "buy_hold_return": 11.4722,
+          "excess_vs_hold": -2.5464,
+          "beat_hold": false,
+          "n_trades": 20,
+          "win_rate": 0.5
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 3.4446,
+          "buy_hold_return": 11.4722,
+          "excess_vs_hold": -8.0276,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 11.4722,
+          "excess_vs_hold": -11.4722,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 11.4722,
+          "excess_vs_hold": -11.4722,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.3998,
+          "buy_hold_return": 11.4722,
+          "excess_vs_hold": -11.872,
+          "beat_hold": false,
+          "n_trades": 14,
+          "win_rate": 0.214
         }
       }
     },
@@ -9318,7 +10950,7 @@
         "vs_200dma": 0.079138,
         "vs_50dma": 0.170954,
         "tsmom_12m": 1,
-        "rank_universe": 0.29,
+        "rank_universe": 0.318,
         "rank_group": 0.375,
         "rs_126_vs_proxy": 0.009451
       },
@@ -9379,6 +11011,108 @@
         }
       }
     },
+    "RGTI": {
+      "ticker": "RGTI",
+      "group": "Quantum computing basket constituents (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 14.66,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.2384,
+        "r2_vs_null_pct": 30,
+        "vr": 0.9253,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.4348,
+        "macd_signal": -0.1455,
+        "macd_hist": -0.2894,
+        "macd_hist_prev": -0.2544,
+        "rsi": 40.04,
+        "mfi": 34.15,
+        "vpvma": -1.290349,
+        "vpvma_signal": -0.285809
+      },
+      "momentum": {
+        "mom_12_1": 0.124356,
+        "mom_6_1": -0.017455,
+        "ret_12m": -0.055412,
+        "ret_3m": -0.391575,
+        "ret_1m": -0.159885,
+        "dist_52w_high": -0.739794,
+        "dist_52w_low": 0.136434,
+        "vs_200dma": -0.243899,
+        "vs_50dma": -0.115573,
+        "tsmom_12m": -1,
+        "rank_universe": 0.305,
+        "rank_group": 0.8,
+        "rs_126_vs_proxy": -0.266704
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": -0.0578,
+        "swing": "mixed",
+        "close_pos_20": 0.446,
+        "atr_pct": 7.19,
+        "atr_pct_rank_1y": 0.131,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.76,
+        "vol_10v50": 0.72,
+        "rvol": 0.05,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 2.249,
+          "buy_hold_return": 16.6414,
+          "excess_vs_hold": -14.3924,
+          "beat_hold": false,
+          "n_trades": 16,
+          "win_rate": 0.375
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 5.7168,
+          "buy_hold_return": 16.6414,
+          "excess_vs_hold": -10.9246,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.667
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 16.6414,
+          "excess_vs_hold": -16.6414,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 16.6414,
+          "excess_vs_hold": -16.6414,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 4.1231,
+          "buy_hold_return": 16.6414,
+          "excess_vs_hold": -12.5183,
+          "beat_hold": false,
+          "n_trades": 15,
+          "win_rate": 0.533
+        }
+      }
+    },
     "RING": {
       "ticker": "RING",
       "group": "Metals ETFs",
@@ -9420,7 +11154,7 @@
         "vs_200dma": 0.07649,
         "vs_50dma": 0.156266,
         "tsmom_12m": 1,
-        "rank_universe": 0.403,
+        "rank_universe": 0.417,
         "rank_group": 0.429,
         "rs_126_vs_proxy": 0.029689
       },
@@ -9522,7 +11256,7 @@
         "vs_200dma": 0.102997,
         "vs_50dma": 0.034986,
         "tsmom_12m": 1,
-        "rank_universe": 0.25,
+        "rank_universe": 0.278,
         "rank_group": 0.3,
         "rs_126_vs_proxy": 0.056915
       },
@@ -9624,7 +11358,7 @@
         "vs_200dma": 0.291534,
         "vs_50dma": 0.055772,
         "tsmom_12m": 1,
-        "rank_universe": 0.218,
+        "rank_universe": 0.238,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.231412
       },
@@ -9726,7 +11460,7 @@
         "vs_200dma": 0.065143,
         "vs_50dma": 0.137178,
         "tsmom_12m": 1,
-        "rank_universe": 0.379,
+        "rank_universe": 0.391,
         "rank_group": 0.143,
         "rs_126_vs_proxy": -0.00693
       },
@@ -9828,7 +11562,7 @@
         "vs_200dma": 0.064883,
         "vs_50dma": 0.057936,
         "tsmom_12m": -1,
-        "rank_universe": 0.097,
+        "rank_universe": 0.113,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.091243
       },
@@ -9930,7 +11664,7 @@
         "vs_200dma": -0.100111,
         "vs_50dma": 0.04858,
         "tsmom_12m": 1,
-        "rank_universe": 0.532,
+        "rank_universe": 0.55,
         "rank_group": 0.789,
         "rs_126_vs_proxy": null
       },
@@ -10032,7 +11766,7 @@
         "vs_200dma": 0.093734,
         "vs_50dma": 0.008333,
         "tsmom_12m": 1,
-        "rank_universe": 0.339,
+        "rank_universe": 0.358,
         "rank_group": 0.2,
         "rs_126_vs_proxy": -0.133066
       },
@@ -10134,7 +11868,7 @@
         "vs_200dma": 0.057707,
         "vs_50dma": 0.135638,
         "tsmom_12m": 1,
-        "rank_universe": 0.484,
+        "rank_universe": 0.497,
         "rank_group": 0.714,
         "rs_126_vs_proxy": -0.014995
       },
@@ -10236,7 +11970,7 @@
         "vs_200dma": 0.013155,
         "vs_50dma": 0.100169,
         "tsmom_12m": 1,
-        "rank_universe": 0.54,
+        "rank_universe": 0.556,
         "rank_group": 0.857,
         "rs_126_vs_proxy": -0.074497
       },
@@ -10338,7 +12072,7 @@
         "vs_200dma": -0.110493,
         "vs_50dma": 0.041457,
         "tsmom_12m": 1,
-        "rank_universe": 0.565,
+        "rank_universe": 0.583,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.13783
       },
@@ -10440,7 +12174,7 @@
         "vs_200dma": 0.149778,
         "vs_50dma": -0.056911,
         "tsmom_12m": 1,
-        "rank_universe": 0.742,
+        "rank_universe": 0.755,
         "rank_group": 0.9,
         "rs_126_vs_proxy": 0.238559
       },
@@ -10644,7 +12378,7 @@
         "vs_200dma": 0.168339,
         "vs_50dma": -0.081076,
         "tsmom_12m": 1,
-        "rank_universe": 0.806,
+        "rank_universe": 0.821,
         "rank_group": 0.95,
         "rs_126_vs_proxy": 0.329051
       },
@@ -10746,7 +12480,7 @@
         "vs_200dma": 0.071935,
         "vs_50dma": 0.009369,
         "tsmom_12m": 1,
-        "rank_universe": 0.347,
+        "rank_universe": 0.364,
         "rank_group": 0.35,
         "rs_126_vs_proxy": 0.0
       },
@@ -10848,7 +12582,7 @@
         "vs_200dma": 0.285492,
         "vs_50dma": 0.179402,
         "tsmom_12m": 1,
-        "rank_universe": 0.548,
+        "rank_universe": 0.563,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.376787
       },
@@ -10909,6 +12643,108 @@
         }
       }
     },
+    "STM": {
+      "ticker": "STM",
+      "group": "Semiconductors: compute, design, analog/power",
+      "proxy": "SMH",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 50.215,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.195,
+        "r2_vs_null_pct": 25,
+        "vr": 0.6554,
+        "cross_rate": 7.04,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -2.3248,
+        "macd_signal": -2.6416,
+        "macd_hist": 0.3168,
+        "macd_hist_prev": 0.256,
+        "rsi": 41.9,
+        "mfi": 39.74,
+        "vpvma": -14.061966,
+        "vpvma_signal": -15.223171
+      },
+      "momentum": {
+        "mom_12_1": 1.085824,
+        "mom_6_1": 0.63324,
+        "ret_12m": 0.931753,
+        "ret_3m": -0.369319,
+        "ret_1m": -0.073866,
+        "dist_52w_high": -0.371606,
+        "dist_52w_low": 1.368632,
+        "vs_200dma": 0.115567,
+        "vs_50dma": -0.146524,
+        "tsmom_12m": 1,
+        "rank_universe": 0.828,
+        "rank_group": 0.583,
+        "rs_126_vs_proxy": 0.084915
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.2725,
+        "swing": "mixed",
+        "close_pos_20": 0.388,
+        "atr_pct": 4.36,
+        "atr_pct_rank_1y": 0.687,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.63,
+        "vol_10v50": 0.63,
+        "rvol": 0.06,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.8144,
+          "buy_hold_return": 0.697,
+          "excess_vs_hold": 0.1174,
+          "beat_hold": true,
+          "n_trades": 21,
+          "win_rate": 0.381
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 1.0046,
+          "buy_hold_return": 0.697,
+          "excess_vs_hold": 0.3076,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.697,
+          "excess_vs_hold": -0.697,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.697,
+          "excess_vs_hold": -0.697,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0574,
+          "buy_hold_return": 0.697,
+          "excess_vs_hold": -0.6396,
+          "beat_hold": false,
+          "n_trades": 24,
+          "win_rate": 0.458
+        }
+      }
+    },
     "TENB": {
       "ticker": "TENB",
       "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
@@ -10950,7 +12786,7 @@
         "vs_200dma": 0.367268,
         "vs_50dma": -0.007599,
         "tsmom_12m": 1,
-        "rank_universe": 0.282,
+        "rank_universe": 0.311,
         "rank_group": 0.444,
         "rs_126_vs_proxy": 0.407589
       },
@@ -11052,7 +12888,7 @@
         "vs_200dma": -0.015659,
         "vs_50dma": 0.072341,
         "tsmom_12m": 1,
-        "rank_universe": 0.234,
+        "rank_universe": 0.252,
         "rank_group": 0.188,
         "rs_126_vs_proxy": -0.059198
       },
@@ -11154,7 +12990,7 @@
         "vs_200dma": 0.203195,
         "vs_50dma": 0.002998,
         "tsmom_12m": 1,
-        "rank_universe": 0.573,
+        "rank_universe": 0.589,
         "rank_group": 0.55,
         "rs_126_vs_proxy": 0.286372
       },
@@ -11215,6 +13051,108 @@
         }
       }
     },
+    "TLN": {
+      "ticker": "TLN",
+      "group": "Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 293.75,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.2935,
+        "r2_vs_null_pct": 35,
+        "vr": 1.3228,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -16.5335,
+        "macd_signal": -14.1792,
+        "macd_hist": -2.3543,
+        "macd_hist_prev": -2.7856,
+        "rsi": 31.69,
+        "mfi": 9.27,
+        "vpvma": -555.742033,
+        "vpvma_signal": -406.158617
+      },
+      "momentum": {
+        "mom_12_1": -0.093696,
+        "mom_6_1": 0.010191,
+        "ret_12m": -0.21698,
+        "ret_3m": -0.226139,
+        "ret_1m": -0.136029,
+        "dist_52w_high": -0.341131,
+        "dist_52w_low": 6.8e-05,
+        "vs_200dma": -0.180716,
+        "vs_50dma": -0.164101,
+        "tsmom_12m": -1,
+        "rank_universe": 0.152,
+        "rank_group": 0.571,
+        "rs_126_vs_proxy": -0.224663
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": 0.0079,
+        "swing": "LH/LL",
+        "close_pos_20": 0.388,
+        "atr_pct": 5.1,
+        "atr_pct_rank_1y": 0.484,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.71,
+        "vol_10v50": 0.85,
+        "rvol": 0.02,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.1092,
+          "buy_hold_return": 1.1244,
+          "excess_vs_hold": -1.2336,
+          "beat_hold": false,
+          "n_trades": 21,
+          "win_rate": 0.571
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.0868,
+          "buy_hold_return": 1.1244,
+          "excess_vs_hold": -1.2112,
+          "beat_hold": false,
+          "n_trades": 4,
+          "win_rate": 0.25
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.1244,
+          "excess_vs_hold": -1.1244,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.1244,
+          "excess_vs_hold": -1.1244,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 1.9133,
+          "buy_hold_return": 1.1244,
+          "excess_vs_hold": 0.789,
+          "beat_hold": true,
+          "n_trades": 22,
+          "win_rate": 0.636
+        }
+      }
+    },
     "TLT": {
       "ticker": "TLT",
       "group": "Macro / benchmarks",
@@ -11256,7 +13194,7 @@
         "vs_200dma": -0.05191,
         "vs_50dma": -0.021925,
         "tsmom_12m": -1,
-        "rank_universe": 0.145,
+        "rank_universe": 0.179,
         "rank_group": 0.158,
         "rs_126_vs_proxy": null
       },
@@ -11358,8 +13296,8 @@
         "vs_200dma": 0.116597,
         "vs_50dma": -0.017614,
         "tsmom_12m": 1,
-        "rank_universe": 0.718,
-        "rank_group": 0.524,
+        "rank_universe": 0.735,
+        "rank_group": 0.5,
         "rs_126_vs_proxy": -0.154769
       },
       "setup": {
@@ -11460,8 +13398,8 @@
         "vs_200dma": 0.064781,
         "vs_50dma": -0.105041,
         "tsmom_12m": 1,
-        "rank_universe": 0.524,
-        "rank_group": 0.286,
+        "rank_universe": 0.536,
+        "rank_group": 0.25,
         "rs_126_vs_proxy": -0.094257
       },
       "setup": {
@@ -11521,6 +13459,108 @@
         }
       }
     },
+    "UFO": {
+      "ticker": "UFO",
+      "group": "Space (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 42.8022,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.5224,
+        "r2_vs_null_pct": 55,
+        "vr": 1.2545,
+        "cross_rate": 4.23,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.9494,
+        "macd_signal": -0.5729,
+        "macd_hist": -0.3764,
+        "macd_hist_prev": -0.3709,
+        "rsi": 32.44,
+        "mfi": 22.26,
+        "vpvma": -4.805373,
+        "vpvma_signal": -4.042442
+      },
+      "momentum": {
+        "mom_12_1": 0.414525,
+        "mom_6_1": 0.02562,
+        "ret_12m": 0.272752,
+        "ret_3m": -0.257776,
+        "ret_1m": -0.100227,
+        "dist_52w_high": -0.368746,
+        "dist_52w_low": 0.361177,
+        "vs_200dma": -0.078184,
+        "vs_50dma": -0.069919,
+        "tsmom_12m": 1,
+        "rank_universe": 0.576,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": -0.1802
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0314,
+        "swing": "LH/LL",
+        "close_pos_20": 0.385,
+        "atr_pct": 2.49,
+        "atr_pct_rank_1y": 0.111,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.55,
+        "vol_10v50": 0.38,
+        "rvol": 0.02,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.9198,
+          "buy_hold_return": 1.3099,
+          "excess_vs_hold": -0.3901,
+          "beat_hold": false,
+          "n_trades": 17,
+          "win_rate": 0.529
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.9392,
+          "buy_hold_return": 1.3099,
+          "excess_vs_hold": -0.3707,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 1.0
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 1.3099,
+          "excess_vs_hold": -1.3099,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.3179,
+          "buy_hold_return": 1.3099,
+          "excess_vs_hold": -0.992,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "vpvma": {
+          "strategy_return": 0.7629,
+          "buy_hold_return": 1.3099,
+          "excess_vs_hold": -0.547,
+          "beat_hold": false,
+          "n_trades": 18,
+          "win_rate": 0.667
+        }
+      }
+    },
     "UUP": {
       "ticker": "UUP",
       "group": "Macro / benchmarks",
@@ -11562,7 +13602,7 @@
         "vs_200dma": 0.017359,
         "vs_50dma": -0.002031,
         "tsmom_12m": 1,
-        "rank_universe": 0.226,
+        "rank_universe": 0.245,
         "rank_group": 0.421,
         "rs_126_vs_proxy": null
       },
@@ -11623,6 +13663,312 @@
         }
       }
     },
+    "VICR": {
+      "ticker": "VICR",
+      "group": "Semiconductors: compute, design, analog/power",
+      "proxy": "SMH",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 176.88,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.4457,
+        "r2_vs_null_pct": 50,
+        "vr": 0.9416,
+        "cross_rate": 8.45,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -14.5181,
+        "macd_signal": -12.2276,
+        "macd_hist": -2.2905,
+        "macd_hist_prev": -2.1246,
+        "rsi": 35.61,
+        "mfi": 29.64,
+        "vpvma": -454.489309,
+        "vpvma_signal": -416.43884
+      },
+      "momentum": {
+        "mom_12_1": 3.487418,
+        "mom_6_1": 0.114622,
+        "ret_12m": 2.504656,
+        "ret_3m": -0.464779,
+        "ret_1m": -0.219004,
+        "dist_52w_high": -0.534257,
+        "dist_52w_low": 2.650021,
+        "vs_200dma": -0.121762,
+        "vs_50dma": -0.256992,
+        "tsmom_12m": 1,
+        "rank_universe": 0.96,
+        "rank_group": 0.958,
+        "rs_126_vs_proxy": -0.375621
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.2244,
+        "swing": "mixed",
+        "close_pos_20": 0.411,
+        "atr_pct": 8.73,
+        "atr_pct_rank_1y": 0.726,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.67,
+        "vol_10v50": 0.73,
+        "rvol": 0.02,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.1601,
+          "buy_hold_return": 3.9505,
+          "excess_vs_hold": -3.7904,
+          "beat_hold": false,
+          "n_trades": 20,
+          "win_rate": 0.35
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 2.6527,
+          "buy_hold_return": 3.9505,
+          "excess_vs_hold": -1.2977,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 3.9505,
+          "excess_vs_hold": -3.9505,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 3.9505,
+          "excess_vs_hold": -3.9505,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.2963,
+          "buy_hold_return": 3.9505,
+          "excess_vs_hold": -3.6542,
+          "beat_hold": false,
+          "n_trades": 16,
+          "win_rate": 0.5
+        }
+      }
+    },
+    "VRT": {
+      "ticker": "VRT",
+      "group": "Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 255.72,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.6379,
+        "r2_vs_null_pct": 65,
+        "vr": 0.9067,
+        "cross_rate": 14.08,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -7.3696,
+        "macd_signal": -6.9766,
+        "macd_hist": -0.3929,
+        "macd_hist_prev": -0.4016,
+        "rsi": 41.78,
+        "mfi": 41.45,
+        "vpvma": -296.973456,
+        "vpvma_signal": -249.381234
+      },
+      "momentum": {
+        "mom_12_1": 1.179077,
+        "mom_6_1": 0.074699,
+        "ret_12m": 1.064363,
+        "ret_3m": -0.228297,
+        "ret_1m": -0.052643,
+        "dist_52w_high": -0.320309,
+        "dist_52w_low": 1.099163,
+        "vs_200dma": -0.002416,
+        "vs_50dma": -0.101257,
+        "tsmom_12m": 1,
+        "rank_universe": 0.841,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": -0.095541
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.1093,
+        "swing": "mixed",
+        "close_pos_20": 0.449,
+        "atr_pct": 5.37,
+        "atr_pct_rank_1y": 0.46,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.84,
+        "vol_10v50": 0.66,
+        "rvol": 0.04,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.4922,
+          "buy_hold_return": 2.4005,
+          "excess_vs_hold": -1.9083,
+          "beat_hold": false,
+          "n_trades": 19,
+          "win_rate": 0.368
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.9616,
+          "buy_hold_return": 2.4005,
+          "excess_vs_hold": -1.4389,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.667
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 2.4005,
+          "excess_vs_hold": -2.4005,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 2.4005,
+          "excess_vs_hold": -2.4005,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.1289,
+          "buy_hold_return": 2.4005,
+          "excess_vs_hold": -2.5294,
+          "beat_hold": false,
+          "n_trades": 12,
+          "win_rate": 0.5
+        }
+      }
+    },
+    "VST": {
+      "ticker": "VST",
+      "group": "Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 137.35,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.165,
+        "r2_vs_null_pct": 25,
+        "vr": 1.1055,
+        "cross_rate": 15.49,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -3.5649,
+        "macd_signal": -3.6942,
+        "macd_hist": 0.1293,
+        "macd_hist_prev": 0.0778,
+        "rsi": 40.5,
+        "mfi": 29.06,
+        "vpvma": -76.735812,
+        "vpvma_signal": -67.765558
+      },
+      "momentum": {
+        "mom_12_1": -0.225115,
+        "mom_6_1": -0.120799,
+        "ret_12m": -0.256926,
+        "ret_3m": -0.105706,
+        "ret_1m": -0.041053,
+        "dist_52w_high": -0.369723,
+        "dist_52w_low": 0.019598,
+        "vs_200dma": -0.130772,
+        "vs_50dma": -0.085932,
+        "tsmom_12m": -1,
+        "rank_universe": 0.093,
+        "rank_group": 0.143,
+        "rs_126_vs_proxy": -0.251019
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": -0.0388,
+        "swing": "LH/LL",
+        "close_pos_20": 0.422,
+        "atr_pct": 3.57,
+        "atr_pct_rank_1y": 0.004,
+        "vol_state": "contracted",
+        "ud_vol_50d": 0.78,
+        "vol_10v50": 0.86,
+        "rvol": 0.05,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.3201,
+          "buy_hold_return": 0.8134,
+          "excess_vs_hold": -1.1335,
+          "beat_hold": false,
+          "n_trades": 23,
+          "win_rate": 0.435
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.4761,
+          "buy_hold_return": 0.8134,
+          "excess_vs_hold": -1.2896,
+          "beat_hold": false,
+          "n_trades": 5,
+          "win_rate": 0.2
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.8134,
+          "excess_vs_hold": -0.8134,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.8134,
+          "excess_vs_hold": -0.8134,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.2276,
+          "buy_hold_return": 0.8134,
+          "excess_vs_hold": -1.041,
+          "beat_hold": false,
+          "n_trades": 31,
+          "win_rate": 0.484
+        }
+      }
+    },
     "WCLD": {
       "ticker": "WCLD",
       "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
@@ -11664,7 +14010,7 @@
         "vs_200dma": 0.303748,
         "vs_50dma": 0.147859,
         "tsmom_12m": 1,
-        "rank_universe": 0.177,
+        "rank_universe": 0.205,
         "rank_group": 0.222,
         "rs_126_vs_proxy": 0.16825
       },
@@ -11766,7 +14112,7 @@
         "vs_200dma": 0.126731,
         "vs_50dma": 0.171693,
         "tsmom_12m": 1,
-        "rank_universe": 0.258,
+        "rank_universe": 0.285,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.067846
       },
@@ -11868,7 +14214,7 @@
         "vs_200dma": 0.136559,
         "vs_50dma": -0.051745,
         "tsmom_12m": 1,
-        "rank_universe": 0.637,
+        "rank_universe": 0.649,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.165751
       },
@@ -11929,6 +14275,414 @@
         }
       }
     },
+    "WULF": {
+      "ticker": "WULF",
+      "group": "AI compute / datacenter operators",
+      "proxy": "SMH",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 14.535,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.5709,
+        "r2_vs_null_pct": 60,
+        "vr": 0.7738,
+        "cross_rate": 7.04,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -1.0619,
+        "macd_signal": -1.0681,
+        "macd_hist": 0.0062,
+        "macd_hist_prev": 0.0355,
+        "rsi": 37.37,
+        "mfi": 42.56,
+        "vpvma": -3.621187,
+        "vpvma_signal": -3.146068
+      },
+      "momentum": {
+        "mom_12_1": 0.96054,
+        "mom_6_1": 0.228367,
+        "ret_12m": 0.509346,
+        "ret_3m": -0.444381,
+        "ret_1m": -0.230138,
+        "dist_52w_high": -0.498447,
+        "dist_52w_low": 0.63867,
+        "vs_200dma": -0.184196,
+        "vs_50dma": -0.228155,
+        "tsmom_12m": 1,
+        "rank_universe": 0.768,
+        "rank_group": 0.667,
+        "rs_126_vs_proxy": -0.321714
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.1242,
+        "swing": "LH/LL",
+        "close_pos_20": 0.409,
+        "atr_pct": 8.85,
+        "atr_pct_rank_1y": 0.516,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.58,
+        "vol_10v50": 0.78,
+        "rvol": 0.05,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.6672,
+          "buy_hold_return": 2.805,
+          "excess_vs_hold": -3.4722,
+          "beat_hold": false,
+          "n_trades": 25,
+          "win_rate": 0.36
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.8134,
+          "buy_hold_return": 2.805,
+          "excess_vs_hold": -1.9916,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 2.805,
+          "excess_vs_hold": -2.805,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 2.805,
+          "excess_vs_hold": -2.805,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 1.6867,
+          "buy_hold_return": 2.805,
+          "excess_vs_hold": -1.1183,
+          "beat_hold": false,
+          "n_trades": 20,
+          "win_rate": 0.55
+        }
+      }
+    },
+    "XBI": {
+      "ticker": "XBI",
+      "group": "Biotech (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 167.6292,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.7676,
+        "r2_vs_null_pct": 80,
+        "vr": 0.8886,
+        "cross_rate": 9.86,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 3.2522,
+        "macd_signal": 3.3791,
+        "macd_hist": -0.127,
+        "macd_hist_prev": -0.2535,
+        "rsi": 60.82,
+        "mfi": 52.15,
+        "vpvma": 17.761785,
+        "vpvma_signal": 6.598007
+      },
+      "momentum": {
+        "mom_12_1": 0.642712,
+        "mom_6_1": 0.202572,
+        "ret_12m": 0.813053,
+        "ret_3m": 0.292411,
+        "ret_1m": 0.103695,
+        "dist_52w_high": -0.011329,
+        "dist_52w_low": 0.794169,
+        "vs_200dma": 0.242765,
+        "vs_50dma": 0.063715,
+        "tsmom_12m": 1,
+        "rank_universe": 0.682,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": 0.179093
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.1354,
+        "swing": "HH/HL",
+        "close_pos_20": 0.658,
+        "atr_pct": 2.52,
+        "atr_pct_rank_1y": 0.52,
+        "vol_state": "normal",
+        "ud_vol_50d": 1.66,
+        "vol_10v50": 0.96,
+        "rvol": 0.07,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.063,
+          "buy_hold_return": 0.6991,
+          "excess_vs_hold": -0.636,
+          "beat_hold": false,
+          "n_trades": 20,
+          "win_rate": 0.5
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 1.0056,
+          "buy_hold_return": 0.6991,
+          "excess_vs_hold": 0.3066,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.6991,
+          "excess_vs_hold": -0.6991,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.6991,
+          "excess_vs_hold": -0.6991,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.4868,
+          "buy_hold_return": 0.6991,
+          "excess_vs_hold": -0.2122,
+          "beat_hold": false,
+          "n_trades": 28,
+          "win_rate": 0.643
+        }
+      }
+    },
+    "XLF": {
+      "ticker": "XLF",
+      "group": "Financials & banks (added 9/2/26, Stream D; not held)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 57.495,
+      "regime": {
+        "regime": "trending",
+        "r2": 0.9074,
+        "r2_vs_null_pct": 100,
+        "vr": 0.6903,
+        "cross_rate": 9.86,
+        "slope": "up",
+        "trend_ok": true,
+        "oscillator_ok": false,
+        "false_positive_rate": 0.1,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 0.2789,
+        "macd_signal": 0.4277,
+        "macd_hist": -0.1488,
+        "macd_hist_prev": -0.1418,
+        "rsi": 51.09,
+        "mfi": 41.66,
+        "vpvma": -0.935814,
+        "vpvma_signal": -0.422502
+      },
+      "momentum": {
+        "mom_12_1": 0.096813,
+        "mom_6_1": 0.133618,
+        "ret_12m": 0.089518,
+        "ret_3m": 0.134193,
+        "ret_1m": -0.006652,
+        "dist_52w_high": -0.013977,
+        "dist_52w_low": 0.202573,
+        "vs_200dma": 0.07622,
+        "vs_50dma": 0.014642,
+        "tsmom_12m": 1,
+        "rank_universe": 0.272,
+        "rank_group": 0.5,
+        "rs_126_vs_proxy": 0.00036
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0404,
+        "swing": "HH/HL",
+        "close_pos_20": 0.444,
+        "atr_pct": 1.03,
+        "atr_pct_rank_1y": 0.028,
+        "vol_state": "contracted",
+        "ud_vol_50d": 1.23,
+        "vol_10v50": 0.8,
+        "rvol": 0.04,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0647,
+          "buy_hold_return": 0.2664,
+          "excess_vs_hold": -0.2018,
+          "beat_hold": false,
+          "n_trades": 21,
+          "win_rate": 0.476
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.0497,
+          "buy_hold_return": 0.2664,
+          "excess_vs_hold": -0.3161,
+          "beat_hold": false,
+          "n_trades": 4,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2664,
+          "excess_vs_hold": -0.2664,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2664,
+          "excess_vs_hold": -0.2664,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0946,
+          "buy_hold_return": 0.2664,
+          "excess_vs_hold": -0.1718,
+          "beat_hold": false,
+          "n_trades": 42,
+          "win_rate": 0.619
+        }
+      }
+    },
+    "XLU": {
+      "ticker": "XLU",
+      "group": "Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-09-03",
+      "last_date": "2026-09-02",
+      "close": 42.21,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.2845,
+        "r2_vs_null_pct": 35,
+        "vr": 0.7675,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.5638,
+        "macd_signal": -0.4644,
+        "macd_hist": -0.0994,
+        "macd_hist_prev": -0.088,
+        "rsi": 34.02,
+        "mfi": 36.74,
+        "vpvma": -1.278869,
+        "vpvma_signal": -0.749378
+      },
+      "momentum": {
+        "mom_12_1": 0.079012,
+        "mom_6_1": -0.054326,
+        "ret_12m": 0.032534,
+        "ret_3m": -0.028151,
+        "ret_1m": -0.043074,
+        "dist_52w_high": -0.115651,
+        "dist_52w_low": 0.021786,
+        "vs_200dma": -0.055197,
+        "vs_50dma": -0.052236,
+        "tsmom_12m": 1,
+        "rank_universe": 0.258,
+        "rank_group": 0.714,
+        "rs_126_vs_proxy": -0.196089
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": 0.0014,
+        "swing": "LH/LL",
+        "close_pos_20": 0.503,
+        "atr_pct": 1.53,
+        "atr_pct_rank_1y": 0.583,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.69,
+        "vol_10v50": 0.96,
+        "rvol": 0.07,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.055,
+          "buy_hold_return": 0.1082,
+          "excess_vs_hold": -0.0532,
+          "beat_hold": false,
+          "n_trades": 20,
+          "win_rate": 0.4
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.0291,
+          "buy_hold_return": 0.1082,
+          "excess_vs_hold": -0.1372,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1082,
+          "excess_vs_hold": -0.1082,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": -0.0411,
+          "buy_hold_return": 0.1082,
+          "excess_vs_hold": -0.1493,
+          "beat_hold": false,
+          "n_trades": 1,
+          "win_rate": 0.0
+        },
+        "vpvma": {
+          "strategy_return": 0.2025,
+          "buy_hold_return": 0.1082,
+          "excess_vs_hold": 0.0944,
+          "beat_hold": true,
+          "n_trades": 44,
+          "win_rate": 0.659
+        }
+      }
+    },
     "ZS": {
       "ticker": "ZS",
       "group": "SaaS & cybersecurity software sleds + peers (added 8/27/26, not held)",
@@ -11970,7 +14724,7 @@
         "vs_200dma": 0.022965,
         "vs_50dma": 0.128221,
         "tsmom_12m": -1,
-        "rank_universe": 0.032,
+        "rank_universe": 0.026,
         "rank_group": 0.111,
         "rs_126_vs_proxy": -0.086537
       },
@@ -12072,7 +14826,7 @@
         "vs_200dma": 0.043828,
         "vs_50dma": 0.008382,
         "tsmom_12m": 1,
-        "rank_universe": 0.363,
+        "rank_universe": 0.377,
         "rank_group": 0.632,
         "rs_126_vs_proxy": null
       },
@@ -12174,7 +14928,7 @@
         "vs_200dma": 0.07081,
         "vs_50dma": 0.00803,
         "tsmom_12m": 1,
-        "rank_universe": 0.323,
+        "rank_universe": 0.344,
         "rank_group": 0.579,
         "rs_126_vs_proxy": null
       },
@@ -12276,7 +15030,7 @@
         "vs_200dma": -0.023092,
         "vs_50dma": 0.006689,
         "tsmom_12m": -1,
-        "rank_universe": 0.169,
+        "rank_universe": 0.199,
         "rank_group": 0.263,
         "rs_126_vs_proxy": null
       },
@@ -12378,7 +15132,7 @@
         "vs_200dma": 0.072137,
         "vs_50dma": 0.005588,
         "tsmom_12m": 1,
-        "rank_universe": 0.387,
+        "rank_universe": 0.397,
         "rank_group": 0.684,
         "rs_126_vs_proxy": null
       },
@@ -12480,7 +15234,7 @@
         "vs_200dma": 0.094077,
         "vs_50dma": -0.059036,
         "tsmom_12m": 1,
-        "rank_universe": 0.774,
+        "rank_universe": 0.788,
         "rank_group": 0.947,
         "rs_126_vs_proxy": null
       },
@@ -12582,7 +15336,7 @@
         "vs_200dma": 0.093832,
         "vs_50dma": -0.036921,
         "tsmom_12m": 1,
-        "rank_universe": 0.589,
+        "rank_universe": 0.603,
         "rank_group": 0.895,
         "rs_126_vs_proxy": null
       },
@@ -12684,7 +15438,7 @@
         "vs_200dma": 0.15502,
         "vs_50dma": -0.076337,
         "tsmom_12m": 1,
-        "rank_universe": 0.79,
+        "rank_universe": 0.801,
         "rank_group": 1.0,
         "rs_126_vs_proxy": null
       },
@@ -12786,7 +15540,7 @@
         "vs_200dma": -0.108008,
         "vs_50dma": -0.002783,
         "tsmom_12m": 1,
-        "rank_universe": 0.194,
+        "rank_universe": 0.219,
         "rank_group": 0.316,
         "rs_126_vs_proxy": null
       },
@@ -73717,6 +76471,23 @@
     "ladder": {
       "rows": [
         {
+          "t": "XBI",
+          "name": "Biotech (equal-weight)",
+          "side": null,
+          "r5": -0.033708,
+          "r21": 0.109225,
+          "r63": 0.280216,
+          "r126": 0.324376,
+          "blend": 0.302296,
+          "third": "top",
+          "third21": "top",
+          "streak": 35,
+          "twin_of": null,
+          "sector": "Biotech",
+          "basket": false,
+          "members": null
+        },
+        {
           "t": "CIBR",
           "name": "Cybersecurity",
           "side": "offense",
@@ -73727,8 +76498,28 @@
           "blend": 0.264983,
           "third": "top",
           "third21": "mid",
-          "streak": 76,
-          "twin_of": null
+          "streak": 50,
+          "twin_of": null,
+          "sector": "Software & internet",
+          "basket": false,
+          "members": null
+        },
+        {
+          "t": "IBB",
+          "name": "Biotech (IBB)",
+          "side": null,
+          "r5": -0.025786,
+          "r21": 0.13399,
+          "r63": 0.283555,
+          "r126": 0.240468,
+          "blend": 0.262012,
+          "third": null,
+          "third21": null,
+          "streak": 0,
+          "twin_of": "XBI",
+          "sector": "Biotech",
+          "basket": false,
+          "members": null
         },
         {
           "t": "ARTY",
@@ -73742,7 +76533,10 @@
           "third": "mid",
           "third21": "mid",
           "streak": 0,
-          "twin_of": null
+          "twin_of": null,
+          "sector": "AI & hyperscalers",
+          "basket": false,
+          "members": null
         },
         {
           "t": "SOXX",
@@ -73756,7 +76550,10 @@
           "third": null,
           "third21": null,
           "streak": 0,
-          "twin_of": "SMH"
+          "twin_of": "SMH",
+          "sector": "Semis",
+          "basket": false,
+          "members": null
         },
         {
           "t": "IGV",
@@ -73768,9 +76565,12 @@
           "r126": 0.262481,
           "blend": 0.138258,
           "third": "top",
-          "third21": "mid",
-          "streak": 8,
-          "twin_of": null
+          "third21": "top",
+          "streak": 27,
+          "twin_of": null,
+          "sector": "Software & internet",
+          "basket": false,
+          "members": null
         },
         {
           "t": "SMH",
@@ -73781,10 +76581,30 @@
           "r63": -0.137597,
           "r126": 0.394211,
           "blend": 0.128307,
-          "third": "bottom",
-          "third21": "bottom",
-          "streak": 3,
-          "twin_of": null
+          "third": "mid",
+          "third21": "mid",
+          "streak": 0,
+          "twin_of": null,
+          "sector": "Semis",
+          "basket": false,
+          "members": null
+        },
+        {
+          "t": "XLF",
+          "name": "Financials",
+          "side": null,
+          "r5": -0.019036,
+          "r21": -0.003137,
+          "r63": 0.115437,
+          "r126": 0.126644,
+          "blend": 0.12104,
+          "third": "top",
+          "third21": "mid",
+          "streak": 30,
+          "twin_of": null,
+          "sector": "Financials",
+          "basket": false,
+          "members": null
         },
         {
           "t": "EWY",
@@ -73797,8 +76617,28 @@
           "blend": 0.073931,
           "third": "bottom",
           "third21": "top",
-          "streak": 11,
-          "twin_of": null
+          "streak": 6,
+          "twin_of": null,
+          "sector": "Korea",
+          "basket": false,
+          "members": null
+        },
+        {
+          "t": "KRE",
+          "name": "Regional banks (KRE)",
+          "side": null,
+          "r5": -0.023006,
+          "r21": -0.057617,
+          "r63": 0.050398,
+          "r126": 0.091663,
+          "blend": 0.071031,
+          "third": null,
+          "third21": null,
+          "streak": 0,
+          "twin_of": "XLF",
+          "sector": "Financials",
+          "basket": false,
+          "members": null
         },
         {
           "t": "SPY",
@@ -73810,9 +76650,12 @@
           "r126": 0.125672,
           "blend": 0.065583,
           "third": "top",
-          "third21": "bottom",
+          "third21": "mid",
           "streak": 1,
-          "twin_of": null
+          "twin_of": null,
+          "sector": "Broad",
+          "basket": false,
+          "members": null
         },
         {
           "t": "QQQ",
@@ -73826,7 +76669,10 @@
           "third": "mid",
           "third21": "mid",
           "streak": 0,
-          "twin_of": null
+          "twin_of": null,
+          "sector": "Broad",
+          "basket": false,
+          "members": null
         },
         {
           "t": "IWM",
@@ -73838,9 +76684,12 @@
           "r126": 0.125517,
           "blend": 0.062075,
           "third": "top",
-          "third21": "bottom",
-          "streak": 1,
-          "twin_of": null
+          "third21": "mid",
+          "streak": 3,
+          "twin_of": null,
+          "sector": "Broad",
+          "basket": false,
+          "members": null
         },
         {
           "t": "ICOP",
@@ -73854,7 +76703,10 @@
           "third": "mid",
           "third21": "top",
           "streak": 0,
-          "twin_of": null
+          "twin_of": null,
+          "sector": "Metals",
+          "basket": false,
+          "members": null
         },
         {
           "t": "RING",
@@ -73868,7 +76720,33 @@
           "third": null,
           "third21": null,
           "streak": 0,
-          "twin_of": "GDX"
+          "twin_of": "GDX",
+          "sector": "Metals",
+          "basket": false,
+          "members": null
+        },
+        {
+          "t": "HYPERSCALE",
+          "name": "Hyperscalers (basket)",
+          "side": "offense",
+          "r5": -0.009276,
+          "r21": -0.039232,
+          "r63": -0.088248,
+          "r126": 0.100252,
+          "blend": 0.006002,
+          "third": "mid",
+          "third21": "bottom",
+          "streak": 0,
+          "twin_of": null,
+          "sector": "AI & hyperscalers",
+          "basket": true,
+          "members": [
+            "MSFT",
+            "GOOGL",
+            "AMZN",
+            "META",
+            "ORCL"
+          ]
         },
         {
           "t": "GDX",
@@ -73882,7 +76760,10 @@
           "third": "top",
           "third21": "top",
           "streak": 10,
-          "twin_of": null
+          "twin_of": null,
+          "sector": "Metals",
+          "basket": false,
+          "members": null
         },
         {
           "t": "DTCR",
@@ -73894,9 +76775,12 @@
           "r126": 0.106728,
           "blend": -0.021247,
           "third": "bottom",
-          "third21": "bottom",
-          "streak": 12,
-          "twin_of": null
+          "third21": "mid",
+          "streak": 2,
+          "twin_of": null,
+          "sector": "Data centers & neoclouds",
+          "basket": false,
+          "members": null
         },
         {
           "t": "GRID",
@@ -73910,7 +76794,10 @@
           "third": "mid",
           "third21": "bottom",
           "streak": 0,
-          "twin_of": null
+          "twin_of": null,
+          "sector": "Power & utilities",
+          "basket": false,
+          "members": null
         },
         {
           "t": "GDXJ",
@@ -73924,7 +76811,75 @@
           "third": null,
           "third21": null,
           "streak": 0,
-          "twin_of": "GDX"
+          "twin_of": "GDX",
+          "sector": "Metals",
+          "basket": false,
+          "members": null
+        },
+        {
+          "t": "XLU",
+          "name": "Utilities",
+          "side": "defense",
+          "r5": -0.017317,
+          "r21": -0.040577,
+          "r63": -0.024333,
+          "r126": -0.083679,
+          "blend": -0.054006,
+          "third": "top",
+          "third21": "bottom",
+          "streak": 1,
+          "twin_of": null,
+          "sector": "Power & utilities",
+          "basket": false,
+          "members": null
+        },
+        {
+          "t": "NEOCLOUD",
+          "name": "Neoclouds (basket)",
+          "side": "offense",
+          "r5": -0.110661,
+          "r21": -0.14156,
+          "r63": -0.385022,
+          "r126": 0.229553,
+          "blend": -0.077734,
+          "third": "bottom",
+          "third21": "bottom",
+          "streak": 21,
+          "twin_of": null,
+          "sector": "Data centers & neoclouds",
+          "basket": true,
+          "members": [
+            "CRWV",
+            "NBIS",
+            "IREN",
+            "APLD",
+            "CORZ",
+            "WULF"
+          ]
+        },
+        {
+          "t": "POWERSEMI",
+          "name": "Power semis (basket)",
+          "side": "offense",
+          "r5": -0.06531,
+          "r21": -0.116746,
+          "r63": -0.435925,
+          "r126": 0.266621,
+          "blend": -0.084652,
+          "third": "bottom",
+          "third21": "bottom",
+          "streak": 28,
+          "twin_of": null,
+          "sector": "Semis",
+          "basket": true,
+          "members": [
+            "ON",
+            "NVTS",
+            "MPWR",
+            "AOSL",
+            "VICR",
+            "STM"
+          ]
         },
         {
           "t": "SILJ",
@@ -73938,7 +76893,74 @@
           "third": "mid",
           "third21": "top",
           "streak": 0,
-          "twin_of": null
+          "twin_of": null,
+          "sector": "Metals",
+          "basket": false,
+          "members": null
+        },
+        {
+          "t": "QUANTUM",
+          "name": "Quantum (basket)",
+          "side": "offense",
+          "r5": -0.100249,
+          "r21": -0.065274,
+          "r63": -0.320755,
+          "r126": 0.050403,
+          "blend": -0.135176,
+          "third": "bottom",
+          "third21": "bottom",
+          "streak": 8,
+          "twin_of": null,
+          "sector": "Quantum",
+          "basket": true,
+          "members": [
+            "IONQ",
+            "RGTI",
+            "QBTS",
+            "QUBT",
+            "ARQQ"
+          ]
+        },
+        {
+          "t": "OPTICS",
+          "name": "Optics / photonics (basket)",
+          "side": "offense",
+          "r5": -0.051423,
+          "r21": -0.028492,
+          "r63": -0.344565,
+          "r126": 0.0726,
+          "blend": -0.135983,
+          "third": "bottom",
+          "third21": "bottom",
+          "streak": 42,
+          "twin_of": null,
+          "sector": "Optics",
+          "basket": true,
+          "members": [
+            "LITE",
+            "COHR",
+            "AAOI",
+            "CIEN",
+            "FN",
+            "GLW"
+          ]
+        },
+        {
+          "t": "UFO",
+          "name": "Space",
+          "side": "offense",
+          "r5": -0.041265,
+          "r21": -0.059406,
+          "r63": -0.300821,
+          "r126": -0.056978,
+          "blend": -0.1789,
+          "third": "bottom",
+          "third21": "bottom",
+          "streak": 44,
+          "twin_of": null,
+          "sector": "Space",
+          "basket": false,
+          "members": null
         },
         {
           "t": "SLV",
@@ -73949,10 +76971,13 @@
           "r63": -0.14811,
           "r126": -0.224424,
           "blend": -0.186267,
-          "third": "bottom",
+          "third": "mid",
           "third21": "top",
-          "streak": 75,
-          "twin_of": null
+          "streak": 0,
+          "twin_of": null,
+          "sector": "Metals",
+          "basket": false,
+          "members": null
         },
         {
           "t": "DRAM",
@@ -73964,107 +76989,131 @@
           "r126": null,
           "blend": -0.208567,
           "third": "bottom",
-          "third21": "mid",
-          "streak": 5,
-          "twin_of": null
+          "third21": "top",
+          "streak": 4,
+          "twin_of": null,
+          "sector": "Memory & storage",
+          "basket": false,
+          "members": null
         }
       ],
       "divergence": true
     },
     "receipts": {
       "000660.KS": {
-        "rank": 0.95283,
+        "rank": 0.96063,
         "tier": "top",
-        "streak": 223,
-        "sinceRet": 3.090657,
-        "entryIdx": 2303
+        "streak": 203,
+        "sinceRet": 1.801357,
+        "entryIdx": 2323
       },
       "005930.KS": {
-        "rank": 0.896226,
+        "rank": 0.897638,
         "tier": "top",
-        "streak": 134,
-        "sinceRet": 0.377321,
-        "entryIdx": 2392
+        "streak": 137,
+        "sinceRet": 0.444971,
+        "entryIdx": 2389
       },
       "AAOI": {
-        "rank": 0.933962,
+        "rank": 0.944882,
         "tier": "top",
         "streak": 108,
         "sinceRet": 0.21364,
         "entryIdx": 2418
       },
       "AEHR": {
-        "rank": 0.943396,
+        "rank": 0.952756,
         "tier": "top",
         "streak": 120,
         "sinceRet": 1.034263,
         "entryIdx": 2406
       },
       "AEM": {
-        "rank": 0.301887,
+        "rank": 0.346457,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AG": {
-        "rank": 0.726415,
+        "rank": 0.740157,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AGI": {
-        "rank": 0.283019,
+        "rank": 0.330709,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ALAB": {
-        "rank": 0.801887,
+        "rank": 0.818898,
         "tier": "top",
-        "streak": 3,
-        "sinceRet": -0.033026,
-        "entryIdx": 2523
+        "streak": 43,
+        "sinceRet": -0.311279,
+        "entryIdx": 2483
       },
       "AMD": {
-        "rank": 0.867925,
+        "rank": 0.874016,
         "tier": "top",
-        "streak": 73,
-        "sinceRet": 0.110035,
-        "entryIdx": 2453
+        "streak": 72,
+        "sinceRet": 0.026878,
+        "entryIdx": 2454
       },
       "AMSC": {
-        "rank": 0.056604,
+        "rank": 0.047244,
         "tier": "bottom",
-        "streak": 22,
-        "sinceRet": -0.078412,
-        "entryIdx": 2504
+        "streak": 21,
+        "sinceRet": -0.146188,
+        "entryIdx": 2505
       },
       "AOSL": {
-        "rank": 0.367925,
+        "rank": 0.409449,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "APLD": {
+        "rank": 0.787402,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "ARKX": {
+        "rank": 0.362205,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "ARQQ": {
+        "rank": 0.070866,
+        "tier": "bottom",
+        "streak": 96,
+        "sinceRet": 0.198478,
+        "entryIdx": 2430
+      },
       "ASML": {
-        "rank": 0.820755,
+        "rank": 0.834646,
         "tier": "top",
         "streak": 12,
         "sinceRet": -0.115755,
         "entryIdx": 2514
       },
       "AU": {
-        "rank": 0.669811,
+        "rank": 0.692913,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "AVGO": {
-        "rank": 0.415094,
+        "rank": 0.448819,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
@@ -74073,201 +77122,229 @@
       "AXTI": {
         "rank": 1.0,
         "tier": "top",
-        "streak": 196,
-        "sinceRet": 4.549951,
-        "entryIdx": 2330
+        "streak": 193,
+        "sinceRet": 5.007495,
+        "entryIdx": 2333
       },
       "BE": {
-        "rank": 0.962264,
+        "rank": 0.968504,
         "tier": "top",
         "streak": 280,
         "sinceRet": 6.944589,
         "entryIdx": 2246
       },
       "BMNR": {
-        "rank": 0.037736,
+        "rank": 0.031496,
         "tier": "bottom",
         "streak": 23,
         "sinceRet": 0.352431,
         "entryIdx": 2503
       },
       "BOTZ": {
-        "rank": 0.216981,
+        "rank": 0.251969,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "BTC-USD": {
-        "rank": 0.075472,
+        "rank": 0.062992,
         "tier": "bottom",
-        "streak": 138,
-        "sinceRet": 0.124346,
-        "entryIdx": 2388
+        "streak": 144,
+        "sinceRet": 0.234728,
+        "entryIdx": 2382
       },
       "BZ=F": {
-        "rank": 0.254717,
+        "rank": 0.299213,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CAT": {
-        "rank": 0.698113,
+        "rank": 0.716535,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CDE": {
-        "rank": 0.650943,
+        "rank": 0.669291,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "CEG": {
+        "rank": 0.11811,
+        "tier": "bottom",
+        "streak": 60,
+        "sinceRet": 0.119962,
+        "entryIdx": 2466
+      },
       "CIEN": {
-        "rank": 0.915094,
+        "rank": 0.92126,
         "tier": "top",
-        "streak": 129,
-        "sinceRet": 0.033352,
-        "entryIdx": 2397
+        "streak": 130,
+        "sinceRet": 0.056191,
+        "entryIdx": 2396
       },
       "COHR": {
-        "rank": 0.858491,
+        "rank": 0.866142,
         "tier": "top",
-        "streak": 114,
-        "sinceRet": 0.072547,
-        "entryIdx": 2412
+        "streak": 115,
+        "sinceRet": -0.012846,
+        "entryIdx": 2411
+      },
+      "CORZ": {
+        "rank": 0.637795,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
       },
       "CPER": {
-        "rank": 0.462264,
+        "rank": 0.503937,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CRWD": {
-        "rank": 0.641509,
+        "rank": 0.661417,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "CRWV": {
-        "rank": 0.09434,
+        "rank": 0.102362,
         "tier": "bottom",
         "streak": 43,
         "sinceRet": 0.001284,
         "entryIdx": 2483
       },
       "DDOG": {
-        "rank": 0.716981,
+        "rank": 0.732283,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "EQIX": {
-        "rank": 0.40566,
+        "rank": 0.440945,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ETH-USD": {
-        "rank": 0.028302,
+        "rank": 0.023622,
         "tier": "bottom",
         "streak": 58,
         "sinceRet": 0.492478,
         "entryIdx": 2468
       },
       "ETHA": {
-        "rank": 0.018868,
+        "rank": 0.015748,
         "tier": "bottom",
         "streak": 58,
         "sinceRet": 0.484528,
         "entryIdx": 2468
       },
+      "ETN": {
+        "rank": 0.291339,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
       "EXK": {
-        "rank": 0.509434,
+        "rank": 0.543307,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "FLEX": {
-        "rank": 0.811321,
+        "rank": 0.826772,
         "tier": "top",
-        "streak": 1,
-        "sinceRet": 0.0,
-        "entryIdx": 2525
+        "streak": 2,
+        "sinceRet": -0.021876,
+        "entryIdx": 2524
+      },
+      "FN": {
+        "rank": 0.480315,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
       },
       "FNV": {
-        "rank": 0.433962,
+        "rank": 0.464567,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "FTNT": {
-        "rank": 0.613208,
+        "rank": 0.629921,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GC=F": {
-        "rank": 0.330189,
+        "rank": 0.377953,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GEV": {
-        "rank": 0.518868,
+        "rank": 0.551181,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GLD": {
-        "rank": 0.358491,
+        "rank": 0.401575,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "GLW": {
-        "rank": 0.792453,
-        "tier": "mid",
-        "streak": 0,
-        "sinceRet": null,
-        "entryIdx": null
+        "rank": 0.811024,
+        "tier": "top",
+        "streak": 99,
+        "sinceRet": -0.167762,
+        "entryIdx": 2427
       },
       "GOLD": {
-        "rank": 0.745283,
+        "rank": 0.755906,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "HIMS": {
-        "rank": 0.009434,
+        "rank": 0.007874,
         "tier": "bottom",
         "streak": 127,
         "sinceRet": 0.797724,
         "entryIdx": 2399
       },
       "HIMX": {
-        "rank": 0.481132,
+        "rank": 0.519685,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "HL": {
-        "rank": 0.849057,
+        "rank": 0.858268,
         "tier": "top",
         "streak": 18,
         "sinceRet": 0.134125,
@@ -74281,441 +77358,539 @@
         "entryIdx": 2278
       },
       "HYG": {
-        "rank": 0.207547,
+        "rank": 0.244094,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "IBIT": {
-        "rank": 0.066038,
+        "rank": 0.055118,
         "tier": "bottom",
-        "streak": 138,
-        "sinceRet": 0.122915,
-        "entryIdx": 2388
+        "streak": 144,
+        "sinceRet": 0.212188,
+        "entryIdx": 2382
       },
       "IFNNY": {
-        "rank": 0.660377,
+        "rank": 0.685039,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "IGPT": {
-        "rank": 0.632075,
+        "rank": 0.653543,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "INTC": {
-        "rank": 0.924528,
+        "rank": 0.929134,
         "tier": "top",
         "streak": 77,
         "sinceRet": -0.260371,
         "entryIdx": 2449
       },
       "INVH": {
-        "rank": 0.160377,
+        "rank": 0.204724,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "IONQ": {
+        "rank": 0.181102,
         "tier": "bottom",
-        "streak": 107,
-        "sinceRet": 0.184219,
-        "entryIdx": 2419
+        "streak": 19,
+        "sinceRet": -0.048842,
+        "entryIdx": 2507
       },
       "IREN": {
-        "rank": 0.839623,
+        "rank": 0.850394,
         "tier": "top",
         "streak": 3,
         "sinceRet": 0.038646,
         "entryIdx": 2523
       },
       "JPM": {
-        "rank": 0.320755,
+        "rank": 0.370079,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "KGC": {
-        "rank": 0.490566,
+        "rank": 0.527559,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "LITE": {
-        "rank": 0.971698,
+        "rank": 0.976378,
         "tier": "top",
         "streak": 311,
         "sinceRet": 9.667199,
         "entryIdx": 2215
       },
       "LQD": {
-        "rank": 0.150943,
+        "rank": 0.19685,
         "tier": "bottom",
-        "streak": 3,
-        "sinceRet": -0.006472,
-        "entryIdx": 2523
+        "streak": 1,
+        "sinceRet": 0.0,
+        "entryIdx": 2525
       },
       "LRCX": {
-        "rank": 0.886792,
+        "rank": 0.889764,
         "tier": "top",
         "streak": 98,
         "sinceRet": 0.066056,
         "entryIdx": 2428
       },
       "MPWR": {
-        "rank": 0.688679,
+        "rank": 0.708661,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "MRAAY": {
-        "rank": 0.877358,
+        "rank": 0.88189,
         "tier": "top",
         "streak": 48,
         "sinceRet": -0.380045,
         "entryIdx": 2478
       },
       "MRNA": {
-        "rank": 0.679245,
+        "rank": 0.700787,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "MRVL": {
-        "rank": 0.830189,
+        "rank": 0.84252,
         "tier": "top",
         "streak": 44,
         "sinceRet": -0.226459,
         "entryIdx": 2482
       },
+      "MSFT": {
+        "rank": 0.149606,
+        "tier": "bottom",
+        "streak": 100,
+        "sinceRet": 0.356406,
+        "entryIdx": 2426
+      },
       "MU": {
-        "rank": 0.981132,
+        "rank": 0.984252,
         "tier": "top",
-        "streak": 191,
-        "sinceRet": 3.057818,
-        "entryIdx": 2335
+        "streak": 187,
+        "sinceRet": 2.990233,
+        "entryIdx": 2339
       },
       "NBIS": {
-        "rank": 0.90566,
+        "rank": 0.913386,
         "tier": "top",
         "streak": 105,
         "sinceRet": 0.83367,
         "entryIdx": 2421
       },
       "NEM": {
-        "rank": 0.528302,
+        "rank": 0.559055,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NET": {
-        "rank": 0.443396,
+        "rank": 0.472441,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NOK": {
-        "rank": 0.783019,
-        "tier": "mid",
-        "streak": 0,
-        "sinceRet": null,
-        "entryIdx": null
+        "rank": 0.80315,
+        "tier": "top",
+        "streak": 1,
+        "sinceRet": 0.0,
+        "entryIdx": 2525
       },
       "NOW": {
-        "rank": 0.084906,
+        "rank": 0.094488,
         "tier": "bottom",
-        "streak": 207,
-        "sinceRet": -0.194993,
-        "entryIdx": 2319
+        "streak": 217,
+        "sinceRet": -0.241105,
+        "entryIdx": 2309
+      },
+      "NRG": {
+        "rank": 0.125984,
+        "tier": "bottom",
+        "streak": 56,
+        "sinceRet": -0.124104,
+        "entryIdx": 2470
       },
       "NVDA": {
-        "rank": 0.264151,
+        "rank": 0.314961,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "NVO": {
-        "rank": 0.188679,
-        "tier": "bottom",
-        "streak": 403,
-        "sinceRet": -0.453631,
-        "entryIdx": 2123
+        "rank": 0.228346,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
       },
       "NVTS": {
-        "rank": 0.556604,
+        "rank": 0.582677,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "OKTA": {
-        "rank": 0.471698,
+        "rank": 0.511811,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "ON": {
+        "rank": 0.488189,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "ORCL": {
+        "rank": 0.07874,
+        "tier": "bottom",
+        "streak": 34,
+        "sinceRet": 0.137751,
+        "entryIdx": 2492
+      },
       "PAAS": {
-        "rank": 0.603774,
+        "rank": 0.622047,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PANW": {
-        "rank": 0.735849,
+        "rank": 0.748031,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PENG": {
-        "rank": 0.764151,
+        "rank": 0.779528,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "POWI": {
-        "rank": 0.377358,
+        "rank": 0.417323,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "PYPL": {
-        "rank": 0.103774,
+        "rank": 0.133858,
         "tier": "bottom",
         "streak": 240,
         "sinceRet": -0.228637,
         "entryIdx": 2286
       },
+      "QBTS": {
+        "rank": 0.307087,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
       "QLYS": {
-        "rank": 0.273585,
+        "rank": 0.322835,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "QTUM": {
-        "rank": 0.584906,
+        "rank": 0.606299,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "QUBT": {
+        "rank": 0.086614,
+        "tier": "bottom",
+        "streak": 42,
+        "sinceRet": -0.156884,
+        "entryIdx": 2484
+      },
       "RDDT": {
-        "rank": 0.132075,
+        "rank": 0.173228,
         "tier": "bottom",
         "streak": 2,
         "sinceRet": -0.021446,
         "entryIdx": 2524
       },
       "RGLD": {
-        "rank": 0.424528,
+        "rank": 0.456693,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "RGTI": {
+        "rank": 0.267717,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "ROBT": {
-        "rank": 0.245283,
+        "rank": 0.283465,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "S": {
-        "rank": 0.226415,
+        "rank": 0.259843,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SGDM": {
-        "rank": 0.45283,
+        "rank": 0.496063,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SHOP": {
-        "rank": 0.122642,
+        "rank": 0.165354,
         "tier": "bottom",
         "streak": 3,
         "sinceRet": -0.085546,
         "entryIdx": 2523
       },
       "SI=F": {
-        "rank": 0.566038,
+        "rank": 0.590551,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SIEGY": {
-        "rank": 0.396226,
+        "rank": 0.433071,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SIL": {
-        "rank": 0.59434,
+        "rank": 0.614173,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "SNDK": {
-        "rank": 0.990566,
+        "rank": 0.992126,
         "tier": "top",
         "streak": 116,
         "sinceRet": 1.039127,
         "entryIdx": 2410
       },
       "SSRM": {
-        "rank": 0.773585,
+        "rank": 0.795276,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "STM": {
+        "rank": 0.771654,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "TENB": {
-        "rank": 0.235849,
+        "rank": 0.275591,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "TFPM": {
-        "rank": 0.386792,
+        "rank": 0.425197,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "THNQ": {
-        "rank": 0.537736,
+        "rank": 0.566929,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
-      "TLT": {
-        "rank": 0.141509,
+      "TLN": {
+        "rank": 0.141732,
         "tier": "bottom",
-        "streak": 86,
-        "sinceRet": -0.029038,
-        "entryIdx": 2440
+        "streak": 5,
+        "sinceRet": -0.041007,
+        "entryIdx": 2521
+      },
+      "TLT": {
+        "rank": 0.188976,
+        "tier": "bottom",
+        "streak": 1,
+        "sinceRet": 0.0,
+        "entryIdx": 2525
       },
       "TSM": {
-        "rank": 0.622642,
+        "rank": 0.645669,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "TXN": {
-        "rank": 0.5,
+        "rank": 0.535433,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "UUP": {
-        "rank": 0.169811,
+        "rank": 0.212598,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "VICR": {
+        "rank": 0.937008,
+        "tier": "top",
+        "streak": 102,
+        "sinceRet": -0.022223,
+        "entryIdx": 2424
+      },
+      "VRT": {
+        "rank": 0.677165,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
+      },
+      "VST": {
+        "rank": 0.110236,
         "tier": "bottom",
-        "streak": 1,
-        "sinceRet": 0.0,
-        "entryIdx": 2525
+        "streak": 47,
+        "sinceRet": -0.155422,
+        "entryIdx": 2479
       },
       "WCLD": {
-        "rank": 0.179245,
-        "tier": "bottom",
-        "streak": 190,
-        "sinceRet": 0.230021,
-        "entryIdx": 2336
+        "rank": 0.220472,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
       },
       "WPM": {
-        "rank": 0.339623,
+        "rank": 0.385827,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "WTAI": {
-        "rank": 0.575472,
+        "rank": 0.598425,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
+      "WULF": {
+        "rank": 0.905512,
+        "tier": "top",
+        "streak": 122,
+        "sinceRet": 0.020906,
+        "entryIdx": 2404
+      },
       "ZS": {
-        "rank": 0.04717,
+        "rank": 0.03937,
         "tier": "bottom",
-        "streak": 108,
-        "sinceRet": 0.299505,
-        "entryIdx": 2418
+        "streak": 123,
+        "sinceRet": 0.096852,
+        "entryIdx": 2403
       },
       "^FTSE": {
-        "rank": 0.292453,
+        "rank": 0.338583,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^GSPC": {
-        "rank": 0.311321,
+        "rank": 0.354331,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^HSI": {
-        "rank": 0.198113,
-        "tier": "bottom",
-        "streak": 41,
-        "sinceRet": 0.078004,
-        "entryIdx": 2485
+        "rank": 0.23622,
+        "tier": "mid",
+        "streak": 0,
+        "sinceRet": null,
+        "entryIdx": null
       },
       "^IXIC": {
-        "rank": 0.349057,
+        "rank": 0.393701,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^KS11": {
-        "rank": 0.707547,
+        "rank": 0.724409,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^N225": {
-        "rank": 0.54717,
+        "rank": 0.574803,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^SOX": {
-        "rank": 0.754717,
+        "rank": 0.76378,
         "tier": "mid",
         "streak": 0,
         "sinceRet": null,
         "entryIdx": null
       },
       "^VIX": {
-        "rank": 0.113208,
+        "rank": 0.15748,
         "tier": "bottom",
         "streak": 1,
         "sinceRet": 0.0,
