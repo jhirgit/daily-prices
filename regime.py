@@ -630,6 +630,36 @@ def ret(close, lag):
     return (b / a - 1) if (a is not None and b is not None and a > 0) else None
 
 
+def basket_series(series, members):
+    """Equal-weight, daily-rebalanced index (base 100) of the member closes that
+    are present: each session's basket return is the plain mean of the members'
+    simple returns that day (a member with no bar on either side of the session
+    sits out that day; a day with no member data carries the prior level).
+    None until the first computable return. Stream D (9/2/26). Port of
+    RC.basketSeries -- the summation order (members order) is part of parity."""
+    cs = [series[m] for m in members if series.get(m)]
+    if not cs:
+        return None
+    n = len(cs[0])
+    out = [None] * n
+    v = None
+    for i in range(n):
+        acc = 0.0
+        cnt = 0
+        if i >= 1:
+            for c in cs:
+                if i < len(c):
+                    a = c[i - 1]
+                    b = c[i]
+                    if a is not None and b is not None and a > 0:
+                        acc += b / a - 1
+                        cnt += 1
+        if cnt:
+            v = (100.0 if v is None else v) * (1.0 + acc / cnt)
+        out[i] = v
+    return out
+
+
 def sector_ladder(series, etfs):
     """Rank sector ETFs by a 63d/126d blended return, tag each into thirds of
     the field by 63d return with a streak, sort by blend desc, and flag an
@@ -646,7 +676,17 @@ def sector_ladder(series, etfs):
     twin_of=<primary ticker>, so near-duplicate proxies (SMH+SOXX, the three
     gold-miner ETFs) no longer double-count the same sleeve in the field or
     fire the divergence/turn tells twice. `etfs` is a list of
-    {"t","name","side"[,"grp"]}. Port of RC.sectorLadder."""
+    {"t","name","side"[,"grp"][,"sector"][,"basket"]}. Port of RC.sectorLadder.
+
+    Stream D (9/2/26): an entry may carry `basket` (a list of member tickers);
+    its series is basket_series() over the members present and its row is
+    flagged basket=True with `members`. `sector` is carried through untouched
+    (display grouping only -- the field, thirds, streaks and tells never see
+    it)."""
+    ser = {}
+    for e in etfs:
+        ser[e["t"]] = basket_series(series, e["basket"]) if e.get("basket") else series.get(e["t"])
+    series = ser
     present = [e for e in etfs if series.get(e["t"])]
     seen_grp = {}
     field_set = {}
@@ -675,7 +715,8 @@ def sector_ladder(series, etfs):
             blend = r63 if r63 is not None else r126
         rows.append({"t": e["t"], "name": e["name"], "side": e.get("side"),
                      "r5": r5, "r21": r21, "r63": r63, "r126": r126, "blend": blend,
-                     "twin_of": twin_of[k]})
+                     "twin_of": twin_of[k], "sector": e.get("sector"),
+                     "basket": bool(e.get("basket")), "members": e.get("basket") or None})
     n = len(series[present[0]["t"]]) if present else 0
 
     def ret_ser(k, lag):
@@ -746,11 +787,21 @@ REG_ETFS = [
     # deliberately NOT grouped -- metal vs miner is an economic distinction
     # (today's SLV-vs-SILJ 63d gap is exactly that), unlike the true
     # near-duplicates SMH/SOXX and GDX/GDXJ/RING.
-    {"t": "SMH", "name": "Semis", "side": "offense", "grp": "semis"},
-    {"t": "SOXX", "name": "Semis (SOXX)", "side": "offense", "grp": "semis"},
-    {"t": "QQQ", "name": "Nasdaq 100", "side": "offense"},
-    {"t": "IWM", "name": "Small caps", "side": "offense"},
-    {"t": "IGV", "name": "Software", "side": "offense"},
+    # Stream D (9/2/26, Jake: "make a big multiselect of sectors and sub sectors
+    # for that list"): every entry carries `sector` (the multiselect group; the
+    # sled itself is the sub-sector). DISPLAY ONLY -- the field/thirds/streaks/
+    # tells never read it. Basket sleds (`basket: [...]`) are first-class rows
+    # whose series is an equal-weight daily-rebalanced index of the members
+    # (regime.basket_series == RC.basketSeries; parity-checked); the members
+    # themselves stay OUT of REG_ETFS. Adding rows re-thirds the whole field --
+    # streaks on every other sled reset at 9/2/26 (recorded in the CHANGELOG).
+    {"t": "SMH", "name": "Semis", "side": "offense", "grp": "semis", "sector": "Semis"},
+    {"t": "SOXX", "name": "Semis (SOXX)", "side": "offense", "grp": "semis", "sector": "Semis"},
+    {"t": "POWERSEMI", "name": "Power semis (basket)", "side": "offense", "sector": "Semis",
+     "basket": ["ON", "NVTS", "MPWR", "AOSL", "VICR", "STM"]},
+    {"t": "QQQ", "name": "Nasdaq 100", "side": "offense", "sector": "Broad"},
+    {"t": "IWM", "name": "Small caps", "side": "offense", "sector": "Broad"},
+    {"t": "IGV", "name": "Software", "side": "offense", "sector": "Software & internet"},
     # Cybersecurity as its OWN sled, deliberately NOT a `grp` twin of IGV. The
     # grp mechanism is for near-duplicates (SMH/SOXX, GDX/GDXJ/RING); cybersec
     # vs general software is an economic distinction, the same call already made
@@ -759,19 +810,33 @@ REG_ETFS = [
     # single-name prints under it (CRWD +20, OKTA +29, PANW +14) were the whole
     # story. NOTE: adding a row re-thirds the WHOLE field, so streaks on every
     # other sled reset relative to the pre-8/27 series. That is intended.
-    {"t": "CIBR", "name": "Cybersecurity", "side": "offense"},
-    {"t": "ARTY", "name": "AI basket", "side": "offense"},
-    {"t": "DTCR", "name": "Data centers", "side": "offense"},
-    {"t": "DRAM", "name": "Memory", "side": "offense"},
-    {"t": "GRID", "name": "Grid infra", "side": "offense"},
-    {"t": "SPY", "name": "S&P 500", "side": None},
-    {"t": "EWY", "name": "Korea", "side": None},
-    {"t": "ICOP", "name": "Copper miners", "side": None},
-    {"t": "GDX", "name": "Gold miners", "side": "defense", "grp": "gold"},
-    {"t": "GDXJ", "name": "Jr gold miners", "side": "defense", "grp": "gold"},
-    {"t": "RING", "name": "Gold miners (RING)", "side": "defense", "grp": "gold"},
-    {"t": "SILJ", "name": "Jr silver miners", "side": "defense"},
-    {"t": "SLV", "name": "Silver", "side": "defense"},
+    {"t": "CIBR", "name": "Cybersecurity", "side": "offense", "sector": "Software & internet"},
+    {"t": "ARTY", "name": "AI basket", "side": "offense", "sector": "AI & hyperscalers"},
+    {"t": "HYPERSCALE", "name": "Hyperscalers (basket)", "side": "offense", "sector": "AI & hyperscalers",
+     "basket": ["MSFT", "GOOGL", "AMZN", "META", "ORCL"]},
+    {"t": "DTCR", "name": "Data centers", "side": "offense", "sector": "Data centers & neoclouds"},
+    {"t": "NEOCLOUD", "name": "Neoclouds (basket)", "side": "offense", "sector": "Data centers & neoclouds",
+     "basket": ["CRWV", "NBIS", "IREN", "APLD", "CORZ", "WULF"]},
+    {"t": "OPTICS", "name": "Optics / photonics (basket)", "side": "offense", "sector": "Optics",
+     "basket": ["LITE", "COHR", "AAOI", "CIEN", "FN", "GLW"]},
+    {"t": "QUANTUM", "name": "Quantum (basket)", "side": "offense", "sector": "Quantum",
+     "basket": ["IONQ", "RGTI", "QBTS", "QUBT", "ARQQ"]},
+    {"t": "DRAM", "name": "Memory", "side": "offense", "sector": "Memory & storage"},
+    {"t": "GRID", "name": "Grid infra", "side": "offense", "sector": "Power & utilities"},
+    {"t": "XLU", "name": "Utilities", "side": "defense", "sector": "Power & utilities"},
+    {"t": "UFO", "name": "Space", "side": "offense", "sector": "Space"},
+    {"t": "XBI", "name": "Biotech (equal-weight)", "side": None, "grp": "biotech", "sector": "Biotech"},
+    {"t": "IBB", "name": "Biotech (IBB)", "side": None, "grp": "biotech", "sector": "Biotech"},
+    {"t": "XLF", "name": "Financials", "side": None, "grp": "financials", "sector": "Financials"},
+    {"t": "KRE", "name": "Regional banks (KRE)", "side": None, "grp": "financials", "sector": "Financials"},
+    {"t": "SPY", "name": "S&P 500", "side": None, "sector": "Broad"},
+    {"t": "EWY", "name": "Korea", "side": None, "sector": "Korea"},
+    {"t": "ICOP", "name": "Copper miners", "side": None, "sector": "Metals"},
+    {"t": "GDX", "name": "Gold miners", "side": "defense", "grp": "gold", "sector": "Metals"},
+    {"t": "GDXJ", "name": "Jr gold miners", "side": "defense", "grp": "gold", "sector": "Metals"},
+    {"t": "RING", "name": "Gold miners (RING)", "side": "defense", "grp": "gold", "sector": "Metals"},
+    {"t": "SILJ", "name": "Jr silver miners", "side": "defense", "sector": "Metals"},
+    {"t": "SLV", "name": "Silver", "side": "defense", "sector": "Metals"},
 ]
 
 # The composite legs. v52 carried the three macro + two equity trend-rule legs
@@ -1061,6 +1126,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         "r5": _r(r.get("r5")), "r21": _r(r["r21"]), "r63": _r(r["r63"]), "r126": _r(r["r126"]),
         "blend": _r(r["blend"]), "third": r["third"], "third21": r["third21"],
         "streak": r["streak"], "twin_of": r["twin_of"],
+        "sector": r.get("sector"), "basket": r.get("basket", False), "members": r.get("members"),
     } for r in lad["rows"]]
 
     brm = base_rates_multi(series, book, comp["state"], (5, 21, 63))

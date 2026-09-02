@@ -88,12 +88,18 @@
   function legFirstActive(cont){var e=ema(cont,50);for(var i=0;i<cont.length;i++){if(i>=21&&cont[i]!=null&&e[i]!=null&&e[i-21]!=null)return i;}return cont.length;}
   function firstNonNull(arr){for(var i=0;i<arr.length;i++){if(arr[i]!=null)return i;}return arr.length;}
   function baseRatesMulti(series,names,state,hs){hs=hs||[5,21,63];var arrs=names.map(function(t){return series[t];}).filter(Boolean);var n=arrs.length?arrs[0].length:0,res={};for(var h=0;h<hs.length;h++){var H=hs[h],bk={"risk-on":[],"neutral":[],"defensive":[],"all":[]};for(var t=0;t+H<n;t++){var st=state[t],rets=[];for(var k=0;k<arrs.length;k++){var a=arrs[k][t],b=arrs[k][t+H];if(a!=null&&b!=null&&a>0)rets.push(b/a-1);}var m=median(rets);if(m!=null){if(bk[st])bk[st].push(m);bk["all"].push(m);}}var out={};["risk-on","neutral","defensive","all"].forEach(function(s2){var arr=bk[s2];out[s2]={n:arr.length,n_eff:arr.length?Math.ceil(arr.length/H):0,median:median(arr),hit:arr.length?arr.filter(function(x){return x>0;}).length/arr.length:null};});res["h"+H]=out;}return res;}
+  // Stream D (9/2/26): equal-weight daily-rebalanced basket index (base 100) over the
+  // members present -- mean of the members' simple returns each session, a member
+  // without both bars sits out that day, a day with no member data carries the level.
+  // regime.basket_series is the port; summation order (members order) is part of parity.
+  function basketSeries(series,members){var cs=[];for(var m=0;m<members.length;m++){if(series[members[m]])cs.push(series[members[m]]);}if(!cs.length)return null;var n=cs[0].length,out=new Array(n),v=null;for(var i=0;i<n;i++){var acc=0,cnt=0;if(i>=1){for(var k=0;k<cs.length;k++){var c=cs[k];if(i<c.length){var a=c[i-1],b=c[i];if(a!=null&&b!=null&&a>0){acc+=b/a-1;cnt++;}}}}if(cnt){v=(v==null?100:v)*(1+acc/cnt);}out[i]=v;}return out;}
   function sectorLadder(series,etfs){
+    var ser={};etfs.forEach(function(e){ser[e.t]=e.basket?basketSeries(series,e.basket):series[e.t];});series=ser;
     var present=etfs.filter(function(e){return series[e.t];});
     var seenGrp={},fieldSet={},twinOf=new Array(present.length).fill(null);
     for(var kk=0;kk<present.length;kk++){var g=present[kk].grp;if(!g){fieldSet[kk]=1;}else if(!(g in seenGrp)){seenGrp[g]=kk;fieldSet[kk]=1;}else{twinOf[kk]=present[seenGrp[g]].t;}}
     var fieldIdx=Object.keys(fieldSet).map(Number).sort(function(a,b){return a-b;});
-    var rows=present.map(function(e,k){var c=series[e.t],r5=ret(c,5),r21=ret(c,21),r63=ret(c,63),r126=ret(c,126),blend=(r63!=null&&r126!=null)?(r63+r126)/2:(r63!=null?r63:r126);return{t:e.t,name:e.name,side:e.side||null,r5:r5,r21:r21,r63:r63,r126:r126,blend:blend,twin_of:twinOf[k]};});
+    var rows=present.map(function(e,k){var c=series[e.t],r5=ret(c,5),r21=ret(c,21),r63=ret(c,63),r126=ret(c,126),blend=(r63!=null&&r126!=null)?(r63+r126)/2:(r63!=null?r63:r126);return{t:e.t,name:e.name,side:e.side||null,r5:r5,r21:r21,r63:r63,r126:r126,blend:blend,twin_of:twinOf[k],sector:e.sector||null,basket:!!e.basket,members:e.basket||null};});
     var n=present.length?series[present[0].t].length:0;
     function retSer(k,lag){var c=series[present[k].t],s=new Array(c.length);for(var i=0;i<c.length;i++){var a=i>=lag?c[i-lag]:null,b=c[i];s[i]=(a!=null&&b!=null&&a>0)?b/a-1:null;}return s;}
     var r63ser={},r21ser={};fieldIdx.forEach(function(k){r63ser[k]=retSer(k,63);r21ser[k]=retSer(k,21);});
@@ -111,5 +117,5 @@
   // ---- END verbatim RC internals ----
 
   // Exported surface — identical set/names to index.html's inline RC return.
-  return {parseCsv:parseCsv,ratio:ratio,ratioLegSeries:ratioLegSeries,trendLegSeries:trendLegSeries,breadthSeries:breadthSeries,breadthLegSeries:breadthLegSeries,compositeSeries:compositeSeries,durations:durations,flips:flips,baseRates:baseRates,baseRatesMulti:baseRatesMulti,rankReceipts:rankReceipts,sectorLadder:sectorLadder,ret:ret,retSeries:retSeries,rvSeries:rvSeries,pctRankSeries:pctRankSeries,pctVoteSeries:pctVoteSeries,corrPairSeries:corrPairSeries,corrVoteSeries:corrVoteSeries,avgCorrSeries:avgCorrSeries,legFirstActive:legFirstActive,firstNonNull:firstNonNull};
+  return {parseCsv:parseCsv,ratio:ratio,ratioLegSeries:ratioLegSeries,trendLegSeries:trendLegSeries,breadthSeries:breadthSeries,breadthLegSeries:breadthLegSeries,compositeSeries:compositeSeries,durations:durations,flips:flips,baseRates:baseRates,baseRatesMulti:baseRatesMulti,rankReceipts:rankReceipts,sectorLadder:sectorLadder,basketSeries:basketSeries,ret:ret,retSeries:retSeries,rvSeries:rvSeries,pctRankSeries:pctRankSeries,pctVoteSeries:pctVoteSeries,corrPairSeries:corrPairSeries,corrVoteSeries:corrVoteSeries,avgCorrSeries:avgCorrSeries,legFirstActive:legFirstActive,firstNonNull:firstNonNull};
 });

@@ -176,6 +176,14 @@ const cases = [
   { id: "ladder_nodiv", fn: "sectorLadder", args: { series: ladSeries, etfs: ladEtfsNoDiv } },
   { id: "ladder_missing", fn: "sectorLadder", args: { series: { E1: ladSeries.E1 }, etfs: [{ t: "E1", name: "x", side: null }, { t: "NOPE", name: "y", side: null }] } },
   { id: "ladder_ragged", fn: "sectorLadder", args: { series: RP.series, etfs: RP.names.map((t, i) => ({ t, name: t, side: i % 2 ? "offense" : "defense" })) } },
+  // Stream D (9/2/26): basket sleds + sector passthrough. E9 has a null hole and a
+  // leading gap; NOPE is absent; the basket joins the field as a first-class row.
+  { id: "ladder_basket", fn: "sectorLadder", args: { series: Object.assign({}, ladSeries, { E9: [null, null].concat(geo(LAD_N - 2, 1.003).map((v, i) => (i === 50 ? null : v))) }), etfs: [
+    { t: "E1", name: "off-hi", side: "offense", sector: "A" }, { t: "E2", name: "def-hi", side: "defense", sector: "B" },
+    { t: "BK", name: "basket", side: "offense", sector: "A", basket: ["E3", "E9", "NOPE", "E5"] },
+    { t: "E4", name: "def-mid", side: "defense", sector: "B" }, { t: "E6", name: "neu2", side: null, sector: "C" },
+  ] } },
+  { id: "ladder_basket_empty", fn: "sectorLadder", args: { series: { E1: ladSeries.E1 }, etfs: [ { t: "E1", name: "x", side: null }, { t: "BK", name: "b", side: null, basket: ["NOPE", "NOPE2"] } ] } },
   // v60: grp dedup — E2/E4 twin E1/E3; twins carry levels only (third/third21 null, twin_of set)
   { id: "ladder_grp_twins", fn: "sectorLadder", args: { series: ladSeries, etfs: [
     { t: "E1", name: "semi", side: "offense", grp: "semi" }, { t: "E2", name: "semi2", side: "offense", grp: "semi" },

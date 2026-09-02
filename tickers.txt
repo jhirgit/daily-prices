@@ -22,6 +22,9 @@ AEHR       # Aehr Test Systems
 HIMX       # Himax
 POWI       # Power Integrations
 AOSL       # Alpha & Omega Semiconductor
+ON         # onsemi (power/SiC; Power-semis basket, Stream D 9/2/26)
+VICR       # Vicor (power modules; Power-semis basket)
+STM        # STMicroelectronics (power/SiC; Power-semis basket)
 IFNNY      # Infineon (ADR)
 MRAAY      # Murata (ADR, 2 ADS = 1 ord) - liquid US line
 MRAAF      # Murata (foreign ordinary, 1:1) - THIN, often single-print days
@@ -45,6 +48,7 @@ COHR       # Coherent
 LITE       # Lumentum
 AAOI       # Applied Optoelectronics
 CIEN       # Ciena
+FN         # Fabrinet (optical/photonic contract manufacturer; Optics basket, Stream D 9/2/26)
 GLW        # Corning
 NOK        # Nokia
 
@@ -52,6 +56,9 @@ NOK        # Nokia
 IREN       # Iris Energy
 NBIS       # Nebius
 CRWV       # CoreWeave
+APLD       # Applied Digital (neocloud/HPC hosting; Neoclouds basket, Stream D 9/2/26)
+CORZ       # Core Scientific (HPC hosting; Neoclouds basket)
+WULF       # TeraWulf (HPC hosting; Neoclouds basket)
 
 # --- Datacenter power / energy ---
 GEV        # GE Vernova
@@ -143,6 +150,42 @@ GOOGL      # Alphabet (Search + ads, Google Cloud, TPU capex)
 AAPL       # Apple (hardware + Services; on-device AI)
 AMZN       # Amazon (AWS value driver + retail/ads; heavy AI capex)
 META       # Meta (ad core funding AI-infra capex + Reality Labs)
+MSFT       # Microsoft (Azure + OpenAI capex; Hyperscalers basket, Stream D 9/2/26)
+ORCL       # Oracle (OCI capex; Hyperscalers basket)
+
+# --- Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D) ---
+# WHY: Jake asked for power/utilities on the regime ladder. XLU is the ladder sled
+# (defense side); the generators and equipment names feed the setups table only.
+# Header carries "power" so technicals.GROUP_PROXY proxies the block to SPY, like
+# the datacenter-power block above.
+XLU        # Utilities Select Sector SPDR - the ladder sled (side: defense)
+VST        # Vistra (AI-power IPP)
+CEG        # Constellation Energy (nuclear fleet)
+NRG        # NRG Energy
+TLN        # Talen Energy (Susquehanna / AWS PPA)
+ETN        # Eaton (electrical equipment)
+VRT        # Vertiv (datacenter thermal + power)
+
+# --- Financials & banks (added 9/2/26, Stream D; not held) ---
+XLF        # Financial Select Sector SPDR - ladder sled
+KRE        # SPDR S&P Regional Banking - grp twin of XLF (regionals)
+
+# --- Space (added 9/2/26, Stream D; not held) ---
+UFO        # Procure Space ETF - ladder sled (side: offense)
+ARKX       # ARK Space Exploration - fallback proxy, setups only
+
+# --- Biotech (added 9/2/26, Stream D; not held) ---
+XBI        # SPDR S&P Biotech (equal-weight) - ladder sled
+IBB        # iShares Biotechnology (cap-weight) - grp twin of XBI
+
+# --- Quantum computing basket constituents (added 9/2/26, Stream D; not held) ---
+# No clean ETF (QTUM is mostly classical compute), so the ladder carries an
+# equal-weight daily-rebalanced basket computed in regime.py + the JS oracle.
+IONQ       # IonQ
+RGTI       # Rigetti
+QBTS       # D-Wave
+QUBT       # Quantum Computing Inc
+ARQQ       # Arqit
 
 # --- Real estate / REITs ---
 INVH       # Invitation Homes (single-family rental REIT; state file + DCF 8/21)
