@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T11:31:07Z",
+  "generated_at": "2026-09-02T15:11:38Z",
   "source": "Yahoo Finance via yfinance",
   "note": "pct = last vs previous close. Asia = completed session; Europe = session in progress; US futures = overnight vs prior settle; crypto = trailing 24h.",
   "groups": [
@@ -9,33 +9,33 @@
         {
           "ticker": "ES=F",
           "name": "S&P 500",
-          "last": 7631.75,
+          "last": 7679.25,
           "prev_close": 7635.5,
-          "pct": -0.049,
+          "pct": 0.573,
           "currency": "USD"
         },
         {
           "ticker": "NQ=F",
           "name": "Nasdaq 100",
-          "last": 29004.5,
+          "last": 29116.0,
           "prev_close": 29054.0,
-          "pct": -0.17,
+          "pct": 0.213,
           "currency": "USD"
         },
         {
           "ticker": "YM=F",
           "name": "Dow",
-          "last": 52816.0,
+          "last": 53241.0,
           "prev_close": 52819.0,
-          "pct": -0.006,
+          "pct": 0.799,
           "currency": "USD"
         },
         {
           "ticker": "RTY=F",
           "name": "Russell 2000",
-          "last": 2922.5,
+          "last": 2948.8999,
           "prev_close": 2920.6001,
-          "pct": 0.065,
+          "pct": 0.969,
           "currency": "USD"
         }
       ]
@@ -46,7 +46,7 @@
         {
           "ticker": "^N225",
           "name": "Nikkei 225 (Tokyo)",
-          "last": 64325.6406,
+          "last": 64325.64,
           "prev_close": 66311.6875,
           "pct": -2.995,
           "currency": "JPY"
@@ -62,7 +62,7 @@
         {
           "ticker": "^KS11",
           "name": "KOSPI (Seoul)",
-          "last": 6562.7202,
+          "last": 6562.72,
           "prev_close": 6835.8,
           "pct": -3.995,
           "currency": "KRW"
@@ -91,33 +91,33 @@
         {
           "ticker": "^FTSE",
           "name": "FTSE 100 (London)",
-          "last": 10737.5801,
+          "last": 10766.1904,
           "prev_close": 10792.7695,
-          "pct": -0.511,
+          "pct": -0.246,
           "currency": "GBP"
         },
         {
           "ticker": "^GDAXI",
           "name": "DAX (Frankfurt)",
-          "last": 25822.9492,
+          "last": 25828.6699,
           "prev_close": 25957.6895,
-          "pct": -0.519,
+          "pct": -0.497,
           "currency": "EUR"
         },
         {
           "ticker": "^STOXX50E",
           "name": "Euro Stoxx 50",
-          "last": 6350.8901,
+          "last": 6360.1602,
           "prev_close": 6364.29,
-          "pct": -0.211,
+          "pct": -0.065,
           "currency": "EUR"
         },
         {
           "ticker": "^FCHI",
           "name": "CAC 40 (Paris)",
-          "last": 8267.9697,
+          "last": 8284.4297,
           "prev_close": 8291.7305,
-          "pct": -0.287,
+          "pct": -0.088,
           "currency": "EUR"
         }
       ]
@@ -129,32 +129,32 @@
           "ticker": "^TNX",
           "name": "US 10Y yield",
           "last": 4.796,
-          "prev_close": 4.758,
-          "pct": 0.799,
+          "prev_close": 4.796,
+          "pct": 0.0,
           "currency": "USD"
         },
         {
           "ticker": "DX-Y.NYB",
           "name": "Dollar index",
-          "last": 99.792,
+          "last": 99.527,
           "prev_close": 99.771,
-          "pct": 0.021,
+          "pct": -0.245,
           "currency": "USD"
         },
         {
           "ticker": "GC=F",
           "name": "Gold",
-          "last": 4365.7002,
+          "last": 4422.7998,
           "prev_close": 4348.7998,
-          "pct": 0.389,
+          "pct": 1.702,
           "currency": "USD"
         },
         {
           "ticker": "CL=F",
           "name": "WTI crude",
-          "last": 89.76,
+          "last": 90.54,
           "prev_close": 90.69,
-          "pct": -1.025,
+          "pct": -0.165,
           "currency": "USD"
         }
       ]
@@ -165,17 +165,17 @@
         {
           "ticker": "BTC-USD",
           "name": "Bitcoin",
-          "last": 76475.0,
+          "last": 76762.4922,
           "prev_close": 77398.7031,
-          "pct": -1.193,
+          "pct": -0.822,
           "currency": "USD"
         },
         {
           "ticker": "ETH-USD",
           "name": "Ethereum",
-          "last": 2373.8899,
+          "last": 2381.1899,
           "prev_close": 2417.1899,
-          "pct": -1.791,
+          "pct": -1.489,
           "currency": "USD"
         }
       ]
