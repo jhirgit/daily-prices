@@ -1058,7 +1058,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
     lad = sector_ladder(series, REG_ETFS)
     ladder_rows = [{
         "t": r["t"], "name": r["name"], "side": r["side"],
-        "r21": _r(r["r21"]), "r63": _r(r["r63"]), "r126": _r(r["r126"]),
+        "r5": _r(r.get("r5")), "r21": _r(r["r21"]), "r63": _r(r["r63"]), "r126": _r(r["r126"]),
         "blend": _r(r["blend"]), "third": r["third"], "third21": r["third21"],
         "streak": r["streak"], "twin_of": r["twin_of"],
     } for r in lad["rows"]]
