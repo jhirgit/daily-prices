@@ -153,7 +153,62 @@ META       # Meta (ad core funding AI-infra capex + Reality Labs)
 MSFT       # Microsoft (Azure + OpenAI capex; Hyperscalers basket, Stream D 9/2/26)
 ORCL       # Oracle (OCI capex; Hyperscalers basket)
 
-# --- Power & utilities: AI-power generators + grid equipment (added 9/2/26, Stream D) ---
+# --- Sector and industry ETF proxies for the regime ladder (GICS map; added 9/2/26, Stream E) ---
+# WHY: Jake: "regime watching is about foresight not backward looking analysis" — the
+# ladder maps the whole market on MSCI's published GICS structure, one proxy per node
+# where a clean ETF exists (equal-weight baskets elsewhere, see regime.REG_ETFS).
+# Header carries none of technicals.GROUP_PROXY's trigger words, so these fall to SPY.
+XLE        # Energy sector (10)
+XLB        # Materials sector (15)
+XLI        # Industrials sector (20)
+XLY        # Consumer Discretionary sector (25)
+XLP        # Consumer Staples sector (30)
+XLV        # Health Care sector (35)
+XLK        # Information Technology sector (45)
+XLC        # Communication Services sector (50)
+XLRE       # Real Estate sector (60)
+OIH        # Oil & gas equipment/services (101010)
+XES        # Oil & gas equipment/services — twin of OIH
+XOP        # Oil & gas exploration/production (10102020)
+AMLP       # Midstream MLPs — storage & transportation (10102040)
+URA        # Uranium — coal & consumable fuels (10102050)
+XME        # Metals & mining (151040)
+SLX        # Steel (15104050)
+COPX       # Copper miners (15104020)
+LIT        # Lithium & battery chain (151040, diversified metals)
+REMX       # Rare earths / strategic metals (15104020)
+ITA        # Aerospace & defense (201010)
+XAR        # Aerospace & defense — twin of ITA
+PPA        # Aerospace & defense — twin of ITA
+PAVE       # Infrastructure — construction & engineering / materials (2010)
+IYT        # Transportation (2030)
+XTN        # Transportation — twin of IYT
+JETS       # Passenger airlines (203020)
+DRIV       # Autos / EV & autonomous (251020)
+ITB        # Homebuilders — household durables (25201030)
+XHB        # Homebuilders — twin of ITB
+PEJ        # Leisure & entertainment — hotels, restaurants & leisure (253010)
+XRT        # Retail (2550)
+PBJ        # Food & beverage (3020)
+IHI        # Medical devices — health care equipment (351010)
+IHF        # Health care providers & services (351020)
+XPH        # Pharmaceuticals (352020)
+PJP        # Pharmaceuticals — twin of XPH
+KBE        # Banks (401010)
+IAI        # Broker-dealers / capital markets (402030)
+KCE        # Capital markets — twin of IAI
+FINX       # Fintech — transaction & payment processing (40201060)
+KIE        # Insurance (403010)
+HACK       # Cybersecurity — twin of CIBR (45103020 systems software)
+FDN        # Internet — interactive media & services (502030)
+PBS        # Media (502010)
+ESPO       # Video games & esports — entertainment (502020)
+XSD        # Semiconductors equal-weight — twin of SMH
+ICLN       # Clean energy — independent power & renewables (551050)
+TAN        # Solar — twin of ICLN
+NLR        # Nuclear energy & uranium — independent power (551050)
+VNQ        # REITs — twin of XLRE
+
 # WHY: Jake asked for power/utilities on the regime ladder. XLU is the ladder sled
 # (defense side); the generators and equipment names feed the setups table only.
 # Header carries "power" so technicals.GROUP_PROXY proxies the block to SPY, like

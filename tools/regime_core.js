@@ -99,7 +99,7 @@
     var seenGrp={},fieldSet={},twinOf=new Array(present.length).fill(null);
     for(var kk=0;kk<present.length;kk++){var g=present[kk].grp;if(!g){fieldSet[kk]=1;}else if(!(g in seenGrp)){seenGrp[g]=kk;fieldSet[kk]=1;}else{twinOf[kk]=present[seenGrp[g]].t;}}
     var fieldIdx=Object.keys(fieldSet).map(Number).sort(function(a,b){return a-b;});
-    var rows=present.map(function(e,k){var c=series[e.t],r5=ret(c,5),r21=ret(c,21),r63=ret(c,63),r126=ret(c,126),blend=(r63!=null&&r126!=null)?(r63+r126)/2:(r63!=null?r63:r126);return{t:e.t,name:e.name,side:e.side||null,r5:r5,r21:r21,r63:r63,r126:r126,blend:blend,twin_of:twinOf[k],sector:e.sector||null,basket:!!e.basket,members:e.basket||null};});
+    var rows=present.map(function(e,k){var c=series[e.t],r5=ret(c,5),r21=ret(c,21),r63=ret(c,63),r126=ret(c,126),blend=(r63!=null&&r126!=null)?(r63+r126)/2:(r63!=null?r63:r126);return{t:e.t,name:e.name,side:e.side||null,r5:r5,r21:r21,r63:r63,r126:r126,blend:blend,twin_of:twinOf[k],sector:e.sector||null,gics:e.gics||null,basket:!!e.basket,members:e.basket||null};});
     var n=present.length?series[present[0].t].length:0;
     function retSer(k,lag){var c=series[present[k].t],s=new Array(c.length);for(var i=0;i<c.length;i++){var a=i>=lag?c[i-lag]:null,b=c[i];s[i]=(a!=null&&b!=null&&a>0)?b/a-1:null;}return s;}
     var r63ser={},r21ser={};fieldIdx.forEach(function(k){r63ser[k]=retSer(k,63);r21ser[k]=retSer(k,21);});

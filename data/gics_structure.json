@@ -1,0 +1,1208 @@
+{
+ "source": "MSCI GICS Map 2023 (structure effective 2023-03-17), public download from msci.com; discontinued rows removed, change annotations stripped",
+ "vendored": "2026-09-02",
+ "sectors": {
+  "10": {
+   "name": "Energy",
+   "groups": {
+    "1010": {
+     "name": "Energy",
+     "industries": {
+      "101010": {
+       "name": "Energy Equipment & Services",
+       "subs": {
+        "10101010": {
+         "name": "Oil & Gas Drilling",
+         "def": ""
+        },
+        "10101020": {
+         "name": "Oil & Gas Equipment & Services",
+         "def": ""
+        }
+       }
+      },
+      "101020": {
+       "name": "Oil, Gas & Consumable Fuels",
+       "subs": {
+        "10102010": {
+         "name": "Integrated Oil & Gas",
+         "def": ""
+        },
+        "10102020": {
+         "name": "Oil & Gas Exploration & Production",
+         "def": ""
+        },
+        "10102030": {
+         "name": "Oil & Gas Refining & Marketing",
+         "def": ""
+        },
+        "10102040": {
+         "name": "Oil & Gas Storage & Transportation",
+         "def": ""
+        },
+        "10102050": {
+         "name": "Coal & Consumable Fuels",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "15": {
+   "name": "Materials",
+   "groups": {
+    "1510": {
+     "name": "Materials",
+     "industries": {
+      "151010": {
+       "name": "Chemicals",
+       "subs": {
+        "15101010": {
+         "name": "Commodity Chemicals",
+         "def": ""
+        },
+        "15101020": {
+         "name": "Diversified Chemicals",
+         "def": ""
+        },
+        "15101030": {
+         "name": "Fertilizers & Agricultural Chemicals",
+         "def": ""
+        },
+        "15101040": {
+         "name": "Industrial Gases",
+         "def": ""
+        },
+        "15101050": {
+         "name": "Specialty Chemicals",
+         "def": ""
+        }
+       }
+      },
+      "151020": {
+       "name": "Construction Materials",
+       "subs": {
+        "15102010": {
+         "name": "Construction Materials",
+         "def": ""
+        }
+       }
+      },
+      "151030": {
+       "name": "Containers & Packaging",
+       "subs": {
+        "15103010": {
+         "name": "Metal, Glass & Plastic Containers",
+         "def": ""
+        },
+        "15103020": {
+         "name": "Paper & Plastic Packaging Products & Materials",
+         "def": ""
+        }
+       }
+      },
+      "151040": {
+       "name": "Metals & Mining",
+       "subs": {
+        "15104010": {
+         "name": "Aluminum",
+         "def": ""
+        },
+        "15104020": {
+         "name": "Diversified Metals & Mining",
+         "def": ""
+        },
+        "15104025": {
+         "name": "Copper",
+         "def": ""
+        },
+        "15104030": {
+         "name": "Gold",
+         "def": ""
+        },
+        "15104040": {
+         "name": "Precious Metals & Minerals",
+         "def": ""
+        },
+        "15104045": {
+         "name": "Silver",
+         "def": ""
+        },
+        "15104050": {
+         "name": "Steel",
+         "def": ""
+        }
+       }
+      },
+      "151050": {
+       "name": "Paper & Forest Products",
+       "subs": {
+        "15105010": {
+         "name": "Forest Products",
+         "def": ""
+        },
+        "15105020": {
+         "name": "Paper Products",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "20": {
+   "name": "Industrials",
+   "groups": {
+    "2010": {
+     "name": "Capital Goods",
+     "industries": {
+      "201010": {
+       "name": "Aerospace & Defense",
+       "subs": {
+        "20101010": {
+         "name": "Aerospace & Defense",
+         "def": ""
+        }
+       }
+      },
+      "201020": {
+       "name": "Building Products",
+       "subs": {
+        "20102010": {
+         "name": "Building Products",
+         "def": ""
+        }
+       }
+      },
+      "201030": {
+       "name": "Construction & Engineering",
+       "subs": {
+        "20103010": {
+         "name": "Construction & Engineering",
+         "def": ""
+        }
+       }
+      },
+      "201040": {
+       "name": "Electrical Equipment",
+       "subs": {
+        "20104010": {
+         "name": "Electrical Components & Equipment",
+         "def": ""
+        },
+        "20104020": {
+         "name": "Heavy Electrical Equipment",
+         "def": ""
+        }
+       }
+      },
+      "201050": {
+       "name": "Industrial Conglomerates",
+       "subs": {
+        "20105010": {
+         "name": "Industrial Conglomerates",
+         "def": ""
+        }
+       }
+      },
+      "201060": {
+       "name": "Machinery",
+       "subs": {
+        "20106010": {
+         "name": "Construction Machinery & Heavy Transportation Equipment",
+         "def": ""
+        },
+        "20106015": {
+         "name": "Agricultural & Farm Machinery",
+         "def": ""
+        },
+        "20106020": {
+         "name": "Industrial Machinery & Supplies & Components",
+         "def": ""
+        }
+       }
+      },
+      "201070": {
+       "name": "Trading Companies & Distributors",
+       "subs": {
+        "20107010": {
+         "name": "Trading Companies & Distributors",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "2020": {
+     "name": "Commercial  & Professional Services",
+     "industries": {
+      "202010": {
+       "name": "Commercial Services & Supplies",
+       "subs": {
+        "20201010": {
+         "name": "Commercial Printing",
+         "def": ""
+        },
+        "20201050": {
+         "name": "Environmental & Facilities Services",
+         "def": ""
+        },
+        "20201060": {
+         "name": "Office Services & Supplies",
+         "def": ""
+        },
+        "20201070": {
+         "name": "Diversified Support Services",
+         "def": ""
+        },
+        "20201080": {
+         "name": "Security & Alarm Services",
+         "def": ""
+        }
+       }
+      },
+      "202020": {
+       "name": "Professional Services",
+       "subs": {
+        "20202010": {
+         "name": "Human Resource & Employment Services",
+         "def": ""
+        },
+        "20202020": {
+         "name": "Research & Consulting Services",
+         "def": ""
+        },
+        "20202030": {
+         "name": "Data Processing & Outsourced Services (Sector Change, New Code & Definition Update)",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "2030": {
+     "name": "Transportation",
+     "industries": {
+      "203010": {
+       "name": "Air Freight & Logistics",
+       "subs": {
+        "20301010": {
+         "name": "Air Freight & Logistics",
+         "def": ""
+        }
+       }
+      },
+      "203020": {
+       "name": "Passenger Airlines",
+       "subs": {
+        "20302010": {
+         "name": "Passenger Airlines",
+         "def": ""
+        }
+       }
+      },
+      "203030": {
+       "name": "Marine Transportation",
+       "subs": {
+        "20303010": {
+         "name": "Marine Transportation",
+         "def": ""
+        }
+       }
+      },
+      "203040": {
+       "name": "Ground Transportation",
+       "subs": {
+        "20304010": {
+         "name": "Rail Transportation",
+         "def": ""
+        },
+        "20304030": {
+         "name": "Cargo Ground Transportation",
+         "def": ""
+        },
+        "20304040": {
+         "name": "Passenger Ground Transportation",
+         "def": ""
+        }
+       }
+      },
+      "203050": {
+       "name": "Transportation Infrastructure",
+       "subs": {
+        "20305010": {
+         "name": "Airport Services",
+         "def": ""
+        },
+        "20305020": {
+         "name": "Highways & Railtracks",
+         "def": ""
+        },
+        "20305030": {
+         "name": "Marine Ports & Services",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "25": {
+   "name": "Consumer Discretionary",
+   "groups": {
+    "2510": {
+     "name": "Automobiles & Components",
+     "industries": {
+      "251010": {
+       "name": "Automobile Components",
+       "subs": {
+        "25101010": {
+         "name": "Automotive Parts & Equipment",
+         "def": ""
+        },
+        "25101020": {
+         "name": "Tires & Rubber",
+         "def": ""
+        }
+       }
+      },
+      "251020": {
+       "name": "Automobiles",
+       "subs": {
+        "25102010": {
+         "name": "Automobile Manufacturers",
+         "def": ""
+        },
+        "25102020": {
+         "name": "Motorcycle Manufacturers",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "2520": {
+     "name": "Consumer Durables & Apparel",
+     "industries": {
+      "252010": {
+       "name": "Household Durables",
+       "subs": {
+        "25201010": {
+         "name": "Consumer Electronics",
+         "def": ""
+        },
+        "25201020": {
+         "name": "Home Furnishings",
+         "def": ""
+        },
+        "25201030": {
+         "name": "Homebuilding",
+         "def": ""
+        },
+        "25201040": {
+         "name": "Household Appliances",
+         "def": ""
+        },
+        "25201050": {
+         "name": "Housewares & Specialties",
+         "def": ""
+        }
+       }
+      },
+      "252020": {
+       "name": "Leisure Products",
+       "subs": {
+        "25202010": {
+         "name": "Leisure Products",
+         "def": ""
+        }
+       }
+      },
+      "252030": {
+       "name": "Textiles, Apparel & Luxury Goods",
+       "subs": {
+        "25203010": {
+         "name": "Apparel, Accessories & Luxury Goods",
+         "def": ""
+        },
+        "25203020": {
+         "name": "Footwear",
+         "def": ""
+        },
+        "25203030": {
+         "name": "Textiles",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "2530": {
+     "name": "Consumer Services",
+     "industries": {
+      "253010": {
+       "name": "Hotels, Restaurants & Leisure",
+       "subs": {
+        "25301010": {
+         "name": "Casinos & Gaming",
+         "def": ""
+        },
+        "25301020": {
+         "name": "Hotels, Resorts & Cruise Lines",
+         "def": ""
+        },
+        "25301030": {
+         "name": "Leisure Facilities",
+         "def": ""
+        },
+        "25301040": {
+         "name": "Restaurants",
+         "def": ""
+        }
+       }
+      },
+      "253020": {
+       "name": "Diversified Consumer Services",
+       "subs": {
+        "25302010": {
+         "name": "Education Services",
+         "def": ""
+        },
+        "25302020": {
+         "name": "Specialized Consumer Services",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "2550": {
+     "name": "Consumer Discretionary Distribution & Retail",
+     "industries": {
+      "255010": {
+       "name": "Distributors",
+       "subs": {
+        "25501010": {
+         "name": "Distributors",
+         "def": ""
+        }
+       }
+      },
+      "255030": {
+       "name": "Broadline Retail",
+       "subs": {
+        "25503030": {
+         "name": "Broadline Retail",
+         "def": ""
+        }
+       }
+      },
+      "255040": {
+       "name": "Specialty Retail",
+       "subs": {
+        "25504010": {
+         "name": "Apparel Retail",
+         "def": ""
+        },
+        "25504020": {
+         "name": "Computer & Electronics Retail",
+         "def": ""
+        },
+        "25504030": {
+         "name": "Home Improvement Retail",
+         "def": ""
+        },
+        "25504040": {
+         "name": "Other Specialty Retail",
+         "def": ""
+        },
+        "25504050": {
+         "name": "Automotive Retail",
+         "def": ""
+        },
+        "25504060": {
+         "name": "Homefurnishing Retail",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "30": {
+   "name": "Consumer Staples",
+   "groups": {
+    "3010": {
+     "name": "Consumer Staples Distribution & Retail",
+     "industries": {
+      "301010": {
+       "name": "Consumer Staples Distribution & Retail",
+       "subs": {
+        "30101010": {
+         "name": "Drug Retail",
+         "def": ""
+        },
+        "30101020": {
+         "name": "Food Distributors",
+         "def": ""
+        },
+        "30101030": {
+         "name": "Food Retail",
+         "def": ""
+        },
+        "30101040": {
+         "name": "Consumer Staples Merchandise Retail",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "3020": {
+     "name": "Food, Beverage & Tobacco",
+     "industries": {
+      "302010": {
+       "name": "Beverages",
+       "subs": {
+        "30201010": {
+         "name": "Brewers",
+         "def": ""
+        },
+        "30201020": {
+         "name": "Distillers & Vintners",
+         "def": ""
+        },
+        "30201030": {
+         "name": "Soft Drinks & Non-alcoholic Beverages",
+         "def": ""
+        }
+       }
+      },
+      "302020": {
+       "name": "Food Products",
+       "subs": {
+        "30202010": {
+         "name": "Agricultural Products & Services",
+         "def": ""
+        },
+        "30202030": {
+         "name": "Packaged Foods & Meats",
+         "def": ""
+        }
+       }
+      },
+      "302030": {
+       "name": "Tobacco",
+       "subs": {
+        "30203010": {
+         "name": "Tobacco",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "3030": {
+     "name": "Household & Personal Products",
+     "industries": {
+      "303010": {
+       "name": "Household Products",
+       "subs": {
+        "30301010": {
+         "name": "Household Products",
+         "def": ""
+        }
+       }
+      },
+      "303020": {
+       "name": "Personal Care Products",
+       "subs": {
+        "30302010": {
+         "name": "Personal Care Products",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "35": {
+   "name": "Health Care",
+   "groups": {
+    "3510": {
+     "name": "Health Care Equipment & Services",
+     "industries": {
+      "351010": {
+       "name": "Health Care Equipment & Supplies",
+       "subs": {
+        "35101010": {
+         "name": "Health Care Equipment",
+         "def": ""
+        },
+        "35101020": {
+         "name": "Health Care Supplies",
+         "def": ""
+        }
+       }
+      },
+      "351020": {
+       "name": "Health Care Providers & Services",
+       "subs": {
+        "35102010": {
+         "name": "Health Care Distributors",
+         "def": ""
+        },
+        "35102015": {
+         "name": "Health Care Services",
+         "def": ""
+        },
+        "35102020": {
+         "name": "Health Care Facilities",
+         "def": ""
+        },
+        "35102030": {
+         "name": "Managed Health Care",
+         "def": ""
+        }
+       }
+      },
+      "351030": {
+       "name": "Health Care Technology",
+       "subs": {
+        "35103010": {
+         "name": "Health Care Technology",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "3520": {
+     "name": "Pharmaceuticals, Biotechnology & Life Sciences",
+     "industries": {
+      "352010": {
+       "name": "Biotechnology",
+       "subs": {
+        "35201010": {
+         "name": "Biotechnology",
+         "def": ""
+        }
+       }
+      },
+      "352020": {
+       "name": "Pharmaceuticals",
+       "subs": {
+        "35202010": {
+         "name": "Pharmaceuticals",
+         "def": ""
+        }
+       }
+      },
+      "352030": {
+       "name": "Life Sciences Tools & Services",
+       "subs": {
+        "35203010": {
+         "name": "Life Sciences Tools & Services",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "40": {
+   "name": "Financials",
+   "groups": {
+    "4010": {
+     "name": "Banks",
+     "industries": {
+      "401010": {
+       "name": "Banks",
+       "subs": {
+        "40101010": {
+         "name": "Diversified Banks",
+         "def": ""
+        },
+        "40101015": {
+         "name": "Regional Banks",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "4020": {
+     "name": "Financial Services",
+     "industries": {
+      "402010": {
+       "name": "Financial Services",
+       "subs": {
+        "40201020": {
+         "name": "Diversified Financial Services",
+         "def": ""
+        },
+        "40201030": {
+         "name": "Multi-Sector Holdings",
+         "def": ""
+        },
+        "40201040": {
+         "name": "Specialized Finance",
+         "def": ""
+        },
+        "40201050": {
+         "name": "Commercial & Residential Mortgage Finance",
+         "def": ""
+        },
+        "40201060": {
+         "name": "Transaction & Payment Processing Services",
+         "def": ""
+        }
+       }
+      },
+      "402020": {
+       "name": "Consumer Finance",
+       "subs": {
+        "40202010": {
+         "name": "Consumer Finance",
+         "def": ""
+        }
+       }
+      },
+      "402030": {
+       "name": "Capital Markets",
+       "subs": {
+        "40203010": {
+         "name": "Asset Management & Custody Banks",
+         "def": ""
+        },
+        "40203020": {
+         "name": "Investment Banking & Brokerage",
+         "def": ""
+        },
+        "40203030": {
+         "name": "Diversified Capital Markets",
+         "def": ""
+        },
+        "40203040": {
+         "name": "Financial Exchanges & Data",
+         "def": ""
+        }
+       }
+      },
+      "402040": {
+       "name": "Mortgage Real Estate Investment\r\nTrusts (REITs)",
+       "subs": {
+        "40204010": {
+         "name": "Mortgage REITs",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "4030": {
+     "name": "Insurance",
+     "industries": {
+      "403010": {
+       "name": "Insurance",
+       "subs": {
+        "40301010": {
+         "name": "Insurance Brokers",
+         "def": ""
+        },
+        "40301020": {
+         "name": "Life & Health Insurance",
+         "def": ""
+        },
+        "40301030": {
+         "name": "Multi-line Insurance",
+         "def": ""
+        },
+        "40301040": {
+         "name": "Property & Casualty Insurance",
+         "def": ""
+        },
+        "40301050": {
+         "name": "Reinsurance",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "45": {
+   "name": "Information Technology",
+   "groups": {
+    "4510": {
+     "name": "Software & Services",
+     "industries": {
+      "451020": {
+       "name": "IT Services",
+       "subs": {
+        "45102010": {
+         "name": "IT Consulting & Other Services",
+         "def": ""
+        },
+        "45102030": {
+         "name": "Internet Services & Infrastructure",
+         "def": ""
+        }
+       }
+      },
+      "451030": {
+       "name": "Software",
+       "subs": {
+        "45103010": {
+         "name": "Application Software",
+         "def": ""
+        },
+        "45103020": {
+         "name": "Systems Software",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "4520": {
+     "name": "Technology Hardware & Equipment",
+     "industries": {
+      "452010": {
+       "name": "Communications Equipment",
+       "subs": {
+        "45201020": {
+         "name": "Communications Equipment",
+         "def": ""
+        }
+       }
+      },
+      "452020": {
+       "name": "Technology Hardware, Storage & Peripherals",
+       "subs": {
+        "45202030": {
+         "name": "Technology Hardware, Storage & Peripherals",
+         "def": ""
+        }
+       }
+      },
+      "452030": {
+       "name": "Electronic Equipment, Instruments & Components",
+       "subs": {
+        "45203010": {
+         "name": "Electronic Equipment & Instruments",
+         "def": ""
+        },
+        "45203015": {
+         "name": "Electronic Components",
+         "def": ""
+        },
+        "45203020": {
+         "name": "Electronic Manufacturing Services",
+         "def": ""
+        },
+        "45203030": {
+         "name": "Technology Distributors",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "4530": {
+     "name": "Semiconductors & Semiconductor Equipment",
+     "industries": {
+      "453010": {
+       "name": "Semiconductors & Semiconductor Equipment",
+       "subs": {
+        "45301010": {
+         "name": "Semiconductor Materials & Equipment",
+         "def": ""
+        },
+        "45301020": {
+         "name": "Semiconductors",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "50": {
+   "name": "Communication Services",
+   "groups": {
+    "5010": {
+     "name": "Telecommunication Services",
+     "industries": {
+      "501010": {
+       "name": "Diversified Telecommunication Services",
+       "subs": {
+        "50101010": {
+         "name": "Alternative Carriers",
+         "def": ""
+        },
+        "50101020": {
+         "name": "Integrated Telecommunication Services",
+         "def": ""
+        }
+       }
+      },
+      "501020": {
+       "name": "Wireless Telecommunication Services",
+       "subs": {
+        "50102010": {
+         "name": "Wireless Telecommunication Services",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "5020": {
+     "name": "Media & Entertainment",
+     "industries": {
+      "502010": {
+       "name": "Media",
+       "subs": {
+        "50201010": {
+         "name": "Advertising",
+         "def": ""
+        },
+        "50201020": {
+         "name": "Broadcasting",
+         "def": ""
+        },
+        "50201030": {
+         "name": "Cable & Satellite",
+         "def": ""
+        },
+        "50201040": {
+         "name": "Publishing",
+         "def": ""
+        }
+       }
+      },
+      "502020": {
+       "name": "Entertainment",
+       "subs": {
+        "50202010": {
+         "name": "Movies & Entertainment",
+         "def": ""
+        },
+        "50202020": {
+         "name": "Interactive Home Entertainment",
+         "def": ""
+        }
+       }
+      },
+      "502030": {
+       "name": "Interactive Media & Services",
+       "subs": {
+        "50203010": {
+         "name": "Interactive Media & Services",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "55": {
+   "name": "Utilities",
+   "groups": {
+    "5510": {
+     "name": "Utilities",
+     "industries": {
+      "551010": {
+       "name": "Electric Utilities",
+       "subs": {
+        "55101010": {
+         "name": "Electric Utilities",
+         "def": ""
+        }
+       }
+      },
+      "551020": {
+       "name": "Gas Utilities",
+       "subs": {
+        "55102010": {
+         "name": "Gas Utilities",
+         "def": ""
+        }
+       }
+      },
+      "551030": {
+       "name": "Multi-Utilities",
+       "subs": {
+        "55103010": {
+         "name": "Multi-Utilities",
+         "def": ""
+        }
+       }
+      },
+      "551040": {
+       "name": "Water Utilities",
+       "subs": {
+        "55104010": {
+         "name": "Water Utilities",
+         "def": ""
+        }
+       }
+      },
+      "551050": {
+       "name": "Independent Power and Renewable Electricity Producers",
+       "subs": {
+        "55105010": {
+         "name": "Independent Power Producers & Energy Traders",
+         "def": ""
+        },
+        "55105020": {
+         "name": "Renewable Electricity",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "60": {
+   "name": "Real Estate",
+   "groups": {
+    "6010": {
+     "name": "Equity Real Estate Investment Trusts (REITs)",
+     "industries": {
+      "601010": {
+       "name": "Diversified REITs",
+       "subs": {
+        "60101010": {
+         "name": "Diversified REITs",
+         "def": ""
+        }
+       }
+      },
+      "601025": {
+       "name": "Industrial REITs",
+       "subs": {
+        "60102510": {
+         "name": "Industrial REITs",
+         "def": ""
+        }
+       }
+      },
+      "601030": {
+       "name": "Hotel & Resort REITs",
+       "subs": {
+        "60103010": {
+         "name": "Hotel & Resort REITs",
+         "def": ""
+        }
+       }
+      },
+      "601040": {
+       "name": "Office REITs",
+       "subs": {
+        "60104010": {
+         "name": "Office REITs",
+         "def": ""
+        }
+       }
+      },
+      "601050": {
+       "name": "Health Care REITs",
+       "subs": {
+        "60105010": {
+         "name": "Health Care REITs",
+         "def": ""
+        }
+       }
+      },
+      "601060": {
+       "name": "Residential REITs",
+       "subs": {
+        "60106010": {
+         "name": "Multi-Family Residential REITs",
+         "def": ""
+        },
+        "60106020": {
+         "name": "Single-Family Residential REITs",
+         "def": ""
+        }
+       }
+      },
+      "601070": {
+       "name": "Retail REITs",
+       "subs": {
+        "60107010": {
+         "name": "Retail REITs",
+         "def": ""
+        }
+       }
+      },
+      "601080": {
+       "name": "Specialized REITs",
+       "subs": {
+        "60108010": {
+         "name": "Other Specialized REITs",
+         "def": ""
+        },
+        "60108020": {
+         "name": "Self-Storage REITs",
+         "def": ""
+        },
+        "60108030": {
+         "name": "Telecom Tower REITs",
+         "def": ""
+        },
+        "60108040": {
+         "name": "Timber REITs",
+         "def": ""
+        },
+        "60108050": {
+         "name": "Data Center REITs",
+         "def": ""
+        }
+       }
+      }
+     }
+    },
+    "6020": {
+     "name": "Real Estate Management & Development",
+     "industries": {
+      "602010": {
+       "name": "Real Estate Management & Development",
+       "subs": {
+        "60201010": {
+         "name": "Diversified Real Estate Activities",
+         "def": ""
+        },
+        "60201020": {
+         "name": "Real Estate Operating Companies",
+         "def": ""
+        },
+        "60201030": {
+         "name": "Real Estate Development",
+         "def": ""
+        },
+        "60201040": {
+         "name": "Real Estate Services",
+         "def": ""
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

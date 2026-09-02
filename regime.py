@@ -715,7 +715,7 @@ def sector_ladder(series, etfs):
             blend = r63 if r63 is not None else r126
         rows.append({"t": e["t"], "name": e["name"], "side": e.get("side"),
                      "r5": r5, "r21": r21, "r63": r63, "r126": r126, "blend": blend,
-                     "twin_of": twin_of[k], "sector": e.get("sector"),
+                     "twin_of": twin_of[k], "sector": e.get("sector"), "gics": e.get("gics"),
                      "basket": bool(e.get("basket")), "members": e.get("basket") or None})
     n = len(series[present[0]["t"]]) if present else 0
 
@@ -781,62 +781,120 @@ def sector_ladder(series, etfs):
 # The sector-rotation ladder + offense/defense divergence field. Verbatim from
 # index.html `REG_ETFS` (v52). `side` drives the divergence tell.
 REG_ETFS = [
-    # grp = sleeve group for the v60 dedup: only the first-listed present
-    # member of a grp joins the thirds/streak/divergence field; later members
-    # are display-only twins. SLV (the metal) and SILJ (jr miners) are
-    # deliberately NOT grouped -- metal vs miner is an economic distinction
-    # (today's SLV-vs-SILJ 63d gap is exactly that), unlike the true
-    # near-duplicates SMH/SOXX and GDX/GDXJ/RING.
-    # Stream D (9/2/26, Jake: "make a big multiselect of sectors and sub sectors
-    # for that list"): every entry carries `sector` (the multiselect group; the
-    # sled itself is the sub-sector). DISPLAY ONLY -- the field/thirds/streaks/
-    # tells never read it. Basket sleds (`basket: [...]`) are first-class rows
-    # whose series is an equal-weight daily-rebalanced index of the members
-    # (regime.basket_series == RC.basketSeries; parity-checked); the members
-    # themselves stay OUT of REG_ETFS. Adding rows re-thirds the whole field --
-    # streaks on every other sled reset at 9/2/26 (recorded in the CHANGELOG).
-    {"t": "SMH", "name": "Semis", "side": "offense", "grp": "semis", "sector": "Semis"},
-    {"t": "SOXX", "name": "Semis (SOXX)", "side": "offense", "grp": "semis", "sector": "Semis"},
-    {"t": "POWERSEMI", "name": "Power semis (basket)", "side": "offense", "sector": "Semis",
-     "basket": ["ON", "NVTS", "MPWR", "AOSL", "VICR", "STM"]},
-    {"t": "QQQ", "name": "Nasdaq 100", "side": "offense", "sector": "Broad"},
-    {"t": "IWM", "name": "Small caps", "side": "offense", "sector": "Broad"},
-    {"t": "IGV", "name": "Software", "side": "offense", "sector": "Software & internet"},
-    # Cybersecurity as its OWN sled, deliberately NOT a `grp` twin of IGV. The
-    # grp mechanism is for near-duplicates (SMH/SOXX, GDX/GDXJ/RING); cybersec
-    # vs general software is an economic distinction, the same call already made
-    # for SLV vs SILJ. Added 8/27/26, when IGV +7.8% could not be told apart
-    # from CIBR +7.7% by an engine carrying only one software row -- and the
-    # single-name prints under it (CRWD +20, OKTA +29, PANW +14) were the whole
-    # story. NOTE: adding a row re-thirds the WHOLE field, so streaks on every
-    # other sled reset relative to the pre-8/27 series. That is intended.
-    {"t": "CIBR", "name": "Cybersecurity", "side": "offense", "sector": "Software & internet"},
-    {"t": "ARTY", "name": "AI basket", "side": "offense", "sector": "AI & hyperscalers"},
-    {"t": "HYPERSCALE", "name": "Hyperscalers (basket)", "side": "offense", "sector": "AI & hyperscalers",
-     "basket": ["MSFT", "GOOGL", "AMZN", "META", "ORCL"]},
-    {"t": "DTCR", "name": "Data centers", "side": "offense", "sector": "Data centers & neoclouds"},
-    {"t": "NEOCLOUD", "name": "Neoclouds (basket)", "side": "offense", "sector": "Data centers & neoclouds",
-     "basket": ["CRWV", "NBIS", "IREN", "APLD", "CORZ", "WULF"]},
-    {"t": "OPTICS", "name": "Optics / photonics (basket)", "side": "offense", "sector": "Optics",
+    # Stream E (9/2/26, Jake: "select down into the entire GICS hierarchy ... regime
+    # watching is about foresight not backward looking analysis"): the ladder maps the
+    # WHOLE MARKET on MSCI's published GICS structure (data/gics_structure.json,
+    # vendored from msci.com; refresh annually). Every sled carries `gics`, the code
+    # of the node it proxies (2 = sector, 4 = industry group, 6 = industry, 8 = sub-
+    # industry) or a pseudo-node ("TH" themes, "BR" broad, "RG" regions); `sector` is
+    # the display group (the GICS sector name or the pseudo-sector). DISPLAY ONLY --
+    # the field/thirds/streaks/tells never read gics/sector.
+    # Proxy rule (Jake: "the hybrid of equal weight baskets or representative
+    # etfs"): a representative ETF where a clean one exists, an equal-weight basket
+    # (`basket: [...]`, regime.basket_series == RC.basketSeries) otherwise. `grp`
+    # twins stay near-duplicates only. `side` drives the divergence tell and is set
+    # ONLY on clearly polar sleds (growth-cyclical = offense, defensive = defense);
+    # everything else is None so the tell keeps its meaning in an ~80-row field.
+    # Adding rows re-thirds the field: streaks reset again at 9/2/26 (Stream E).
+    # ---- Broad / regions ----
+    {"t": "SPY", "name": "S&P 500", "side": None, "gics": "BR", "sector": "Broad"},
+    {"t": "QQQ", "name": "Nasdaq 100", "side": "offense", "gics": "BR", "sector": "Broad"},
+    {"t": "IWM", "name": "Small caps", "side": "offense", "gics": "BR", "sector": "Broad"},
+    {"t": "EWY", "name": "Korea", "side": None, "gics": "RG", "sector": "Regions"},
+    # ---- 10 Energy ----
+    {"t": "XLE", "name": "Energy (sector)", "side": None, "gics": "10", "sector": "Energy"},
+    {"t": "OIH", "name": "Oil & gas equipment & services", "side": None, "gics": "101010", "sector": "Energy", "grp": "oilsvc"},
+    {"t": "XES", "name": "Oil & gas equipment (XES)", "side": None, "gics": "101010", "sector": "Energy", "grp": "oilsvc"},
+    {"t": "XOP", "name": "Oil & gas E&P", "side": None, "gics": "10102020", "sector": "Energy"},
+    {"t": "AMLP", "name": "Midstream (storage & transport)", "side": None, "gics": "10102040", "sector": "Energy"},
+    {"t": "URA", "name": "Uranium", "side": None, "gics": "10102050", "sector": "Energy"},
+    # ---- 15 Materials ----
+    {"t": "XLB", "name": "Materials (sector)", "side": None, "gics": "15", "sector": "Materials"},
+    {"t": "XME", "name": "Metals & mining", "side": "offense", "gics": "151040", "sector": "Materials"},
+    {"t": "SLX", "name": "Steel", "side": "offense", "gics": "15104050", "sector": "Materials"},
+    {"t": "COPX", "name": "Copper miners", "side": "offense", "gics": "15104020", "sector": "Materials", "grp": "copper"},
+    {"t": "ICOP", "name": "Copper miners (ICOP)", "side": "offense", "gics": "15104020", "sector": "Materials", "grp": "copper"},
+    {"t": "LIT", "name": "Lithium & battery chain", "side": "offense", "gics": "151040", "sector": "Materials"},
+    {"t": "REMX", "name": "Rare earths / strategic metals", "side": None, "gics": "15104020", "sector": "Materials"},
+    {"t": "GDX", "name": "Gold miners", "side": "defense", "gics": "15104030", "sector": "Materials", "grp": "gold"},
+    {"t": "GDXJ", "name": "Jr gold miners", "side": "defense", "gics": "15104030", "sector": "Materials", "grp": "gold"},
+    {"t": "RING", "name": "Gold miners (RING)", "side": "defense", "gics": "15104030", "sector": "Materials", "grp": "gold"},
+    {"t": "SILJ", "name": "Jr silver miners", "side": "defense", "gics": "15104045", "sector": "Materials"},
+    {"t": "SLV", "name": "Silver (metal)", "side": "defense", "gics": "15104045", "sector": "Materials"},
+    # ---- 20 Industrials ----
+    {"t": "XLI", "name": "Industrials (sector)", "side": "offense", "gics": "20", "sector": "Industrials"},
+    {"t": "ITA", "name": "Aerospace & defense", "side": None, "gics": "201010", "sector": "Industrials", "grp": "defense"},
+    {"t": "XAR", "name": "Aerospace & defense (XAR)", "side": None, "gics": "201010", "sector": "Industrials", "grp": "defense"},
+    {"t": "PPA", "name": "Aerospace & defense (PPA)", "side": None, "gics": "201010", "sector": "Industrials", "grp": "defense"},
+    {"t": "GRID", "name": "Grid / electrical equipment", "side": "offense", "gics": "201040", "sector": "Industrials"},
+    {"t": "PAVE", "name": "Infrastructure", "side": "offense", "gics": "2010", "sector": "Industrials"},
+    {"t": "IYT", "name": "Transportation", "side": "offense", "gics": "2030", "sector": "Industrials", "grp": "transport"},
+    {"t": "XTN", "name": "Transportation (XTN)", "side": "offense", "gics": "2030", "sector": "Industrials", "grp": "transport"},
+    {"t": "JETS", "name": "Airlines", "side": "offense", "gics": "203020", "sector": "Industrials"},
+    # ---- 25 Consumer Discretionary ----
+    {"t": "XLY", "name": "Consumer discretionary (sector)", "side": "offense", "gics": "25", "sector": "Consumer Discretionary"},
+    {"t": "DRIV", "name": "Autos / EV & autonomous", "side": "offense", "gics": "251020", "sector": "Consumer Discretionary"},
+    {"t": "ITB", "name": "Homebuilders", "side": "offense", "gics": "25201030", "sector": "Consumer Discretionary", "grp": "homebuild"},
+    {"t": "XHB", "name": "Homebuilders (XHB)", "side": "offense", "gics": "25201030", "sector": "Consumer Discretionary", "grp": "homebuild"},
+    {"t": "PEJ", "name": "Leisure & entertainment", "side": "offense", "gics": "253010", "sector": "Consumer Discretionary"},
+    {"t": "XRT", "name": "Retail", "side": "offense", "gics": "2550", "sector": "Consumer Discretionary"},
+    # ---- 30 Consumer Staples ----
+    {"t": "XLP", "name": "Consumer staples (sector)", "side": "defense", "gics": "30", "sector": "Consumer Staples"},
+    {"t": "PBJ", "name": "Food & beverage", "side": "defense", "gics": "3020", "sector": "Consumer Staples"},
+    # ---- 35 Health Care ----
+    {"t": "XLV", "name": "Health care (sector)", "side": "defense", "gics": "35", "sector": "Health Care"},
+    {"t": "IHI", "name": "Medical devices", "side": None, "gics": "351010", "sector": "Health Care"},
+    {"t": "IHF", "name": "Health care providers", "side": "defense", "gics": "351020", "sector": "Health Care"},
+    {"t": "XBI", "name": "Biotech (equal-weight)", "side": None, "gics": "352010", "sector": "Health Care", "grp": "biotech"},
+    {"t": "IBB", "name": "Biotech (IBB)", "side": None, "gics": "352010", "sector": "Health Care", "grp": "biotech"},
+    {"t": "XPH", "name": "Pharmaceuticals", "side": "defense", "gics": "352020", "sector": "Health Care", "grp": "pharma"},
+    {"t": "PJP", "name": "Pharmaceuticals (PJP)", "side": "defense", "gics": "352020", "sector": "Health Care", "grp": "pharma"},
+    # ---- 40 Financials ----
+    {"t": "XLF", "name": "Financials (sector)", "side": None, "gics": "40", "sector": "Financials"},
+    {"t": "KBE", "name": "Banks", "side": None, "gics": "401010", "sector": "Financials"},
+    {"t": "KRE", "name": "Regional banks", "side": None, "gics": "40101015", "sector": "Financials"},
+    {"t": "IAI", "name": "Capital markets / broker-dealers", "side": "offense", "gics": "402030", "sector": "Financials", "grp": "capmkts"},
+    {"t": "KCE", "name": "Capital markets (KCE)", "side": "offense", "gics": "402030", "sector": "Financials", "grp": "capmkts"},
+    {"t": "FINX", "name": "Fintech / payments", "side": "offense", "gics": "40201060", "sector": "Financials"},
+    {"t": "KIE", "name": "Insurance", "side": None, "gics": "403010", "sector": "Financials"},
+    # ---- 45 Information Technology ----
+    {"t": "XLK", "name": "Information technology (sector)", "side": "offense", "gics": "45", "sector": "Information Technology"},
+    {"t": "IGV", "name": "Software", "side": "offense", "gics": "451030", "sector": "Information Technology", "grp": "software"},
+    {"t": "WCLD", "name": "High-multiple SaaS (WCLD)", "side": "offense", "gics": "45103010", "sector": "Information Technology", "grp": "software"},
+    {"t": "CIBR", "name": "Cybersecurity", "side": "offense", "gics": "45103020", "sector": "Information Technology", "grp": "cyber"},
+    {"t": "HACK", "name": "Cybersecurity (HACK)", "side": "offense", "gics": "45103020", "sector": "Information Technology", "grp": "cyber"},
+    {"t": "OPTICS", "name": "Optics / photonics (basket)", "side": "offense", "gics": "4520", "sector": "Information Technology",
      "basket": ["LITE", "COHR", "AAOI", "CIEN", "FN", "GLW"]},
-    {"t": "QUANTUM", "name": "Quantum (basket)", "side": "offense", "sector": "Quantum",
+    {"t": "SMH", "name": "Semis", "side": "offense", "gics": "453010", "sector": "Information Technology", "grp": "semis"},
+    {"t": "SOXX", "name": "Semis (SOXX)", "side": "offense", "gics": "453010", "sector": "Information Technology", "grp": "semis"},
+    {"t": "XSD", "name": "Semis equal-weight (XSD)", "side": "offense", "gics": "453010", "sector": "Information Technology", "grp": "semis"},
+    {"t": "DRAM", "name": "Memory", "side": "offense", "gics": "45301020", "sector": "Information Technology"},
+    {"t": "POWERSEMI", "name": "Power semis (basket)", "side": "offense", "gics": "45301020", "sector": "Information Technology",
+     "basket": ["ON", "NVTS", "MPWR", "AOSL", "VICR", "STM"]},
+    # ---- 50 Communication Services ----
+    {"t": "XLC", "name": "Communication services (sector)", "side": None, "gics": "50", "sector": "Communication Services"},
+    {"t": "PBS", "name": "Media", "side": None, "gics": "502010", "sector": "Communication Services"},
+    {"t": "ESPO", "name": "Video games & esports", "side": "offense", "gics": "502020", "sector": "Communication Services"},
+    {"t": "FDN", "name": "Internet / interactive media", "side": "offense", "gics": "502030", "sector": "Communication Services"},
+    # ---- 55 Utilities ----
+    {"t": "XLU", "name": "Utilities (sector)", "side": "defense", "gics": "55", "sector": "Utilities"},
+    {"t": "ICLN", "name": "Clean energy / renewables", "side": None, "gics": "551050", "sector": "Utilities", "grp": "renew"},
+    {"t": "TAN", "name": "Solar (TAN)", "side": None, "gics": "551050", "sector": "Utilities", "grp": "renew"},
+    {"t": "NLR", "name": "Nuclear energy", "side": None, "gics": "551050", "sector": "Utilities"},
+    # ---- 60 Real Estate ----
+    {"t": "XLRE", "name": "Real estate (sector)", "side": None, "gics": "60", "sector": "Real Estate", "grp": "reit"},
+    {"t": "VNQ", "name": "REITs (VNQ)", "side": None, "gics": "6010", "sector": "Real Estate", "grp": "reit"},
+    {"t": "DTCR", "name": "Data center REITs & digital infra", "side": "offense", "gics": "60108050", "sector": "Real Estate"},
+    # ---- Themes (cross-sector; not GICS nodes) ----
+    {"t": "ARTY", "name": "AI basket (ARTY)", "side": "offense", "gics": "TH", "sector": "Themes"},
+    {"t": "HYPERSCALE", "name": "Hyperscalers (basket)", "side": "offense", "gics": "TH", "sector": "Themes",
+     "basket": ["MSFT", "GOOGL", "AMZN", "META", "ORCL"]},
+    {"t": "NEOCLOUD", "name": "Neoclouds (basket)", "side": "offense", "gics": "TH", "sector": "Themes",
+     "basket": ["CRWV", "NBIS", "IREN", "APLD", "CORZ", "WULF"]},
+    {"t": "QUANTUM", "name": "Quantum (basket)", "side": "offense", "gics": "TH", "sector": "Themes",
      "basket": ["IONQ", "RGTI", "QBTS", "QUBT", "ARQQ"]},
-    {"t": "DRAM", "name": "Memory", "side": "offense", "sector": "Memory & storage"},
-    {"t": "GRID", "name": "Grid infra", "side": "offense", "sector": "Power & utilities"},
-    {"t": "XLU", "name": "Utilities", "side": "defense", "sector": "Power & utilities"},
-    {"t": "UFO", "name": "Space", "side": "offense", "sector": "Space"},
-    {"t": "XBI", "name": "Biotech (equal-weight)", "side": None, "grp": "biotech", "sector": "Biotech"},
-    {"t": "IBB", "name": "Biotech (IBB)", "side": None, "grp": "biotech", "sector": "Biotech"},
-    {"t": "XLF", "name": "Financials", "side": None, "grp": "financials", "sector": "Financials"},
-    {"t": "KRE", "name": "Regional banks (KRE)", "side": None, "grp": "financials", "sector": "Financials"},
-    {"t": "SPY", "name": "S&P 500", "side": None, "sector": "Broad"},
-    {"t": "EWY", "name": "Korea", "side": None, "sector": "Korea"},
-    {"t": "ICOP", "name": "Copper miners", "side": None, "sector": "Metals"},
-    {"t": "GDX", "name": "Gold miners", "side": "defense", "grp": "gold", "sector": "Metals"},
-    {"t": "GDXJ", "name": "Jr gold miners", "side": "defense", "grp": "gold", "sector": "Metals"},
-    {"t": "RING", "name": "Gold miners (RING)", "side": "defense", "grp": "gold", "sector": "Metals"},
-    {"t": "SILJ", "name": "Jr silver miners", "side": "defense", "sector": "Metals"},
-    {"t": "SLV", "name": "Silver", "side": "defense", "sector": "Metals"},
+    {"t": "UFO", "name": "Space", "side": "offense", "gics": "TH", "sector": "Themes"},
+    {"t": "BOTZ", "name": "Robotics & AI", "side": "offense", "gics": "TH", "sector": "Themes"},
 ]
 
 # The composite legs. v52 carried the three macro + two equity trend-rule legs
@@ -1126,7 +1184,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         "r5": _r(r.get("r5")), "r21": _r(r["r21"]), "r63": _r(r["r63"]), "r126": _r(r["r126"]),
         "blend": _r(r["blend"]), "third": r["third"], "third21": r["third21"],
         "streak": r["streak"], "twin_of": r["twin_of"],
-        "sector": r.get("sector"), "basket": r.get("basket", False), "members": r.get("members"),
+        "sector": r.get("sector"), "gics": r.get("gics"), "basket": r.get("basket", False), "members": r.get("members"),
     } for r in lad["rows"]]
 
     brm = base_rates_multi(series, book, comp["state"], (5, 21, 63))

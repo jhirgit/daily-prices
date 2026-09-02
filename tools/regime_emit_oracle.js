@@ -102,7 +102,7 @@ Object.keys(rr).forEach((t) => {
 });
 
 const lad = RC.sectorLadder(series, REG_ETFS);
-const ladderRows = lad.rows.map((r) => ({ t: r.t, name: r.name, side: r.side, r5: r.r5, r21: r.r21, r63: r.r63, r126: r.r126, blend: r.blend, third: r.third, third21: r.third21, streak: r.streak, twin_of: r.twin_of, sector: r.sector, basket: r.basket, members: r.members }));
+const ladderRows = lad.rows.map((r) => ({ t: r.t, name: r.name, side: r.side, r5: r.r5, r21: r.r21, r63: r.r63, r126: r.r126, blend: r.blend, third: r.third, third21: r.third21, streak: r.streak, twin_of: r.twin_of, sector: r.sector, gics: r.gics, basket: r.basket, members: r.members }));
 
 const baseRates = RC.baseRatesMulti(series, book, comp.state, [5, 21, 63]);
 

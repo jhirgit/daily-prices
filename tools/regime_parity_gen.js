@@ -180,7 +180,7 @@ const cases = [
   // leading gap; NOPE is absent; the basket joins the field as a first-class row.
   { id: "ladder_basket", fn: "sectorLadder", args: { series: Object.assign({}, ladSeries, { E9: [null, null].concat(geo(LAD_N - 2, 1.003).map((v, i) => (i === 50 ? null : v))) }), etfs: [
     { t: "E1", name: "off-hi", side: "offense", sector: "A" }, { t: "E2", name: "def-hi", side: "defense", sector: "B" },
-    { t: "BK", name: "basket", side: "offense", sector: "A", basket: ["E3", "E9", "NOPE", "E5"] },
+    { t: "BK", name: "basket", side: "offense", sector: "A", gics: "45301020", basket: ["E3", "E9", "NOPE", "E5"] },
     { t: "E4", name: "def-mid", side: "defense", sector: "B" }, { t: "E6", name: "neu2", side: null, sector: "C" },
   ] } },
   { id: "ladder_basket_empty", fn: "sectorLadder", args: { series: { E1: ladSeries.E1 }, etfs: [ { t: "E1", name: "x", side: null }, { t: "BK", name: "b", side: null, basket: ["NOPE", "NOPE2"] } ] } },
