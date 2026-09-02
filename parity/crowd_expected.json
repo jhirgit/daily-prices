@@ -1,0 +1,41 @@
+{
+ "source": "crowd.py first run, hand-verified on these names (SPEC-36 phase 3)",
+ "today": "2026-09-01",
+ "cases": {
+  "NVDA": {
+   "asof": "2026-09-01",
+   "relvol_20_60": 0.9344,
+   "ext_50d": 0.0414,
+   "ext_200d": 0.1089,
+   "insider_net_30d": 0
+  },
+  "COHR": {
+   "asof": "2026-09-01",
+   "relvol_20_60": 1.2157,
+   "ext_50d": -0.1349,
+   "ext_200d": -0.0088,
+   "insider_net_30d": 972000
+  },
+  "SMH": {
+   "asof": "2026-09-01",
+   "relvol_20_60": 0.6256,
+   "ext_50d": -0.0569,
+   "ext_200d": 0.1498,
+   "insider_net_30d": null
+  },
+  "AAOI": {
+   "asof": "2026-09-01",
+   "relvol_20_60": 0.9994,
+   "ext_50d": -0.1392,
+   "ext_200d": 0.031,
+   "insider_net_30d": 2061988
+  },
+  "IREN": {
+   "asof": "2026-09-01",
+   "relvol_20_60": 1.0069,
+   "ext_50d": -0.0967,
+   "ext_200d": -0.1951,
+   "insider_net_30d": 0
+  }
+ }
+}

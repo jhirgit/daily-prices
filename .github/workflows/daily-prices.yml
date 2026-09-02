@@ -53,6 +53,9 @@ jobs:
       - name: Export text data (CSV + JSON for public URLs)
         run: python export_data.py
 
+      - name: Positioning proxies (SPEC-36 crowd block, display-only)
+        run: python crowd.py
+
       - name: Commit updated database and exports
         run: |
           git config user.name  "github-actions[bot]"
