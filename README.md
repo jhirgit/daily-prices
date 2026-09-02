@@ -1,5 +1,10 @@
 # daily-prices
 
+> **Visibility note (2026-09-01, backlog #15):** this repository is being taken **private**. Once it is, the raw
+> `raw.githubusercontent.com` / jsDelivr URLs below stop working for anyone not logged in. The dashboard already
+> reads through its same-origin proxy (`jr-dash` `/data/*`, behind Cloudflare Access); tooling on Jake's machine uses
+> the local clone or `tools/jr_prices.py` (Access service token). Claude.ai chat cannot read this data directly any more.
+
 A tiny daily job that records **open/high/low/close**, **adjusted close**, **volume**,
 and a **delayed spot quote** for a watchlist of tickers into a **SQLite** database —
 so you accumulate a price history for market analysis.

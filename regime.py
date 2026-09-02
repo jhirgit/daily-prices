@@ -665,6 +665,7 @@ def sector_ladder(series, etfs):
     for k in range(len(present)):
         e = present[k]
         c = series[e["t"]]
+        r5 = ret(c, 5)     # #46(c): 1 week = 5 sessions, display only (not in the sort key)
         r21 = ret(c, 21)
         r63 = ret(c, 63)
         r126 = ret(c, 126)
@@ -673,7 +674,7 @@ def sector_ladder(series, etfs):
         else:
             blend = r63 if r63 is not None else r126
         rows.append({"t": e["t"], "name": e["name"], "side": e.get("side"),
-                     "r21": r21, "r63": r63, "r126": r126, "blend": blend,
+                     "r5": r5, "r21": r21, "r63": r63, "r126": r126, "blend": blend,
                      "twin_of": twin_of[k]})
     n = len(series[present[0]["t"]]) if present else 0
 

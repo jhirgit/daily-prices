@@ -1,5 +1,10 @@
 # How to get price data from this repo (instructions for Claude sessions)
 
+> **Visibility note (2026-09-01, backlog #15):** this repository is being taken **private**. Once it is, the raw
+> `raw.githubusercontent.com` / jsDelivr URLs below stop working for anyone not logged in. The dashboard already
+> reads through its same-origin proxy (`jr-dash` `/data/*`, behind Cloudflare Access); tooling on Jake's machine uses
+> the local clone or `tools/jr_prices.py` (Access service token). Claude.ai chat cannot read this data directly any more.
+
 This repo (`jhirgit/daily-prices`) provides two kinds of price data. Pick the
 right one for the question being asked.
 
