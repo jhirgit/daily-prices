@@ -1,0 +1,33 @@
+name: Finnhub probe
+# On-demand: print the classification fields Finnhub returns for one symbol on
+# this account's plan (never the token). Used to decide the GICS source for the
+# regime ladder (2026-09-02). Public repo: the log shows only public facts.
+on:
+  workflow_dispatch:
+    inputs:
+      symbol:
+        description: "Ticker to probe"
+        required: false
+        default: "NVDA"
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe /stock/profile and /stock/profile2
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SYMBOL: ${{ inputs.symbol }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          t = os.environ["FINNHUB_API_KEY"]; s = os.environ.get("SYMBOL") or "NVDA"
+          keep = ("gsector","ggroup","gind","gsubind","naics","naicsSector","naicsSubsector","naicsNationalIndustry","sic","finnhubIndustry","error","name")
+          for p in ("profile", "profile2"):
+              try:
+                  j = json.load(urllib.request.urlopen(f"https://finnhub.io/api/v1/stock/{p}?symbol={s}&token={t}", timeout=30))
+                  print(p, "->", {k: v for k, v in j.items() if k in keep}, "| keys:", sorted(j.keys())[:40])
+              except Exception as e:
+                  print(p, "-> HTTP/parse error:", str(e)[:120])
+          PY
