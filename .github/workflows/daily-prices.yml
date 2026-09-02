@@ -56,6 +56,9 @@ jobs:
       - name: Positioning proxies (SPEC-36 crowd block, display-only)
         run: python crowd.py
 
+      - name: Adjusted-close history for the Book performance view (#51)
+        run: python closes.py
+
       - name: Commit updated database and exports
         run: |
           git config user.name  "github-actions[bot]"
