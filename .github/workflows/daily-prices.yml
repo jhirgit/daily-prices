@@ -72,6 +72,41 @@ jobs:
             git push
           fi
 
+  # The forward earnings calendar, on the same cadence and the same trigger as
+  # the prices (jr-dash SPEC-56 P2). Deliberately a SEPARATE job rather than a
+  # step inside `fetch`: a feed hiccup on the calendar must never stop the
+  # prices committing, and `needs: fetch` serialises the two pushes so they
+  # cannot race each other on the same branch.
+  earnings-dates:
+    needs: fetch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Emit the forward earnings calendar
+        run: python earnings_dates.py
+
+      - name: Commit the calendar
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/earnings_dates.json
+          if git diff --staged --quiet; then
+            echo "No calendar changes to commit."
+          else
+            git commit -m "earnings dates: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git pull --rebase
+            git push
+          fi
+
   # A silent cron is the failure mode this repo actually has: nothing here
   # reported a broken run until someone noticed stale prices downstream.
   alert:
@@ -80,5 +115,17 @@ jobs:
     uses: ./.github/workflows/_alert-failure.yml
     with:
       workflow: Daily Prices
+    permissions:
+      issues: write
+
+  # Same reasoning, its own alert: a calendar that quietly stops refreshing is
+  # exactly the silence SPEC-56 is designed against, and it would otherwise be
+  # invisible because the prices job beside it would still be green.
+  alert-earnings-dates:
+    needs: earnings-dates
+    if: failure()
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Daily Prices - earnings dates
     permissions:
       issues: write
