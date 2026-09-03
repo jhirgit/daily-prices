@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-09-03T19:02:35Z",
+  "generated_at": "2026-09-03T22:06:57Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
-  "window_days": 30,
+  "window_days": 10,
   "grace_sessions": 2,
   "counts": {
     "in_window": 5,
     "checked": 5,
-    "detected": 4,
-    "awaiting": 1,
+    "detected": 5,
+    "awaiting": 0,
     "overdue": 0,
     "errors": 0
   },
@@ -70,7 +70,17 @@
     },
     "ZS": {
       "expected": "2026-09-03",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-09-03",
+      "period": "2026-09-01",
+      "accession": "0001713683-26-000156",
+      "items": [
+        "2.02",
+        "2.05",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1713683/000171368326000156/zs-20260901.htm"
     }
   }
 }
