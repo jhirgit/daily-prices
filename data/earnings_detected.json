@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-09-03T19:02:35Z",
+  "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
+  "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
+  "window_days": 30,
+  "grace_sessions": 2,
+  "counts": {
+    "in_window": 5,
+    "checked": 5,
+    "detected": 4,
+    "awaiting": 1,
+    "overdue": 0,
+    "errors": 0
+  },
+  "not_sec_filers": [],
+  "names": {
+    "AVGO": {
+      "expected": "2026-09-02",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-09-02",
+      "period": "2026-09-02",
+      "accession": "0001730168-26-000076",
+      "items": [
+        "2.02",
+        "8.01",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-20260902.htm"
+    },
+    "CIEN": {
+      "expected": "2026-09-03",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-09-03",
+      "period": "2026-09-03",
+      "accession": "0001628280-26-060245",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/936395/000162828026060245/cien-20260903.htm"
+    },
+    "OKTA": {
+      "expected": "2026-08-26",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-08-26",
+      "period": "2026-08-26",
+      "accession": "0001660134-26-000068",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000068/okta-20260826.htm"
+    },
+    "S": {
+      "expected": "2026-08-27",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-08-27",
+      "period": "2026-08-27",
+      "accession": "0001583708-26-000052",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000052/s-20260827.htm"
+    },
+    "ZS": {
+      "expected": "2026-09-03",
+      "status": "awaiting"
+    }
+  }
+}

@@ -94,18 +94,34 @@ jobs:
       - name: Emit the forward earnings calendar
         run: python earnings_dates.py
 
-      - name: Commit the calendar
+      # continue-on-error so an OVERDUE name still gets COMMITTED before the job
+      # goes red. Without it the detector would fail, skip the commit, and the
+      # evidence for why it failed would never land — loud but useless.
+      - name: Detect prints against EDGAR
+        id: detect
+        continue-on-error: true
+        run: python earnings_detect.py
+
+      - name: Commit the calendar and detections
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/earnings_dates.json
+          git add data/earnings_dates.json data/earnings_detected.json data/cik_map.json
           if git diff --staged --quiet; then
             echo "No calendar changes to commit."
           else
-            git commit -m "earnings dates: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git commit -m "earnings dates + detections: $(date -u +'%Y-%m-%d %H:%M UTC')"
             git pull --rebase
             git push
           fi
+
+      # Now go red, after the artifact is safely committed. An overdue name means
+      # the expected date is wrong or the print was missed; both need a human.
+      - name: Fail if a print is overdue
+        if: steps.detect.outcome == 'failure'
+        run: |
+          echo "earnings_detect reported an OVERDUE name — see data/earnings_detected.json"
+          exit 1
 
   # A silent cron is the failure mode this repo actually has: nothing here
   # reported a broken run until someone noticed stale prices downstream.
