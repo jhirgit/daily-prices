@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-03T23:57:32Z",
+  "generated_at": "2026-09-04T22:08:16Z",
   "source": "yfinance Ticker.calendar['Earnings Date'], soonest forward date",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 110,
@@ -224,6 +224,6 @@
     "WOLF": "2026-11-04",
     "WPM": "2026-11-05",
     "WULF": "2026-11-09",
-    "ZS": "2026-09-03"
+    "ZS": "2026-11-24"
   }
 }
