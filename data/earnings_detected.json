@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T22:08:17Z",
+  "generated_at": "2026-09-04T23:54:24Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
