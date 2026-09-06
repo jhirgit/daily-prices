@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-04T23:52:51Z",
+  "generated_at": "2026-09-06T09:16:47Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
-  "count": 217,
+  "count": 222,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -1187,6 +1187,21 @@
       "spot_captured_at": "2026-09-04T23:52:07Z",
       "currency": "USD",
       "dma200": 50.2009,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "IEF",
+      "date": "2026-09-04",
+      "open": 92.26,
+      "high": 92.4,
+      "low": 92.22,
+      "close": 92.25,
+      "adj_close": 92.25,
+      "volume": 3011600,
+      "spot_price": 92.25,
+      "spot_captured_at": "2026-09-06T08:19:00Z",
+      "currency": "USD",
+      "dma200": 95.0711,
       "dma200_n": 200
     },
     {
@@ -3155,6 +3170,21 @@
       "dma200_n": 200
     },
     {
+      "ticker": "^FVX",
+      "date": "2026-09-04",
+      "open": 4.509,
+      "high": 4.582,
+      "low": 4.502,
+      "close": 4.55,
+      "adj_close": 4.55,
+      "volume": 0,
+      "spot_price": 4.55,
+      "spot_captured_at": "2026-09-06T08:18:57Z",
+      "currency": "USD",
+      "dma200": 4.0019,
+      "dma200_n": 200
+    },
+    {
       "ticker": "^GSPC",
       "date": "2026-09-04",
       "open": 7750.1899,
@@ -3182,6 +3212,21 @@
       "spot_captured_at": "2026-09-04T23:52:31Z",
       "currency": "HKD",
       "dma200": 25666.781,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "^IRX",
+      "date": "2026-09-04",
+      "open": 3.745,
+      "high": 3.77,
+      "low": 3.73,
+      "close": 3.757,
+      "adj_close": 3.757,
+      "volume": 0,
+      "spot_price": 3.757,
+      "spot_captured_at": "2026-09-06T08:18:55Z",
+      "currency": "USD",
+      "dma200": 3.6292,
       "dma200_n": 200
     },
     {
@@ -3242,6 +3287,36 @@
       "spot_captured_at": "2026-09-04T23:52:26Z",
       "currency": "USD",
       "dma200": 9843.9769,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "^TNX",
+      "date": "2026-09-04",
+      "open": 4.754,
+      "high": 4.812,
+      "low": 4.748,
+      "close": 4.784,
+      "adj_close": 4.784,
+      "volume": 0,
+      "spot_price": 4.784,
+      "spot_captured_at": "2026-09-06T08:18:58Z",
+      "currency": "USD",
+      "dma200": 4.3596,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "^TYX",
+      "date": "2026-09-04",
+      "open": 5.232,
+      "high": 5.273,
+      "low": 5.222,
+      "close": 5.246,
+      "adj_close": 5.246,
+      "volume": 0,
+      "spot_price": 5.246,
+      "spot_captured_at": "2026-09-06T08:18:59Z",
+      "currency": "USD",
+      "dma200": 4.94,
       "dma200_n": 200
     },
     {
