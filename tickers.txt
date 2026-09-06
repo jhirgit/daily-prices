@@ -288,6 +288,11 @@ HYG        # US high-yield credit (iShares iBoxx HY) - credit-risk read
 LQD        # US investment-grade credit (iShares iBoxx IG)
 UUP        # US dollar bullish (Invesco DB USD Index) - dollar read
 TLT        # 20+yr Treasuries (iShares) - stocks-bonds correlation leg (regime #3 improvement)
+^IRX       # 13-week T-bill yield (3mo) - curve short end
+^FVX       # 5yr Treasury yield - curve mid
+^TNX       # 10yr Treasury yield - curve benchmark
+^TYX       # 30yr Treasury yield - curve long end
+IEF        # 7-10yr Treasuries (iShares) - curve proxy ETF
 BTC-USD    # Bitcoin
 ETH-USD    # Ethereum
 
