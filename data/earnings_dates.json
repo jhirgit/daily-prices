@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-06T21:57:13Z",
-  "source": "yfinance Ticker.calendar['Earnings Date'], soonest forward date",
-  "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. Public repo: tickers and public reporting dates only, never coverage or position data.",
+  "generated_at": "2026-09-07T22:06:54Z",
+  "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
+  "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 110,
   "asked": 222,
   "missing": [
@@ -120,115 +120,445 @@
   ],
   "errors": {},
   "dates": {
-    "000660.KS": "2026-10-26",
-    "005930.KS": "2026-10-27",
-    "6981.T": "2026-10-29",
-    "AAOI": "2026-11-05",
-    "AAPL": "2026-10-29",
-    "AEHR": "2026-10-08",
-    "AEM": "2026-10-28",
-    "AG": "2026-10-29",
-    "AGI": "2026-10-28",
-    "ALAB": "2026-11-03",
-    "AMD": "2026-11-03",
-    "AMSC": "2026-11-04",
-    "AMZN": "2026-10-29",
-    "AOSL": "2026-11-09",
-    "APLD": "2026-10-08",
-    "ASML": "2026-10-14",
-    "AU": "2026-11-05",
-    "AVGO": "2026-09-02",
-    "AXTI": "2026-10-29",
-    "BE": "2026-10-27",
-    "BMNR": "2026-11-20",
-    "CAT": "2026-10-29",
-    "CDE": "2026-10-28",
-    "CEG": "2026-11-09",
-    "CIEN": "2026-09-03",
-    "COHR": "2026-11-04",
-    "CORZ": "2026-10-23",
-    "CRWD": "2026-12-01",
-    "CRWV": "2026-11-11",
-    "DDOG": "2026-11-05",
-    "DPC": "2026-11-09",
-    "ENPH": "2026-10-27",
-    "EQIX": "2026-10-28",
-    "ETN": "2026-11-03",
-    "EXK": "2026-11-05",
-    "FLEX": "2026-10-28",
-    "FN": "2026-11-02",
-    "FNV": "2026-11-03",
-    "FRVO": "2026-11-16",
-    "FTNT": "2026-11-04",
-    "GEV": "2026-10-28",
-    "GLW": "2026-10-27",
-    "GOLD": "2026-11-05",
-    "GOOGL": "2026-10-28",
-    "HIMS": "2026-11-09",
-    "HIMX": "2026-11-05",
-    "HL": "2026-11-05",
-    "HUBS": "2026-11-04",
-    "IFNNY": "2026-11-10",
-    "INTC": "2026-10-22",
-    "INVH": "2026-10-28",
-    "IONQ": "2026-11-04",
-    "IREN": "2026-11-05",
-    "JPM": "2026-10-13",
-    "KGC": "2026-11-10",
-    "LITE": "2026-11-05",
-    "LRCX": "2026-10-21",
-    "META": "2026-10-28",
-    "MPWR": "2026-10-29",
-    "MRAAF": "2026-10-30",
-    "MRAAY": "2026-10-30",
-    "MRNA": "2026-11-05",
-    "MRVL": "2026-12-01",
-    "MSFT": "2026-10-28",
-    "MU": "2026-09-30",
-    "NBIS": "2026-11-10",
-    "NEM": "2026-10-22",
-    "NET": "2026-10-29",
-    "NLST": "2026-11-05",
-    "NOK": "2026-10-22",
-    "NOW": "2026-10-28",
-    "NRG": "2026-11-05",
-    "NVDA": "2026-11-17",
-    "NVO": "2026-11-04",
-    "NVTS": "2026-11-02",
-    "OKTA": "2026-12-01",
-    "ON": "2026-11-02",
-    "ORCL": "2026-09-10",
-    "PAAS": "2026-11-16",
-    "PANW": "2026-11-19",
-    "PENG": "2026-10-13",
-    "POWI": "2026-11-05",
-    "PYPL": "2026-10-27",
-    "QBTS": "2026-11-05",
-    "QLYS": "2026-11-03",
-    "QUBT": "2026-11-09",
-    "RDDT": "2026-10-29",
-    "RGLD": "2026-11-04",
-    "RGTI": "2026-11-10",
-    "S": "2026-08-27",
-    "SHOP": "2026-11-03",
-    "SIEGY": "2026-11-12",
-    "SIVEF": "2026-11-26",
-    "SNDK": "2026-11-06",
-    "SPCX": "2026-11-03",
-    "SSRM": "2026-11-03",
-    "STM": "2026-10-29",
-    "TENB": "2026-10-28",
-    "TFPM": "2026-11-03",
-    "TLN": "2026-11-04",
-    "TSM": "2026-10-15",
-    "TXN": "2026-10-27",
-    "VICR": "2026-10-20",
-    "VPG": "2026-11-03",
-    "VRT": "2026-10-21",
-    "VST": "2026-11-05",
-    "WOLF": "2026-11-04",
-    "WPM": "2026-11-05",
-    "WULF": "2026-11-09",
-    "ZS": "2026-11-24"
+    "000660.KS": {
+      "date": "2026-10-27",
+      "estimated": true
+    },
+    "005930.KS": {
+      "date": "2026-10-28",
+      "estimated": false
+    },
+    "6981.T": {
+      "date": "2026-10-30",
+      "estimated": false
+    },
+    "AAOI": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "AAPL": {
+      "date": "2026-10-29",
+      "estimated": false
+    },
+    "AEHR": {
+      "date": "2026-10-08",
+      "estimated": false
+    },
+    "AEM": {
+      "date": "2026-10-28",
+      "estimated": false
+    },
+    "AG": {
+      "date": "2026-10-29",
+      "estimated": true
+    },
+    "AGI": {
+      "date": "2026-10-28",
+      "estimated": true
+    },
+    "ALAB": {
+      "date": "2026-11-03",
+      "estimated": true
+    },
+    "AMD": {
+      "date": "2026-11-03",
+      "estimated": true
+    },
+    "AMSC": {
+      "date": "2026-11-04",
+      "estimated": true
+    },
+    "AMZN": {
+      "date": "2026-10-29",
+      "estimated": true
+    },
+    "AOSL": {
+      "date": "2026-11-09",
+      "estimated": true
+    },
+    "APLD": {
+      "date": "2026-10-08",
+      "estimated": false
+    },
+    "ASML": {
+      "date": "2026-10-14",
+      "estimated": false
+    },
+    "AU": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "AVGO": {
+      "date": "2026-09-02",
+      "estimated": false
+    },
+    "AXTI": {
+      "date": "2026-10-29",
+      "estimated": true
+    },
+    "BE": {
+      "date": "2026-10-27",
+      "estimated": true
+    },
+    "BMNR": {
+      "date": "2026-11-20",
+      "estimated": true
+    },
+    "CAT": {
+      "date": "2026-10-29",
+      "estimated": false
+    },
+    "CDE": {
+      "date": "2026-10-28",
+      "estimated": false
+    },
+    "CEG": {
+      "date": "2026-11-09",
+      "estimated": true
+    },
+    "CIEN": {
+      "date": "2026-09-03",
+      "estimated": false
+    },
+    "COHR": {
+      "date": "2026-11-04",
+      "estimated": false
+    },
+    "CORZ": {
+      "date": "2026-10-23",
+      "estimated": true
+    },
+    "CRWD": {
+      "date": "2026-12-01",
+      "estimated": false
+    },
+    "CRWV": {
+      "date": "2026-11-11",
+      "estimated": false
+    },
+    "DDOG": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "DPC": {
+      "date": "2026-11-09",
+      "estimated": true
+    },
+    "ENPH": {
+      "date": "2026-10-27",
+      "estimated": true
+    },
+    "EQIX": {
+      "date": "2026-10-28",
+      "estimated": true
+    },
+    "ETN": {
+      "date": "2026-11-03",
+      "estimated": true
+    },
+    "EXK": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "FLEX": {
+      "date": "2026-10-28",
+      "estimated": false
+    },
+    "FN": {
+      "date": "2026-11-02",
+      "estimated": true
+    },
+    "FNV": {
+      "date": "2026-11-03",
+      "estimated": true
+    },
+    "FRVO": {
+      "date": "2026-11-16",
+      "estimated": false
+    },
+    "FTNT": {
+      "date": "2026-11-04",
+      "estimated": true
+    },
+    "GEV": {
+      "date": "2026-10-28",
+      "estimated": false
+    },
+    "GLW": {
+      "date": "2026-10-27",
+      "estimated": true
+    },
+    "GOLD": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "GOOGL": {
+      "date": "2026-10-28",
+      "estimated": false
+    },
+    "HIMS": {
+      "date": "2026-11-09",
+      "estimated": false
+    },
+    "HIMX": {
+      "date": "2026-11-05",
+      "estimated": false
+    },
+    "HL": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "HUBS": {
+      "date": "2026-11-04",
+      "estimated": true
+    },
+    "IFNNY": {
+      "date": "2026-11-10",
+      "estimated": false
+    },
+    "INTC": {
+      "date": "2026-10-22",
+      "estimated": true
+    },
+    "INVH": {
+      "date": "2026-10-28",
+      "estimated": true
+    },
+    "IONQ": {
+      "date": "2026-11-04",
+      "estimated": false
+    },
+    "IREN": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "JPM": {
+      "date": "2026-10-13",
+      "estimated": false
+    },
+    "KGC": {
+      "date": "2026-11-10",
+      "estimated": true
+    },
+    "LITE": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "LRCX": {
+      "date": "2026-10-21",
+      "estimated": false
+    },
+    "META": {
+      "date": "2026-10-28",
+      "estimated": true
+    },
+    "MPWR": {
+      "date": "2026-10-29",
+      "estimated": false
+    },
+    "MRAAF": {
+      "date": "2026-10-30",
+      "estimated": false
+    },
+    "MRAAY": {
+      "date": "2026-10-30",
+      "estimated": false
+    },
+    "MRNA": {
+      "date": "2026-11-05",
+      "estimated": false
+    },
+    "MRVL": {
+      "date": "2026-12-01",
+      "estimated": true
+    },
+    "MSFT": {
+      "date": "2026-10-28",
+      "estimated": true
+    },
+    "MU": {
+      "date": "2026-09-30",
+      "estimated": false
+    },
+    "NBIS": {
+      "date": "2026-11-10",
+      "estimated": false
+    },
+    "NEM": {
+      "date": "2026-10-22",
+      "estimated": false
+    },
+    "NET": {
+      "date": "2026-10-29",
+      "estimated": true
+    },
+    "NLST": {
+      "date": "2026-11-05",
+      "estimated": false
+    },
+    "NOK": {
+      "date": "2026-10-22",
+      "estimated": false
+    },
+    "NOW": {
+      "date": "2026-10-28",
+      "estimated": false
+    },
+    "NRG": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "NVDA": {
+      "date": "2026-11-17",
+      "estimated": false
+    },
+    "NVO": {
+      "date": "2026-11-04",
+      "estimated": false
+    },
+    "NVTS": {
+      "date": "2026-11-02",
+      "estimated": true
+    },
+    "OKTA": {
+      "date": "2026-12-01",
+      "estimated": false
+    },
+    "ON": {
+      "date": "2026-11-02",
+      "estimated": true
+    },
+    "ORCL": {
+      "date": "2026-09-10",
+      "estimated": false
+    },
+    "PAAS": {
+      "date": "2026-11-16",
+      "estimated": true
+    },
+    "PANW": {
+      "date": "2026-11-19",
+      "estimated": true
+    },
+    "PENG": {
+      "date": "2026-10-13",
+      "estimated": false
+    },
+    "POWI": {
+      "date": "2026-11-05",
+      "estimated": false
+    },
+    "PYPL": {
+      "date": "2026-10-27",
+      "estimated": false
+    },
+    "QBTS": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "QLYS": {
+      "date": "2026-11-03",
+      "estimated": true
+    },
+    "QUBT": {
+      "date": "2026-11-09",
+      "estimated": true
+    },
+    "RDDT": {
+      "date": "2026-10-29",
+      "estimated": false
+    },
+    "RGLD": {
+      "date": "2026-11-04",
+      "estimated": true
+    },
+    "RGTI": {
+      "date": "2026-11-10",
+      "estimated": false
+    },
+    "S": {
+      "date": "2026-08-27",
+      "estimated": false
+    },
+    "SHOP": {
+      "date": "2026-11-03",
+      "estimated": true
+    },
+    "SIEGY": {
+      "date": "2026-11-12",
+      "estimated": false
+    },
+    "SIVEF": {
+      "date": "2026-11-26",
+      "estimated": true
+    },
+    "SNDK": {
+      "date": "2026-11-06",
+      "estimated": true
+    },
+    "SPCX": {
+      "date": "2026-11-03",
+      "estimated": true
+    },
+    "SSRM": {
+      "date": "2026-11-03",
+      "estimated": false
+    },
+    "STM": {
+      "date": "2026-10-29",
+      "estimated": false
+    },
+    "TENB": {
+      "date": "2026-10-28",
+      "estimated": true
+    },
+    "TFPM": {
+      "date": "2026-11-03",
+      "estimated": false
+    },
+    "TLN": {
+      "date": "2026-11-04",
+      "estimated": false
+    },
+    "TSM": {
+      "date": "2026-10-15",
+      "estimated": false
+    },
+    "TXN": {
+      "date": "2026-10-27",
+      "estimated": false
+    },
+    "VICR": {
+      "date": "2026-10-20",
+      "estimated": false
+    },
+    "VPG": {
+      "date": "2026-11-03",
+      "estimated": false
+    },
+    "VRT": {
+      "date": "2026-10-21",
+      "estimated": true
+    },
+    "VST": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "WOLF": {
+      "date": "2026-11-04",
+      "estimated": false
+    },
+    "WPM": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
+    "WULF": {
+      "date": "2026-11-09",
+      "estimated": true
+    },
+    "ZS": {
+      "date": "2026-11-24",
+      "estimated": true
+    }
   }
 }
