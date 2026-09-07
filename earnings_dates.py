@@ -58,14 +58,34 @@ def watchlist():
     return out
 
 
-def next_date(tk):
-    """The soonest forward earnings date the feed knows, or None."""
-    cal = yf.Ticker(tk).calendar or {}
-    got = cal.get("Earnings Date") or []
-    if isinstance(got, (str, date, datetime)):
-        got = [got]
+def parse_calendar_events(result):
+    """Pull (soonest forward earnings date, isEarningsDateEstimate) out of a raw
+    quoteSummary `calendarEvents` payload -- the same JSON shape
+    `yf.Ticker(tk)._quote._fetch(modules=["calendarEvents"])` returns.
+
+    Returns (None, None) if the payload has no earnings block or no date in it.
+
+    `estimated` is Yahoo's OWN `isEarningsDateEstimate` flag on the earnings
+    block. It is a HINT, never a confirmation: `estimated is False` means Yahoo
+    took this date from its calendar vendor, NOT that the company confirmed it
+    -- do not read `estimated: false` as "confirmed" anywhere downstream. When
+    the payload doesn't carry the key at all, `estimated` comes back None.
+    """
+    try:
+        events = result["quoteSummary"]["result"][0]["calendarEvents"]
+    except (KeyError, IndexError, TypeError):
+        return None, None
+    earnings = events.get("earnings") or {}
+    raw = earnings.get("earningsDate") or []
+    if isinstance(raw, (str, int, float, date, datetime)):
+        raw = [raw]
     parsed = []
-    for d in got:
+    for d in raw:
+        if isinstance(d, (int, float)):
+            # Yahoo ships epoch seconds here; yfinance's own Quote._fetch_calendar
+            # decodes the same field with datetime.fromtimestamp(d).date(), so
+            # mirror that exactly rather than introduce a UTC-vs-local skew.
+            d = datetime.fromtimestamp(d).date()
         if isinstance(d, datetime):
             d = d.date()
         if isinstance(d, date):
@@ -73,8 +93,27 @@ def next_date(tk):
         elif isinstance(d, str) and d[:10]:
             parsed.append(d[:10])
     if not parsed:
-        return None
-    return str(sorted(str(x) for x in parsed)[0])
+        return None, None
+    soonest = str(sorted(str(x) for x in parsed)[0])
+    return soonest, earnings.get("isEarningsDateEstimate")
+
+
+def next_date(tk):
+    """The soonest forward earnings date the feed knows, plus Yahoo's own
+    isEarningsDateEstimate hint for it, or (None, None).
+
+    This reads the raw quoteSummary `calendarEvents` module directly off
+    `Ticker._quote` instead of going through the `Ticker.calendar` property --
+    SAME single request (`Quote._fetch_calendar()` calls this exact
+    `_fetch(modules=["calendarEvents"])`, see yfinance/scrapers/quote.py), no
+    extra network call. `.calendar`'s own parsing copies out only
+    earningsDate/earningsHigh/earningsLow/earningsAverage/revenue* and drops
+    `isEarningsDateEstimate`, which is the one field this feed wants.
+    """
+    result = yf.Ticker(tk)._quote._fetch(modules=["calendarEvents"])
+    if not result:
+        return None, None
+    return parse_calendar_events(result)
 
 
 def main(argv=None):
@@ -88,20 +127,29 @@ def main(argv=None):
 
     for tk in names:
         try:
-            d = next_date(tk)
+            d, estimated = next_date(tk)
         except Exception as exc:                      # feed hiccup on one name
             errors[tk] = type(exc).__name__
             continue
         if d:
-            dates[tk] = d
+            # `estimated` is Yahoo's own isEarningsDateEstimate hint, not a
+            # confirmation flag -- `estimated: false` must never be read
+            # downstream as "company-confirmed" (see parse_calendar_events()
+            # and SPEC-71 in the jr-dash repo). None means the raw payload
+            # didn't carry the key at all.
+            dates[tk] = {"date": d, "estimated": estimated}
         else:
             missing.append(tk)
 
     asof = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     doc = {
         "generated_at": asof,
-        "source": "yfinance Ticker.calendar['Earnings Date'], soonest forward date",
+        "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, "
+                  "plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
         "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. "
+                "`dates[ticker].estimated` is Yahoo's own hint that IT projected the date "
+                "(true) vs took it from its calendar vendor (false) -- false is NOT "
+                "company confirmation, and estimated may be null when Yahoo omits the flag. "
                 "Public repo: tickers and public reporting dates only, never coverage or position data.",
         "count": len(dates),
         "asked": len(names),
