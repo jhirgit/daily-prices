@@ -163,6 +163,11 @@ def main(argv=None):
         return 1
     with io.open(DATES, encoding="utf-8") as fh:
         expected = json.load(fh).get("dates", {})
+    # SPEC-71: since cebc949 each value is {"date": "YYYY-MM-DD", "estimated": bool|None};
+    # older artifacts carried the bare string. Normalise to the date — this script only
+    # needs WHEN, and the `expected` field it emits stays a plain date for stage_earnings.py.
+    expected = {tk: (v["date"] if isinstance(v, dict) else v) for tk, v in expected.items()
+                if (v.get("date") if isinstance(v, dict) else v)}
 
     today = date.today()
     lo, hi = today - timedelta(days=args.window), today + timedelta(days=1)
