@@ -215,6 +215,141 @@ Caveats: outside US market hours Finnhub returns the last close (`price` ==
 `prev_close` is expected, not a bug); unknown symbols land in the `errors`
 array; the free tier allows 60 req/min, so the script sleeps 1s per ticker.
 
+## Options flow (`options_flow.py`)
+
+A once-a-day chain snapshot for every optionable name in `tickers.txt`, over the
+**three nearest monthly expiries** (nearest three of any kind if a name lists
+fewer than three monthlies). SPEC-62 phase 1. Source is **yfinance** — the same
+OPRA end-of-day figures Schwab returns, but Schwab's token grants account read,
+expires every 7 days behind an interactive browser login, and carries no
+per-contract IV, none of which survives an unattended job in a **public** repo.
+
+**Read this first:** a daily snapshot is *positioning arithmetic, not flow*. It
+cannot see the trade tape, the aggressor side, or whether a print opened or
+closed a position — so it never says "bullish sweep". Open interest is the prior
+session's OCC figure; volume is the session's own. Display-only, confidence LOW
+to MODERATE, alert-never-action.
+
+### Artifacts
+
+| File | What it is |
+|---|---|
+| `data/options_flow.json` | the snapshot: one row per name, ~250 KB |
+| `data/options_iv_hist.json` | the IV history: one `iv30` float per name per session, self-capping at 252 |
+
+```
+{"generated_at": <utc>, "as_of": <session>, "source": "yfinance", "expiries": 3,
+ "thresholds": {...}, "iv_history": "options_iv_hist.json",
+ "universe_n": 195, "count": 195, "elapsed_s": 69.8,
+ "skipped": {"BTC-USD": "crypto", "IFNNY": "no listed options"},
+ "names": {"NVDA": {
+    "spot":, "n":,                              # contracts across the 3 expiries
+    "cv":, "pv":, "pc_vol":,                    # call/put volume and the skew
+    "coi":, "poi":, "pc_oi":,                   # call/put open interest and the skew
+    "d_coi":, "d_poi":,                         # day-over-day OI change
+    "voloi_max":, "voloi_max_c":,               # largest vol/OI and its contract
+    "iv30":, "iv60":, "kink":,                  # vol POINTS (41.2 == 41.2%)
+    "iv_rank":, "iv_pct":, "iv_rank_n":, "iv_state":,
+    "kink_event": {"date":, "estimated":},      # the print the kink is pricing, if known
+    "n_unusual":, "flags": [],
+    "top": [{"s","t","e","k","v","oi","iv","px","n","d_oi"}],   # 5 by premium notional
+    "oi_top": {"<contract>": <oi>}}}}                           # 12 largest, the carried state
+```
+
+### The signals
+
+| Signal | Definition | Flag |
+|---|---|---|
+| **vol/OI** | `volume / open interest`, **null** when OI is 0 — never `0`, never `inf` | — |
+| **premium notional** | `volume x 100 x mid` (mid when the book is two-sided, else last) | — |
+| **UNUSUAL** | `vol/OI > 3` **AND** `volume > 500` **AND** `notional > $1M` — all three ANDed | `UNUSUAL` |
+| **P/C skew** | `pc_vol = put volume / call volume`, likewise `pc_oi` | `SKEW` when `> 1.5` or `< 0.40` **and** total volume `> 1,000` |
+| **OI delta** | `d_coi` / `d_poi` against yesterday's artifact, plus `d_oi` per contract on the 12 largest-OI contracts carried forward | — |
+| **IV rank** | `(iv30 - min) / (max - min)` over the trailing history, plus `iv_pct`, the share of days below | `IV-HIGH` `> 0.8`, `IV-LOW` `< 0.2`, **only once `iv_state` is `full`** |
+| **Term kink** | `iv30 - iv60` in vol points, cross-referenced against `data/earnings_dates.json` | `EVENT` when `> +5` |
+
+The three legs of **UNUSUAL** are ANDed for a reason. The ratio alone fires
+constantly on illiquid far-OTM strikes where open interest is single digits; the
+500-contract floor removes single prints, and the $1M premium floor removes penny
+lottery tickets that clear a ratio test trivially. `3x` rather than the `2x`
+retail screens use keeps the false-positive rate low across a 195-name universe
+scanned unattended.
+
+### How to read a flag
+
+- **`UNUSUAL`** — at least one contract traded more today than its entire
+  standing open interest, in size, for real money. That is *new positioning
+  rather than churn*. It does **not** say which way, or by whom. Open the `top`
+  list and look at the strike and the expiry before drawing any conclusion.
+- **`SKEW`** — the day's volume ran heavily one-sided. On an index ETF this is
+  usually hedging, not a view; on a single name it is worth a glance.
+- **`EVENT`** — the front expiry is pricing something the back expiry is not.
+  If `kink_event` is populated, that something is a scheduled print and the flag
+  is *explained, not interesting*. If it is `null`, nobody here knows what the
+  front month is worried about.
+- **`IV-HIGH` / `IV-LOW`** — the name's own 30-day vol against its own trailing
+  year. Never against another name's.
+- **A blank `iv_rank` is not a zero.** `iv_state` says why: `null` below 60
+  sessions of history, `provisional` from 60 to 251, `full` at 252. A rank
+  computed over three weeks is a number that means nothing, and shipping it
+  would be worse than shipping a blank — which is why phase 1 ships alone and
+  starts accumulating.
+
+### State, and the size of it
+
+The **only** state the job carries is its own previous output: it reads
+`data/options_flow.json` before overwriting it, and the 12-entry `oi_top` map is
+all the open-interest delta needs. No database, nothing to prune, no second
+artifact to keep in sync by hand.
+
+The IV history is a separate file because it cannot be anything else: 252 floats
+per name projects to **~342 KB**, which inside the snapshot would put the payload
+near 590 KB and breach the hard cap outright. It stores one float per name per
+session against a shared date axis, `null` where a name had no reading, and trims
+itself to 252 sessions.
+
+Measured on a full run, 2026-09-08: **195 optionable names of 222 lines**,
+27 skipped, **69.8 s** (0.36 s/name), payload **249,585 B** at ~1,270 B/name
+(summary 326 + `oi_top` 339 + `top` 647). The guard **warns above 200 KB and
+FAILS above 300 KB** — so it warns today. SPEC-62 section 5 budgeted 850 B/name,
+but that estimate is not reachable with the ten-field `top` entry the same
+section prescribes. The schema ships as specified rather than quietly trimmed;
+headroom before the hard cap is ~236 names.
+
+### It fails loud, after committing
+
+`continue-on-error` on the emit step, then the commit, then an explicit `exit 1`
+— the `earnings_detect.py` pattern. The board gets to see the partial data *and*
+the failure still surfaces. It goes red when coverage drops below **80%** of the
+optionable universe, when the optionable universe itself collapses below 80% of
+yesterday's, when `as_of` trails the last settled session in `data/latest.json`,
+or when the payload breaches 300 KB. `_alert-failure.yml` then opens an issue.
+
+### Running it
+
+```powershell
+python options_flow.py                      # both artifacts
+python options_flow.py --tickers NVDA,MU    # a small live run
+python options_flow.py --dry-run            # compute and print, write nothing
+python options_flow.py --verify             # parity against the frozen fixture, no network
+python options_flow.py --freeze             # re-freeze the fixture after an intended change
+python -m unittest test_options_flow        # 52 offline tests
+```
+
+`--verify` recomputes every signal from `data/fixtures/options_flow_fixture.json`
+— a **synthetic** chain set, hand-authored so each name sits on a threshold, not
+a capture of live data. The workflow runs it before the live emit: if the
+arithmetic has drifted, nothing downstream is worth committing.
+
+### The job
+
+A separate `options` job in `daily-prices.yml` on the **same 22:00 UTC trigger** —
+no new cron, no new Worker schedule, `cron-dispatch` already dispatches this
+workflow. It needs `[fetch, earnings-dates]` because it is the third job pushing
+to this branch and `needs:` is what serialises those pushes; the `always()` guard
+keeps it running when `earnings-dates` goes red on an overdue print. Roughly
+**+65 Actions min/month** (~3 billable min x 21 weekdays).
+
 ## Querying the data
 
 ```powershell

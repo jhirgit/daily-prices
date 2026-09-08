@@ -123,6 +123,80 @@ jobs:
           echo "earnings_detect reported an OVERDUE name — see data/earnings_detected.json"
           exit 1
 
+  # The options-chain snapshot (SPEC-62 phase 1). Same 22:00 UTC trigger, no new
+  # cron and no new Worker schedule — cron-dispatch already dispatches this
+  # workflow, and the free plan's fifth trigger is not spent on this.
+  #
+  # A SEPARATE job, exactly like earnings-dates: a Yahoo options hiccup must
+  # never stop the price commit.
+  #
+  # `needs: [fetch, earnings-dates]` rather than `needs: fetch` because this is
+  # the THIRD job that pushes to the same branch. Two of them made `needs:` alone
+  # enough to serialise the pushes; a third running in parallel with
+  # earnings-dates would race it, and `git pull --rebase && git push` loses that
+  # race roughly as often as it wins. The `always()` guard keeps the two jobs
+  # UNCOUPLED in outcome while still ordering them: earnings-dates goes red on an
+  # overdue print, and that must not take the options snapshot down with it. Only
+  # `fetch` is a real prerequisite — the staleness check reads data/latest.json.
+  #
+  # Actions budget: ~70 s of fetching over ~195 optionable names plus setup and
+  # commit, so ~3 billable min/run x 21 weekdays = ~65 min/month on top of the
+  # ~1,380 min/month the repo already burns (see cron-dispatch/wrangler.jsonc).
+  options:
+    needs: [fetch, earnings-dates]
+    if: ${{ always() && needs.fetch.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Parity first: if the signal arithmetic has drifted from the frozen
+      # fixture, nothing downstream is worth committing. No network needed.
+      - name: Parity check against the frozen fixture
+        run: python options_flow.py --verify
+
+      # continue-on-error so a partial or oversized snapshot still gets COMMITTED
+      # before the job goes red — the earnings_detect pattern. Without it the
+      # board would see neither the partial data nor the reason it is partial.
+      - name: Emit the options-flow snapshot
+        id: flow
+        continue-on-error: true
+        run: python options_flow.py
+
+      - name: Commit the snapshot and the IV history
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # If the emit crashed outright rather than exiting 1, the files will not
+          # exist — git add would then fail and hide the real error behind it.
+          for f in data/options_flow.json data/options_iv_hist.json; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
+          if git diff --staged --quiet; then
+            echo "No options-flow changes to commit."
+          else
+            git commit -m "options flow: $(date -u +'%Y-%m-%d %H:%M UTC') [skip ci]"
+            git pull --rebase
+            git push
+          fi
+
+      # Now go red, after the artifact is safely committed. Coverage below 80% of
+      # the optionable universe, an as_of behind the last settled session, or a
+      # payload over the 300 KB cap all mean the tab would render something
+      # misleading — and silence is the failure mode this repo actually has.
+      - name: Fail if the snapshot is short, stale or oversized
+        if: steps.flow.outcome == 'failure'
+        run: |
+          echo "options_flow reported a coverage, staleness or size failure — see data/options_flow.json"
+          exit 1
+
   # A silent cron is the failure mode this repo actually has: nothing here
   # reported a broken run until someone noticed stale prices downstream.
   alert:
@@ -143,5 +217,16 @@ jobs:
     uses: ./.github/workflows/_alert-failure.yml
     with:
       workflow: Daily Prices - earnings dates
+    permissions:
+      issues: write
+
+  # And its own alert, for the same reason: a green prices job beside a broken
+  # options job would make the outage invisible.
+  alert-options:
+    needs: options
+    if: failure()
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Daily Prices - options flow
     permissions:
       issues: write
