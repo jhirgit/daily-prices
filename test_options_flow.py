@@ -329,9 +329,11 @@ class TestSizeGuard(unittest.TestCase):
         self.assertLess(mx, 1700)
 
     def test_the_hard_cap_still_has_headroom_at_the_measured_row_size(self):
-        """195 optionable names x 1,270 B = ~250 KB: warns, does not fail. The
-        cap is reached around 236 names."""
-        self.assertEqual(of.size_verdict(195 * 1270), "warn")
+        """195 optionable names x 1,270 B = ~250 KB: below the 260 KB warn line
+        (raised 2026-09-08 so the measured payload does not warn on every run);
+        ~210 names crosses it; the 300 KB cap is reached around 236 names."""
+        self.assertEqual(of.size_verdict(195 * 1270), "ok")
+        self.assertEqual(of.size_verdict(210 * 1270), "warn")
         self.assertEqual(of.size_verdict(236 * 1270), "warn")
         self.assertEqual(of.size_verdict(250 * 1270), "fail")
 
