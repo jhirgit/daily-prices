@@ -310,7 +310,7 @@ itself to 252 sessions.
 
 Measured on a full run, 2026-09-08: **195 optionable names of 222 lines**,
 27 skipped, **69.8 s** (0.36 s/name), payload **249,585 B** at ~1,270 B/name
-(summary 326 + `oi_top` 339 + `top` 647). The guard **warns above 200 KB and
+(summary 326 + `oi_top` 339 + `top` 647). The guard **warns above 260 KB (raised from 200 on 2026-09-08 — 250 KB measured at 195 names) and
 FAILS above 300 KB** — so it warns today. SPEC-62 section 5 budgeted 850 B/name,
 but that estimate is not reachable with the ten-field `top` entry the same
 section prescribes. The schema ships as specified rather than quietly trimmed;

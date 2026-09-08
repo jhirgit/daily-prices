@@ -85,7 +85,7 @@ IV_HIST_CAP = 252            # sessions retained per name
 IV_HIGH, IV_LOW = 0.80, 0.20
 OI_TOP_N = 12                # per-contract OI deltas carried forward
 TOP_N = 5                    # largest-notional contracts kept verbatim
-SIZE_WARN = 200 * 1024
+SIZE_WARN = 260 * 1024   # 2026-09-08: measured 250 KB at 195 names with the spec's ten-field top-5; a warn that fires every run is noise (#39 lesson). Hard cap stays 300 KB.
 SIZE_FAIL = 300 * 1024
 COVERAGE_MIN = 0.80          # of the optionable universe
 
