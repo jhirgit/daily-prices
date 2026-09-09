@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-09T22:07:10Z",
+  "generated_at": "2026-09-09T23:59:00Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
   "count": 222,
@@ -14,7 +14,7 @@
       "adj_close": 1856000.0,
       "volume": 3526484,
       "spot_price": 1856000.0,
-      "spot_captured_at": "2026-09-09T22:02:07Z",
+      "spot_captured_at": "2026-09-09T23:54:30Z",
       "currency": "KRW",
       "dma200": 1324610.0,
       "dma200_n": 200
@@ -29,7 +29,7 @@
       "adj_close": 269500.0,
       "volume": 16370962,
       "spot_price": 269500.0,
-      "spot_captured_at": "2026-09-09T22:02:06Z",
+      "spot_captured_at": "2026-09-09T23:54:29Z",
       "currency": "KRW",
       "dma200": 214282.25,
       "dma200_n": 200
@@ -44,7 +44,7 @@
       "adj_close": 7128.0,
       "volume": 19674600,
       "spot_price": 7128.0,
-      "spot_captured_at": "2026-09-09T22:01:52Z",
+      "spot_captured_at": "2026-09-09T23:54:16Z",
       "currency": "JPY",
       "dma200": null,
       "dma200_n": 26
@@ -59,7 +59,7 @@
       "adj_close": 107.93,
       "volume": 5855501,
       "spot_price": 107.93,
-      "spot_captured_at": "2026-09-09T22:02:13Z",
+      "spot_captured_at": "2026-09-09T23:54:35Z",
       "currency": "USD",
       "dma200": 102.399,
       "dma200_n": 200
@@ -74,7 +74,7 @@
       "adj_close": 315.34,
       "volume": 64902991,
       "spot_price": 315.34,
-      "spot_captured_at": "2026-09-09T22:03:55Z",
+      "spot_captured_at": "2026-09-09T23:56:06Z",
       "currency": "USD",
       "dma200": 284.3478,
       "dma200_n": 200
@@ -89,7 +89,7 @@
       "adj_close": 95.56,
       "volume": 4300961,
       "spot_price": 95.56,
-      "spot_captured_at": "2026-09-09T22:01:37Z",
+      "spot_captured_at": "2026-09-09T23:54:01Z",
       "currency": "USD",
       "dma200": 63.4702,
       "dma200_n": 200
@@ -104,7 +104,7 @@
       "adj_close": 202.57,
       "volume": 1339976,
       "spot_price": 202.57,
-      "spot_captured_at": "2026-09-09T22:02:49Z",
+      "spot_captured_at": "2026-09-09T23:55:07Z",
       "currency": "USD",
       "dma200": 186.8856,
       "dma200_n": 200
@@ -119,7 +119,7 @@
       "adj_close": 21.18,
       "volume": 9328692,
       "spot_price": 21.18,
-      "spot_captured_at": "2026-09-09T22:02:56Z",
+      "spot_captured_at": "2026-09-09T23:55:14Z",
       "currency": "USD",
       "dma200": 19.8023,
       "dma200_n": 200
@@ -134,7 +134,7 @@
       "adj_close": 36.93,
       "volume": 2141123,
       "spot_price": 36.93,
-      "spot_captured_at": "2026-09-09T22:02:52Z",
+      "spot_captured_at": "2026-09-09T23:55:10Z",
       "currency": "USD",
       "dma200": 39.1546,
       "dma200_n": 200
@@ -149,7 +149,7 @@
       "adj_close": 300.54,
       "volume": 3041977,
       "spot_price": 300.54,
-      "spot_captured_at": "2026-09-09T22:01:31Z",
+      "spot_captured_at": "2026-09-09T23:53:56Z",
       "currency": "USD",
       "dma200": 226.6832,
       "dma200_n": 200
@@ -164,7 +164,7 @@
       "adj_close": 521.095,
       "volume": 22033121,
       "spot_price": 521.095,
-      "spot_captured_at": "2026-09-09T22:01:20Z",
+      "spot_captured_at": "2026-09-09T23:53:46Z",
       "currency": "USD",
       "dma200": 343.8629,
       "dma200_n": 200
@@ -179,7 +179,7 @@
       "adj_close": 56.19,
       "volume": 816293,
       "spot_price": 56.19,
-      "spot_captured_at": "2026-09-09T22:04:21Z",
+      "spot_captured_at": "2026-09-09T23:56:30Z",
       "currency": "USD",
       "dma200": 51.784,
       "dma200_n": 200
@@ -194,7 +194,7 @@
       "adj_close": 29.31,
       "volume": 900898,
       "spot_price": 29.31,
-      "spot_captured_at": "2026-09-09T22:02:00Z",
+      "spot_captured_at": "2026-09-09T23:54:23Z",
       "currency": "USD",
       "dma200": 35.8191,
       "dma200_n": 200
@@ -209,7 +209,7 @@
       "adj_close": 252.4,
       "volume": 32177880,
       "spot_price": 252.4,
-      "spot_captured_at": "2026-09-09T22:03:57Z",
+      "spot_captured_at": "2026-09-09T23:56:07Z",
       "currency": "USD",
       "dma200": 239.4435,
       "dma200_n": 200
@@ -224,7 +224,7 @@
       "adj_close": 25.51,
       "volume": 490891,
       "spot_price": 25.51,
-      "spot_captured_at": "2026-09-09T22:01:42Z",
+      "spot_captured_at": "2026-09-09T23:54:05Z",
       "currency": "USD",
       "dma200": 29.5714,
       "dma200_n": 200
@@ -239,7 +239,7 @@
       "adj_close": 27.14,
       "volume": 11669239,
       "spot_price": 27.14,
-      "spot_captured_at": "2026-09-09T22:02:26Z",
+      "spot_captured_at": "2026-09-09T23:54:46Z",
       "currency": "USD",
       "dma200": 32.2483,
       "dma200_n": 200
@@ -254,7 +254,7 @@
       "adj_close": 31.84,
       "volume": 356787,
       "spot_price": 31.84,
-      "spot_captured_at": "2026-09-09T22:05:41Z",
+      "spot_captured_at": "2026-09-09T23:57:41Z",
       "currency": "USD",
       "dma200": 32.0756,
       "dma200_n": 200
@@ -269,7 +269,7 @@
       "adj_close": 21.64,
       "volume": 259296,
       "spot_price": 21.64,
-      "spot_captured_at": "2026-09-09T22:05:52Z",
+      "spot_captured_at": "2026-09-09T23:57:51Z",
       "currency": "USD",
       "dma200": 19.4569,
       "dma200_n": 200
@@ -284,7 +284,7 @@
       "adj_close": 76.32,
       "volume": 327254,
       "spot_price": 76.32,
-      "spot_captured_at": "2026-09-09T22:06:12Z",
+      "spot_captured_at": "2026-09-09T23:58:09Z",
       "currency": "USD",
       "dma200": 59.7655,
       "dma200_n": 200
@@ -299,7 +299,7 @@
       "adj_close": 1729.52,
       "volume": 1037030,
       "spot_price": 1729.52,
-      "spot_captured_at": "2026-09-09T22:01:27Z",
+      "spot_captured_at": "2026-09-09T23:53:53Z",
       "currency": "USD",
       "dma200": 1487.7868,
       "dma200_n": 200
@@ -314,7 +314,7 @@
       "adj_close": 108.53,
       "volume": 2064049,
       "spot_price": 108.53,
-      "spot_captured_at": "2026-09-09T22:02:47Z",
+      "spot_captured_at": "2026-09-09T23:55:05Z",
       "currency": "USD",
       "dma200": 95.4839,
       "dma200_n": 200
@@ -329,7 +329,7 @@
       "adj_close": 364.38,
       "volume": 24562370,
       "spot_price": 364.38,
-      "spot_captured_at": "2026-09-09T22:01:21Z",
+      "spot_captured_at": "2026-09-09T23:53:47Z",
       "currency": "USD",
       "dma200": 370.0238,
       "dma200_n": 200
@@ -344,7 +344,7 @@
       "adj_close": 68.91,
       "volume": 8319731,
       "spot_price": 68.91,
-      "spot_captured_at": "2026-09-09T22:01:34Z",
+      "spot_captured_at": "2026-09-09T23:53:59Z",
       "currency": "USD",
       "dma200": 55.2114,
       "dma200_n": 200
@@ -359,7 +359,7 @@
       "adj_close": 269.28,
       "volume": 12069960,
       "spot_price": 269.28,
-      "spot_captured_at": "2026-09-09T22:02:35Z",
+      "spot_captured_at": "2026-09-09T23:54:54Z",
       "currency": "USD",
       "dma200": 192.9166,
       "dma200_n": 200
@@ -374,7 +374,7 @@
       "adj_close": 24.21,
       "volume": 27965157,
       "spot_price": 24.21,
-      "spot_captured_at": "2026-09-09T22:06:25Z",
+      "spot_captured_at": "2026-09-09T23:58:20Z",
       "currency": "USD",
       "dma200": 22.255,
       "dma200_n": 200
@@ -389,7 +389,7 @@
       "adj_close": 35.18,
       "volume": 557935,
       "spot_price": 35.18,
-      "spot_captured_at": "2026-09-09T22:06:17Z",
+      "spot_captured_at": "2026-09-09T23:58:13Z",
       "currency": "USD",
       "dma200": 36.9003,
       "dma200_n": 200
@@ -399,29 +399,29 @@
       "date": "2026-09-09",
       "open": 78446.1797,
       "high": 79691.6562,
-      "low": 78060.0156,
-      "close": 77990.6172,
-      "adj_close": 77990.6172,
-      "volume": 28836810752,
-      "spot_price": 77990.6172,
-      "spot_captured_at": "2026-09-09T22:07:04Z",
+      "low": 77824.5547,
+      "close": 78263.0469,
+      "adj_close": 78263.0469,
+      "volume": 29183354880,
+      "spot_price": 78263.1016,
+      "spot_captured_at": "2026-09-09T23:58:54Z",
       "currency": "USD",
-      "dma200": 69916.5085,
+      "dma200": 69917.8707,
       "dma200_n": 200
     },
     {
       "ticker": "BZ=F",
       "date": "2026-09-09",
-      "open": 99.53,
-      "high": 101.71,
-      "low": 98.83,
-      "close": 101.63,
-      "adj_close": 101.63,
-      "volume": 50455,
-      "spot_price": 101.63,
-      "spot_captured_at": "2026-09-09T22:06:46Z",
+      "open": 101.8,
+      "high": 102.57,
+      "low": 101.79,
+      "close": 102.11,
+      "adj_close": 102.11,
+      "volume": 322,
+      "spot_price": 102.11,
+      "spot_captured_at": "2026-09-09T23:58:39Z",
       "currency": "USD",
-      "dma200": 84.5039,
+      "dma200": 84.5063,
       "dma200_n": 200
     },
     {
@@ -434,7 +434,7 @@
       "adj_close": 815.56,
       "volume": 1739323,
       "spot_price": 815.56,
-      "spot_captured_at": "2026-09-09T22:02:32Z",
+      "spot_captured_at": "2026-09-09T23:54:51Z",
       "currency": "USD",
       "dma200": 775.9059,
       "dma200_n": 200
@@ -449,7 +449,7 @@
       "adj_close": 21.0,
       "volume": 25199864,
       "spot_price": 21.0,
-      "spot_captured_at": "2026-09-09T22:02:58Z",
+      "spot_captured_at": "2026-09-09T23:55:16Z",
       "currency": "USD",
       "dma200": 19.0042,
       "dma200_n": 200
@@ -464,7 +464,7 @@
       "adj_close": 293.905,
       "volume": 2197755,
       "spot_price": 293.905,
-      "spot_captured_at": "2026-09-09T22:05:29Z",
+      "spot_captured_at": "2026-09-09T23:57:31Z",
       "currency": "USD",
       "dma200": 295.842,
       "dma200_n": 200
@@ -479,7 +479,7 @@
       "adj_close": 94.48,
       "volume": 829262,
       "spot_price": 94.48,
-      "spot_captured_at": "2026-09-09T22:03:29Z",
+      "spot_captured_at": "2026-09-09T23:55:42Z",
       "currency": "USD",
       "dma200": 77.5975,
       "dma200_n": 200
@@ -494,7 +494,7 @@
       "adj_close": 338.0,
       "volume": 1795012,
       "spot_price": 338.0,
-      "spot_captured_at": "2026-09-09T22:02:15Z",
+      "spot_captured_at": "2026-09-09T23:54:37Z",
       "currency": "USD",
       "dma200": 378.6822,
       "dma200_n": 200
@@ -509,7 +509,7 @@
       "adj_close": 303.48,
       "volume": 5002165,
       "spot_price": 303.48,
-      "spot_captured_at": "2026-09-09T22:02:10Z",
+      "spot_captured_at": "2026-09-09T23:54:33Z",
       "currency": "USD",
       "dma200": 278.0568,
       "dma200_n": 200
@@ -524,7 +524,7 @@
       "adj_close": 95.27,
       "volume": 2610007,
       "spot_price": 95.27,
-      "spot_captured_at": "2026-09-09T22:04:27Z",
+      "spot_captured_at": "2026-09-09T23:56:35Z",
       "currency": "USD",
       "dma200": 81.1034,
       "dma200_n": 200
@@ -539,7 +539,7 @@
       "adj_close": 18.09,
       "volume": 9924668,
       "spot_price": 18.09,
-      "spot_captured_at": "2026-09-09T22:02:27Z",
+      "spot_captured_at": "2026-09-09T23:54:47Z",
       "currency": "USD",
       "dma200": 19.7235,
       "dma200_n": 200
@@ -554,7 +554,7 @@
       "adj_close": 41.05,
       "volume": 693488,
       "spot_price": 41.05,
-      "spot_captured_at": "2026-09-09T22:06:48Z",
+      "spot_captured_at": "2026-09-09T23:58:40Z",
       "currency": "USD",
       "dma200": 36.8193,
       "dma200_n": 200
@@ -569,7 +569,7 @@
       "adj_close": 207.8,
       "volume": 5522313,
       "spot_price": 207.8,
-      "spot_captured_at": "2026-09-09T22:03:26Z",
+      "spot_captured_at": "2026-09-09T23:55:40Z",
       "currency": "USD",
       "dma200": 143.2859,
       "dma200_n": 200
@@ -584,7 +584,7 @@
       "adj_close": 94.94,
       "volume": 21157798,
       "spot_price": 94.94,
-      "spot_captured_at": "2026-09-09T22:02:24Z",
+      "spot_captured_at": "2026-09-09T23:54:45Z",
       "currency": "USD",
       "dma200": 91.6956,
       "dma200_n": 200
@@ -599,7 +599,7 @@
       "adj_close": 225.27,
       "volume": 4971176,
       "spot_price": 225.27,
-      "spot_captured_at": "2026-09-09T22:03:24Z",
+      "spot_captured_at": "2026-09-09T23:55:38Z",
       "currency": "USD",
       "dma200": 176.7822,
       "dma200_n": 200
@@ -614,7 +614,7 @@
       "adj_close": 40.59,
       "volume": 1410061,
       "spot_price": 40.59,
-      "spot_captured_at": "2026-09-09T22:02:42Z",
+      "spot_captured_at": "2026-09-09T23:55:01Z",
       "currency": "USD",
       "dma200": null,
       "dma200_n": 53
@@ -629,7 +629,7 @@
       "adj_close": 61.58,
       "volume": 26924244,
       "spot_price": 61.58,
-      "spot_captured_at": "2026-09-09T22:02:09Z",
+      "spot_captured_at": "2026-09-09T23:54:31Z",
       "currency": "USD",
       "dma200": null,
       "dma200_n": 110
@@ -644,7 +644,7 @@
       "adj_close": 34.535,
       "volume": 37261,
       "spot_price": 34.535,
-      "spot_captured_at": "2026-09-09T22:04:43Z",
+      "spot_captured_at": "2026-09-09T23:56:49Z",
       "currency": "USD",
       "dma200": 34.1009,
       "dma200_n": 200
@@ -659,7 +659,7 @@
       "adj_close": 28.43,
       "volume": 498357,
       "spot_price": 28.43,
-      "spot_captured_at": "2026-09-09T22:06:21Z",
+      "spot_captured_at": "2026-09-09T23:58:17Z",
       "currency": "USD",
       "dma200": 26.458,
       "dma200_n": 200
@@ -674,7 +674,7 @@
       "adj_close": 36.72,
       "volume": 5201015,
       "spot_price": 36.72,
-      "spot_captured_at": "2026-09-09T22:02:39Z",
+      "spot_captured_at": "2026-09-09T23:54:59Z",
       "currency": "USD",
       "dma200": 40.8463,
       "dma200_n": 200
@@ -689,7 +689,7 @@
       "adj_close": 1043.0601,
       "volume": 471729,
       "spot_price": 1043.0601,
-      "spot_captured_at": "2026-09-09T22:05:55Z",
+      "spot_captured_at": "2026-09-09T23:57:54Z",
       "currency": "USD",
       "dma200": 963.8052,
       "dma200_n": 200
@@ -704,7 +704,7 @@
       "adj_close": 96.06,
       "volume": 22829,
       "spot_price": 96.06,
-      "spot_captured_at": "2026-09-09T22:05:16Z",
+      "spot_captured_at": "2026-09-09T23:57:20Z",
       "currency": "USD",
       "dma200": 95.6876,
       "dma200_n": 200
@@ -714,14 +714,14 @@
       "date": "2026-09-09",
       "open": 2484.9294,
       "high": 2520.908,
-      "low": 2457.8481,
-      "close": 2455.1499,
-      "adj_close": 2455.1499,
-      "volume": 14296097792,
-      "spot_price": 2455.1499,
-      "spot_captured_at": "2026-09-09T22:07:05Z",
+      "low": 2447.7471,
+      "close": 2466.96,
+      "adj_close": 2466.96,
+      "volume": 14986769408,
+      "spot_price": 2466.8301,
+      "spot_captured_at": "2026-09-09T23:58:55Z",
       "currency": "USD",
-      "dma200": 2046.578,
+      "dma200": 2046.6371,
       "dma200_n": 200
     },
     {
@@ -734,7 +734,7 @@
       "adj_close": 18.58,
       "volume": 37725281,
       "spot_price": 18.58,
-      "spot_captured_at": "2026-09-09T22:06:27Z",
+      "spot_captured_at": "2026-09-09T23:58:22Z",
       "currency": "USD",
       "dma200": 17.2549,
       "dma200_n": 200
@@ -749,7 +749,7 @@
       "adj_close": 415.22,
       "volume": 1774951,
       "spot_price": 415.22,
-      "spot_captured_at": "2026-09-09T22:05:33Z",
+      "spot_captured_at": "2026-09-09T23:57:35Z",
       "currency": "USD",
       "dma200": 381.8016,
       "dma200_n": 200
@@ -764,7 +764,7 @@
       "adj_close": 190.78,
       "volume": 11026516,
       "spot_price": 190.78,
-      "spot_captured_at": "2026-09-09T22:06:06Z",
+      "spot_captured_at": "2026-09-09T23:58:03Z",
       "currency": "USD",
       "dma200": 148.4322,
       "dma200_n": 200
@@ -779,7 +779,7 @@
       "adj_close": 11.15,
       "volume": 9536717,
       "spot_price": 11.15,
-      "spot_captured_at": "2026-09-09T22:02:59Z",
+      "spot_captured_at": "2026-09-09T23:55:17Z",
       "currency": "USD",
       "dma200": 9.8694,
       "dma200_n": 200
@@ -794,7 +794,7 @@
       "adj_close": 287.93,
       "volume": 112373,
       "spot_price": 287.93,
-      "spot_captured_at": "2026-09-09T22:05:07Z",
+      "spot_captured_at": "2026-09-09T23:57:11Z",
       "currency": "USD",
       "dma200": 264.2257,
       "dma200_n": 200
@@ -809,7 +809,7 @@
       "adj_close": 26.05,
       "volume": 32361,
       "spot_price": 26.05,
-      "spot_captured_at": "2026-09-09T22:05:03Z",
+      "spot_captured_at": "2026-09-09T23:57:07Z",
       "currency": "USD",
       "dma200": 26.2512,
       "dma200_n": 200
@@ -824,7 +824,7 @@
       "adj_close": 112.68,
       "volume": 2250104,
       "spot_price": 112.68,
-      "spot_captured_at": "2026-09-09T22:02:38Z",
+      "spot_captured_at": "2026-09-09T23:54:57Z",
       "currency": "USD",
       "dma200": 95.3943,
       "dma200_n": 200
@@ -839,7 +839,7 @@
       "adj_close": 418.27,
       "volume": 537723,
       "spot_price": 418.27,
-      "spot_captured_at": "2026-09-09T22:02:16Z",
+      "spot_captured_at": "2026-09-09T23:54:38Z",
       "currency": "USD",
       "dma200": 536.1512,
       "dma200_n": 200
@@ -854,7 +854,7 @@
       "adj_close": 265.43,
       "volume": 2095832,
       "spot_price": 265.43,
-      "spot_captured_at": "2026-09-09T22:03:02Z",
+      "spot_captured_at": "2026-09-09T23:55:19Z",
       "currency": "USD",
       "dma200": 233.4171,
       "dma200_n": 200
@@ -869,7 +869,7 @@
       "adj_close": 17.24,
       "volume": 5004297,
       "spot_price": 17.24,
-      "spot_captured_at": "2026-09-09T22:02:36Z",
+      "spot_captured_at": "2026-09-09T23:54:56Z",
       "currency": "USD",
       "dma200": null,
       "dma200_n": 82
@@ -884,7 +884,7 @@
       "adj_close": 157.22,
       "volume": 2786573,
       "spot_price": 157.22,
-      "spot_captured_at": "2026-09-09T22:03:35Z",
+      "spot_captured_at": "2026-09-09T23:55:48Z",
       "currency": "USD",
       "dma200": 110.8294,
       "dma200_n": 200
@@ -892,16 +892,16 @@
     {
       "ticker": "GC=F",
       "date": "2026-09-09",
-      "open": 4399.0,
-      "high": 4479.0,
-      "low": 4384.1001,
-      "close": 4447.2002,
-      "adj_close": 4447.2002,
-      "volume": 161446,
-      "spot_price": 4447.2002,
-      "spot_captured_at": "2026-09-09T22:06:43Z",
+      "open": 4448.0,
+      "high": 4450.3999,
+      "low": 4437.0,
+      "close": 4437.7002,
+      "adj_close": 4437.7002,
+      "volume": 6439,
+      "spot_price": 4437.7002,
+      "spot_captured_at": "2026-09-09T23:58:36Z",
       "currency": "USD",
-      "dma200": 4526.997,
+      "dma200": 4526.9495,
       "dma200_n": 200
     },
     {
@@ -914,7 +914,7 @@
       "adj_close": 99.47,
       "volume": 15062525,
       "spot_price": 99.47,
-      "spot_captured_at": "2026-09-09T22:03:09Z",
+      "spot_captured_at": "2026-09-09T23:55:25Z",
       "currency": "USD",
       "dma200": 90.0926,
       "dma200_n": 200
@@ -929,7 +929,7 @@
       "adj_close": 129.25,
       "volume": 2579691,
       "spot_price": 129.25,
-      "spot_captured_at": "2026-09-09T22:03:10Z",
+      "spot_captured_at": "2026-09-09T23:55:26Z",
       "currency": "USD",
       "dma200": 118.4991,
       "dma200_n": 200
@@ -944,7 +944,7 @@
       "adj_close": 951.04,
       "volume": 1471717,
       "spot_price": 951.04,
-      "spot_captured_at": "2026-09-09T22:02:30Z",
+      "spot_captured_at": "2026-09-09T23:54:50Z",
       "currency": "USD",
       "dma200": 889.9805,
       "dma200_n": 200
@@ -959,7 +959,7 @@
       "adj_close": 403.35,
       "volume": 8050955,
       "spot_price": 403.35,
-      "spot_captured_at": "2026-09-09T22:06:41Z",
+      "spot_captured_at": "2026-09-09T23:58:34Z",
       "currency": "USD",
       "dma200": 415.7045,
       "dma200_n": 200
@@ -974,7 +974,7 @@
       "adj_close": 168.46,
       "volume": 8308512,
       "spot_price": 168.46,
-      "spot_captured_at": "2026-09-09T22:02:18Z",
+      "spot_captured_at": "2026-09-09T23:54:39Z",
       "currency": "USD",
       "dma200": 144.6417,
       "dma200_n": 200
@@ -989,7 +989,7 @@
       "adj_close": 49.33,
       "volume": 1018228,
       "spot_price": 49.33,
-      "spot_captured_at": "2026-09-09T22:02:45Z",
+      "spot_captured_at": "2026-09-09T23:55:04Z",
       "currency": "USD",
       "dma200": 43.0694,
       "dma200_n": 200
@@ -1004,7 +1004,7 @@
       "adj_close": 330.65,
       "volume": 32730889,
       "spot_price": 330.65,
-      "spot_captured_at": "2026-09-09T22:03:53Z",
+      "spot_captured_at": "2026-09-09T23:56:04Z",
       "currency": "USD",
       "dma200": 336.4006,
       "dma200_n": 200
@@ -1019,7 +1019,7 @@
       "adj_close": 180.13,
       "volume": 394835,
       "spot_price": 180.13,
-      "spot_captured_at": "2026-09-09T22:06:23Z",
+      "spot_captured_at": "2026-09-09T23:58:18Z",
       "currency": "USD",
       "dma200": 174.7288,
       "dma200_n": 200
@@ -1034,7 +1034,7 @@
       "adj_close": 110.96,
       "volume": 116392,
       "spot_price": 110.96,
-      "spot_captured_at": "2026-09-09T22:05:06Z",
+      "spot_captured_at": "2026-09-09T23:57:10Z",
       "currency": "USD",
       "dma200": 89.6851,
       "dma200_n": 200
@@ -1049,7 +1049,7 @@
       "adj_close": 27.9,
       "volume": 8326257,
       "spot_price": 27.9,
-      "spot_captured_at": "2026-09-09T22:03:49Z",
+      "spot_captured_at": "2026-09-09T23:56:00Z",
       "currency": "USD",
       "dma200": 28.2994,
       "dma200_n": 200
@@ -1064,7 +1064,7 @@
       "adj_close": 13.95,
       "volume": 668636,
       "spot_price": 13.95,
-      "spot_captured_at": "2026-09-09T22:01:38Z",
+      "spot_captured_at": "2026-09-09T23:54:03Z",
       "currency": "USD",
       "dma200": 11.8424,
       "dma200_n": 200
@@ -1079,7 +1079,7 @@
       "adj_close": 20.85,
       "volume": 27053493,
       "spot_price": 20.85,
-      "spot_captured_at": "2026-09-09T22:02:53Z",
+      "spot_captured_at": "2026-09-09T23:55:11Z",
       "currency": "USD",
       "dma200": 19.0405,
       "dma200_n": 200
@@ -1094,7 +1094,7 @@
       "adj_close": 230.19,
       "volume": 1530283,
       "spot_price": 230.19,
-      "spot_captured_at": "2026-09-09T22:03:21Z",
+      "spot_captured_at": "2026-09-09T23:55:36Z",
       "currency": "USD",
       "dma200": 259.2965,
       "dma200_n": 200
@@ -1109,7 +1109,7 @@
       "adj_close": 78.98,
       "volume": 31592398,
       "spot_price": 78.98,
-      "spot_captured_at": "2026-09-09T22:06:49Z",
+      "spot_captured_at": "2026-09-09T23:58:41Z",
       "currency": "USD",
       "dma200": 80.1051,
       "dma200_n": 200
@@ -1124,7 +1124,7 @@
       "adj_close": 191.63,
       "volume": 53655,
       "spot_price": 191.63,
-      "spot_captured_at": "2026-09-09T22:05:00Z",
+      "spot_captured_at": "2026-09-09T23:57:04Z",
       "currency": "USD",
       "dma200": 180.0661,
       "dma200_n": 200
@@ -1139,7 +1139,7 @@
       "adj_close": 205.49,
       "volume": 1114591,
       "spot_price": 205.49,
-      "spot_captured_at": "2026-09-09T22:05:44Z",
+      "spot_captured_at": "2026-09-09T23:57:44Z",
       "currency": "USD",
       "dma200": 177.9431,
       "dma200_n": 200
@@ -1154,7 +1154,7 @@
       "adj_close": 44.29,
       "volume": 36996918,
       "spot_price": 44.29,
-      "spot_captured_at": "2026-09-09T22:06:26Z",
+      "spot_captured_at": "2026-09-09T23:58:21Z",
       "currency": "USD",
       "dma200": 42.3099,
       "dma200_n": 200
@@ -1169,7 +1169,7 @@
       "adj_close": 18.01,
       "volume": 11968185,
       "spot_price": 18.01,
-      "spot_captured_at": "2026-09-09T22:05:19Z",
+      "spot_captured_at": "2026-09-09T23:57:22Z",
       "currency": "USD",
       "dma200": 18.7577,
       "dma200_n": 200
@@ -1184,7 +1184,7 @@
       "adj_close": 59.17,
       "volume": 241459,
       "spot_price": 59.17,
-      "spot_captured_at": "2026-09-09T22:06:08Z",
+      "spot_captured_at": "2026-09-09T23:58:05Z",
       "currency": "USD",
       "dma200": 50.4174,
       "dma200_n": 200
@@ -1199,7 +1199,7 @@
       "adj_close": 91.895,
       "volume": 5437996,
       "spot_price": 91.895,
-      "spot_captured_at": "2026-09-09T22:07:02Z",
+      "spot_captured_at": "2026-09-09T23:58:52Z",
       "currency": "USD",
       "dma200": 95.0247,
       "dma200_n": 200
@@ -1214,7 +1214,7 @@
       "adj_close": 66.06,
       "volume": 19470,
       "spot_price": 66.06,
-      "spot_captured_at": "2026-09-09T22:01:48Z",
+      "spot_captured_at": "2026-09-09T23:54:12Z",
       "currency": "USD",
       "dma200": 61.6737,
       "dma200_n": 200
@@ -1229,7 +1229,7 @@
       "adj_close": 96.89,
       "volume": 179359,
       "spot_price": 96.89,
-      "spot_captured_at": "2026-09-09T22:06:15Z",
+      "spot_captured_at": "2026-09-09T23:58:11Z",
       "currency": "USD",
       "dma200": 75.9776,
       "dma200_n": 200
@@ -1244,7 +1244,7 @@
       "adj_close": 101.83,
       "volume": 8200806,
       "spot_price": 101.83,
-      "spot_captured_at": "2026-09-09T22:06:05Z",
+      "spot_captured_at": "2026-09-09T23:58:02Z",
       "currency": "USD",
       "dma200": 93.6158,
       "dma200_n": 200
@@ -1259,7 +1259,7 @@
       "adj_close": 56.74,
       "volume": 659191,
       "spot_price": 56.74,
-      "spot_captured_at": "2026-09-09T22:04:53Z",
+      "spot_captured_at": "2026-09-09T23:56:59Z",
       "currency": "USD",
       "dma200": 50.0137,
       "dma200_n": 200
@@ -1274,7 +1274,7 @@
       "adj_close": 51.48,
       "volume": 2221100,
       "spot_price": 51.48,
-      "spot_captured_at": "2026-09-09T22:04:52Z",
+      "spot_captured_at": "2026-09-09T23:56:57Z",
       "currency": "USD",
       "dma200": 55.4688,
       "dma200_n": 200
@@ -1289,7 +1289,7 @@
       "adj_close": 106.24,
       "volume": 96066104,
       "spot_price": 106.24,
-      "spot_captured_at": "2026-09-09T22:01:24Z",
+      "spot_captured_at": "2026-09-09T23:53:50Z",
       "currency": "USD",
       "dma200": 74.8613,
       "dma200_n": 200
@@ -1304,7 +1304,7 @@
       "adj_close": 28.18,
       "volume": 4600095,
       "spot_price": 28.18,
-      "spot_captured_at": "2026-09-09T22:05:53Z",
+      "spot_captured_at": "2026-09-09T23:57:52Z",
       "currency": "USD",
       "dma200": 27.8878,
       "dma200_n": 200
@@ -1319,7 +1319,7 @@
       "adj_close": 38.14,
       "volume": 25192915,
       "spot_price": 38.14,
-      "spot_captured_at": "2026-09-09T22:05:46Z",
+      "spot_captured_at": "2026-09-09T23:57:45Z",
       "currency": "USD",
       "dma200": 44.1269,
       "dma200_n": 200
@@ -1334,7 +1334,7 @@
       "adj_close": 45.37,
       "volume": 29209576,
       "spot_price": 45.37,
-      "spot_captured_at": "2026-09-09T22:02:21Z",
+      "spot_captured_at": "2026-09-09T23:54:42Z",
       "currency": "USD",
       "dma200": 45.6482,
       "dma200_n": 200
@@ -1349,7 +1349,7 @@
       "adj_close": 219.45,
       "volume": 967874,
       "spot_price": 219.45,
-      "spot_captured_at": "2026-09-09T22:04:32Z",
+      "spot_captured_at": "2026-09-09T23:56:39Z",
       "currency": "USD",
       "dma200": 229.6313,
       "dma200_n": 200
@@ -1364,7 +1364,7 @@
       "adj_close": 90.31,
       "volume": 1794763,
       "spot_price": 90.31,
-      "spot_captured_at": "2026-09-09T22:04:44Z",
+      "spot_captured_at": "2026-09-09T23:56:50Z",
       "currency": "USD",
       "dma200": 98.4748,
       "dma200_n": 200
@@ -1379,7 +1379,7 @@
       "adj_close": 290.64,
       "volume": 19035168,
       "spot_price": 290.64,
-      "spot_captured_at": "2026-09-09T22:05:59Z",
+      "spot_captured_at": "2026-09-09T23:57:58Z",
       "currency": "USD",
       "dma200": 273.2728,
       "dma200_n": 200
@@ -1394,7 +1394,7 @@
       "adj_close": 81.71,
       "volume": 525408,
       "spot_price": 81.71,
-      "spot_captured_at": "2026-09-09T22:04:38Z",
+      "spot_captured_at": "2026-09-09T23:56:45Z",
       "currency": "USD",
       "dma200": 80.7122,
       "dma200_n": 200
@@ -1409,7 +1409,7 @@
       "adj_close": 28.02,
       "volume": 3276155,
       "spot_price": 28.02,
-      "spot_captured_at": "2026-09-09T22:04:41Z",
+      "spot_captured_at": "2026-09-09T23:56:47Z",
       "currency": "USD",
       "dma200": 28.4124,
       "dma200_n": 200
@@ -1424,7 +1424,7 @@
       "adj_close": 354.71,
       "volume": 6262650,
       "spot_price": 354.71,
-      "spot_captured_at": "2026-09-09T22:03:43Z",
+      "spot_captured_at": "2026-09-09T23:55:55Z",
       "currency": "USD",
       "dma200": 318.8695,
       "dma200_n": 200
@@ -1439,7 +1439,7 @@
       "adj_close": 67.67,
       "volume": 1225195,
       "spot_price": 67.67,
-      "spot_captured_at": "2026-09-09T22:04:58Z",
+      "spot_captured_at": "2026-09-09T23:57:03Z",
       "currency": "USD",
       "dma200": 64.3544,
       "dma200_n": 200
@@ -1454,7 +1454,7 @@
       "adj_close": 165.853,
       "volume": 22782,
       "spot_price": 165.853,
-      "spot_captured_at": "2026-09-09T22:05:01Z",
+      "spot_captured_at": "2026-09-09T23:57:06Z",
       "currency": "USD",
       "dma200": 152.3573,
       "dma200_n": 200
@@ -1469,7 +1469,7 @@
       "adj_close": 30.23,
       "volume": 5090530,
       "spot_price": 30.23,
-      "spot_captured_at": "2026-09-09T22:02:50Z",
+      "spot_captured_at": "2026-09-09T23:55:08Z",
       "currency": "USD",
       "dma200": 29.5082,
       "dma200_n": 200
@@ -1484,7 +1484,7 @@
       "adj_close": 62.08,
       "volume": 1404788,
       "spot_price": 62.08,
-      "spot_captured_at": "2026-09-09T22:05:04Z",
+      "spot_captured_at": "2026-09-09T23:57:09Z",
       "currency": "USD",
       "dma200": 59.3123,
       "dma200_n": 200
@@ -1499,7 +1499,7 @@
       "adj_close": 73.45,
       "volume": 10842022,
       "spot_price": 73.45,
-      "spot_captured_at": "2026-09-09T22:05:38Z",
+      "spot_captured_at": "2026-09-09T23:57:39Z",
       "currency": "USD",
       "dma200": 69.951,
       "dma200_n": 200
@@ -1514,7 +1514,7 @@
       "adj_close": 73.77,
       "volume": 83784,
       "spot_price": 73.77,
-      "spot_captured_at": "2026-09-09T22:04:29Z",
+      "spot_captured_at": "2026-09-09T23:56:36Z",
       "currency": "USD",
       "dma200": 74.2653,
       "dma200_n": 200
@@ -1529,7 +1529,7 @@
       "adj_close": 988.98,
       "volume": 4519016,
       "spot_price": 988.98,
-      "spot_captured_at": "2026-09-09T22:02:12Z",
+      "spot_captured_at": "2026-09-09T23:54:34Z",
       "currency": "USD",
       "dma200": 692.4787,
       "dma200_n": 200
@@ -1544,7 +1544,7 @@
       "adj_close": 105.31,
       "volume": 34195958,
       "spot_price": 105.31,
-      "spot_captured_at": "2026-09-09T22:06:51Z",
+      "spot_captured_at": "2026-09-09T23:58:43Z",
       "currency": "USD",
       "dma200": 109.0316,
       "dma200_n": 200
@@ -1559,7 +1559,7 @@
       "adj_close": 315.84,
       "volume": 5453423,
       "spot_price": 315.84,
-      "spot_captured_at": "2026-09-09T22:01:29Z",
+      "spot_captured_at": "2026-09-09T23:53:54Z",
       "currency": "USD",
       "dma200": 262.6163,
       "dma200_n": 200
@@ -1574,7 +1574,7 @@
       "adj_close": 25.15,
       "volume": 24034,
       "spot_price": 25.15,
-      "spot_captured_at": "2026-09-09T22:06:09Z",
+      "spot_captured_at": "2026-09-09T23:58:06Z",
       "currency": "USD",
       "dma200": null,
       "dma200_n": 130
@@ -1589,7 +1589,7 @@
       "adj_close": 653.69,
       "volume": 35359694,
       "spot_price": 653.69,
-      "spot_captured_at": "2026-09-09T22:03:58Z",
+      "spot_captured_at": "2026-09-09T23:56:08Z",
       "currency": "USD",
       "dma200": 622.6859,
       "dma200_n": 200
@@ -1604,7 +1604,7 @@
       "adj_close": 1203.75,
       "volume": 493112,
       "spot_price": 1203.75,
-      "spot_captured_at": "2026-09-09T22:01:32Z",
+      "spot_captured_at": "2026-09-09T23:53:57Z",
       "currency": "USD",
       "dma200": 1253.9535,
       "dma200_n": 200
@@ -1619,7 +1619,7 @@
       "adj_close": 45.612,
       "volume": 900,
       "spot_price": 45.612,
-      "spot_captured_at": "2026-09-09T22:01:51Z",
+      "spot_captured_at": "2026-09-09T23:54:14Z",
       "currency": "USD",
       "dma200": 36.0631,
       "dma200_n": 200
@@ -1634,7 +1634,7 @@
       "adj_close": 22.85,
       "volume": 58535,
       "spot_price": 22.85,
-      "spot_captured_at": "2026-09-09T22:01:49Z",
+      "spot_captured_at": "2026-09-09T23:54:13Z",
       "currency": "USD",
       "dma200": 17.8892,
       "dma200_n": 200
@@ -1649,7 +1649,7 @@
       "adj_close": 135.61,
       "volume": 8608986,
       "spot_price": 135.61,
-      "spot_captured_at": "2026-09-09T22:03:46Z",
+      "spot_captured_at": "2026-09-09T23:55:57Z",
       "currency": "USD",
       "dma200": 55.9581,
       "dma200_n": 200
@@ -1664,7 +1664,7 @@
       "adj_close": 235.01,
       "volume": 20034900,
       "spot_price": 235.01,
-      "spot_captured_at": "2026-09-09T22:01:23Z",
+      "spot_captured_at": "2026-09-09T23:53:49Z",
       "currency": "USD",
       "dma200": 153.2715,
       "dma200_n": 200
@@ -1679,7 +1679,7 @@
       "adj_close": 491.65,
       "volume": 12778304,
       "spot_price": 491.65,
-      "spot_captured_at": "2026-09-09T22:03:59Z",
+      "spot_captured_at": "2026-09-09T23:56:10Z",
       "currency": "USD",
       "dma200": 431.0699,
       "dma200_n": 200
@@ -1694,7 +1694,7 @@
       "adj_close": 1027.77,
       "volume": 23573851,
       "spot_price": 1027.77,
-      "spot_captured_at": "2026-09-09T22:02:01Z",
+      "spot_captured_at": "2026-09-09T23:54:24Z",
       "currency": "USD",
       "dma200": 614.3476,
       "dma200_n": 200
@@ -1709,7 +1709,7 @@
       "adj_close": 240.35,
       "volume": 11185498,
       "spot_price": 240.35,
-      "spot_captured_at": "2026-09-09T22:02:23Z",
+      "spot_captured_at": "2026-09-09T23:54:43Z",
       "currency": "USD",
       "dma200": 156.2814,
       "dma200_n": 200
@@ -1724,7 +1724,7 @@
       "adj_close": 128.71,
       "volume": 7211503,
       "spot_price": 128.71,
-      "spot_captured_at": "2026-09-09T22:02:44Z",
+      "spot_captured_at": "2026-09-09T23:55:03Z",
       "currency": "USD",
       "dma200": 108.9095,
       "dma200_n": 200
@@ -1739,7 +1739,7 @@
       "adj_close": 314.18,
       "volume": 4759162,
       "spot_price": 314.18,
-      "spot_captured_at": "2026-09-09T22:03:38Z",
+      "spot_captured_at": "2026-09-09T23:55:50Z",
       "currency": "USD",
       "dma200": 223.3748,
       "dma200_n": 200
@@ -1754,7 +1754,7 @@
       "adj_close": 122.95,
       "volume": 259465,
       "spot_price": 122.95,
-      "spot_captured_at": "2026-09-09T22:05:22Z",
+      "spot_captured_at": "2026-09-09T23:57:25Z",
       "currency": "USD",
       "dma200": 131.0135,
       "dma200_n": 200
@@ -1769,7 +1769,7 @@
       "adj_close": 4.63,
       "volume": 1344633,
       "spot_price": 4.63,
-      "spot_captured_at": "2026-09-09T22:02:04Z",
+      "spot_captured_at": "2026-09-09T23:54:27Z",
       "currency": "USD",
       "dma200": 2.2332,
       "dma200_n": 200
@@ -1784,7 +1784,7 @@
       "adj_close": 10.76,
       "volume": 85194184,
       "spot_price": 10.76,
-      "spot_captured_at": "2026-09-09T22:02:20Z",
+      "spot_captured_at": "2026-09-09T23:54:41Z",
       "currency": "USD",
       "dma200": 9.6497,
       "dma200_n": 200
@@ -1799,7 +1799,7 @@
       "adj_close": 131.11,
       "volume": 10269432,
       "spot_price": 131.11,
-      "spot_captured_at": "2026-09-09T22:03:19Z",
+      "spot_captured_at": "2026-09-09T23:55:34Z",
       "currency": "USD",
       "dma200": 118.2754,
       "dma200_n": 200
@@ -1814,7 +1814,7 @@
       "adj_close": 115.37,
       "volume": 2814177,
       "spot_price": 115.37,
-      "spot_captured_at": "2026-09-09T22:05:30Z",
+      "spot_captured_at": "2026-09-09T23:57:32Z",
       "currency": "USD",
       "dma200": 146.1803,
       "dma200_n": 200
@@ -1829,7 +1829,7 @@
       "adj_close": 223.67,
       "volume": 79204871,
       "spot_price": 223.67,
-      "spot_captured_at": "2026-09-09T22:01:18Z",
+      "spot_captured_at": "2026-09-09T23:53:45Z",
       "currency": "USD",
       "dma200": 197.0871,
       "dma200_n": 200
@@ -1844,7 +1844,7 @@
       "adj_close": 44.56,
       "volume": 8788337,
       "spot_price": 44.56,
-      "spot_captured_at": "2026-09-09T22:03:44Z",
+      "spot_captured_at": "2026-09-09T23:55:56Z",
       "currency": "USD",
       "dma200": 46.3108,
       "dma200_n": 200
@@ -1859,7 +1859,7 @@
       "adj_close": 11.6,
       "volume": 8098396,
       "spot_price": 11.6,
-      "spot_captured_at": "2026-09-09T22:01:35Z",
+      "spot_captured_at": "2026-09-09T23:54:00Z",
       "currency": "USD",
       "dma200": 12.9501,
       "dma200_n": 200
@@ -1874,7 +1874,7 @@
       "adj_close": 429.35,
       "volume": 212350,
       "spot_price": 429.35,
-      "spot_captured_at": "2026-09-09T22:04:17Z",
+      "spot_captured_at": "2026-09-09T23:56:25Z",
       "currency": "USD",
       "dma200": 379.551,
       "dma200_n": 200
@@ -1889,7 +1889,7 @@
       "adj_close": 172.74,
       "volume": 3418587,
       "spot_price": 172.74,
-      "spot_captured_at": "2026-09-09T22:03:36Z",
+      "spot_captured_at": "2026-09-09T23:55:49Z",
       "currency": "USD",
       "dma200": 102.7473,
       "dma200_n": 200
@@ -1904,7 +1904,7 @@
       "adj_close": 70.98,
       "volume": 6467798,
       "spot_price": 70.98,
-      "spot_captured_at": "2026-09-09T22:01:43Z",
+      "spot_captured_at": "2026-09-09T23:54:07Z",
       "currency": "USD",
       "dma200": 78.6011,
       "dma200_n": 200
@@ -1919,7 +1919,7 @@
       "adj_close": 161.63,
       "volume": 26502308,
       "spot_price": 161.63,
-      "spot_captured_at": "2026-09-09T22:04:01Z",
+      "spot_captured_at": "2026-09-09T23:56:11Z",
       "currency": "USD",
       "dma200": 168.1756,
       "dma200_n": 200
@@ -1934,7 +1934,7 @@
       "adj_close": 52.9,
       "volume": 5052015,
       "spot_price": 52.9,
-      "spot_captured_at": "2026-09-09T22:02:55Z",
+      "spot_captured_at": "2026-09-09T23:55:13Z",
       "currency": "USD",
       "dma200": 52.4711,
       "dma200_n": 200
@@ -1949,7 +1949,7 @@
       "adj_close": 335.1,
       "volume": 4267638,
       "spot_price": 335.1,
-      "spot_captured_at": "2026-09-09T22:03:27Z",
+      "spot_captured_at": "2026-09-09T23:55:41Z",
       "currency": "USD",
       "dma200": 234.4229,
       "dma200_n": 200
@@ -1964,7 +1964,7 @@
       "adj_close": 54.19,
       "volume": 1502469,
       "spot_price": 54.19,
-      "spot_captured_at": "2026-09-09T22:04:37Z",
+      "spot_captured_at": "2026-09-09T23:56:43Z",
       "currency": "USD",
       "dma200": 53.9407,
       "dma200_n": 200
@@ -1979,7 +1979,7 @@
       "adj_close": 46.9,
       "volume": 91325,
       "spot_price": 46.9,
-      "spot_captured_at": "2026-09-09T22:04:50Z",
+      "spot_captured_at": "2026-09-09T23:56:56Z",
       "currency": "USD",
       "dma200": 47.8793,
       "dma200_n": 200
@@ -2009,7 +2009,7 @@
       "adj_close": 62.86,
       "volume": 100606,
       "spot_price": 62.86,
-      "spot_captured_at": "2026-09-09T22:04:47Z",
+      "spot_captured_at": "2026-09-09T23:56:53Z",
       "currency": "USD",
       "dma200": 62.3383,
       "dma200_n": 200
@@ -2024,7 +2024,7 @@
       "adj_close": 51.06,
       "volume": 917638,
       "spot_price": 51.06,
-      "spot_captured_at": "2026-09-09T22:01:55Z",
+      "spot_captured_at": "2026-09-09T23:54:19Z",
       "currency": "USD",
       "dma200": 36.9454,
       "dma200_n": 200
@@ -2039,7 +2039,7 @@
       "adj_close": 126.253,
       "volume": 18150,
       "spot_price": 126.253,
-      "spot_captured_at": "2026-09-09T22:04:57Z",
+      "spot_captured_at": "2026-09-09T23:57:01Z",
       "currency": "USD",
       "dma200": 110.9141,
       "dma200_n": 200
@@ -2054,7 +2054,7 @@
       "adj_close": 49.71,
       "volume": 675374,
       "spot_price": 49.71,
-      "spot_captured_at": "2026-09-09T22:01:40Z",
+      "spot_captured_at": "2026-09-09T23:54:04Z",
       "currency": "USD",
       "dma200": 56.5539,
       "dma200_n": 200
@@ -2069,7 +2069,7 @@
       "adj_close": 161.3,
       "volume": 242050,
       "spot_price": 161.3,
-      "spot_captured_at": "2026-09-09T22:04:35Z",
+      "spot_captured_at": "2026-09-09T23:56:42Z",
       "currency": "USD",
       "dma200": 170.6431,
       "dma200_n": 200
@@ -2084,7 +2084,7 @@
       "adj_close": 52.17,
       "volume": 9448992,
       "spot_price": 52.17,
-      "spot_captured_at": "2026-09-09T22:03:47Z",
+      "spot_captured_at": "2026-09-09T23:55:59Z",
       "currency": "USD",
       "dma200": 50.9434,
       "dma200_n": 200
@@ -2099,7 +2099,7 @@
       "adj_close": 17.12,
       "volume": 15884567,
       "spot_price": 17.12,
-      "spot_captured_at": "2026-09-09T22:05:49Z",
+      "spot_captured_at": "2026-09-09T23:57:48Z",
       "currency": "USD",
       "dma200": 21.4591,
       "dma200_n": 200
@@ -2114,7 +2114,7 @@
       "adj_close": 170.17,
       "volume": 605738,
       "spot_price": 170.17,
-      "spot_captured_at": "2026-09-09T22:03:41Z",
+      "spot_captured_at": "2026-09-09T23:55:53Z",
       "currency": "USD",
       "dma200": 125.0009,
       "dma200_n": 200
@@ -2129,7 +2129,7 @@
       "adj_close": 716.31,
       "volume": 26405228,
       "spot_price": 716.31,
-      "spot_captured_at": "2026-09-09T22:05:58Z",
+      "spot_captured_at": "2026-09-09T23:57:56Z",
       "currency": "USD",
       "dma200": 658.8997,
       "dma200_n": 200
@@ -2144,7 +2144,7 @@
       "adj_close": 147.81,
       "volume": 138392,
       "spot_price": 147.81,
-      "spot_captured_at": "2026-09-09T22:06:18Z",
+      "spot_captured_at": "2026-09-09T23:58:14Z",
       "currency": "USD",
       "dma200": 131.3086,
       "dma200_n": 200
@@ -2159,7 +2159,7 @@
       "adj_close": 8.04,
       "volume": 5248527,
       "spot_price": 8.04,
-      "spot_captured_at": "2026-09-09T22:05:50Z",
+      "spot_captured_at": "2026-09-09T23:57:50Z",
       "currency": "USD",
       "dma200": 9.4723,
       "dma200_n": 200
@@ -2174,7 +2174,7 @@
       "adj_close": 146.44,
       "volume": 4752987,
       "spot_price": 146.44,
-      "spot_captured_at": "2026-09-09T22:03:50Z",
+      "spot_captured_at": "2026-09-09T23:56:01Z",
       "currency": "USD",
       "dma200": 174.1563,
       "dma200_n": 200
@@ -2189,7 +2189,7 @@
       "adj_close": 76.34,
       "volume": 407326,
       "spot_price": 76.34,
-      "spot_captured_at": "2026-09-09T22:04:30Z",
+      "spot_captured_at": "2026-09-09T23:56:38Z",
       "currency": "USD",
       "dma200": 86.3044,
       "dma200_n": 200
@@ -2204,7 +2204,7 @@
       "adj_close": 262.54,
       "volume": 432011,
       "spot_price": 262.54,
-      "spot_captured_at": "2026-09-09T22:03:06Z",
+      "spot_captured_at": "2026-09-09T23:55:22Z",
       "currency": "USD",
       "dma200": 237.3363,
       "dma200_n": 200
@@ -2219,7 +2219,7 @@
       "adj_close": 15.24,
       "volume": 18522974,
       "spot_price": 15.24,
-      "spot_captured_at": "2026-09-09T22:05:47Z",
+      "spot_captured_at": "2026-09-09T23:57:47Z",
       "currency": "USD",
       "dma200": 19.1905,
       "dma200_n": 200
@@ -2234,7 +2234,7 @@
       "adj_close": 87.27,
       "volume": 303938,
       "spot_price": 87.27,
-      "spot_captured_at": "2026-09-09T22:03:16Z",
+      "spot_captured_at": "2026-09-09T23:55:32Z",
       "currency": "USD",
       "dma200": 77.7559,
       "dma200_n": 200
@@ -2249,7 +2249,7 @@
       "adj_close": 57.28,
       "volume": 51227,
       "spot_price": 57.28,
-      "spot_captured_at": "2026-09-09T22:06:20Z",
+      "spot_captured_at": "2026-09-09T23:58:15Z",
       "currency": "USD",
       "dma200": 53.3851,
       "dma200_n": 200
@@ -2264,7 +2264,7 @@
       "adj_close": 19.44,
       "volume": 3863066,
       "spot_price": 19.44,
-      "spot_captured_at": "2026-09-09T22:03:33Z",
+      "spot_captured_at": "2026-09-09T23:55:46Z",
       "currency": "USD",
       "dma200": 16.0556,
       "dma200_n": 200
@@ -2279,7 +2279,7 @@
       "adj_close": 82.6,
       "volume": 26403,
       "spot_price": 82.6,
-      "spot_captured_at": "2026-09-09T22:03:12Z",
+      "spot_captured_at": "2026-09-09T23:55:28Z",
       "currency": "USD",
       "dma200": 74.1769,
       "dma200_n": 200
@@ -2294,7 +2294,7 @@
       "adj_close": 126.79,
       "volume": 13950819,
       "spot_price": 126.79,
-      "spot_captured_at": "2026-09-09T22:03:23Z",
+      "spot_captured_at": "2026-09-09T23:55:37Z",
       "currency": "USD",
       "dma200": 131.1756,
       "dma200_n": 200
@@ -2302,16 +2302,16 @@
     {
       "ticker": "SI=F",
       "date": "2026-09-09",
-      "open": 66.44,
-      "high": 68.98,
-      "low": 66.13,
-      "close": 67.925,
-      "adj_close": 67.925,
-      "volume": 53753,
-      "spot_price": 67.925,
-      "spot_captured_at": "2026-09-09T22:06:44Z",
+      "open": 67.945,
+      "high": 68.045,
+      "low": 67.78,
+      "close": 67.82,
+      "adj_close": 67.82,
+      "volume": 566,
+      "spot_price": 67.82,
+      "spot_captured_at": "2026-09-09T23:58:37Z",
       "currency": "USD",
-      "dma200": 72.291,
+      "dma200": 72.2905,
       "dma200_n": 200
     },
     {
@@ -2324,7 +2324,7 @@
       "adj_close": 153.75,
       "volume": 49792,
       "spot_price": 153.75,
-      "spot_captured_at": "2026-09-09T22:02:34Z",
+      "spot_captured_at": "2026-09-09T23:54:53Z",
       "currency": "USD",
       "dma200": 147.2071,
       "dma200_n": 200
@@ -2339,7 +2339,7 @@
       "adj_close": 100.11,
       "volume": 928201,
       "spot_price": 100.11,
-      "spot_captured_at": "2026-09-09T22:03:13Z",
+      "spot_captured_at": "2026-09-09T23:55:29Z",
       "currency": "USD",
       "dma200": 89.9358,
       "dma200_n": 200
@@ -2354,7 +2354,7 @@
       "adj_close": 31.94,
       "volume": 3793760,
       "spot_price": 31.94,
-      "spot_captured_at": "2026-09-09T22:03:15Z",
+      "spot_captured_at": "2026-09-09T23:55:30Z",
       "currency": "USD",
       "dma200": 29.8685,
       "dma200_n": 200
@@ -2368,8 +2368,8 @@
       "close": 3.25,
       "adj_close": 3.25,
       "volume": 408446,
-      "spot_price": 3.25,
-      "spot_captured_at": "2026-09-09T22:01:57Z",
+      "spot_price": 2.99,
+      "spot_captured_at": "2026-09-09T23:54:20Z",
       "currency": "USD",
       "dma200": null,
       "dma200_n": 118
@@ -2384,7 +2384,7 @@
       "adj_close": 60.72,
       "volume": 20302403,
       "spot_price": 60.72,
-      "spot_captured_at": "2026-09-09T22:03:18Z",
+      "spot_captured_at": "2026-09-09T23:55:33Z",
       "currency": "USD",
       "dma200": 65.4554,
       "dma200_n": 200
@@ -2399,7 +2399,7 @@
       "adj_close": 111.1,
       "volume": 8063,
       "spot_price": 111.1,
-      "spot_captured_at": "2026-09-09T22:04:26Z",
+      "spot_captured_at": "2026-09-09T23:56:34Z",
       "currency": "USD",
       "dma200": 98.2509,
       "dma200_n": 200
@@ -2414,7 +2414,7 @@
       "adj_close": 574.29,
       "volume": 3395360,
       "spot_price": 574.29,
-      "spot_captured_at": "2026-09-09T22:06:01Z",
+      "spot_captured_at": "2026-09-09T23:57:59Z",
       "currency": "USD",
       "dma200": 479.7723,
       "dma200_n": 200
@@ -2429,7 +2429,7 @@
       "adj_close": 1764.17,
       "volume": 9527177,
       "spot_price": 1764.17,
-      "spot_captured_at": "2026-09-09T22:02:03Z",
+      "spot_captured_at": "2026-09-09T23:54:26Z",
       "currency": "USD",
       "dma200": 1019.024,
       "dma200_n": 200
@@ -2444,7 +2444,7 @@
       "adj_close": 532.0,
       "volume": 6412526,
       "spot_price": 532.0,
-      "spot_captured_at": "2026-09-09T22:06:03Z",
+      "spot_captured_at": "2026-09-09T23:58:00Z",
       "currency": "USD",
       "dma200": 434.0425,
       "dma200_n": 200
@@ -2459,7 +2459,7 @@
       "adj_close": 147.55,
       "volume": 120147894,
       "spot_price": 147.55,
-      "spot_captured_at": "2026-09-09T22:03:52Z",
+      "spot_captured_at": "2026-09-09T23:56:03Z",
       "currency": "USD",
       "dma200": null,
       "dma200_n": 61
@@ -2474,7 +2474,7 @@
       "adj_close": 762.4,
       "volume": 32250970,
       "spot_price": 762.4,
-      "spot_captured_at": "2026-09-09T22:05:56Z",
+      "spot_captured_at": "2026-09-09T23:57:55Z",
       "currency": "USD",
       "dma200": 713.1812,
       "dma200_n": 200
@@ -2489,7 +2489,7 @@
       "adj_close": 37.6,
       "volume": 1771188,
       "spot_price": 37.6,
-      "spot_captured_at": "2026-09-09T22:03:01Z",
+      "spot_captured_at": "2026-09-09T23:55:18Z",
       "currency": "USD",
       "dma200": 28.2822,
       "dma200_n": 200
@@ -2504,7 +2504,7 @@
       "adj_close": 51.55,
       "volume": 7168924,
       "spot_price": 51.55,
-      "spot_captured_at": "2026-09-09T22:01:46Z",
+      "spot_captured_at": "2026-09-09T23:54:10Z",
       "currency": "USD",
       "dma200": 45.5968,
       "dma200_n": 200
@@ -2519,7 +2519,7 @@
       "adj_close": 47.74,
       "volume": 732096,
       "spot_price": 47.74,
-      "spot_captured_at": "2026-09-09T22:05:21Z",
+      "spot_captured_at": "2026-09-09T23:57:24Z",
       "currency": "USD",
       "dma200": 55.096,
       "dma200_n": 200
@@ -2534,7 +2534,7 @@
       "adj_close": 33.67,
       "volume": 4539087,
       "spot_price": 33.67,
-      "spot_captured_at": "2026-09-09T22:03:39Z",
+      "spot_captured_at": "2026-09-09T23:55:52Z",
       "currency": "USD",
       "dma200": 26.1356,
       "dma200_n": 200
@@ -2549,7 +2549,7 @@
       "adj_close": 33.9,
       "volume": 314418,
       "spot_price": 33.9,
-      "spot_captured_at": "2026-09-09T22:03:07Z",
+      "spot_captured_at": "2026-09-09T23:55:24Z",
       "currency": "USD",
       "dma200": 33.2536,
       "dma200_n": 200
@@ -2564,7 +2564,7 @@
       "adj_close": 89.94,
       "volume": 34423,
       "spot_price": 89.94,
-      "spot_captured_at": "2026-09-09T22:06:11Z",
+      "spot_captured_at": "2026-09-09T23:58:07Z",
       "currency": "USD",
       "dma200": 74.0763,
       "dma200_n": 200
@@ -2579,7 +2579,7 @@
       "adj_close": 319.67,
       "volume": 883350,
       "spot_price": 319.67,
-      "spot_captured_at": "2026-09-09T22:05:32Z",
+      "spot_captured_at": "2026-09-09T23:57:33Z",
       "currency": "USD",
       "dma200": 357.4517,
       "dma200_n": 200
@@ -2594,7 +2594,7 @@
       "adj_close": 81.73,
       "volume": 40501732,
       "spot_price": 81.73,
-      "spot_captured_at": "2026-09-09T22:06:54Z",
+      "spot_captured_at": "2026-09-09T23:58:46Z",
       "currency": "USD",
       "dma200": 86.177,
       "dma200_n": 200
@@ -2609,7 +2609,7 @@
       "adj_close": 435.36,
       "volume": 7443121,
       "spot_price": 435.36,
-      "spot_captured_at": "2026-09-09T22:01:26Z",
+      "spot_captured_at": "2026-09-09T23:53:52Z",
       "currency": "USD",
       "dma200": 374.4018,
       "dma200_n": 200
@@ -2624,7 +2624,7 @@
       "adj_close": 261.59,
       "volume": 4169438,
       "spot_price": 261.59,
-      "spot_captured_at": "2026-09-09T22:01:54Z",
+      "spot_captured_at": "2026-09-09T23:54:17Z",
       "currency": "USD",
       "dma200": 240.41,
       "dma200_n": 200
@@ -2639,7 +2639,7 @@
       "adj_close": 43.06,
       "volume": 205305,
       "spot_price": 43.06,
-      "spot_captured_at": "2026-09-09T22:05:40Z",
+      "spot_captured_at": "2026-09-09T23:57:40Z",
       "currency": "USD",
       "dma200": 46.6509,
       "dma200_n": 200
@@ -2654,7 +2654,7 @@
       "adj_close": 46.86,
       "volume": 2046318,
       "spot_price": 46.86,
-      "spot_captured_at": "2026-09-09T22:04:23Z",
+      "spot_captured_at": "2026-09-09T23:56:31Z",
       "currency": "USD",
       "dma200": 48.5048,
       "dma200_n": 200
@@ -2669,7 +2669,7 @@
       "adj_close": 27.98,
       "volume": 1377960,
       "spot_price": 27.98,
-      "spot_captured_at": "2026-09-09T22:06:52Z",
+      "spot_captured_at": "2026-09-09T23:58:44Z",
       "currency": "USD",
       "dma200": 27.725,
       "dma200_n": 200
@@ -2684,7 +2684,7 @@
       "adj_close": 183.87,
       "volume": 621031,
       "spot_price": 183.87,
-      "spot_captured_at": "2026-09-09T22:01:44Z",
+      "spot_captured_at": "2026-09-09T23:54:08Z",
       "currency": "USD",
       "dma200": 203.4203,
       "dma200_n": 200
@@ -2699,7 +2699,7 @@
       "adj_close": 94.94,
       "volume": 4074994,
       "spot_price": 94.94,
-      "spot_captured_at": "2026-09-09T22:05:24Z",
+      "spot_captured_at": "2026-09-09T23:57:26Z",
       "currency": "USD",
       "dma200": 94.161,
       "dma200_n": 200
@@ -2714,7 +2714,7 @@
       "adj_close": 63.26,
       "volume": 261653,
       "spot_price": 63.26,
-      "spot_captured_at": "2026-09-09T22:02:41Z",
+      "spot_captured_at": "2026-09-09T23:55:00Z",
       "currency": "USD",
       "dma200": 68.7057,
       "dma200_n": 200
@@ -2729,7 +2729,7 @@
       "adj_close": 262.89,
       "volume": 9735461,
       "spot_price": 262.89,
-      "spot_captured_at": "2026-09-09T22:05:35Z",
+      "spot_captured_at": "2026-09-09T23:57:36Z",
       "currency": "USD",
       "dma200": 258.4939,
       "dma200_n": 200
@@ -2744,7 +2744,7 @@
       "adj_close": 151.1,
       "volume": 3867234,
       "spot_price": 151.1,
-      "spot_captured_at": "2026-09-09T22:05:27Z",
+      "spot_captured_at": "2026-09-09T23:57:29Z",
       "currency": "USD",
       "dma200": 157.5097,
       "dma200_n": 200
@@ -2759,7 +2759,7 @@
       "adj_close": 38.9,
       "volume": 1462890,
       "spot_price": 38.9,
-      "spot_captured_at": "2026-09-09T22:03:30Z",
+      "spot_captured_at": "2026-09-09T23:55:44Z",
       "currency": "USD",
       "dma200": 32.1491,
       "dma200_n": 200
@@ -2774,7 +2774,7 @@
       "adj_close": 27.28,
       "volume": 2112930,
       "spot_price": 27.28,
-      "spot_captured_at": "2026-09-09T22:01:58Z",
+      "spot_captured_at": "2026-09-09T23:54:22Z",
       "currency": "USD",
       "dma200": 28.938,
       "dma200_n": 200
@@ -2789,7 +2789,7 @@
       "adj_close": 156.76,
       "volume": 1608826,
       "spot_price": 156.76,
-      "spot_captured_at": "2026-09-09T22:03:04Z",
+      "spot_captured_at": "2026-09-09T23:55:21Z",
       "currency": "USD",
       "dma200": 129.9043,
       "dma200_n": 200
@@ -2804,7 +2804,7 @@
       "adj_close": 42.65,
       "volume": 192077,
       "spot_price": 42.65,
-      "spot_captured_at": "2026-09-09T22:06:14Z",
+      "spot_captured_at": "2026-09-09T23:58:10Z",
       "currency": "USD",
       "dma200": 35.332,
       "dma200_n": 200
@@ -2819,7 +2819,7 @@
       "adj_close": 17.13,
       "volume": 21769975,
       "spot_price": 17.13,
-      "spot_captured_at": "2026-09-09T22:02:29Z",
+      "spot_captured_at": "2026-09-09T23:54:49Z",
       "currency": "USD",
       "dma200": 17.9255,
       "dma200_n": 200
@@ -2834,7 +2834,7 @@
       "adj_close": 246.7,
       "volume": 176228,
       "spot_price": 246.7,
-      "spot_captured_at": "2026-09-09T22:04:34Z",
+      "spot_captured_at": "2026-09-09T23:56:41Z",
       "currency": "USD",
       "dma200": 266.7098,
       "dma200_n": 200
@@ -2849,7 +2849,7 @@
       "adj_close": 159.38,
       "volume": 5465967,
       "spot_price": 159.38,
-      "spot_captured_at": "2026-09-09T22:05:43Z",
+      "spot_captured_at": "2026-09-09T23:57:43Z",
       "currency": "USD",
       "dma200": 135.8277,
       "dma200_n": 200
@@ -2864,7 +2864,7 @@
       "adj_close": 123.34,
       "volume": 33468,
       "spot_price": 123.34,
-      "spot_captured_at": "2026-09-09T22:04:18Z",
+      "spot_captured_at": "2026-09-09T23:56:27Z",
       "currency": "USD",
       "dma200": 109.6228,
       "dma200_n": 200
@@ -2879,7 +2879,7 @@
       "adj_close": 99.23,
       "volume": 1979639,
       "spot_price": 99.23,
-      "spot_captured_at": "2026-09-09T22:04:46Z",
+      "spot_captured_at": "2026-09-09T23:56:52Z",
       "currency": "USD",
       "dma200": 106.9713,
       "dma200_n": 200
@@ -2894,7 +2894,7 @@
       "adj_close": 51.39,
       "volume": 13103490,
       "spot_price": 51.39,
-      "spot_captured_at": "2026-09-09T22:04:04Z",
+      "spot_captured_at": "2026-09-09T23:56:14Z",
       "currency": "USD",
       "dma200": 50.1592,
       "dma200_n": 200
@@ -2909,7 +2909,7 @@
       "adj_close": 110.83,
       "volume": 4802307,
       "spot_price": 110.83,
-      "spot_captured_at": "2026-09-09T22:04:14Z",
+      "spot_captured_at": "2026-09-09T23:56:23Z",
       "currency": "USD",
       "dma200": 114.0199,
       "dma200_n": 200
@@ -2924,7 +2924,7 @@
       "adj_close": 65.31,
       "volume": 25178949,
       "spot_price": 65.31,
-      "spot_captured_at": "2026-09-09T22:04:03Z",
+      "spot_captured_at": "2026-09-09T23:56:12Z",
       "currency": "USD",
       "dma200": 55.0289,
       "dma200_n": 200
@@ -2939,7 +2939,7 @@
       "adj_close": 57.06,
       "volume": 27341993,
       "spot_price": 57.06,
-      "spot_captured_at": "2026-09-09T22:05:36Z",
+      "spot_captured_at": "2026-09-09T23:57:37Z",
       "currency": "USD",
       "dma200": 53.5449,
       "dma200_n": 200
@@ -2954,7 +2954,7 @@
       "adj_close": 171.79,
       "volume": 6379102,
       "spot_price": 171.79,
-      "spot_captured_at": "2026-09-09T22:04:06Z",
+      "spot_captured_at": "2026-09-09T23:56:15Z",
       "currency": "USD",
       "dma200": 170.9767,
       "dma200_n": 200
@@ -2969,7 +2969,7 @@
       "adj_close": 187.87,
       "volume": 5972161,
       "spot_price": 187.87,
-      "spot_captured_at": "2026-09-09T22:04:12Z",
+      "spot_captured_at": "2026-09-09T23:56:21Z",
       "currency": "USD",
       "dma200": 160.8338,
       "dma200_n": 200
@@ -2984,7 +2984,7 @@
       "adj_close": 83.05,
       "volume": 12200149,
       "spot_price": 83.05,
-      "spot_captured_at": "2026-09-09T22:04:09Z",
+      "spot_captured_at": "2026-09-09T23:56:18Z",
       "currency": "USD",
       "dma200": 83.3931,
       "dma200_n": 200
@@ -2999,7 +2999,7 @@
       "adj_close": 43.41,
       "volume": 5833062,
       "spot_price": 43.41,
-      "spot_captured_at": "2026-09-09T22:04:15Z",
+      "spot_captured_at": "2026-09-09T23:56:24Z",
       "currency": "USD",
       "dma200": 43.0982,
       "dma200_n": 200
@@ -3014,7 +3014,7 @@
       "adj_close": 42.94,
       "volume": 16890067,
       "spot_price": 42.94,
-      "spot_captured_at": "2026-09-09T22:05:25Z",
+      "spot_captured_at": "2026-09-09T23:57:28Z",
       "currency": "USD",
       "dma200": 44.6507,
       "dma200_n": 200
@@ -3029,7 +3029,7 @@
       "adj_close": 166.58,
       "volume": 7997013,
       "spot_price": 166.58,
-      "spot_captured_at": "2026-09-09T22:04:11Z",
+      "spot_captured_at": "2026-09-09T23:56:20Z",
       "currency": "USD",
       "dma200": 155.5188,
       "dma200_n": 200
@@ -3044,7 +3044,7 @@
       "adj_close": 112.46,
       "volume": 7648466,
       "spot_price": 112.46,
-      "spot_captured_at": "2026-09-09T22:04:07Z",
+      "spot_captured_at": "2026-09-09T23:56:17Z",
       "currency": "USD",
       "dma200": 116.9784,
       "dma200_n": 200
@@ -3059,7 +3059,7 @@
       "adj_close": 119.19,
       "volume": 1886507,
       "spot_price": 119.19,
-      "spot_captured_at": "2026-09-09T22:04:24Z",
+      "spot_captured_at": "2026-09-09T23:56:32Z",
       "currency": "USD",
       "dma200": 113.0213,
       "dma200_n": 200
@@ -3074,7 +3074,7 @@
       "adj_close": 195.01,
       "volume": 2183093,
       "spot_price": 195.01,
-      "spot_captured_at": "2026-09-09T22:04:20Z",
+      "spot_captured_at": "2026-09-09T23:56:28Z",
       "currency": "USD",
       "dma200": 159.0624,
       "dma200_n": 200
@@ -3089,7 +3089,7 @@
       "adj_close": 69.32,
       "volume": 77634,
       "spot_price": 69.32,
-      "spot_captured_at": "2026-09-09T22:04:55Z",
+      "spot_captured_at": "2026-09-09T23:57:00Z",
       "currency": "USD",
       "dma200": 59.9872,
       "dma200_n": 200
@@ -3104,7 +3104,7 @@
       "adj_close": 84.3,
       "volume": 4303777,
       "spot_price": 84.3,
-      "spot_captured_at": "2026-09-09T22:04:49Z",
+      "spot_captured_at": "2026-09-09T23:56:54Z",
       "currency": "USD",
       "dma200": 85.895,
       "dma200_n": 200
@@ -3119,7 +3119,7 @@
       "adj_close": 495.65,
       "volume": 45199,
       "spot_price": 495.65,
-      "spot_captured_at": "2026-09-09T22:05:18Z",
+      "spot_captured_at": "2026-09-09T23:57:21Z",
       "currency": "USD",
       "dma200": 439.3235,
       "dma200_n": 200
@@ -3134,7 +3134,7 @@
       "adj_close": 102.16,
       "volume": 53751,
       "spot_price": 102.16,
-      "spot_captured_at": "2026-09-09T22:04:40Z",
+      "spot_captured_at": "2026-09-09T23:56:46Z",
       "currency": "USD",
       "dma200": 102.8999,
       "dma200_n": 200
@@ -3149,7 +3149,7 @@
       "adj_close": 166.1,
       "volume": 3249494,
       "spot_price": 166.1,
-      "spot_captured_at": "2026-09-09T22:03:32Z",
+      "spot_captured_at": "2026-09-09T23:55:45Z",
       "currency": "USD",
       "dma200": 171.168,
       "dma200_n": 200
@@ -3160,13 +3160,13 @@
       "open": 10811.4404,
       "high": 10811.5996,
       "low": 10651.71,
-      "close": 10670.0596,
-      "adj_close": 10670.0596,
+      "close": null,
+      "adj_close": null,
       "volume": 0,
-      "spot_price": 10670.0596,
-      "spot_captured_at": "2026-09-09T22:06:35Z",
+      "spot_price": 10670.06,
+      "spot_captured_at": "2026-09-09T23:58:29Z",
       "currency": "GBP",
-      "dma200": 10372.3953,
+      "dma200": 10366.7435,
       "dma200_n": 200
     },
     {
@@ -3179,7 +3179,7 @@
       "adj_close": 4.614,
       "volume": 0,
       "spot_price": 4.614,
-      "spot_captured_at": "2026-09-09T22:06:57Z",
+      "spot_captured_at": "2026-09-09T23:58:48Z",
       "currency": "USD",
       "dma200": 4.0108,
       "dma200_n": 200
@@ -3194,7 +3194,7 @@
       "adj_close": 7636.3599,
       "volume": 2739714000,
       "spot_price": 7636.3599,
-      "spot_captured_at": "2026-09-09T22:06:29Z",
+      "spot_captured_at": "2026-09-09T23:58:24Z",
       "currency": "USD",
       "dma200": 7152.0169,
       "dma200_n": 200
@@ -3209,7 +3209,7 @@
       "adj_close": null,
       "volume": 0,
       "spot_price": 25274.96,
-      "spot_captured_at": "2026-09-09T22:06:38Z",
+      "spot_captured_at": "2026-09-09T23:58:32Z",
       "currency": "HKD",
       "dma200": 25645.226,
       "dma200_n": 200
@@ -3224,7 +3224,7 @@
       "adj_close": 3.805,
       "volume": 0,
       "spot_price": 3.805,
-      "spot_captured_at": "2026-09-09T22:06:55Z",
+      "spot_captured_at": "2026-09-09T23:58:47Z",
       "currency": "USD",
       "dma200": 3.6294,
       "dma200_n": 200
@@ -3239,7 +3239,7 @@
       "adj_close": 26253.3398,
       "volume": 6592678000,
       "spot_price": 26253.3398,
-      "spot_captured_at": "2026-09-09T22:06:30Z",
+      "spot_captured_at": "2026-09-09T23:58:25Z",
       "currency": "USD",
       "dma200": 24436.2168,
       "dma200_n": 200
@@ -3254,7 +3254,7 @@
       "adj_close": 6954.52,
       "volume": 335200,
       "spot_price": 7051.64,
-      "spot_captured_at": "2026-09-09T22:06:33Z",
+      "spot_captured_at": "2026-09-09T23:58:28Z",
       "currency": "KRW",
       "dma200": 6090.9635,
       "dma200_n": 200
@@ -3269,7 +3269,7 @@
       "adj_close": null,
       "volume": 0,
       "spot_price": 65142.78,
-      "spot_captured_at": "2026-09-09T22:06:36Z",
+      "spot_captured_at": "2026-09-09T23:58:30Z",
       "currency": "JPY",
       "dma200": 59129.8811,
       "dma200_n": 200
@@ -3284,7 +3284,7 @@
       "adj_close": 11931.3213,
       "volume": 0,
       "spot_price": 11931.3213,
-      "spot_captured_at": "2026-09-09T22:06:32Z",
+      "spot_captured_at": "2026-09-09T23:58:26Z",
       "currency": "USD",
       "dma200": 9896.9676,
       "dma200_n": 200
@@ -3299,7 +3299,7 @@
       "adj_close": 4.837,
       "volume": 0,
       "spot_price": 4.837,
-      "spot_captured_at": "2026-09-09T22:06:58Z",
+      "spot_captured_at": "2026-09-09T23:58:50Z",
       "currency": "USD",
       "dma200": 4.3665,
       "dma200_n": 200
@@ -3314,7 +3314,7 @@
       "adj_close": 5.286,
       "volume": 0,
       "spot_price": 5.286,
-      "spot_captured_at": "2026-09-09T22:07:00Z",
+      "spot_captured_at": "2026-09-09T23:58:51Z",
       "currency": "USD",
       "dma200": 4.9453,
       "dma200_n": 200
@@ -3329,7 +3329,7 @@
       "adj_close": 16.46,
       "volume": 0,
       "spot_price": 16.46,
-      "spot_captured_at": "2026-09-09T22:06:40Z",
+      "spot_captured_at": "2026-09-09T23:58:33Z",
       "currency": "USD",
       "dma200": 18.0898,
       "dma200_n": 200
