@@ -1,10 +1,11 @@
 {
-  "generated_at": "2026-09-09T22:08:23Z",
+  "generated_at": "2026-09-10T00:00:25Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
-  "count": 106,
+  "count": 110,
   "asked": 222,
   "missing": [
+    "AMLP",
     "ARKX",
     "ARQQ",
     "ARTY",
@@ -21,10 +22,10 @@
     "ETH-USD",
     "ETHA",
     "EWY",
-    "EXK",
     "FDN",
     "FINX",
     "GC=F",
+    "GDX",
     "GDXJ",
     "GLD",
     "GRID",
@@ -41,9 +42,7 @@
     "IHF",
     "IHI",
     "ITA",
-    "ITB",
     "IWM",
-    "IYT",
     "JETS",
     "KBE",
     "KCE",
@@ -53,9 +52,8 @@
     "LQD",
     "MARS",
     "NLR",
-    "NVO",
     "OIH",
-    "ORCL",
+    "PAVE",
     "PBJ",
     "PBS",
     "PEJ",
@@ -84,14 +82,17 @@
     "VNQ",
     "WCLD",
     "WTAI",
+    "XAR",
     "XBI",
     "XES",
     "XHB",
     "XLB",
     "XLC",
+    "XLE",
     "XLF",
     "XLI",
     "XLK",
+    "XLP",
     "XLRE",
     "XLU",
     "XLV",
@@ -116,13 +117,8 @@
     "^VIX"
   ],
   "errors": {
-    "GDX": "YFRateLimitError",
-    "MSFT": "YFRateLimitError",
-    "XLE": "YFRateLimitError",
-    "XLP": "YFRateLimitError",
-    "AMLP": "YFRateLimitError",
-    "XAR": "YFRateLimitError",
-    "PAVE": "YFRateLimitError"
+    "IYT": "YFRateLimitError",
+    "ITB": "YFRateLimitError"
   },
   "dates": {
     "000660.KS": {
@@ -261,6 +257,10 @@
       "date": "2026-11-03",
       "estimated": true
     },
+    "EXK": {
+      "date": "2026-11-05",
+      "estimated": true
+    },
     "FLEX": {
       "date": "2026-10-28",
       "estimated": false
@@ -347,7 +347,7 @@
     },
     "LRCX": {
       "date": "2026-10-21",
-      "estimated": true
+      "estimated": false
     },
     "META": {
       "date": "2026-10-28",
@@ -371,6 +371,10 @@
     },
     "MRVL": {
       "date": "2026-12-01",
+      "estimated": true
+    },
+    "MSFT": {
+      "date": "2026-10-28",
       "estimated": true
     },
     "MU": {
@@ -409,6 +413,10 @@
       "date": "2026-11-17",
       "estimated": false
     },
+    "NVO": {
+      "date": "2026-11-04",
+      "estimated": false
+    },
     "NVTS": {
       "date": "2026-11-02",
       "estimated": true
@@ -420,6 +428,10 @@
     "ON": {
       "date": "2026-11-02",
       "estimated": true
+    },
+    "ORCL": {
+      "date": "2026-09-10",
+      "estimated": false
     },
     "PAAS": {
       "date": "2026-11-16",
