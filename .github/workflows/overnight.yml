@@ -57,6 +57,10 @@ jobs:
             echo "No overnight changes to commit."
           else
             git commit -m "overnight: $(date -u +'%Y-%m-%d %H:%M UTC') [skip ci]"
+            # Every other workflow here rebases before pushing; this one did not,
+            # and lost the race to the 20-minute intraday cron. The news step puts
+            # ~4 minutes between checkout and push, so the race is now the norm.
+            git pull --rebase
             git push
           fi
 
