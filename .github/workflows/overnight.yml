@@ -34,11 +34,25 @@ jobs:
       - name: Fetch overnight snapshot
         run: python overnight.py
 
+      # Headlines on covered names for the morning missive (SPEC-83 phase 1).
+      # continue-on-error: the snapshot is the job; news is a passenger. A Finnhub
+      # outage, a rate limit or an expired key must never cost the overnight board,
+      # and news.py already tolerates per-symbol failures on its own.
+      - name: Fetch news on covered names
+        continue-on-error: true
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: python news.py
+
       - name: Commit overnight.json
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/overnight.json
+          # On the very first run, or after a news step that died before writing,
+          # data/news.json may not exist -- and an unmatched pathspec is a fatal git
+          # error that would take the snapshot's own commit down with it.
+          if [ -f data/news.json ]; then git add data/news.json; fi
           if git diff --staged --quiet; then
             echo "No overnight changes to commit."
           else

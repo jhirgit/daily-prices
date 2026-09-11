@@ -215,6 +215,30 @@ Caveats: outside US market hours Finnhub returns the last close (`price` ==
 `prev_close` is expected, not a bug); unknown symbols land in the `errors`
 array; the free tier allows 60 req/min, so the script sleeps 1s per ticker.
 
+## News on covered names (`news.py`)
+
+`news.py` fetches Finnhub **`/company-news`** for every name in `tickers.txt` on the
+same `FINNHUB_API_KEY` secret and writes **`data/news.json`** — the last **36 hours**,
+deduped on url, newest first, capped at 25 items per name. It runs as a second step of
+the **Overnight Snapshot** workflow (11:30 UTC weekdays) and is committed beside
+`data/overnight.json`. SPEC-83 phase 1: the morning missive is written by a cloud
+routine that may cite *only* what is in this file, so the file is the guard.
+
+```
+{"generated_at": "...Z", "window_h": 36, "source": "finnhub company-news", "count": 141,
+ "names": {"NVDA": [{"t": "...Z", "headline": "...", "source": "Reuters",
+                     "url": "https://...", "summary": "..."}]},
+ "empty": ["AXTI", ...],
+ "unavailable": [{"ticker": "000660.KS", "why": "HTTP 403"}, ...]}
+```
+
+`empty` (served, nothing in the window) and `unavailable` (the API cannot serve it —
+indices, futures and crypto pairs are skipped without a request; foreign listings are
+attempted and report what they return) are deliberately different facts: "no news" and
+"no feed" are not the same sentence in a missive. The news step is `continue-on-error`
+— an outage must never cost the overnight board. Tests: `python test_news.py` (no
+network).
+
 ## Options flow (`options_flow.py`)
 
 A once-a-day chain snapshot for every optionable name in `tickers.txt`, over the
