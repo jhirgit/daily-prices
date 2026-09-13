@@ -50,6 +50,13 @@ from __future__ import annotations
 
 import math
 
+# How many reference sessions a name's last REAL bar may trail the axis by
+# before it is treated as DEAD rather than unchanged. Five is a trading week:
+# long enough that a listing suspension or a feed hiccup rides through it,
+# short enough that a delisting cannot spend eight weeks being ranked as a
+# flat line (PBS, 2026-07-17 to 2026-09-13). Shared with technicals.build.
+MAX_STALE_SESSIONS = 5
+
 # ==========================================================================
 # scalar helpers -- verbatim ports of regime_core.js (null-tolerant on purpose)
 # ==========================================================================
@@ -660,6 +667,15 @@ def basket_series(series, members):
     return out
 
 
+def _series_stale(c):
+    """True when a series carried real values and has since gone None -- i.e.
+    build_panel stopped forward-filling it because the name stopped printing
+    bars. A series that has simply not started yet (all None) is not stale."""
+    if not c or c[-1] is not None:
+        return False
+    return any(v is not None for v in c)
+
+
 def sector_ladder(series, etfs):
     """Rank sector ETFs by a 63d/126d blended return, tag each into thirds of
     the field by 63d return with a streak, sort by blend desc, and flag an
@@ -688,10 +704,17 @@ def sector_ladder(series, etfs):
         ser[e["t"]] = basket_series(series, e["basket"]) if e.get("basket") else series.get(e["t"])
     series = ser
     present = [e for e in etfs if series.get(e["t"])]
+    # A sled whose series has real history but has gone None at the end is DEAD,
+    # not flat (build_panel's staleness cutoff). Out of the field entirely, and
+    # not eligible to be a group primary -- so a dead primary hands the sleeve
+    # to the next live member instead of silencing the whole group.
+    stale_flag = [_series_stale(series[e["t"]]) for e in present]
     seen_grp = {}
     field_set = {}
     twin_of = [None] * len(present)
     for k in range(len(present)):
+        if stale_flag[k]:
+            continue
         g = present[k].get("grp")
         if not g:
             field_set[k] = 1
@@ -713,10 +736,15 @@ def sector_ladder(series, etfs):
             blend = (r63 + r126) / 2.0
         else:
             blend = r63 if r63 is not None else r126
-        rows.append({"t": e["t"], "name": e["name"], "side": e.get("side"),
-                     "r5": r5, "r21": r21, "r63": r63, "r126": r126, "blend": blend,
-                     "twin_of": twin_of[k], "sector": e.get("sector"), "gics": e.get("gics"),
-                     "basket": bool(e.get("basket")), "members": e.get("basket") or None})
+        row = {"t": e["t"], "name": e["name"], "side": e.get("side"),
+               "r5": r5, "r21": r21, "r63": r63, "r126": r126, "blend": blend,
+               "twin_of": twin_of[k], "sector": e.get("sector"), "gics": e.get("gics"),
+               "basket": bool(e.get("basket")), "members": e.get("basket") or None}
+        # Emitted ONLY when true: every non-stale row keeps the oracle's exact
+        # key set, so parity/expected.json still matches byte for byte.
+        if stale_flag[k]:
+            row["stale"] = True
+        rows.append(row)
     n = len(series[present[0]["t"]]) if present else 0
 
     def ret_ser(k, lag):
@@ -752,6 +780,18 @@ def sector_ladder(series, etfs):
 
     last = n - 1
     for k in range(len(rows)):
+        # STALE (2026-09-13): build_panel stops forward-filling a name five
+        # sessions past its last real bar, so a dead sled's series now ends in
+        # None. Mark the row and keep it OUT of the field -- a flat line has no
+        # honest rank, third or streak. The key is emitted only when true, so
+        # the JS-oracle parity fixtures (none of which end in None) are
+        # byte-identical; a divergence in tools/regime_e2e_parity.py on a stale
+        # sled is the signal, not a regression.
+        if rows[k].get("stale"):
+            rows[k]["third"] = None
+            rows[k]["third21"] = None
+            rows[k]["streak"] = 0
+            continue
         if k not in field_set:   # twin: levels only, out of the field
             rows[k]["third"] = None
             rows[k]["third21"] = None
@@ -873,7 +913,10 @@ REG_ETFS = [
      "basket": ["ON", "NVTS", "MPWR", "AOSL", "VICR", "STM"]},
     # ---- 50 Communication Services ----
     {"t": "XLC", "name": "Communication services (sector)", "side": None, "gics": "50", "sector": "Communication Services"},
-    {"t": "PBS", "name": "Media", "side": None, "gics": "502010", "sector": "Communication Services"},
+    # 502010 Media: PBS was the sled here until 2026-09-13. It printed no bar
+    # after 2026-07-17 (delisted), and the forward-fill then ranked eight weeks
+    # of flat line in the top third on 21d. Removed rather than replaced: the
+    # sector already has XLC, and a wrong proxy is worse than a missing one.
     {"t": "ESPO", "name": "Video games & esports", "side": "offense", "gics": "502020", "sector": "Communication Services"},
     {"t": "FDN", "name": "Internet / interactive media", "side": "offense", "gics": "502030", "sector": "Communication Services"},
     # ---- 55 Utilities ----
@@ -969,7 +1012,40 @@ def _first_present(series, candidates):
 # panel construction  (the #3 fix: equity trading-day axis)
 # ==========================================================================
 
-def build_panel(conn, ref_ticker="SPY"):
+def reference_dates(conn, ref_ticker="SPY"):
+    """The equity trading-day axis: `ref_ticker`'s bar dates, or the union of
+    non-crypto/non-futures trading days if the reference has no bars."""
+    ref = conn.execute(
+        "SELECT date FROM daily_prices WHERE ticker=? AND close IS NOT NULL ORDER BY date",
+        (ref_ticker,),
+    ).fetchall()
+    dates = [r[0] for r in ref]
+    if dates:
+        return dates
+    rows = conn.execute(
+        "SELECT DISTINCT date FROM daily_prices "
+        "WHERE ticker NOT LIKE '%-USD' AND ticker NOT LIKE '%=F' ORDER BY date"
+    ).fetchall()
+    return [r[0] for r in rows]
+
+
+def sessions_behind(axis, last_date):
+    """How many reference sessions have closed since `last_date`. 0 = current.
+    `axis` is ascending; counted in SESSIONS, never calendar days, so a normal
+    weekend is 0 behind and a delisting is unmistakable."""
+    if not axis or not last_date:
+        return 0
+    lo, hi = 0, len(axis)
+    while lo < hi:                      # bisect_right without the import
+        mid = (lo + hi) // 2
+        if axis[mid] <= last_date:
+            lo = mid + 1
+        else:
+            hi = mid
+    return len(axis) - lo
+
+
+def build_panel(conn, ref_ticker="SPY", max_stale=MAX_STALE_SESSIONS):
     """Build the cross-sectional panel on the EQUITY trading-day axis.
 
     Axis = `ref_ticker` (SPY) trading days. Every ticker is as-of aligned onto
@@ -978,19 +1054,22 @@ def build_panel(conn, ref_ticker="SPY"):
     Equities align natively; crypto/futures collapse to their latest close per
     SPY session (weekends dropped). Adjusted close drives the series (matching
     RC.parseCsv's adj_close preference and technicals.py's return maths).
+
+    STALENESS CUTOFF (2026-09-13). The forward-fill used to run to the end of
+    the axis, so a name that stopped printing bars became a FLAT LINE that the
+    ladder then ranked on its merits: PBS (Media) had no bar after 2026-07-17
+    and sat in the top third on 21d with r5 = r21 = 0.0, because a dead ticker
+    never goes down. fetch_prices logged "[FAIL] PBS no daily bars returned"
+    every day and exited 0 the whole time (it only fails on a total wipeout), so
+    eight weeks of silence reached the board as a signal.
+
+    Now the fill stops `max_stale` sessions past a ticker's last REAL bar and
+    the series goes None. Everything downstream already handles None correctly:
+    `ret` returns None, `third_at` returns None, the streak walk stops, and
+    `breadth_series` drops the name from its denominator. Set max_stale=None to
+    restore the old unbounded fill.
     """
-    ref = conn.execute(
-        "SELECT date FROM daily_prices WHERE ticker=? AND close IS NOT NULL ORDER BY date",
-        (ref_ticker,),
-    ).fetchall()
-    dates = [r[0] for r in ref]
-    if not dates:
-        # Fallback: union of equity (non-crypto/futures) trading days.
-        rows = conn.execute(
-            "SELECT DISTINCT date FROM daily_prices "
-            "WHERE ticker NOT LIKE '%-USD' AND ticker NOT LIKE '%=F' ORDER BY date"
-        ).fetchall()
-        dates = [r[0] for r in rows]
+    dates = reference_dates(conn, ref_ticker)
 
     series = {}
     syms = [r[0] for r in conn.execute(
@@ -1001,6 +1080,15 @@ def build_panel(conn, ref_ticker="SPY"):
             "WHERE ticker=? AND close IS NOT NULL ORDER BY date",
             (sym,),
         ).fetchall()
+        # The TRAILING edge only. An interior gap (a foreign market closed for a
+        # holiday week) is still forward-filled, which is correct -- the price
+        # did not move because the venue was shut. What is never correct is
+        # filling past the end of a name's life.
+        last_real = rows[-1][0] if rows else None
+        last_idx = len(dates) - 1
+        if max_stale is not None and last_real is not None:
+            last_idx = (len(dates) - sessions_behind(dates, last_real) - 1) + max_stale
+
         arr = [None] * len(dates)
         ri = 0
         prev = None
@@ -1012,7 +1100,7 @@ def build_panel(conn, ref_ticker="SPY"):
                     prev = v
                     started = True
                 ri += 1
-            arr[i] = prev if started else None
+            arr[i] = prev if (started and i <= last_idx) else None
         series[sym] = arr
     return dates, series
 

@@ -395,6 +395,123 @@ for _fn in sorted(_by_fn):
 check_true(f"regime parity: all {len(_cases)} fixture cases match the JS oracle",
            bool(_cases) and all(v[0] == v[1] for v in _by_fn.values()))
 
+# --------------------------------------------------------------------------
+# staleness guard (2026-09-13): a delisted name is DEAD, not flat
+#
+# PBS printed no bar after 2026-07-17. fetch_prices logged "[FAIL] PBS no daily
+# bars returned" every day and exited 0 (it only fails on a total wipeout), so
+# build_panel forward-filled the last close across every later SPY session and
+# the ladder ranked eight weeks of flat line in the top third on 21d -- r5 0.0,
+# r21 0.0 -- because a dead ticker never goes down. These tests pin the three
+# pieces of the fix on an in-memory database, so they need no network and no
+# prices.db.
+# --------------------------------------------------------------------------
+print("\nstaleness guard -- a name that stopped printing is emitted nowhere")
+
+import sqlite3 as _sq
+
+
+def _stale_db(last_alive="2026-07-17", n=400):
+    """SPY runs to the end of the axis; DEAD stops at `last_alive`; LIVE keeps
+    printing. Prices rise monotonically so a forward-filled DEAD would look
+    merely flat, never negative -- exactly the PBS shape."""
+    import datetime as _dt
+    conn = _sq.connect(":memory:")
+    conn.execute("CREATE TABLE daily_prices (ticker TEXT, date TEXT, open REAL, "
+                 "high REAL, low REAL, close REAL, volume REAL, adj_close REAL)")
+    d = _dt.date(2025, 3, 3)
+    axis = []
+    while len(axis) < n:
+        if d.weekday() < 5:
+            axis.append(d.isoformat())
+        d += _dt.timedelta(days=1)
+    for i, day in enumerate(axis):
+        px = 100.0 + i * 0.1
+        for tk in ("SPY", "LIVE"):
+            conn.execute("INSERT INTO daily_prices VALUES (?,?,?,?,?,?,?,?)",
+                         (tk, day, px, px, px, px, 1e6, px))
+        if day <= last_alive:
+            conn.execute("INSERT INTO daily_prices VALUES (?,?,?,?,?,?,?,?)",
+                         ("DEAD", day, px, px, px, px, 1e6, px))
+    conn.commit()
+    return conn, axis
+
+
+_conn, _axis = _stale_db()
+_last_dead = max(d for d in _axis if d <= "2026-07-17")
+_behind = RG.sessions_behind(_axis, _last_dead)
+check_true("sessions_behind counts SESSIONS, not calendar days", _behind > 5,
+           f"DEAD is {_behind} sessions behind")
+check("a live name is 0 sessions behind", RG.sessions_behind(_axis, _axis[-1]), 0)
+check("a weekend does not make a name stale",
+      RG.sessions_behind(_axis, _axis[-1]) <= RG.MAX_STALE_SESSIONS, True)
+
+_dates, _series = RG.build_panel(_conn)
+check_true("build_panel stops forward-filling a dead name",
+           _series["DEAD"][-1] is None)
+check_true("build_panel keeps filling a live name", _series["LIVE"][-1] is not None)
+check("the fill stops exactly MAX_STALE_SESSIONS past the last real bar",
+      sum(1 for v in _series["DEAD"] if v is not None)
+      - sum(1 for d in _axis if d <= _last_dead), RG.MAX_STALE_SESSIONS)
+check_true("the old unbounded fill is still reachable for comparison",
+           RG.build_panel(_conn, max_stale=None)[1]["DEAD"][-1] is not None)
+
+_etfs = [{"t": "LIVE", "name": "Live", "side": None},
+         {"t": "DEAD", "name": "Dead", "side": None},
+         {"t": "SPY", "name": "Ref", "side": None}]
+_lad = RG.sector_ladder(_series, _etfs)
+_row = {r["t"]: r for r in _lad["rows"]}
+check("a stale sled is flagged stale", _row["DEAD"].get("stale"), True)
+check("a stale sled gets no third", _row["DEAD"]["third"], None)
+check("a stale sled gets no 21d third", _row["DEAD"]["third21"], None)
+check("a stale sled gets no streak", _row["DEAD"]["streak"], 0)
+check_true("a live sled is not flagged", "stale" not in _row["LIVE"])
+check_true("a live sled still gets a third", _row["LIVE"]["third"] is not None)
+
+# The key must be ABSENT (not False) on a healthy row: that is what keeps the
+# emitted shape byte-identical to the regime_core.js oracle the parity fixtures
+# were frozen from.
+check_true("the stale key is absent, never False, on every healthy row",
+           all("stale" not in r for r in _lad["rows"] if r["t"] != "DEAD"))
+
+# A dead GROUP PRIMARY must hand the sleeve to the next live member rather than
+# taking the whole group out of the field with it.
+_grp = RG.sector_ladder(_series, [
+    {"t": "DEAD", "name": "Dead primary", "side": None, "grp": "g"},
+    {"t": "LIVE", "name": "Live twin", "side": None, "grp": "g"},
+    {"t": "SPY", "name": "Ref", "side": None}])
+_grow = {r["t"]: r for r in _grp["rows"]}
+check_true("a dead group primary hands the sleeve to the next live member",
+           _grow["LIVE"]["third"] is not None and _grow["LIVE"]["twin_of"] is None)
+
+_conn.close()
+
+print("\nstaleness guard -- technicals.build skips a stale name")
+import tempfile as _tf
+
+_tmp = _tf.mkdtemp()
+_dbp = os.path.join(_tmp, "stale.db")
+_fconn, _faxis = _stale_db()
+_disk = _sq.connect(_dbp)
+_fconn.backup(_disk)
+_disk.close()
+_fconn.close()
+_tkp = os.path.join(_tmp, "tickers.txt")
+with open(_tkp, "w", encoding="utf-8") as _fh:
+    _fh.write("# --- Reference ---\nSPY\nLIVE\nDEAD\n")
+
+_out = T.build(db=_dbp, tickers_file=_tkp)
+_skip = {s["ticker"]: s for s in _out["skipped"]}
+check_true("DEAD is skipped, not emitted", "DEAD" not in _out["tickers"])
+check("DEAD is skipped for the right reason", _skip.get("DEAD", {}).get("reason"), "stale")
+check_true("the skip row says how far behind it is",
+           _skip.get("DEAD", {}).get("sessions_behind", 0) > RG.MAX_STALE_SESSIONS)
+check_true("LIVE is still emitted", "LIVE" in _out["tickers"])
+check_true("a stale name is reported, never silently dropped",
+           "DEAD" in _skip and _skip["DEAD"].get("last_date") is not None)
+import shutil as _sh
+_sh.rmtree(_tmp, ignore_errors=True)
+
 print("\n" + ("-" * 60))
 if FAILS:
     print(f"{len(FAILS)} FAILED: {', '.join(FAILS)}")

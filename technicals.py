@@ -770,6 +770,16 @@ def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
     syms = [r[0] for r in conn.execute(
         "SELECT DISTINCT ticker FROM daily_prices ORDER BY ticker")]
 
+    # The as-of axis: the reference equity trading days. A name whose last REAL
+    # bar trails it by more than regime.MAX_STALE_SESSIONS has stopped printing
+    # and is emitted nowhere -- its indicators, momentum, setup states and 12-1
+    # rank would all be computed on a series whose last value is simply old.
+    # fetch_prices exits 0 on a per-name failure (it only fails on a total
+    # wipeout), so without this a delisted name publishes confident numbers
+    # indefinitely: PBS logged "[FAIL] PBS no daily bars returned" every day
+    # from 2026-07-17 and was still being ranked eight weeks later.
+    axis = regime.reference_dates(conn)
+
     series, out, skipped = {}, {}, []
     for sym in syms:
         rows = load_bars(conn, sym)
@@ -777,6 +787,11 @@ def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
             skipped.append({"ticker": sym, "bars": len(rows), "reason": "insufficient_history"})
             continue
         dates = [r[0] for r in rows]
+        behind = regime.sessions_behind(axis, dates[-1])
+        if behind > regime.MAX_STALE_SESSIONS:
+            skipped.append({"ticker": sym, "bars": len(rows), "reason": "stale",
+                            "last_date": dates[-1], "sessions_behind": behind})
+            continue
         opens = [r[1] if r[1] is not None else r[4] for r in rows]
         highs = [r[2] if r[2] is not None else r[4] for r in rows]
         lows = [r[3] if r[3] is not None else r[4] for r in rows]
