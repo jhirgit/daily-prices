@@ -391,8 +391,17 @@ def self_test(db=DEFAULT_DB, tickers=DEFAULT_TICKERS):
     r = compute_one(conn, cache, groups, "AOSL", "2026-08-15")  # Saturday
     check("weekend print date resolves", r["base_date"] is not None)
 
-    # 3. an unsettled window yields null, never 0.0
-    r = compute_one(conn, cache, groups, "NVDA", "2026-08-26")
+    # 3. an unsettled window yields null, never 0.0.
+    #    DERIVED from the series, never a calendar date: this case was pinned to
+    #    "NVDA 2026-08-26" and passed for exactly as long as that window was
+    #    still open -- by 2026-09-13 the d10 bar existed and the gate had been
+    #    failing (2/11) on the arithmetic being RIGHT. The second-to-last bar in
+    #    the file leaves at most one session after the print, so d5 and d10
+    #    cannot have settled no matter when this is run.
+    _s = load_series(conn, "NVDA")
+    _unsettled = _s.dates[-2] if len(_s) >= 2 else None
+    check("a second-to-last session exists to test against", _unsettled is not None)
+    r = compute_one(conn, cache, groups, "NVDA", _unsettled)
     check("unsettled d10 is None, not 0.0", r["d10"] is None)
     check("incomplete window flagged", r["complete"] is False)
 
