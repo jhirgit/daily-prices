@@ -2,7 +2,7 @@
 //
 //   node tools/regime_emit_oracle.js parity/panel.json parity/oracle_regime.json
 //
-// Reads a prebuilt panel {dates, series, emitted[], book_universe[]} and runs
+// Reads a prebuilt panel {dates, series, emitted[], coverage_pool[]} and runs
 // the EXACT client-side assembly (index.html renderRegimePanel + renderRotation
 // + the rank-receipt block) on it via regime_core.js, emitting a `regime` object
 // in the SAME shape as regime.py's build_regime(round_floats=False). The Python
@@ -24,7 +24,7 @@ const REG_ETFS = P.reg_etfs;
 function firstPresent(list) { for (let i = 0; i < list.length; i++) if (series[list[i]]) return list[i]; return null; }
 
 const etfSet = {}; REG_ETFS.forEach((e) => { etfSet[e.t] = 1; });
-const book = P.book_universe.filter((t) => series[t] && !etfSet[t] && !/(-USD|=F)$/.test(t) && t.charAt(0) !== "^");
+const book = P.coverage_pool.filter((t) => series[t] && !etfSet[t] && !/(-USD|=F)$/.test(t) && t.charAt(0) !== "^");
 
 const legs = [], info = [];
 const legKeys = [];  // keys assigned in the same order regime.py uses

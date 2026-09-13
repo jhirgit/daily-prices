@@ -68,7 +68,7 @@ BE         # Bloom Energy
 FRVO       # Fervo Energy (enhanced geothermal; Google Cape Station 396MW PPA 9/1/26; coverage-only, not pre-approved)
 FLEX       # Flex
 
-# --- Clean energy / precision industrials (watchlist init 8/23/26, not held) ---
+# --- Clean energy / precision industrials (coverage init 8/23/26) ---
 ENPH       # Enphase Energy (solar microinverters + IQ storage; state file + DCF 8/23)
 VPG        # Vishay Precision Group (precision sensors/resistors, load cells; state file + DCF 8/23)
 DPC        # DPC Holdings / Doncasters (superalloy turbine blades+vanes, aero+IGT; NYSE IPO 6/24/26 @ $33; state file + DCF 9/3)
@@ -108,7 +108,7 @@ DDOG       # Datadog
 CRWD       # CrowdStrike
 PANW       # Palo Alto Networks
 
-# --- SaaS & cybersecurity software sleds + peers (added 8/27/26, not held) ---
+# --- SaaS & cybersecurity software sleds + peers (added 8/27/26) ---
 # WHY: the rotation ladder carries ONE software row (IGV), and IGV is megacap-
 # heavy (MSFT/ORCL/CRM), so it cannot separate "high-multiple SaaS re-rating"
 # from "cybersecurity re-rating" from "megacap software drift". On 8/27/26 the
@@ -139,7 +139,7 @@ HIMS       # Hims & Hers
 RDDT       # Reddit
 SPCX       # SpaceX (IPO 2026-06-12)
 
-# --- Mega-cap platforms / hyperscalers (coverage init 9/1/26, not held) ---
+# --- Mega-cap platforms / hyperscalers (coverage init 9/1/26) ---
 # Coverage-only: the AI-compute DEMAND / capex side — hyperscaler capex funds the
 # NVDA / TSM / EQIX / power cohort, so these anchor the Jin capex adjudication.
 # Header wording is LOAD-BEARING (see the software block): it deliberately carries
@@ -222,19 +222,19 @@ TLN        # Talen Energy (Susquehanna / AWS PPA)
 ETN        # Eaton (electrical equipment)
 VRT        # Vertiv (datacenter thermal + power)
 
-# --- Financials & banks (added 9/2/26, Stream D; not held) ---
+# --- Financials & banks (added 9/2/26, Stream D) ---
 XLF        # Financial Select Sector SPDR - ladder sled
 KRE        # SPDR S&P Regional Banking - grp twin of XLF (regionals)
 
-# --- Space (added 9/2/26, Stream D; not held) ---
+# --- Space (added 9/2/26, Stream D) ---
 UFO        # Procure Space ETF - ladder sled (side: offense)
 ARKX       # ARK Space Exploration - fallback proxy, setups only
 
-# --- Biotech (added 9/2/26, Stream D; not held) ---
+# --- Biotech (added 9/2/26, Stream D) ---
 XBI        # SPDR S&P Biotech (equal-weight) - ladder sled
 IBB        # iShares Biotechnology (cap-weight) - grp twin of XBI
 
-# --- Quantum computing basket constituents (added 9/2/26, Stream D; not held) ---
+# --- Quantum computing basket constituents (added 9/2/26, Stream D) ---
 # No clean ETF (QTUM is mostly classical compute), so the ladder carries an
 # equal-weight daily-rebalanced basket computed in regime.py + the JS oracle.
 IONQ       # IonQ

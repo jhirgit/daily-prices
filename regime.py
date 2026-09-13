@@ -926,21 +926,20 @@ LEG_VOL = [
     # year, +1 in the calmest 30%, −1 in the most stressed 30%
     ("Volatility (SPY)", "spy_vol", ["SPY"], False),
 ]
-# Book dispersion (avg pairwise 63d corr of the covered book, percentile vs own
-# trailing year, +1 dispersed / −1 crowded) is built from BOOK_UNION below.
+# Dispersion (avg pairwise 63d corr across the coverage pool, percentile vs own
+# trailing year, +1 dispersed / −1 crowded) is built from COVERAGE_POOL below.
 
-# The COVERED EQUITY BOOK (backlog #2): the breadth / base-rate pool is the
-# union of the Book tab's HELD, REST and FLAT arrays -- an explicit book set,
-# NOT "everything in the price file that isn't a sector ETF". Verbatim ticker
-# union from index.html (v52). Sector-ETF proxies, crypto, futures and indices
-# are filtered out below so this stays single-name equity breadth.
-BOOK_UNION = [
-    # HELD
+# THE COVERAGE POOL (backlog #2): the breadth / base-rate pool is an EXPLICIT,
+# hand-maintained list of the single names this project covers -- NOT
+# "everything in the price file that isn't a sector ETF", which would let a
+# newly added sled or basket constituent silently change every breadth reading.
+# The order is historical and load-bearing only for the parity fixtures.
+# Sector-ETF proxies, crypto, futures and indices are filtered out below so this
+# stays single-name equity breadth.
+COVERAGE_POOL = [
     "COHR", "HIMX", "SNDK", "IREN", "AXTI", "INTC", "EWY", "ALAB", "AMSC",
     "NOK", "NVDA", "RING", "GDXJ", "ICOP", "ASML", "TSM", "NVO", "PENG",
-    # REST
     "JPM", "QQQ", "IGV", "MARS", "AOSL",
-    # FLAT
     "INVH", "LRCX", "EQIX", "BE", "NBIS", "AAOI", "MPWR", "RDDT", "LITE",
     "AEHR", "MRVL", "MU", "HUBS", "NOW", "SHOP", "DDOG", "PANW", "CRWD", "BTC-USD",
 ]
@@ -1134,7 +1133,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
     for label, key, tick, macro in LEG_VOL:
         add_vol(label, key, tick, macro)
 
-    book = [t for t in BOOK_UNION if _is_book_equity(t, series)]
+    book = [t for t in COVERAGE_POOL if _is_book_equity(t, series)]
     frac = breadth_series(series, book) if book else None
     breadth_leg = None
     if frac is not None:
