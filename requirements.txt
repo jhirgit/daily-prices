@@ -1,1 +1,14 @@
-yfinance>=0.2.40
+# PINNED, not floored. This is the single third-party dependency of the whole
+# cron pipeline: fetch_prices, export_data, crowd, closes, overnight, technicals,
+# earnings_dates and options_flow all sit on it, and CI resolves requirements.txt
+# fresh on every run (pip's cache is keyed on this file but the resolver still
+# takes the newest matching release). The old floor was `yfinance>=0.2.40`, under
+# which a 0.2.x -> 1.x MAJOR bump had already happened unnoticed -- and
+# earnings_dates.next_date reaches two underscore-private attributes
+# (`Ticker._quote._fetch`) that a rename would break for all 222 names at once.
+#
+# Bump deliberately: change the pin, then locally run
+#   python fetch_prices.py --lookback 7d && python test_technicals.py
+#   && python test_earnings_dates.py && python crowd.py --verify
+# 1.4.1 is the version the local venv and the parity fixtures already run against.
+yfinance==1.4.1

@@ -109,11 +109,40 @@ def next_date(tk):
     extra network call. `.calendar`'s own parsing copies out only
     earningsDate/earningsHigh/earningsLow/earningsAverage/revenue* and drops
     `isEarningsDateEstimate`, which is the one field this feed wants.
+
+    Both `_quote` and `_fetch` are PRIVATE, so a yfinance rename takes this out
+    for every name at once: the 22:00 job would report errors[tk]="AttributeError"
+    222 times and the CALENDAR stage of the SPEC-56 loop would go dark on a
+    dependency bump nothing in this repo asked for. requirements.txt pins the
+    version; this is the second half of that belt -- on AttributeError it falls
+    back to the PUBLIC `Ticker.calendar`, which returns the same date and loses
+    only the `estimated` hint (already nullable downstream: None means "Yahoo
+    did not say", never "not an estimate").
     """
-    result = yf.Ticker(tk)._quote._fetch(modules=["calendarEvents"])
+    t = yf.Ticker(tk)
+    try:
+        result = t._quote._fetch(modules=["calendarEvents"])
+    except AttributeError as exc:
+        print(f"  [warn] {tk}: private quote API gone ({exc}); "
+              f"falling back to Ticker.calendar")
+        return next_date_via_calendar(t)
     if not result:
         return None, None
     return parse_calendar_events(result)
+
+
+def next_date_via_calendar(ticker):
+    """Public-API fallback for next_date(): the soonest forward earnings date
+    off `Ticker.calendar`, with `estimated` None -- that property copies out
+    earningsDate and drops isEarningsDateEstimate."""
+    cal = ticker.calendar or {}
+    raw = cal.get("Earnings Date") or cal.get("earningsDate") or []
+    if not isinstance(raw, (list, tuple)):
+        raw = [raw]
+    parsed = [str(x) for x in raw if x is not None]
+    if not parsed:
+        return None, None
+    return str(sorted(parsed)[0]), None
 
 
 def main(argv=None):
