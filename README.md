@@ -122,7 +122,53 @@ sleeve) are not understated against non-payers (the semis). The backtest uses
 raw `close`, because Chio's argument that "no one can buy at Adj Close" is right
 for simulating fills — and wrong for comparing total return across names.
 
-## Run daily on GitHub Actions
+## How these jobs are scheduled
+
+**The scheduler is not GitHub.** It is the `cron-dispatch` Cloudflare Worker in
+the jr-dash repo, which sweeps every 10 minutes, works out which slots each job
+owed in the trailing six hours, and `workflow_dispatch`es the ones it has not
+already served. GitHub's own scheduled delivery is the weakest link in the whole
+stack: it lost ~40% of intraday slots on a good day and stopped creating
+scheduled runs entirely for 12h+ on 2026-08-27 while the workflows still read
+`active`. `workflow_dispatch` has never failed.
+
+| Job | Slot (UTC) | Dispatched by | GitHub cron |
+|---|---|---|---|
+| Intraday Prices | :03 and :33, 13:00–19:59, Mon–Fri | Worker | **none** (deleted 2026-09-13) |
+| Overnight Snapshot | 11:30, Mon–Fri | Worker | **none** (deleted 2026-09-13) |
+| Daily Prices | 22:00, Mon–Fri | Worker | gated fallback |
+| Weekly Insiders | 13:00, Sat | Worker | fallback |
+
+The two deleted crons were not free redundancy. Intraday's delivered 12% of its
+slots at a median 17–27 min late and kept delivering *after the bell* (20:07,
+21:44, 23:26 UTC), each run overwriting the frozen pre-close mark the job is
+designed to leave. Overnight's ran a median **221 minutes** late, replacing the
+pre-open board with a mid-session one every weekday. Between them they produced
+nearly all of the `_alert-failure` noise and most of the rebase conflicts.
+
+`daily-prices.yml` keeps `0 22` because a missed close is the one slot the
+SPEC-56 loop reads at 22:35 — but its first step now exits 0 and skips the whole
+workflow when `data/latest.json` already carries the current session, so it only
+does work when the Worker did not. `weekly-insiders.yml` keeps its Saturday cron
+because nothing else pushes that day, so a late delivery overwrites nothing.
+
+Run a slot by hand at any time:
+
+```
+gh workflow run overnight.yml --repo jhirgit/daily-prices
+```
+
+Is the Worker awake?
+
+```
+curl -s https://jr-cron-dispatch.jakeradencom.workers.dev/heartbeat | jq
+```
+
+`swept_at` should be within ten minutes; `last`/`slot`/`result` report each
+logical schedule's most recent dispatch, and `lastfail` survives a later
+success. Full contract: `cron-dispatch/README.md` in the jr-dash repo.
+
+### Enabling the daily job in a fresh fork
 
 `.github/workflows/daily-prices.yml` runs the script at **22:00 UTC on weekdays**
 and commits the updated `prices.db` back to the repo. To enable it:
@@ -144,7 +190,11 @@ and commits the updated `prices.db` back to the repo. To enable it:
 3. **Actions** tab -> **Daily Prices** -> **Run workflow** to test immediately
    (don't wait for the cron). The scheduled run then fires each weekday.
 
-To change the time, edit the `cron:` line (it's in **UTC**).
+To change *when* a job runs, edit the `SCHEDULES` table in
+`cron-dispatch/src/index.js` (jr-dash) — not the `cron:` lines here, which are
+fallbacks. Both are **UTC**, and both encode EDT market hours: from 2026-11-01
+the last intraday slot lands 87 minutes before the close until the window is
+moved to 14–20.
 
 ## Ask Claude about your prices
 
@@ -187,8 +237,9 @@ python intraday.py --tickers-file tickers.txt        # whole watchlist, JSON
 ## On-demand intraday service (GitHub Actions + Finnhub)
 
 For real-time quotes without hosting anything: the **Intraday Prices** workflow
-(`.github/workflows/intraday-prices.yml`) runs on a cron every 20 minutes during
-US market hours (fetching the Finnhub-compatible watchlist symbols), and is also
+(`.github/workflows/intraday-prices.yml`) is dispatched every 30 minutes during
+US market hours — at :03 and :33, 13:00–19:59 UTC weekdays, by the cron-dispatch
+Worker (fetching the Finnhub-compatible watchlist symbols) — and is also
 a `workflow_dispatch` that anyone with repo access (including a Claude/Cowork
 session) can trigger with a comma-separated ticker list — leave the input empty
 to fetch the watchlist. It fetches live quotes from
