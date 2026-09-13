@@ -2,13 +2,23 @@ name: Overnight Snapshot
 
 on:
   workflow_dispatch: {}
-  schedule:
-    # 11:30 UTC every weekday = 7:30 ET (EDT) / 6:30 ET (EST). Asia has closed,
-    # Europe is a few hours into its session, US index futures are trading --
-    # the "what happened overnight" read a US reader wants before the open.
-    # NOTE: scheduled workflows only fire from the repo's DEFAULT branch, so
-    # this cron is dormant until overnight.yml lands on main.
-    - cron: "30 11 * * 1-5"
+
+# NO `schedule:` BLOCK. Deleted 2026-09-13.
+#
+# The design slot is 11:30 UTC every weekday = 7:30 ET (EDT) / 6:30 ET (EST):
+# Asia has closed, Europe is a few hours into its session, US index futures are
+# trading -- the "what happened overnight" read a US reader wants before the
+# open. That slot is now dispatched by the cron-dispatch Cloudflare Worker
+# (jr-dash/cron-dispatch), which sweeps every 10 minutes.
+#
+# GitHub's own cron used to back it up. It delivered 14 runs at a median **221
+# minutes** late, rewriting data/overnight.json at ~15:0x UTC every weekday from
+# 9/1 to 9/10 -- i.e. replacing a pre-open board with a mid-session one, under a
+# filename and a tab that both promise "overnight". A fallback that arrives 3.5
+# hours late and overwrites the on-design artifact is worse than no fallback.
+#
+# Manual path, unchanged:
+#   gh workflow run overnight.yml --repo jhirgit/daily-prices
 
 permissions:
   contents: write
@@ -57,18 +67,27 @@ jobs:
             echo "No overnight changes to commit."
           else
             git commit -m "overnight: $(date -u +'%Y-%m-%d %H:%M UTC') [skip ci]"
-            # Every other workflow here rebases before pushing; this one did not,
-            # and lost the race to the 20-minute intraday cron. The news step puts
-            # ~4 minutes between checkout and push, so the race is now the norm.
-            git pull --rebase
-            git push
+            # This one lost the race to the intraday cron twice on 9/11 (15:07,
+            # 15:38) before it rebased at all; the news step puts ~4 minutes
+            # between checkout and push, so the race is the norm, not the edge.
+            # data/overnight.json and data/news.json are whole-file SNAPSHOTS,
+            # regenerated from scratch every run and never merged, so `-X theirs`
+            # (during a rebase: the replayed commit, i.e. this run's newer
+            # snapshot) is the only correct resolution. The loop covers the push
+            # rejection; jittered sleep so two racers do not re-collide in step.
+            for i in 1 2 3 4 5; do
+              git pull --rebase -X theirs && git push && exit 0
+              sleep $((RANDOM % 20 + 5))
+            done
+            exit 1
           fi
 
   # A silent cron is the failure mode this repo actually has: nothing here
   # reported a broken run until someone noticed stale prices downstream.
   alert:
     needs: snapshot
-    if: failure()
+    # Conditional on ITS OWN job, not a bare failure() -- see intraday-prices.yml.
+    if: failure() && needs.snapshot.result == 'failure'
     uses: ./.github/workflows/_alert-failure.yml
     with:
       workflow: Overnight Snapshot

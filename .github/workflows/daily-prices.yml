@@ -4,7 +4,19 @@ on:
   schedule:
     # 22:00 UTC every weekday. The US market closes 16:00 ET (= 20:00 UTC in
     # summer / 21:00 UTC in winter); 22:00 UTC leaves buffer for the daily bar
-    # to settle. Note: GitHub can delay scheduled runs by 10-30+ min under load.
+    # to settle.
+    #
+    # This is the ONE GitHub cron left in the repo, and since 2026-09-13 it is a
+    # TRUE fallback rather than a second scheduler. The cron-dispatch Cloudflare
+    # Worker dispatches the 22:00 slot; GitHub delivered this cron a median 114
+    # minutes late (23:47-00:07 observed), re-committing latest.json AFTER the
+    # ARM (22:35) and UNDERWRITE (23:40) routines had already consumed the
+    # 22:00 artifact -- two full runs a day, ~9 extra billable minutes and a
+    # second ~13.8 MB prices.db pack object, for data nobody read.
+    #
+    # The `fallback-guard` step below makes it behave: on a `schedule` event it
+    # exits 0 and skips the whole job when data/latest.json already carries the
+    # current session. It only does work when the Worker did not.
     - cron: "0 22 * * 1-5"
   workflow_dispatch:             # manual runs from the Actions tab / gh CLI
     inputs:
@@ -27,18 +39,64 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.fallback-guard.outputs.run }}
     steps:
       - uses: actions/checkout@v4
 
+      # THE FALLBACK GATE. A `workflow_dispatch` (the Worker, or a human) always
+      # runs. A `schedule` event runs only when data/latest.json does NOT already
+      # carry the session this cron was meant to cover -- so the late GitHub
+      # delivery stops being a second scheduler that re-does, and re-commits,
+      # work the Worker already did. Exits 0 either way: a skipped fallback is a
+      # success, not a failure. stdlib python3, no pip install needed yet.
+      - name: Skip if the Worker already published this session
+        id: fallback-guard
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" != "schedule" ]; then
+            echo "$EVENT is not a fallback -- running."
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import datetime, json, sys
+          now = datetime.datetime.now(datetime.timezone.utc)
+          # The cron fires at 22:00 UTC and has been delivered as late as 00:07,
+          # so a run landing after midnight is still covering the PREVIOUS day's
+          # session.
+          session = (now.date() if now.hour >= 12
+                     else now.date() - datetime.timedelta(days=1)).isoformat()
+          try:
+              d = json.load(open("data/latest.json", encoding="utf-8"))
+              dates = [t.get("date") for t in (d.get("tickers") or []) if t.get("date")]
+              gen = d.get("generated_at") or ""
+              age_h = (now - datetime.datetime.fromisoformat(
+                  gen.replace("Z", "+00:00"))).total_seconds() / 3600.0
+              newest = max(dates) if dates else ""
+          except Exception as err:
+              print("run=true")
+              print(f"latest.json unusable ({err!r}) -- running", file=sys.stderr)
+              raise SystemExit(0)
+          covered = bool(newest) and newest >= session and age_h < 8
+          print("run=false" if covered else "run=true")
+          print(f"session={session} newest_bar={newest} generated_at={gen} "
+                f"age={age_h:.1f}h -> {'SKIP' if covered else 'RUN'}", file=sys.stderr)
+          PY
+
       - uses: actions/setup-python@v5
+        if: steps.fallback-guard.outputs.run == 'true'
         with:
           python-version: "3.12"
           cache: pip
 
       - name: Install dependencies
+        if: steps.fallback-guard.outputs.run == 'true'
         run: pip install -r requirements.txt
 
       - name: Fetch prices
+        if: steps.fallback-guard.outputs.run == 'true'
         env:
           LOOKBACK: ${{ inputs.lookback || '7d' }}
           TICKERS: ${{ inputs.tickers || '' }}
@@ -51,15 +109,19 @@ jobs:
           python fetch_prices.py $ARGS
 
       - name: Export text data (CSV + JSON for public URLs)
+        if: steps.fallback-guard.outputs.run == 'true'
         run: python export_data.py
 
       - name: Positioning proxies (SPEC-36 crowd block, display-only)
+        if: steps.fallback-guard.outputs.run == 'true'
         run: python crowd.py
 
       - name: Adjusted-close history for the Book performance view (#51)
+        if: steps.fallback-guard.outputs.run == 'true'
         run: python closes.py
 
       - name: Commit updated database and exports
+        if: steps.fallback-guard.outputs.run == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -68,8 +130,19 @@ jobs:
             echo "No price changes to commit."
           else
             git commit -m "prices: $(date -u +'%Y-%m-%d %H:%M UTC')"
-            git pull --rebase
-            git push
+            # prices.db and everything under data/ are whole-file artifacts,
+            # REGENERATED from scratch each run and never merged, so `-X theirs`
+            # (during a rebase: the replayed commit, i.e. this run's newer
+            # snapshot) is the only correct resolution -- a three-way merge of a
+            # binary SQLite file or a rewritten JSON snapshot is meaningless.
+            # The loop covers the other half, `! [rejected] main -> main (fetch
+            # first)`, when another job pushed between our fetch and our push.
+            # Jittered sleep so two racers do not re-collide in step.
+            for i in 1 2 3 4 5; do
+              git pull --rebase -X theirs && git push && exit 0
+              sleep $((RANDOM % 20 + 5))
+            done
+            exit 1
           fi
 
   # The forward earnings calendar, on the same cadence and the same trigger as
@@ -79,6 +152,8 @@ jobs:
   # cannot race each other on the same branch.
   earnings-dates:
     needs: fetch
+    # A skipped fallback skips the whole workflow, not just the prices job.
+    if: needs.fetch.outputs.run == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -111,8 +186,13 @@ jobs:
             echo "No calendar changes to commit."
           else
             git commit -m "earnings dates + detections: $(date -u +'%Y-%m-%d %H:%M UTC')"
-            git pull --rebase
-            git push
+            # Whole-file snapshots, regenerated and never merged -- see the
+            # prices commit step above for why `-X theirs` plus a retry loop.
+            for i in 1 2 3 4 5; do
+              git pull --rebase -X theirs && git push && exit 0
+              sleep $((RANDOM % 20 + 5))
+            done
+            exit 1
           fi
 
       # Now go red, after the artifact is safely committed. An overdue name means
@@ -144,7 +224,7 @@ jobs:
   # ~1,380 min/month the repo already burns (see cron-dispatch/wrangler.jsonc).
   options:
     needs: [fetch, earnings-dates]
-    if: ${{ always() && needs.fetch.result == 'success' }}
+    if: ${{ always() && needs.fetch.result == 'success' && needs.fetch.outputs.run == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -183,8 +263,13 @@ jobs:
             echo "No options-flow changes to commit."
           else
             git commit -m "options flow: $(date -u +'%Y-%m-%d %H:%M UTC') [skip ci]"
-            git pull --rebase
-            git push
+            # Whole-file snapshots, regenerated and never merged -- see the
+            # prices commit step above for why `-X theirs` plus a retry loop.
+            for i in 1 2 3 4 5; do
+              git pull --rebase -X theirs && git push && exit 0
+              sleep $((RANDOM % 20 + 5))
+            done
+            exit 1
           fi
 
       # Now go red, after the artifact is safely committed. Coverage below 80% of
@@ -199,9 +284,15 @@ jobs:
 
   # A silent cron is the failure mode this repo actually has: nothing here
   # reported a broken run until someone noticed stale prices downstream.
+  # Each alert is conditional on ITS OWN job. A bare `failure()` is transitive
+  # over the needs chain ("true if any ancestor job fails"), so the DESIGNED loud
+  # path -- earnings_detect exits 1 on an overdue name, earnings-dates goes red,
+  # options still runs and succeeds -- would also open "cron failure: Daily
+  # Prices - options flow", and a fetch failure would open all three issues for
+  # one root cause.
   alert:
     needs: fetch
-    if: failure()
+    if: failure() && needs.fetch.result == 'failure'
     uses: ./.github/workflows/_alert-failure.yml
     with:
       workflow: Daily Prices
@@ -213,7 +304,7 @@ jobs:
   # invisible because the prices job beside it would still be green.
   alert-earnings-dates:
     needs: earnings-dates
-    if: failure()
+    if: failure() && needs.earnings-dates.result == 'failure'
     uses: ./.github/workflows/_alert-failure.yml
     with:
       workflow: Daily Prices - earnings dates
@@ -224,7 +315,7 @@ jobs:
   # options job would make the outage invisible.
   alert-options:
     needs: options
-    if: failure()
+    if: failure() && needs.options.result == 'failure'
     uses: ./.github/workflows/_alert-failure.yml
     with:
       workflow: Daily Prices - options flow

