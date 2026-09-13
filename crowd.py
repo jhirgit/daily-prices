@@ -55,11 +55,21 @@ def load_tickers(path=DEFAULT_TICKERS):
     return out
 
 
-def load_bars(conn, ticker):
-    """Settled daily bars, ascending: [(date, close, volume)]."""
-    rows = conn.execute(
-        "SELECT date, close, volume FROM daily_prices WHERE ticker=? ORDER BY date",
-        (ticker,)).fetchall()
+def load_bars(conn, ticker, asof=None):
+    """Settled daily bars, ascending: [(date, close, volume)].
+
+    `asof` (YYYY-MM-DD) truncates the series to bars on or before that session.
+    Production passes None and reads to the end of the file; --verify passes the
+    fixture's own asof, which is what makes the frozen numbers reproducible."""
+    if asof:
+        rows = conn.execute(
+            "SELECT date, close, volume FROM daily_prices "
+            "WHERE ticker=? AND date <= ? ORDER BY date",
+            (ticker, asof)).fetchall()
+    else:
+        rows = conn.execute(
+            "SELECT date, close, volume FROM daily_prices WHERE ticker=? ORDER BY date",
+            (ticker,)).fetchall()
     return [(d, c, v) for d, c, v in rows if c is not None]
 
 
@@ -106,7 +116,14 @@ def insider_net_30d(entry, today):
     return int(net) if used else None
 
 
-def build(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, today=None):
+def build(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, today=None,
+          asof=None):
+    """`asof` truncates every series to that session. Production leaves it None
+    (read to the end of prices.db); the parity gate passes the fixture's own
+    asof. Without it, relvol_20_60 / ext_50d / ext_200d / asof were computed from
+    whatever the LATEST bars happened to be, so parity/crowd_expected.json could
+    only pass on the day it was frozen -- `--verify` reported 22 drifted values
+    and had been doing so, silently to CI, since 2026-09-01."""
     today = today or dt.date.today()
     conn = sqlite3.connect(db)
     ins = {}
@@ -121,7 +138,7 @@ def build(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, today=No
             ins[t] = e
     out = {}
     for t in load_tickers(tickers):
-        row = compute_one(load_bars(conn, t), ins.get(t), today)
+        row = compute_one(load_bars(conn, t, asof), ins.get(t), today)
         if row:
             out[t] = row
     conn.close()
@@ -147,9 +164,12 @@ def verify(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, path=PA
     with open(path, "r", encoding="utf-8") as fh:
         fx = json.load(fh)
     today = dt.date.fromisoformat(fx["today"])
-    got = build(db, tickers, ins_path, today)["tickers"]
+    # Fixtures frozen before 2026-09-13 carry no `asof`; their `today` IS the
+    # session they were frozen on, so it is the right cutoff for them too.
+    asof = fx.get("asof") or fx["today"]
+    got = build(db, tickers, ins_path, today, asof)["tickers"]
     bad = 0
-    print("parity: %s (today=%s)" % (fx.get("source", path), fx["today"]))
+    print("parity: %s (today=%s asof=%s)" % (fx.get("source", path), fx["today"], asof))
     for t, exp in fx["cases"].items():
         g = got.get(t)
         for k in ("asof", "relvol_20_60", "ext_50d", "ext_200d", "insider_net_30d"):
@@ -165,12 +185,25 @@ def verify(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, path=PA
     return 0
 
 
-def freeze(names, db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, path=PARITY):
-    today = dt.date.today()
-    got = build(db, tickers, ins_path, today)["tickers"]
+def freeze(names, db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, path=PARITY,
+           asof=None):
+    """Freeze the parity fixture at `asof` (default: today).
+
+    Prefer an asof a few weeks back. Two of the five inputs are NOT settled at
+    the moment a bar first appears: Yahoo revises recent VOLUMES for about a
+    week (so relvol_20_60 keeps moving under a fixed asof), and
+    data/insiders_12m.json's monthly buckets keep growing until every Form 4 for
+    that month is filed (so insider_net_30d moves for the current month). An
+    asof whose month has closed makes all five reproducible."""
+    asof = asof or dt.date.today().isoformat()
+    today = dt.date.fromisoformat(asof)
+    got = build(db, tickers, ins_path, today, asof)["tickers"]
     cases = {t: got[t] for t in names if t in got}
-    fx = {"source": "crowd.py first run, hand-verified on these names (SPEC-36 phase 3)",
-          "today": today.isoformat(), "cases": cases}
+    fx = {"source": "crowd.py on five hand-checked names (SPEC-36 phase 3); re-frozen "
+                    "2026-09-13 at a settled asof after build() gained the cutoff. The "
+                    "original 2026-09-01 fixture's ext_50d/ext_200d reproduced EXACTLY "
+                    "under the cutoff -- the arithmetic never drifted, the inputs did.",
+          "today": today.isoformat(), "asof": asof, "cases": cases}
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(fx, fh, indent=1)
@@ -186,11 +219,15 @@ def main():
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--verify", action="store_true")
     ap.add_argument("--freeze", default=None, help="comma-separated tickers to freeze as the parity fixture")
+    ap.add_argument("--asof", default=None,
+                    help="with --freeze: the session to freeze at (default today). "
+                         "Prefer a settled one -- see freeze().")
     a = ap.parse_args()
     if a.verify:
         sys.exit(verify(a.db, a.tickers, a.insiders))
     if a.freeze:
-        sys.exit(freeze([t.strip().upper() for t in a.freeze.split(",") if t.strip()], a.db, a.tickers, a.insiders))
+        sys.exit(freeze([t.strip().upper() for t in a.freeze.split(",") if t.strip()],
+                        a.db, a.tickers, a.insiders, asof=a.asof))
     payload = build(a.db, a.tickers, a.insiders)
     with open(a.out, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, separators=(",", ":"))

@@ -1,40 +1,41 @@
 {
- "source": "crowd.py first run, hand-verified on these names (SPEC-36 phase 3)",
- "today": "2026-09-01",
+ "source": "crowd.py on five hand-checked names (SPEC-36 phase 3); re-frozen 2026-09-13 at a settled asof after build() gained the cutoff. The original 2026-09-01 fixture's ext_50d/ext_200d reproduced EXACTLY under the cutoff -- the arithmetic never drifted, the inputs did.",
+ "today": "2026-08-14",
+ "asof": "2026-08-14",
  "cases": {
   "NVDA": {
-   "asof": "2026-09-01",
-   "relvol_20_60": 0.9344,
-   "ext_50d": 0.0414,
-   "ext_200d": 0.1089,
-   "insider_net_30d": 0
+   "asof": "2026-08-14",
+   "relvol_20_60": 0.824,
+   "ext_50d": 0.0903,
+   "ext_200d": 0.1551,
+   "insider_net_30d": 653017053
   },
   "COHR": {
-   "asof": "2026-09-01",
-   "relvol_20_60": 1.2157,
-   "ext_50d": -0.1349,
-   "ext_200d": -0.0088,
-   "insider_net_30d": 972000
+   "asof": "2026-08-14",
+   "relvol_20_60": 1.145,
+   "ext_50d": -0.034,
+   "ext_200d": 0.227,
+   "insider_net_30d": 6865004
   },
   "SMH": {
-   "asof": "2026-09-01",
-   "relvol_20_60": 0.6256,
-   "ext_50d": -0.0569,
-   "ext_200d": 0.1498,
+   "asof": "2026-08-14",
+   "relvol_20_60": 0.962,
+   "ext_50d": -0.0062,
+   "ext_200d": 0.2722,
    "insider_net_30d": null
   },
   "AAOI": {
-   "asof": "2026-09-01",
-   "relvol_20_60": 0.9994,
-   "ext_50d": -0.1392,
-   "ext_200d": 0.031,
-   "insider_net_30d": 2061988
+   "asof": "2026-08-14",
+   "relvol_20_60": 0.9996,
+   "ext_50d": 0.122,
+   "ext_200d": 0.5821,
+   "insider_net_30d": 6671570
   },
   "IREN": {
-   "asof": "2026-09-01",
-   "relvol_20_60": 1.0069,
-   "ext_50d": -0.0967,
-   "ext_200d": -0.1951,
+   "asof": "2026-08-14",
+   "relvol_20_60": 1.0804,
+   "ext_50d": -0.0186,
+   "ext_200d": -0.0643,
    "insider_net_30d": 0
   }
  }
