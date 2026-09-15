@@ -295,3 +295,37 @@ BTC-USD    # Bitcoin
 ETH-USD    # Ethereum
 
 # Kioxia omitted — needs a verified Yahoo symbol (285A.T returns implausible data).
+
+# --- Style-box ETFs (Russell family; regime style ladder, added 9/15/26) ---
+# WHY: Jake 9/15/26 — "add style boxes to the sector rotation tracking — large cap
+# (value/growth/core) down to micro caps". The size/style grid is ranked against
+# ITSELF as its own ladder (regime.REG_STYLE), never inside the sector field.
+# Header carries none of technicals.GROUP_PROXY's trigger words, so these fall to SPY.
+IWB        # Russell 1000 — large cap core
+IWF        # Russell 1000 Growth — large cap growth
+IWD        # Russell 1000 Value — large cap value
+IWR        # Russell Mid-Cap — mid cap core
+IWP        # Russell Mid-Cap Growth
+IWS        # Russell Mid-Cap Value
+IWO        # Russell 2000 Growth — small cap growth
+IWN        # Russell 2000 Value — small cap value
+IWC        # Russell Microcap — micro cap
+# IWM (Russell 2000, small cap core) is already listed with the regime ladder above.
+
+# --- Bond ETFs by category (regime bond ladder, added 9/15/26) ---
+# WHY: Jake 9/15/26 — "also major bond categories/proxies/indices". Duration
+# buckets, credit quality and the sovereign sleeves, ranked against each other
+# (regime.REG_BONDS) -- in the equity sector field they would only ever read as
+# the bottom third.
+# Header carries none of technicals.GROUP_PROXY's trigger words, so these fall to SPY.
+BIL        # 1-3 month T-bills (SPDR) — cash proxy
+SHY        # 1-3yr Treasuries (iShares) — curve short end
+TLH        # 10-20yr Treasuries (iShares) — long-intermediate duration
+TIP        # TIPS (iShares) — break-even read vs IEF
+AGG        # US aggregate bond index (iShares) — the bond benchmark
+MBB        # Agency MBS (iShares)
+BKLN       # Senior/leveraged loans (Invesco) — floating-rate credit
+MUB        # National munis (iShares)
+BNDX       # International IG, USD-hedged (Vanguard)
+EMB        # EM sovereign USD (iShares)
+# TLT, IEF, HYG and LQD are already listed under Macro / benchmarks above.

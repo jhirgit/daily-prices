@@ -512,6 +512,125 @@ check_true("a stale name is reported, never silently dropped",
 import shutil as _sh
 _sh.rmtree(_tmp, ignore_errors=True)
 
+# --------------------------------------------------------------------------
+# style-box and bond-category ladders (9/15/26, Jake: "add style boxes to the
+# sector rotation tracking -- large cap (value/growth/core) down to micro caps
+# -- also major bond categories/proxies/indices")
+#
+# Two SIBLING ladders beside the sector one, each ranked in its own field. The
+# regression these tests exist to catch is leakage between the fields: a `field`
+# key reaching a sector-ladder row, or the new rows re-thirding the ~80-row
+# sector field.
+# --------------------------------------------------------------------------
+print("\nstyle-box / bond-category ladders (9/15/26)")
+
+_SIDES = (None, "offense", "defense")
+for _nm, _lst, _fld, _n in (("REG_STYLE", RG.REG_STYLE, "style", 10),
+                            ("REG_BONDS", RG.REG_BONDS, "bonds", 14)):
+    check(f"{_nm} row count", len(_lst), _n)
+    check_true(f"{_nm}: every row has exactly t/name/side/sector/field",
+               all(set(e) == {"t", "name", "side", "sector", "field"} for e in _lst))
+    check_true(f"{_nm}: side is only offense / defense / None",
+               all(e["side"] in _SIDES for e in _lst))
+    check_true(f"{_nm}: every row carries field={_fld!r}",
+               all(e["field"] == _fld for e in _lst))
+    check_true(f"{_nm}: tickers are unique", len({e["t"] for e in _lst}) == len(_lst))
+    check_true(f"{_nm}: names are unique", len({e["name"] for e in _lst}) == len(_lst))
+    check_true(f"{_nm}: no entry smuggles in a grp/basket/gics key",
+               all(not ({"grp", "basket", "gics"} & set(e)) for e in _lst))
+
+# Separate fields never dedup against each other: IWM is small-cap CORE in the
+# style boxes and "Small caps" in the sector ladder, and the four macro-leg bond
+# proxies are reused rather than cloned.
+check_true("IWM sits in the sector ladder AND the style boxes",
+           any(e["t"] == "IWM" for e in RG.REG_ETFS)
+           and any(e["t"] == "IWM" for e in RG.REG_STYLE))
+check_true("REG_BONDS reuses the macro-leg proxies (TLT/IEF/HYG/LQD)",
+           {"TLT", "IEF", "HYG", "LQD"} <= {e["t"] for e in RG.REG_BONDS})
+check_true("the style boxes span large -> micro",
+           {e["sector"] for e in RG.REG_STYLE}
+           == {"Large cap", "Mid cap", "Small cap", "Micro cap"})
+
+# A member with no series yet is ABSENT from `rows` (sector_ladder's `present`
+# filter), never a row of Nones -- so a row appearing is itself the signal that
+# the price backfill landed. `_series` here holds SPY/LIVE/DEAD only.
+check("a ladder whose members have no series yet is empty, not rows of Nones",
+      RG.sector_ladder(_series, RG.REG_STYLE)["rows"], [])
+
+# THE REGRESSION THAT MATTERS. `field` is copied onto a row only when the etf
+# entry sets it (exactly like `stale`), and ladder_payload appends the key only
+# for the two new ladders -- so `regime.ladder` is byte-identical to what the
+# pre-9/15 inline emitter produced, key set AND key order.
+_OLD_LADDER_KEYS = ["t", "name", "side", "r5", "r21", "r63", "r126", "blend",
+                    "third", "third21", "streak", "twin_of", "sector", "gics",
+                    "basket", "members"]
+
+
+def _rnd(v, d=6):
+    return None if v is None else round(v, d)
+
+
+check_true("no sector-ladder row carries a `field` key",
+           all("field" not in r for r in _lad["rows"]))
+_pay = RG.ladder_payload(_lad, _rnd)
+# verbatim copy of the emitter that shipped before the two ladders existed
+_frozen = {"rows": [{
+    "t": r["t"], "name": r["name"], "side": r["side"],
+    "r5": _rnd(r.get("r5")), "r21": _rnd(r["r21"]), "r63": _rnd(r["r63"]), "r126": _rnd(r["r126"]),
+    "blend": _rnd(r["blend"]), "third": r["third"], "third21": r["third21"],
+    "streak": r["streak"], "twin_of": r["twin_of"],
+    "sector": r.get("sector"), "gics": r.get("gics"), "basket": r.get("basket", False),
+    "members": r.get("members"),
+} for r in _lad["rows"]], "divergence": _lad["divergence"]}
+check_true("the ladder payload is BYTE-IDENTICAL to the pre-9/15 emitter",
+           json.dumps(_pay) == json.dumps(_frozen),
+           f"{len(_pay['rows'])} rows compared, {len(json.dumps(_pay))} bytes")
+check_true("and its key order is the frozen one",
+           all(list(r.keys()) == _OLD_LADDER_KEYS for r in _pay["rows"]))
+check_true("with_field appends `field` last, and only when asked",
+           all(list(r.keys()) == _OLD_LADDER_KEYS + ["field"]
+               for r in RG.ladder_payload(_lad, _rnd, with_field=True)["rows"]))
+
+
+# Construction check on a hand-built six-box panel: known trajectories, so the
+# blend order, the thirds (ceil(6/3) = 2 rows each end) and the divergence tell
+# are all predictable.
+def _ramp(n, per_day):
+    v, out = 100.0, []
+    for _ in range(n):
+        out.append(v)
+        v *= (1.0 + per_day)
+    return out
+
+
+_fx = {t: _ramp(300, r) for t, r in
+       (("A", 0.0030), ("B", 0.0025), ("C", 0.0018),
+        ("D", 0.0012), ("E", 0.0006), ("F", 0.0001))}
+_fxe = [{"t": "A", "name": "Large growth", "side": "offense", "sector": "Large cap", "field": "style"},
+        {"t": "B", "name": "Large value", "side": "defense", "sector": "Large cap", "field": "style"},
+        {"t": "C", "name": "Large core", "side": None, "sector": "Large cap", "field": "style"},
+        {"t": "D", "name": "Mid core", "side": None, "sector": "Mid cap", "field": "style"},
+        {"t": "E", "name": "Small growth", "side": "offense", "sector": "Small cap", "field": "style"},
+        {"t": "F", "name": "Small value", "side": "defense", "sector": "Small cap", "field": "style"}]
+_fl = RG.sector_ladder(_fx, _fxe)
+check("the fixture ladder sorts by the 63/126 blend, best first",
+      [r["t"] for r in _fl["rows"]], ["A", "B", "C", "D", "E", "F"])
+check("thirds put the two leaders on top",
+      [r["third"] for r in _fl["rows"]], ["top", "top", "mid", "mid", "bottom", "bottom"])
+check_true("every fixture row carries its field",
+           all(r["field"] == "style" for r in _fl["rows"]))
+check_true("every fixture row has numeric r21/r63/r126/blend",
+           all(isinstance(r[k], float) for r in _fl["rows"]
+               for k in ("r21", "r63", "r126", "blend")))
+check_true("the leader's streak counts sessions, not rows", _fl["rows"][0]["streak"] > 1)
+check("offense and defense both in the top third fires the tell", _fl["divergence"], True)
+# same tape, both leaders on the same side: no tell.
+_fl2 = RG.sector_ladder(_fx, [dict(e, side=("offense" if e["t"] in ("A", "B") else e["side"]))
+                              for e in _fxe])
+check("two leaders on the SAME side is not a divergence", _fl2["divergence"], False)
+check_true("re-siding does not move the field", [r["t"] for r in _fl2["rows"]]
+           == [r["t"] for r in _fl["rows"]])
+
 print("\n" + ("-" * 60))
 if FAILS:
     print(f"{len(FAILS)} FAILED: {', '.join(FAILS)}")

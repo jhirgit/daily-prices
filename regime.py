@@ -698,7 +698,13 @@ def sector_ladder(series, etfs):
     its series is basket_series() over the members present and its row is
     flagged basket=True with `members`. `sector` is carried through untouched
     (display grouping only -- the field, thirds, streaks and tells never see
-    it)."""
+    it).
+
+    9/15/26: an entry may also carry `field` -- the name of the ladder it
+    belongs to ("style", "bonds"; REG_ETFS entries carry none). It is copied
+    onto the row ONLY when set, exactly like `stale`, so the sector ladder's
+    emitted row shape (and with it the JS-oracle parity fixtures) is
+    byte-identical to what it was before the two extra ladders existed."""
     ser = {}
     for e in etfs:
         ser[e["t"]] = basket_series(series, e["basket"]) if e.get("basket") else series.get(e["t"])
@@ -744,6 +750,11 @@ def sector_ladder(series, etfs):
         # key set, so parity/expected.json still matches byte for byte.
         if stale_flag[k]:
             row["stale"] = True
+        # Same rule as `stale` above, for the same reason: carried only when the
+        # etf entry sets it (REG_STYLE / REG_BONDS), so a REG_ETFS row's key set
+        # is untouched.
+        if e.get("field"):
+            row["field"] = e["field"]
         rows.append(row)
     n = len(series[present[0]["t"]]) if present else 0
 
@@ -813,6 +824,25 @@ def sector_ladder(series, etfs):
     top_off = any(r["third"] == "top" and r["side"] == "offense" for r in rows)
     top_def = any(r["third"] == "top" and r["side"] == "defense" for r in rows)
     return {"rows": rows, "divergence": top_off and top_def}
+
+
+def ladder_payload(lad, rnd, with_field=False):
+    """Round + key-filter a sector_ladder() result into its technicals.json
+    shape. The key set AND ITS ORDER are the sector ladder's frozen emitted
+    shape; `field` is appended only for the style/bond ladders (9/15/26), so
+    `regime.ladder` stays byte-identical to what the inline emitter produced
+    before they existed. `rnd` is build_regime's rounding shim."""
+    rows = [{
+        "t": r["t"], "name": r["name"], "side": r["side"],
+        "r5": rnd(r.get("r5")), "r21": rnd(r["r21"]), "r63": rnd(r["r63"]), "r126": rnd(r["r126"]),
+        "blend": rnd(r["blend"]), "third": r["third"], "third21": r["third21"],
+        "streak": r["streak"], "twin_of": r["twin_of"],
+        "sector": r.get("sector"), "gics": r.get("gics"), "basket": r.get("basket", False), "members": r.get("members"),
+    } for r in lad["rows"]]
+    if with_field:
+        for out_row, r in zip(rows, lad["rows"]):
+            out_row["field"] = r.get("field")
+    return {"rows": rows, "divergence": lad["divergence"]}
 
 
 # ==========================================================================
@@ -938,6 +968,63 @@ REG_ETFS = [
      "basket": ["IONQ", "RGTI", "QBTS", "QUBT", "ARQQ"]},
     {"t": "UFO", "name": "Space", "side": "offense", "gics": "TH", "sector": "Themes"},
     {"t": "BOTZ", "name": "Robotics & AI", "side": "offense", "gics": "TH", "sector": "Themes"},
+]
+
+
+# The STYLE-BOX ladder (9/15/26, Jake: "add style boxes to the sector rotation
+# tracking -- large cap (value/growth/core) down to micro caps"). The Russell
+# size/style grid -- three caps x core/growth/value, plus micro -- ranked only
+# against EACH OTHER, so "growth over value" and "large over small" read
+# straight off the thirds. It is a separate `field` rather than ten more
+# REG_ETFS rows because these are whole-market slices, not sleeves: dropped
+# into the ~80-row sector field they would settle in the middle third (they ARE
+# roughly its cap-weighted average), say nothing there, and re-third every
+# sector row on the way in. `side` is set on the polar boxes only -- growth =
+# offense, value = defense -- so the divergence tell reads "growth AND value
+# are both leading", a real broadening signal; core and micro stay None. IWM is
+# deliberately also in REG_ETFS: separate fields never dedup against each other.
+REG_STYLE = [
+    {"t": "IWB", "name": "Large cap core", "side": None, "sector": "Large cap", "field": "style"},
+    {"t": "IWF", "name": "Large cap growth", "side": "offense", "sector": "Large cap", "field": "style"},
+    {"t": "IWD", "name": "Large cap value", "side": "defense", "sector": "Large cap", "field": "style"},
+    {"t": "IWR", "name": "Mid cap core", "side": None, "sector": "Mid cap", "field": "style"},
+    {"t": "IWP", "name": "Mid cap growth", "side": "offense", "sector": "Mid cap", "field": "style"},
+    {"t": "IWS", "name": "Mid cap value", "side": "defense", "sector": "Mid cap", "field": "style"},
+    {"t": "IWM", "name": "Small cap core", "side": None, "sector": "Small cap", "field": "style"},
+    {"t": "IWO", "name": "Small cap growth", "side": "offense", "sector": "Small cap", "field": "style"},
+    {"t": "IWN", "name": "Small cap value", "side": "defense", "sector": "Small cap", "field": "style"},
+    {"t": "IWC", "name": "Micro cap", "side": None, "sector": "Micro cap", "field": "style"},
+]
+
+# The BOND-CATEGORY ladder (9/15/26, Jake: "also major bond categories/proxies/
+# indices"). Duration buckets, credit quality and the two non-US-Treasury
+# sovereign sleeves, ranked against each other on the same 63d/126d blend.
+# Again a separate `field`, and here it is not a preference but a correctness
+# point: on total return a bond sleeve sits in the BOTTOM THIRD of every bull
+# tape, so inside the sector field these fourteen rows would say nothing about
+# fixed income while shifting the thirds under all ~80 sector rows. Ranked
+# against each other they carry the reads that matter -- HY vs IG (credit
+# appetite), TLT vs SHY (the duration call), TIP vs IEF (break-evens).
+# `side`: spread product that trades with equities is offense (HYG, BKLN, EMB);
+# rate-driven flight-to-quality paper is defense (bills through the long bond,
+# TIPS, the aggregate, agency MBS); LQD, MUB and BNDX sit between the two and
+# stay None. TLT/IEF/HYG/LQD are also macro LEG inputs -- same series, different
+# job, and no dedup across fields.
+REG_BONDS = [
+    {"t": "BIL", "name": "T-bills 1-3m", "side": "defense", "sector": "Treasuries", "field": "bonds"},
+    {"t": "SHY", "name": "Treasuries 1-3y", "side": "defense", "sector": "Treasuries", "field": "bonds"},
+    {"t": "IEF", "name": "Treasuries 7-10y", "side": "defense", "sector": "Treasuries", "field": "bonds"},
+    {"t": "TLH", "name": "Treasuries 10-20y", "side": "defense", "sector": "Treasuries", "field": "bonds"},
+    {"t": "TLT", "name": "Treasuries 20y+", "side": "defense", "sector": "Treasuries", "field": "bonds"},
+    {"t": "TIP", "name": "TIPS", "side": "defense", "sector": "Inflation", "field": "bonds"},
+    {"t": "AGG", "name": "US aggregate", "side": "defense", "sector": "Aggregate", "field": "bonds"},
+    {"t": "MBB", "name": "Agency MBS", "side": "defense", "sector": "Mortgages", "field": "bonds"},
+    {"t": "LQD", "name": "IG corporates", "side": None, "sector": "Credit", "field": "bonds"},
+    {"t": "HYG", "name": "High yield", "side": "offense", "sector": "Credit", "field": "bonds"},
+    {"t": "BKLN", "name": "Leveraged loans", "side": "offense", "sector": "Credit", "field": "bonds"},
+    {"t": "MUB", "name": "Munis", "side": None, "sector": "Munis", "field": "bonds"},
+    {"t": "BNDX", "name": "Intl IG (hedged)", "side": None, "sector": "International", "field": "bonds"},
+    {"t": "EMB", "name": "EM sovereign USD", "side": "offense", "sector": "International", "field": "bonds"},
 ]
 
 # The composite legs. v52 carried the three macro + two equity trend-rule legs
@@ -1266,13 +1353,13 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         }
 
     lad = sector_ladder(series, REG_ETFS)
-    ladder_rows = [{
-        "t": r["t"], "name": r["name"], "side": r["side"],
-        "r5": _r(r.get("r5")), "r21": _r(r["r21"]), "r63": _r(r["r63"]), "r126": _r(r["r126"]),
-        "blend": _r(r["blend"]), "third": r["third"], "third21": r["third21"],
-        "streak": r["streak"], "twin_of": r["twin_of"],
-        "sector": r.get("sector"), "gics": r.get("gics"), "basket": r.get("basket", False), "members": r.get("members"),
-    } for r in lad["rows"]]
+    ladder_out = ladder_payload(lad, _r)
+    # The two 9/15/26 sibling ladders: same function, same output shape, their
+    # own fields. A member with no series yet is simply ABSENT from `rows`
+    # (sector_ladder's `present` filter), never a row of Nones -- so a row
+    # showing up is itself the signal that the backfill landed.
+    style_out = ladder_payload(sector_ladder(series, REG_STYLE), _r, with_field=True)
+    bond_out = ladder_payload(sector_ladder(series, REG_BONDS), _r, with_field=True)
 
     brm = base_rates_multi(series, book, comp["state"], (5, 21, 63))
     base_rates_out = {}
@@ -1316,7 +1403,9 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
             "pool": "BOOK",
             "pool_tickers": book,
         },
-        "ladder": {"rows": ladder_rows, "divergence": lad["divergence"]},
+        "ladder": ladder_out,
+        "style_ladder": style_out,
+        "bond_ladder": bond_out,
         "receipts": receipts,
         "base_rates": base_rates_out,
         "flips": flips(dates, comp["state"]),
