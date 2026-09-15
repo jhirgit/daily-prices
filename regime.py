@@ -1005,6 +1005,11 @@ REG_STYLE = [
 # fixed income while shifting the thirds under all ~80 sector rows. Ranked
 # against each other they carry the reads that matter -- HY vs IG (credit
 # appetite), TLT vs SHY (the duration call), TIP vs IEF (break-evens).
+# 9/15/26 #91: this stays the FOURTEEN-ticker universe (price backfill, tests,
+# BOND_DURATION), but it is no longer the ranked field. The field is
+# REG_BOND_SPREAD (these minus TREASURY_RUNGS) ranked on EXCESS return; the #91
+# block below REG_BONDS says why a total-return rank of all fourteen was really
+# just a duration rank.
 # `side`: spread product that trades with equities is offense (HYG, BKLN, EMB);
 # rate-driven flight-to-quality paper is defense (bills through the long bond,
 # TIPS, the aggregate, agency MBS); LQD, MUB and BNDX sit between the two and
@@ -1026,6 +1031,276 @@ REG_BONDS = [
     {"t": "BNDX", "name": "Intl IG (hedged)", "side": None, "sector": "International", "field": "bonds"},
     {"t": "EMB", "name": "EM sovereign USD", "side": "offense", "sector": "International", "field": "bonds"},
 ]
+
+# ==========================================================================
+# #91 (9/15/26): the bond field, rebuilt on EXCESS RETURN
+# ==========================================================================
+# The 9/15 bond ladder ranked all fourteen rows on the same 63d/126d TOTAL
+# return as the sector ladder, and that mostly measured DURATION. Five of the
+# rows (BIL SHY IEF TLH TLT) are ONE factor at five maturities and rank in
+# exact maturity order on any rate move -- the first payload's 63d column was
+# BIL +0.9, SHY -0.1, IEF -2.6, TLH -3.7, TLT -5.1, which is not a ranking, it
+# is the yield curve written sideways -- and every other row carries its own
+# duration on top of whatever else it is. So "credit is leading" read off that
+# field was really "short duration is leading": HYG's 63d -1.1% against a
+# duration-matched ~3.3y Treasury at about -0.9% is FLAT credit, not a top
+# third.
+#
+# The fix is the one the bond indices themselves use. Two objects instead of
+# one ranked field:
+#
+#   * `bond_curve`  -- the five Treasury rungs pulled OUT of the ranked field
+#     and shown as a curve strip, each with a yield-change proxy. Five points
+#     on one factor cannot rank against each other; as a curve they say what
+#     the rate move actually was.
+#   * `bond_ladder` -- the other nine rows ranked on EXCESS RETURN over a
+#     duration-matched Treasury. What is left after the rate move is the part
+#     that is actually a credit / carry / breakeven call, which is the only
+#     part a ranking of these nine can honestly be about.
+#
+# Every field the ladder already emitted (r5 r21 r63 r126 blend third third21
+# streak, and the divergence tell built on them) therefore now means EXCESS
+# return. The total return is still carried, as tr21/tr63/tr126/trblend, so the
+# renderer can show both -- and the difference between them is itself a read.
+
+# Approximate EFFECTIVE duration in years (approx, 2026-09) -- round numbers off
+# the issuer fact sheets, and deliberately NOT refreshed per session. The match
+# only has to strip the first-order rate move: a duration that has drifted 0.2y
+# moves an excess return by basis points, while the thing it is removing is
+# whole percent. TIP is a genuine ~6.6y and is matched against NOMINAL
+# Treasuries on purpose -- its excess return IS the breakeven direction.
+BOND_DURATION = {
+    "BIL": 0.1, "SHY": 1.9, "IEF": 7.3, "TLH": 12.5, "TLT": 16.5,
+    "HYG": 3.3, "LQD": 8.4, "BKLN": 0.25, "EMB": 7.0, "MUB": 6.4,
+    "MBB": 5.8, "BNDX": 7.0, "AGG": 6.0, "TIP": 6.6,
+}
+
+# The curve strip, in MATURITY order. Out of the ranked field entirely.
+TREASURY_RUNGS = ["BIL", "SHY", "IEF", "TLH", "TLT"]
+
+# The ranked field: everything else. DERIVED from REG_BONDS rather than written
+# out again, so the ticker list, the price backfill and the existing REG_BONDS
+# tests stay exactly as they are and the two lists cannot drift apart.
+REG_BOND_SPREAD = [e for e in REG_BONDS if e["t"] not in set(TREASURY_RUNGS)]
+
+# Read thresholds. Dead zones, not signs: a 63d total return of 0.1% on IEF is
+# noise, and calling that "rallying" would make the quadrant label flicker.
+DURATION_BAND = 0.005    # +/-0.5% on IEF's 63d TOTAL return
+CURVE_BAND_BP = 10.0     # +/-10bp on the 63d long-minus-short yield proxy
+CREDIT_BAND = 0.0025     # +/-0.25% on the median 63d EXCESS return of the credit sleeves
+CREDIT_SLEEVES = ["HYG", "LQD", "BKLN", "EMB"]
+
+
+def _bracket_rungs(dur):
+    """(lo, hi, w) -- the two TREASURY_RUNGS bracketing `dur`, and the weight on
+    the longer one, so that (1-w)*d_lo + w*d_hi == dur exactly. Below BIL or
+    above TLT it CLAMPS to that end rung (lo == hi), because extrapolating a
+    curve off its own ends is how a match invents a move that never happened."""
+    rungs = sorted(TREASURY_RUNGS, key=lambda t: BOND_DURATION[t])
+    if dur <= BOND_DURATION[rungs[0]]:
+        return rungs[0], rungs[0], 0.0
+    if dur >= BOND_DURATION[rungs[-1]]:
+        return rungs[-1], rungs[-1], 1.0
+    for i in range(len(rungs) - 1):
+        lo, hi = rungs[i], rungs[i + 1]
+        d_lo, d_hi = BOND_DURATION[lo], BOND_DURATION[hi]
+        if d_lo <= dur <= d_hi:
+            return lo, hi, (dur - d_lo) / (d_hi - d_lo)
+    return rungs[-1], rungs[-1], 1.0
+
+
+def matched_treasury_series(series, dur):
+    """A synthetic daily TOTAL-RETURN index for a Treasury position of `dur`
+    years, built on the panel's common index from the two bracketing rungs:
+    each session's return is (1-w)*r_lo + w*r_hi and the level is cumulated
+    from 1.0 at the first session on which both rungs print.
+
+    None on any session either rung is missing -- a matched return we cannot
+    compute must never quietly become zero, because zero is a real answer here
+    ("the curve did not move") and it would show up as excess return. Returns
+    None outright when a bracketing rung has no series at all, which is the
+    signal that the spread row simply cannot be computed yet."""
+    lo, hi, w = _bracket_rungs(dur)
+    c_lo, c_hi = series.get(lo), series.get(hi)
+    if not c_lo or not c_hi:
+        return None
+    n = min(len(c_lo), len(c_hi))
+    out = [None] * n
+    v = None
+    for i in range(n):
+        b_lo, b_hi = c_lo[i], c_hi[i]
+        if b_lo is None or b_hi is None:
+            continue
+        if v is None:
+            v = 1.0          # base the index on the first session both rungs print
+        else:
+            a_lo = c_lo[i - 1]
+            a_hi = c_hi[i - 1]
+            if a_lo is not None and a_hi is not None and a_lo > 0 and a_hi > 0:
+                v *= 1.0 + (1.0 - w) * (b_lo / a_lo - 1.0) + w * (b_hi / a_hi - 1.0)
+        out[i] = v
+    return out
+
+
+def excess_series(etf, matched):
+    """etf / matched, elementwise -- the EXCESS-RETURN index. Its LEVEL is an
+    arbitrary base and means nothing; only its returns do, which is exactly and
+    only what sector_ladder reads off a series. None wherever either side is."""
+    if not etf or not matched:
+        return None
+    n = min(len(etf), len(matched))
+    out = [None] * n
+    for i in range(n):
+        a, b = etf[i], matched[i]
+        out[i] = None if (a is None or b is None or b == 0) else a / b
+    return out
+
+
+def match_label(dur):
+    """The short "measured against what" label for a spread row. Inside the
+    bracket it names the interpolated point; within 10% of either end it names
+    the rung itself, because "vs ~0.2y UST (BIL/SHY)" is a worse description of
+    BKLN (w = 0.083) than the true one, "vs BIL"."""
+    lo, hi, w = _bracket_rungs(dur)
+    if lo == hi or w <= 0.10:
+        return "vs " + lo
+    if w >= 0.90:
+        return "vs " + hi
+    return "vs ~%.1fy UST (%s/%s)" % (dur, lo, hi)
+
+
+def bond_curve_rows(tr_rows, rnd):
+    """The five Treasury rungs in MATURITY order. `tr_rows` is {ticker: row}
+    from a plain sector_ladder over the RAW series, so r5..blend here are total
+    returns. dyN = -rN / dur, in basis points: the duration-1 inversion of that
+    total return into "how far did the yield at this point move". It is a PROXY
+    -- it drops carry and convexity, and at BIL's 0.1y it multiplies noise a
+    hundredfold -- so it is read for the SHAPE of the move across the strip,
+    never as a yield print."""
+    rows = []
+    for t in TREASURY_RUNGS:
+        r = tr_rows.get(t)
+        if not r:
+            continue
+        d = BOND_DURATION[t]
+
+        def _dy(v, _d=d):
+            return None if v is None else round(-v / _d * 10000.0)
+
+        rows.append({
+            "t": t, "name": r["name"], "dur": d,
+            "r5": rnd(r.get("r5")), "r21": rnd(r["r21"]), "r63": rnd(r["r63"]),
+            "r126": rnd(r["r126"]), "blend": rnd(r["blend"]),
+            "dy21": _dy(r["r21"]), "dy63": _dy(r["r63"]), "dy126": _dy(r["r126"]),
+        })
+    return rows
+
+
+def bond_curve_read(rows):
+    """duration / curve / shape / gap_bp off the curve strip.
+
+    `duration` is IEF's own 63d total return (the belly is the cleanest single
+    read on "did rates fall"). `curve` is the 63d yield-proxy move at TLT minus
+    the one at SHY: the long end selling off relative to the short end is a
+    steepening whichever way the level went. `shape` is the two crossed, in the
+    market's own vocabulary, and collapses to "flat" the moment either leg is
+    inside its dead zone -- half a signal is not a shape."""
+    by = {r["t"]: r for r in rows}
+    ief = (by.get("IEF") or {}).get("r63")
+    if ief is None or abs(ief) <= DURATION_BAND:
+        duration = "flat"
+    else:
+        duration = "rallying" if ief > 0 else "selling off"
+    lo = (by.get("SHY") or {}).get("dy63")
+    hi = (by.get("TLT") or {}).get("dy63")
+    gap = None if (lo is None or hi is None) else hi - lo
+    if gap is None or abs(gap) <= CURVE_BAND_BP:
+        curve = "flat"
+    else:
+        curve = "steepening" if gap > 0 else "flattening"
+    if duration == "flat" or curve == "flat":
+        shape = "flat"
+    else:
+        shape = ("bull " if duration == "rallying" else "bear ") + \
+                ("steepener" if curve == "steepening" else "flattener")
+    return {"duration": duration, "curve": curve, "shape": shape, "gap_bp": gap}
+
+
+def bond_ladder_read(rows, curve_read):
+    """credit / duration / quadrant off the nine EXCESS rows plus the curve.
+
+    `credit` is the MEDIAN 63d excess return of the four spread sleeves, not
+    HYG alone: one sleeve can be carried by its own index mechanics, four
+    agreeing is a credit call. `duration` is COPIED from the curve read so the
+    two panels can never disagree with each other. The quadrant is the two
+    crossed -- the four corners are the four macro states a bond market can be
+    in -- and "mixed" is the honest answer whenever either axis sits in its
+    dead zone, rather than the nearest corner."""
+    by = {r["t"]: r for r in rows}
+    med = median([by[t]["r63"] for t in CREDIT_SLEEVES if t in by])
+    if med is None or abs(med) <= CREDIT_BAND:
+        credit = "flat"
+    else:
+        credit = "tightening" if med > 0 else "widening"
+    duration = curve_read["duration"]
+    if credit == "flat" or duration == "flat":
+        quadrant = "mixed"
+    elif credit == "tightening":
+        quadrant = "goldilocks / disinflation" if duration == "rallying" else "reflation"
+    else:
+        quadrant = "growth scare" if duration == "rallying" else "inflation shock (2022 shape)"
+    return {"credit": credit, "duration": duration, "quadrant": quadrant}
+
+
+def _field_spread(rows, key, rnd):
+    """Best minus worst across the field, in PERCENTAGE POINTS -- the field's
+    dispersion. On `blend` (the sort key) that is literally the top row minus
+    the bottom row; on r63 it is the max minus the min, the same statistic but
+    not necessarily the same two rows. None until two rows can supply it."""
+    vals = [r[key] for r in rows if r.get(key) is not None]
+    if len(vals) < 2:
+        return None
+    return rnd((max(vals) - min(vals)) * 100.0, 4)
+
+
+def bond_field(series, rnd):
+    """(bond_ladder, bond_curve) -- the whole #91 object. The ranked field is
+    the NINE non-Treasury rows on EXCESS return over their duration-matched
+    Treasury; the five rungs become the curve strip beside it. `rnd` is
+    build_regime's rounding shim."""
+    # Total returns for all fourteen: the curve strip's own levels, and the tr*
+    # columns carried alongside each spread row's excess ones.
+    tr = {r["t"]: r for r in sector_ladder(series, REG_BONDS)["rows"]}
+    curve_rows = bond_curve_rows(tr, rnd)
+    curve_read = bond_curve_read(curve_rows)
+
+    spread_series = {}
+    for e in REG_BOND_SPREAD:
+        raw = series.get(e["t"])
+        if not raw:
+            continue
+        ex = excess_series(raw, matched_treasury_series(series, BOND_DURATION[e["t"]]))
+        # A row with no computable excess anywhere is ABSENT, never a row of
+        # Nones -- the same rule the ladder already applies to a missing series.
+        if ex and any(v is not None for v in ex):
+            spread_series[e["t"]] = ex
+
+    lad = sector_ladder(spread_series, REG_BOND_SPREAD)
+    out = ladder_payload(lad, rnd, with_field=True)
+    for row in out["rows"]:
+        d = BOND_DURATION[row["t"]]
+        trr = tr.get(row["t"]) or {}
+        row["tr21"] = rnd(trr.get("r21"))
+        row["tr63"] = rnd(trr.get("r63"))
+        row["tr126"] = rnd(trr.get("r126"))
+        row["trblend"] = rnd(trr.get("blend"))
+        row["dur"] = d
+        row["match"] = match_label(d)
+    out["read"] = bond_ladder_read(out["rows"], curve_read)
+    out["spread63"] = _field_spread(out["rows"], "r63", rnd)
+    out["spread_blend"] = _field_spread(out["rows"], "blend", rnd)
+    return out, {"rows": curve_rows, "read": curve_read}
+
 
 # The composite legs. v52 carried the three macro + two equity trend-rule legs
 # verbatim from renderRegimePanel; v60 adds the three ORTHOGONAL-MECHANISM legs
@@ -1359,7 +1634,11 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
     # (sector_ladder's `present` filter), never a row of Nones -- so a row
     # showing up is itself the signal that the backfill landed.
     style_out = ladder_payload(sector_ladder(series, REG_STYLE), _r, with_field=True)
-    bond_out = ladder_payload(sector_ladder(series, REG_BONDS), _r, with_field=True)
+    # The bond field is NOT a plain ladder any more (#91, 9/15/26): the five
+    # Treasury rungs come out into `bond_curve` and the other nine are ranked on
+    # EXCESS return over a duration-matched Treasury. Same payload shape, plus
+    # tr*/dur/match per row and a `read`; bond_field() above says why.
+    bond_out, bond_curve_out = bond_field(series, _r)
 
     brm = base_rates_multi(series, book, comp["state"], (5, 21, 63))
     base_rates_out = {}
@@ -1406,6 +1685,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         "ladder": ladder_out,
         "style_ladder": style_out,
         "bond_ladder": bond_out,
+        "bond_curve": bond_curve_out,
         "receipts": receipts,
         "base_rates": base_rates_out,
         "flips": flips(dates, comp["state"]),

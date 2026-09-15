@@ -89,12 +89,14 @@ def main():
         except OSError:
             pass
 
-    # SERVER-ONLY KEYS (9/15/26): the style-box and bond-category ladders are
-    # emitted by regime.py alone -- regime_core.js (the client oracle) has no
-    # REG_STYLE/REG_BONDS, so it cannot produce them and their absence is not a
-    # config divergence. Dropped before the diff; everything the oracle DOES
-    # compute, `ladder` included, is still compared key for key.
-    mine = {k: v for k, v in mine.items() if k not in ("style_ladder", "bond_ladder")}
+    # SERVER-ONLY KEYS (9/15/26): the style-box and bond ladders and the #91
+    # bond curve strip are emitted by regime.py alone -- regime_core.js (the
+    # client oracle) has no REG_STYLE/REG_BONDS/BOND_DURATION, so it cannot
+    # produce them and their absence is not a config divergence. Dropped before
+    # the diff; everything the oracle DOES compute, `ladder` included, is still
+    # compared key for key.
+    mine = {k: v for k, v in mine.items()
+            if k not in ("style_ladder", "bond_ladder", "bond_curve")}
 
     mism = diff(oracle, mine, "regime")
     print("=" * 60)

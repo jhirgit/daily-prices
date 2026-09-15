@@ -631,6 +631,290 @@ check("two leaders on the SAME side is not a divergence", _fl2["divergence"], Fa
 check_true("re-siding does not move the field", [r["t"] for r in _fl2["rows"]]
            == [r["t"] for r in _fl["rows"]])
 
+
+# --------------------------------------------------------------------------
+# #91 (9/15/26): the bond field on EXCESS RETURN.
+#
+# The bug these tests pin: ranking fourteen bond ETFs on TOTAL return mostly
+# ranks them by DURATION, because five of them are one factor at five
+# maturities and the other nine each carry a duration of their own. Pull the
+# Treasuries out into a curve strip and rank the rest on excess return over a
+# duration-matched Treasury, and a parallel rate move -- the thing that used to
+# BE the ranking -- has to leave the field completely unmoved. That is the
+# central test below, and it is the one that would have caught the bug.
+# --------------------------------------------------------------------------
+print("\nbond field on excess return (#91, 9/15/26)")
+
+
+def _ex(v, d=6):
+    """Identity rounding shim -- build_regime's round_floats=False path. The
+    excess-return invariants are exact to ~1e-16 and 6dp would hide them."""
+    return v
+
+
+def _walk(seed, n=260, vol=0.004):
+    """A distinct random price path per rung, so an interpolation test cannot
+    pass by accident on parallel lines."""
+    rng = random.Random(seed)
+    v, out = 100.0, []
+    for _ in range(n):
+        out.append(v)
+        v *= 1.0 + vol * (rng.random() - 0.5)
+    return out
+
+
+def _shock_panel(moves, n=300):
+    """Every ticker flat at 100 with ONE multiplicative move on the LAST bar,
+    so r5 == r21 == r63 == r126 == blend == that move, exactly."""
+    return {t: [100.0] * (n - 1) + [100.0 * (1.0 + m)] for t, m in moves.items()}
+
+
+def _rebased(c):
+    return [None if v is None else v / c[0] for v in c]
+
+
+def _close(a, b, tol=1e-12):
+    return all(x is not None and y is not None and abs(x - y) <= tol
+               for x, y in zip(a, b))
+
+
+# ---- config ----
+check("BOND_DURATION covers exactly the REG_BONDS universe",
+      sorted(RG.BOND_DURATION), sorted(e["t"] for e in RG.REG_BONDS))
+check("TREASURY_RUNGS is the five-point curve strip",
+      RG.TREASURY_RUNGS, ["BIL", "SHY", "IEF", "TLH", "TLT"])
+check_true("the rungs are listed in maturity order",
+           [RG.BOND_DURATION[t] for t in RG.TREASURY_RUNGS]
+           == sorted(RG.BOND_DURATION[t] for t in RG.TREASURY_RUNGS))
+check("the ranked field is REG_BONDS minus the rungs", len(RG.REG_BOND_SPREAD), 9)
+check_true("no Treasury rung is left in the ranked field",
+           not ({e["t"] for e in RG.REG_BOND_SPREAD} & set(RG.TREASURY_RUNGS)))
+check_true("REG_BONDS is unchanged -- still the 14-ticker universe",
+           len(RG.REG_BONDS) == 14
+           and {e["t"] for e in RG.REG_BOND_SPREAD} | set(RG.TREASURY_RUNGS)
+           == {e["t"] for e in RG.REG_BONDS})
+check("BKLN's label names the rung, not a 0.2y interpolation",
+      RG.match_label(RG.BOND_DURATION["BKLN"]), "vs BIL")
+check("HYG's label names the interpolated point",
+      RG.match_label(RG.BOND_DURATION["HYG"]), "vs ~3.3y UST (SHY/IEF)")
+
+# ---- matched_treasury_series ----
+_rp = {t: _walk(191 + k) for k, t in enumerate(RG.TREASURY_RUNGS)}
+
+for _t in RG.TREASURY_RUNGS:
+    _m = RG.matched_treasury_series(_rp, RG.BOND_DURATION[_t])
+    check_true(f"a match at {_t}'s own duration reproduces {_t} (w = 0 or 1)",
+               _close(_m, _rebased(_rp[_t])),
+               f"w={RG._bracket_rungs(RG.BOND_DURATION[_t])[2]}")
+
+_mid = (RG.BOND_DURATION["SHY"] + RG.BOND_DURATION["IEF"]) / 2.0
+_mb = RG._bracket_rungs(_mid)
+check("the midpoint of a bracket is bracketed by the two rungs", _mb[:2], ("SHY", "IEF"))
+check("...and weighted half and half", _mb[2], 0.5, tol=1e-12)
+_mm = RG.matched_treasury_series(_rp, _mid)
+_want = [1.0]
+for _i in range(1, len(_rp["SHY"])):
+    _want.append(_want[-1] * (1.0 + 0.5 * (_rp["SHY"][_i] / _rp["SHY"][_i - 1] - 1.0)
+                                   + 0.5 * (_rp["IEF"][_i] / _rp["IEF"][_i - 1] - 1.0)))
+check_true("a midpoint match interpolates the two rungs' DAILY returns",
+           _close(_mm, _want))
+check_true("and it is not either rung on its own",
+           not _close(_mm, _rebased(_rp["SHY"]), 1e-6)
+           and not _close(_mm, _rebased(_rp["IEF"]), 1e-6))
+
+check("below BIL the bracket clamps to BIL", RG._bracket_rungs(0.01), ("BIL", "BIL", 0.0))
+check("above TLT the bracket clamps to TLT", RG._bracket_rungs(30.0), ("TLT", "TLT", 1.0))
+check_true("a clamped-short match IS BIL",
+           _close(RG.matched_treasury_series(_rp, 0.01), _rebased(_rp["BIL"])))
+check_true("a clamped-long match IS TLT",
+           _close(RG.matched_treasury_series(_rp, 30.0), _rebased(_rp["TLT"])))
+check("a match with no rung series at all is None, never a flat line",
+      RG.matched_treasury_series({}, 7.0), None)
+
+# A session either rung missed has NO matched level -- it must not silently
+# become a zero return, which is a real answer here.
+_gap = {t: list(c) for t, c in _rp.items()}
+_gap["IEF"][100] = None
+check("a session a bracketing rung missed has no matched level",
+      RG.matched_treasury_series(_gap, 4.6)[100], None)
+
+# ---- THE TEST THIS ITEM EXISTS FOR ----
+# A pure parallel rate move: every ETF, Treasuries included, moves by
+# -duration x dy on the same day. That is exactly what the old total-return
+# ladder was ranking. After the match it must leave every spread row at zero.
+_DY = 0.0025      # +25bp parallel
+_par = _shock_panel({t: -d * _DY for t, d in RG.BOND_DURATION.items()})
+_pb, _pc = RG.bond_field(_par, _ex)
+check("a parallel shock still leaves all nine spread rows", len(_pb["rows"]), 9)
+check_true("a parallel rate shock produces ZERO excess return, every row",
+           all(abs(r["r63"]) < 1e-9 for r in _pb["rows"]),
+           "max |excess r63| = "
+           f"{max(abs(r['r63']) for r in _pb['rows']):.2e}")
+check_true("...on 21d and 126d too",
+           all(abs(r["r21"]) < 1e-9 and abs(r["r126"]) < 1e-9 for r in _pb["rows"]))
+check_true("...while the TOTAL return it strips is not zero at all",
+           all(abs(r["tr63"]) > 1e-4 for r in _pb["rows"]))
+# The same inputs through the OLD arithmetic: a duration ranking wearing a
+# credit ranking's clothes.
+_tot = RG.sector_ladder(_par, RG.REG_BONDS)
+check("the same inputs ranked on TOTAL return are in duration order",
+      [RG.BOND_DURATION[r["t"]] for r in _tot["rows"]],
+      sorted(RG.BOND_DURATION.values()))
+check_true("which is the bug: the old field's top third was just the short end",
+           {r["t"] for r in _tot["rows"][:3]} <= {"BIL", "BKLN", "SHY", "HYG"})
+
+# ---- curve strip + its read ----
+_CURVE_ROW_KEYS = ["t", "name", "dur", "r5", "r21", "r63", "r126", "blend",
+                   "dy21", "dy63", "dy126"]
+check("the curve strip carries the five rungs", len(_pc["rows"]), 5)
+check("the curve strip is in maturity order",
+      [r["t"] for r in _pc["rows"]], RG.TREASURY_RUNGS)
+check_true("every curve row has the stated keys, in order",
+           all(list(r.keys()) == _CURVE_ROW_KEYS for r in _pc["rows"]))
+check("dy is the duration-1 inversion of the total return, in bp",
+      _pc["rows"][4]["dy63"], round(-_pc["rows"][4]["r63"] / 16.5 * 10000))
+check_true("a parallel shock reads as a parallel shock on the strip",
+           len({r["dy63"] for r in _pc["rows"]}) == 1,
+           f"dy63 = {_pc['rows'][0]['dy63']}bp at every point")
+
+
+def _curve_read(ief, shy, tlt, tlh=0.0, bil=0.0):
+    return RG.bond_field(_shock_panel(
+        {"BIL": bil, "SHY": shy, "IEF": ief, "TLH": tlh, "TLT": tlt}), _ex)[1]["read"]
+
+
+# rallying = total return POSITIVE = yields fell. Steepening = the long end's
+# yield move MINUS the short end's is positive (the long end sold off relatively).
+for _nm, _args, _want_shape in (
+        ("bull steepener", dict(ief=0.010, shy=0.005, tlt=0.010), "bull steepener"),
+        ("bull flattener", dict(ief=0.010, shy=0.002, tlt=0.080), "bull flattener"),
+        ("bear steepener", dict(ief=-0.020, shy=-0.001, tlt=-0.050), "bear steepener"),
+        ("bear flattener", dict(ief=-0.010, shy=-0.005, tlt=-0.020), "bear flattener"),
+        ("flat (duration inside its dead zone)", dict(ief=0.001, shy=0.005, tlt=0.010), "flat"),
+        ("flat (curve inside its dead zone)", dict(ief=0.010, shy=0.010, tlt=0.087), "flat")):
+    check(f"curve shape: {_nm}", _curve_read(**_args)["shape"], _want_shape)
+
+check("duration: a belly rally", _curve_read(ief=0.010, shy=0.0, tlt=0.0)["duration"], "rallying")
+check("duration: a belly sell-off", _curve_read(ief=-0.010, shy=0.0, tlt=0.0)["duration"], "selling off")
+check("duration: inside +/-0.5% is flat", _curve_read(ief=0.004, shy=0.0, tlt=0.0)["duration"], "flat")
+check("curve: steepening", _curve_read(ief=-0.020, shy=-0.001, tlt=-0.050)["curve"], "steepening")
+check("curve: flattening", _curve_read(ief=-0.010, shy=-0.005, tlt=-0.020)["curve"], "flattening")
+check("curve: inside +/-10bp is flat", _curve_read(ief=0.010, shy=0.010, tlt=0.087)["curve"], "flat")
+_gr = _curve_read(ief=-0.020, shy=-0.001, tlt=-0.050)
+check("gap_bp IS the dy63 difference it judged on", _gr["gap_bp"],
+      round(0.050 / 16.5 * 10000) - round(0.001 / 1.9 * 10000))
+check_true("the curve read has exactly the stated keys",
+           list(_gr.keys()) == ["duration", "curve", "shape", "gap_bp"])
+
+
+# ---- credit read + the quadrant ----
+def _bond_panel(rung_moves, excess):
+    """A panel in which each spread sleeve's EXCESS return is exactly `excess`.
+    Solved through the real bracket weights: a one-day move of
+    (1+x)(1+m_matched)-1 on a flat history gives excess return x on the nose."""
+    mv = dict(rung_moves)
+    for e in RG.REG_BOND_SPREAD:
+        lo, hi, w = RG._bracket_rungs(RG.BOND_DURATION[e["t"]])
+        m = (1.0 - w) * rung_moves[lo] + w * rung_moves[hi]
+        mv[e["t"]] = (1.0 + excess.get(e["t"], 0.0)) * (1.0 + m) - 1.0
+    return _shock_panel(mv)
+
+
+_FLAT_RUNGS = {t: 0.0 for t in RG.TREASURY_RUNGS}
+
+
+def _credit(x, rungs=None):
+    ex = {t: x for t in RG.CREDIT_SLEEVES}
+    b, c = RG.bond_field(_bond_panel(rungs or _FLAT_RUNGS, ex), _ex)
+    return b, c
+
+
+_b, _c = _credit(0.010)
+check_true("the constructed excess return comes back EXACTLY",
+           all(abs(r["r63"] - 0.010) < 1e-12 for r in _b["rows"]
+               if r["t"] in RG.CREDIT_SLEEVES))
+check("credit: the four spread sleeves up on a still curve is tightening",
+      _b["read"]["credit"], "tightening")
+check("credit: down is widening", _credit(-0.010)[0]["read"]["credit"], "widening")
+check("credit: inside +/-0.25% is flat", _credit(0.002)[0]["read"]["credit"], "flat")
+check_true("the ladder read has exactly the stated keys",
+           list(_b["read"].keys()) == ["credit", "duration", "quadrant"])
+check("a flat curve leaves duration flat, so the quadrant is mixed",
+      _b["read"]["quadrant"], "mixed")
+
+# Both axes live. IEF carries the duration read; the sleeves' excess is solved
+# against the matched Treasury, so the credit read is independent of it.
+_RALLY = {"BIL": 0.0, "SHY": 0.004, "IEF": 0.015, "TLH": 0.020, "TLT": 0.025}
+_SELL = {t: -v for t, v in _RALLY.items()}
+for _nm, _rungs, _x, _want_q in (
+        ("goldilocks / disinflation", _RALLY, 0.010, "goldilocks / disinflation"),
+        ("growth scare", _RALLY, -0.010, "growth scare"),
+        ("inflation shock (2022 shape)", _SELL, -0.010, "inflation shock (2022 shape)"),
+        ("reflation", _SELL, 0.010, "reflation"),
+        ("mixed (credit inside its dead zone)", _RALLY, 0.001, "mixed")):
+    _qb, _qc = _credit(_x, _rungs)
+    check(f"quadrant: {_nm}", _qb["read"]["quadrant"], _want_q)
+    check_true(f"...and the ladder read copies the curve's duration ({_nm})",
+               _qb["read"]["duration"] == _qc["read"]["duration"])
+
+# ---- payload shape ----
+_BOND_ROW_KEYS = _OLD_LADDER_KEYS + ["field", "tr21", "tr63", "tr126",
+                                     "trblend", "dur", "match"]
+_sb, _sc = RG.bond_field(_bond_panel(_RALLY, {t: 0.01 for t in RG.CREDIT_SLEEVES}), _rnd)
+check("bond_ladder carries the nine spread rows", len(_sb["rows"]), 9)
+check_true("every spread row has the stated keys, in the stated order",
+           all(list(r.keys()) == _BOND_ROW_KEYS for r in _sb["rows"]))
+check_true("bond_ladder has exactly rows/divergence/read/spread63/spread_blend",
+           list(_sb.keys()) == ["rows", "divergence", "read", "spread63", "spread_blend"])
+check_true("bond_curve has exactly rows/read", list(_sc.keys()) == ["rows", "read"])
+check_true("every spread row carries its duration and its match label",
+           all(r["dur"] == RG.BOND_DURATION[r["t"]]
+               and r["match"] == RG.match_label(r["dur"]) for r in _sb["rows"]))
+check_true("every spread row still carries field='bonds'",
+           all(r["field"] == "bonds" for r in _sb["rows"]))
+check_true("the rows are sorted by the EXCESS blend, best first",
+           [r["blend"] for r in _sb["rows"]]
+           == sorted((r["blend"] for r in _sb["rows"]), reverse=True))
+check("spread_blend is the field's dispersion, in percentage points",
+      _sb["spread_blend"],
+      round((max(r["blend"] for r in _sb["rows"])
+             - min(r["blend"] for r in _sb["rows"])) * 100.0, 4))
+check("spread63 likewise, on the 63d excess return", _sb["spread63"],
+      round((max(r["r63"] for r in _sb["rows"])
+             - min(r["r63"] for r in _sb["rows"])) * 100.0, 4))
+check_true("tr* is the TOTAL return, and it is not the excess one",
+           all(abs(r["tr63"] - r["r63"]) > 1e-6 for r in _sb["rows"]))
+
+# A bond field whose ETFs have no series yet is EMPTY on both halves -- never
+# rows of Nones, and never a read invented out of nothing.
+_eb, _ec = RG.bond_field({"SPY": [100.0] * 300}, _rnd)
+check("no bond series yet -> no spread rows", _eb["rows"], [])
+check("no bond series yet -> no curve rows", _ec["rows"], [])
+check("no bond series yet -> no curve shape claimed", _ec["read"]["shape"], "flat")
+check("no bond series yet -> no quadrant claimed", _eb["read"]["quadrant"], "mixed")
+check("no bond series yet -> no field spread", _eb["spread63"], None)
+
+# ---- and the two neighbouring ladders are untouched ----
+# The sector one is byte-compared above; the style one is the other ladder that
+# must not have moved, and #91 touched the function they both go through.
+_stylep = RG.ladder_payload(_fl, _rnd, with_field=True)
+_style_frozen = {"rows": [{
+    "t": r["t"], "name": r["name"], "side": r["side"],
+    "r5": _rnd(r.get("r5")), "r21": _rnd(r["r21"]), "r63": _rnd(r["r63"]), "r126": _rnd(r["r126"]),
+    "blend": _rnd(r["blend"]), "third": r["third"], "third21": r["third21"],
+    "streak": r["streak"], "twin_of": r["twin_of"],
+    "sector": r.get("sector"), "gics": r.get("gics"), "basket": r.get("basket", False),
+    "members": r.get("members"), "field": r.get("field"),
+} for r in _fl["rows"]], "divergence": _fl["divergence"]}
+check_true("the STYLE ladder payload is byte-identical after #91",
+           json.dumps(_stylep) == json.dumps(_style_frozen),
+           f"{len(_stylep['rows'])} rows, {len(json.dumps(_stylep))} bytes")
+check_true("and the sector ladder is still byte-identical after #91",
+           json.dumps(RG.ladder_payload(_lad, _rnd)) == json.dumps(_frozen))
+check_true("neither neighbouring ladder learned a bond key",
+           all(not ({"tr63", "dur", "match"} & set(r))
+               for r in _stylep["rows"] + RG.ladder_payload(_lad, _rnd)["rows"]))
+
 print("\n" + ("-" * 60))
 if FAILS:
     print(f"{len(FAILS)} FAILED: {', '.join(FAILS)}")
