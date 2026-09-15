@@ -1088,6 +1088,7 @@ REG_BOND_SPREAD = [e for e in REG_BONDS if e["t"] not in set(TREASURY_RUNGS)]
 DURATION_BAND = 0.005    # +/-0.5% on IEF's 63d TOTAL return
 CURVE_BAND_BP = 10.0     # +/-10bp on the 63d long-minus-short yield proxy
 CREDIT_BAND = 0.0025     # +/-0.25% on the median 63d EXCESS return of the credit sleeves
+DY_MIN_DUR = 0.5         # below this a total return is carry, not a yield move
 CREDIT_SLEEVES = ["HYG", "LQD", "BKLN", "EMB"]
 
 
@@ -1174,9 +1175,16 @@ def bond_curve_rows(tr_rows, rnd):
     from a plain sector_ladder over the RAW series, so r5..blend here are total
     returns. dyN = -rN / dur, in basis points: the duration-1 inversion of that
     total return into "how far did the yield at this point move". It is a PROXY
-    -- it drops carry and convexity, and at BIL's 0.1y it multiplies noise a
-    hundredfold -- so it is read for the SHAPE of the move across the strip,
-    never as a yield print."""
+    -- it drops carry and convexity -- so it is read for the SHAPE of the move
+    across the strip, never as a yield print.
+
+    Below DY_MIN_DUR the inversion is NOT EMITTED AT ALL (None). At BIL's 0.1y
+    a bond's total return is essentially all carry and none of it is price, so
+    dividing by the duration does not recover a yield move, it multiplies the
+    coupon by a hundred: BIL's +0.90% over 63d came out as -901bp, which is not
+    a 9pp rally in bill yields, it is three months of T-bill interest. A number
+    that wrong is worse than a blank, and the curve read never used it -- it
+    reads SHY and TLT for the slope and IEF for the level."""
     rows = []
     for t in TREASURY_RUNGS:
         r = tr_rows.get(t)
@@ -1185,7 +1193,9 @@ def bond_curve_rows(tr_rows, rnd):
         d = BOND_DURATION[t]
 
         def _dy(v, _d=d):
-            return None if v is None else round(-v / _d * 10000.0)
+            if v is None or _d < DY_MIN_DUR:
+                return None
+            return round(-v / _d * 10000.0)
 
         rows.append({
             "t": t, "name": r["name"], "dur": d,

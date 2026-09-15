@@ -773,9 +773,30 @@ check_true("every curve row has the stated keys, in order",
            all(list(r.keys()) == _CURVE_ROW_KEYS for r in _pc["rows"]))
 check("dy is the duration-1 inversion of the total return, in bp",
       _pc["rows"][4]["dy63"], round(-_pc["rows"][4]["r63"] / 16.5 * 10000))
+_DY_ROWS = [r for r in _pc["rows"] if r["dur"] >= RG.DY_MIN_DUR]
 check_true("a parallel shock reads as a parallel shock on the strip",
-           len({r["dy63"] for r in _pc["rows"]}) == 1,
-           f"dy63 = {_pc['rows'][0]['dy63']}bp at every point")
+           len({r["dy63"] for r in _DY_ROWS}) == 1,
+           f"dy63 = {_DY_ROWS[0]['dy63']}bp at every point it is emitted")
+
+# BIL's 0.1y makes the duration-1 inversion meaningless: a bill's total return
+# is carry, not price, so -rN/dur turns three months of T-bill interest into a
+# -901bp "rally". Below DY_MIN_DUR the proxy is NOT EMITTED -- a blank is more
+# honest than a number that wrong, and the curve read never read it anyway.
+check_true("the sub-0.5y rung is the only one whose dy is suppressed",
+           [r["t"] for r in _pc["rows"] if r["dur"] < RG.DY_MIN_DUR] == ["BIL"])
+_bilrow = _pc["rows"][0]
+check("BIL is still on the strip, with its total returns", _bilrow["t"], "BIL")
+check_true("BIL's r21/r63/r126 are still numeric",
+           all(isinstance(_bilrow[k], float) for k in ("r21", "r63", "r126")))
+check_true("but BIL emits NO yield-change proxy at any horizon",
+           all(_bilrow[k] is None for k in ("dy21", "dy63", "dy126")))
+check_true("SHY through TLT all still emit one",
+           all(isinstance(r[k], int) for r in _pc["rows"][1:]
+               for k in ("dy21", "dy63", "dy126")))
+# The read is built on SHY/TLT (slope) and IEF (level), so suppressing BIL
+# cannot move it.
+check("suppressing BIL's dy leaves the curve read untouched",
+      _pc["read"], RG.bond_curve_read([r for r in _pc["rows"] if r["t"] != "BIL"]))
 
 
 def _curve_read(ief, shy, tlt, tlh=0.0, bil=0.0):
