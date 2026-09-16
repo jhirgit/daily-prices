@@ -281,6 +281,7 @@ GLD        # gold
 GC=F       # gold futures
 SI=F       # silver futures
 BZ=F       # Brent crude
+BNO        # Brent crude ETF (United States Brent Oil Fund) - the oil leg of macro_beta (jr-dash #95)
 CPER       # copper (US Copper Index Fund) - industrial-demand read
 HYG        # US high-yield credit (iShares iBoxx HY) - credit-risk read
 LQD        # US investment-grade credit (iShares iBoxx IG)
