@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?><edgarSubmission xmlns="http://www.sec.gov/edgar/nport" xmlns:com="http://www.sec.gov/edgar/common" xmlns:ncom="http://www.sec.gov/edgar/nportcommon" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sec.gov/edgar/nport eis_NPORT_Filer.xsd">
+  <headerData>
+    <submissionType>NPORT-P</submissionType>
+    <isConfidential>false</isConfidential>
+    <filerInfo>
+
+      <filer>
+        <issuerCredentials>
+          <cik>0001100663</cik>
+          <ccc>XXXXXXXX</ccc>
+        </issuerCredentials>
+      </filer>
+
+
+      <seriesClassInfo>
+        <seriesId>S000062201</seriesId>
+        <classId>C000201209</classId>
+      </seriesClassInfo>
+
+    </filerInfo>
+  </headerData>
+  <formData>
+    <genInfo>
+      <regName>iShares Trust</regName>
+      <regCik>0001100663</regCik>
+      <regLei>5493000860OXIC4B5K91</regLei>
+      <regStreet1>400 Howard Street</regStreet1>
+      <regCity>San Francisco</regCity>
+      <regStateConditional regCountry="US" regState="US-CA"/>
+      <regZipOrPostalCode>94105</regZipOrPostalCode>
+      <regPhone>800-474-2737</regPhone>
+      <seriesName>iShares Future AI &amp; Tech ETF</seriesName>
+      <seriesId>S000062201</seriesId>
+      <seriesLei>549300VS8IGDTLP20U91</seriesLei>
+      <repPdEnd>2027-03-31</repPdEnd>
+      <repPdDate>2026-06-30</repPdDate>
+      <isFinalFiling>N</isFinalFiling>
+    </genInfo>
+    <!-- TRIMMED for tools: 8 of the 64 lines of iShares Future AI & Tech ETF's NPORT-P for 2026-06-30 (accession 0001004726-26-007038, fetched 2026-09-25); fundInfo and the other lines removed -->
+    <invstOrSecs>
+      <invstOrSec>
+        <name>SK hynix Inc.</name>
+        <lei>N/A</lei>
+        <title>SK HYNIX INC</title>
+        <cusip>N/A</cusip>
+        <identifiers>
+          <isin value="KR7000660001"/>
+          <other otherDesc="Internal" value="6450267"/>
+        </identifiers>
+        <balance>80816.00000000</balance>
+        <units>NS</units>
+        <currencyConditional curCd="KRW" exchangeRt="1549.30000000"/>
+        <valUSD>142606474.95000000</valUSD>
+        <pctVal>3.628176433952</pctVal>
+        <payoffProfile>Long</payoffProfile>
+        <assetCat>EC</assetCat>
+        <issuerCat>CORP</issuerCat>
+        <invCountry>KR</invCountry>
+        <isRestrictedSec>N</isRestrictedSec>
+
+        <fairValLevel>2</fairValLevel>
+        <securityLending>
+          <isCashCollateral>N</isCashCollateral>
+          <isNonCashCollateral>N</isNonCashCollateral>
+          <isLoanByFund>N</isLoanByFund>
+        </securityLending>
+      </invstOrSec>
+      <invstOrSec>
+        <name>JAPANESE YEN</name>
+        <lei>N/A</lei>
+        <title>JAPANESE YEN</title>
+        <cusip>N/A</cusip>
+        <identifiers>
+          <isin value="N/A"/>
+          <other otherDesc="Internal" value="JPY"/>
+        </identifiers>
+        <balance>46830702.00000000</balance>
+        <units>NS</units>
+        <currencyConditional curCd="JPY" exchangeRt="162.59500000"/>
+        <valUSD>288020.55000000</valUSD>
+        <pctVal>0.007327783485</pctVal>
+        <payoffProfile>N/A</payoffProfile>
+        <assetConditional assetCat="OTHER" desc="currency"/>
+        <issuerConditional desc="currency" issuerCat="OTHER"/>
+        <invCountry>JP</invCountry>
+        <isRestrictedSec>N</isRestrictedSec>
+
+        <fairValLevel>N/A</fairValLevel>
+        <securityLending>
+          <isCashCollateral>N</isCashCollateral>
+          <isNonCashCollateral>N</isNonCashCollateral>
+          <isLoanByFund>N</isLoanByFund>
+        </securityLending>
+      </invstOrSec>
+      <invstOrSec>
+        <name>MICRON TECHNOLOGY, INC.</name>
+        <lei>B3DXGBC8GAIYWI2Z0172</lei>
+        <title>MICRON TECHNOLOGY INC</title>
+        <cusip>595112103</cusip>
+        <identifiers>
+          <isin value="US5951121038"/>
+          <other otherDesc="Internal" value="595112103"/>
+        </identifiers>
+        <balance>183234.00000000</balance>
+        <units>NS</units>
+        <curCd>USD</curCd>
+        <valUSD>211505173.86000000</valUSD>
+        <pctVal>5.381088675860</pctVal>
+        <payoffProfile>Long</payoffProfile>
+        <assetCat>EC</assetCat>
+        <issuerCat>CORP</issuerCat>
+        <invCountry>US</invCountry>
+        <isRestrictedSec>N</isRestrictedSec>
+
+        <fairValLevel>1</fairValLevel>
+        <securityLending>
+          <isCashCollateral>N</isCashCollateral>
+          <isNonCashCollateral>N</isNonCashCollateral>
+          <loanByFundCondition isLoanByFund="Y" loanVal="4386302.00000000"/>
+        </securityLending>
+      </invstOrSec>
+      <invstOrSec>
+        <name>DigiCo Infrastructure REIT</name>
+        <lei>N/A</lei>
+        <title>DIGICO INFRASTRUCTURE REIT</title>
+        <cusip>Q318A4108</cusip>
+        <identifiers>
+          <isin value="AU0000367088"/>
+          <other otherDesc="Internal" value="BTCHK67"/>
+        </identifiers>
+        <balance>15761286.00000000</balance>
+        <units>NS</units>
+        <currencyConditional curCd="AUD" exchangeRt="1.44435600"/>
+        <valUSD>26767543.97000000</valUSD>
+        <pctVal>0.681016568572</pctVal>
+        <payoffProfile>Long</payoffProfile>
+        <assetConditional assetCat="OTHER" desc="UNITS"/>
+        <issuerCat>CORP</issuerCat>
+        <invCountry>AU</invCountry>
+        <isRestrictedSec>N</isRestrictedSec>
+
+        <fairValLevel>2</fairValLevel>
+        <securityLending>
+          <isCashCollateral>N</isCashCollateral>
+          <isNonCashCollateral>N</isNonCashCollateral>
+          <isLoanByFund>N</isLoanByFund>
+        </securityLending>
+      </invstOrSec>
+      <invstOrSec>
+        <name>BlackRock Funds III: BlackRock Cash Funds: Institutional; SL Agency Shares</name>
+        <lei>N/A</lei>
+        <title>BLACKROCK CASH FUNDS INSTITUTIONAL FUND SL AGENCY</title>
+        <cusip>066922519</cusip>
+        <identifiers>
+          <isin value="US0669225197"/>
+          <other otherDesc="Internal" value="066922519            00001"/>
+        </identifiers>
+        <balance>237585713.83180000</balance>
+        <units>NS</units>
+        <curCd>USD</curCd>
+        <valUSD>237656989.55000000</valUSD>
+        <pctVal>6.046439961100</pctVal>
+        <payoffProfile>Long</payoffProfile>
+        <assetCat>STIV</assetCat>
+        <issuerCat>RF</issuerCat>
+        <invCountry>US</invCountry>
+        <isRestrictedSec>N</isRestrictedSec>
+
+        <fairValLevel>1</fairValLevel>
+        <securityLending>
+          <cashCollateralCondition cashCollateralVal="237656989.55000000" isCashCollateral="Y"/>
+          <isNonCashCollateral>N</isNonCashCollateral>
+          <isLoanByFund>N</isLoanByFund>
+        </securityLending>
+      </invstOrSec>
+      <invstOrSec>
+        <name>NASDAQ 100 E MINI SEP26</name>
+        <lei>N/A</lei>
+        <title>NASDAQ 100 E MINI SEP26</title>
+        <cusip>N/A</cusip>
+        <identifiers>
+          <isin value="N/A"/>
+          <ticker value="NQU26"/>
+          <other otherDesc="INTERNAL" value="NQU620265"/>
+        </identifiers>
+        <balance>6.00000000</balance>
+        <units>NC</units>
+        <curCd>USD</curCd>
+        <valUSD>104131.17000000</valUSD>
+        <pctVal>0.002649292447</pctVal>
+        <payoffProfile>N/A</payoffProfile>
+        <assetCat>DE</assetCat>
+        <issuerConditional desc="Index Future" issuerCat="OTHER"/>
+        <invCountry>US</invCountry>
+        <isRestrictedSec>N</isRestrictedSec>
+
+        <fairValLevel>1</fairValLevel>
+        <derivativeInfo>
+          <futrDeriv derivCat="FUT">
+            <counterparties>
+              <counterpartyName>CHICAGO MERCANTILE EXCHANGE INC</counterpartyName>
+              <counterpartyLei>SNZ2OJLFK8MNNCLQOF39</counterpartyLei>
+            </counterparties>
+            <payOffProf>Long</payOffProf>
+            <descRefInstrmnt>
+              <indexBasketInfo>
+                <indexName>NASDAQ 100 E-MINI Sep 2026</indexName>
+                <indexIdentifier>NQU26</indexIdentifier>
+              </indexBasketInfo>
+            </descRefInstrmnt>
+            <expDate>2026-09-18</expDate>
+            <notionalAmt>3558688.83000000</notionalAmt>
+            <curCd>USD</curCd>
+            <unrealizedAppr>104131.17000000</unrealizedAppr>
+          </futrDeriv>
+        </derivativeInfo>
+        <securityLending>
+          <isCashCollateral>N</isCashCollateral>
+          <isNonCashCollateral>N</isNonCashCollateral>
+          <isLoanByFund>N</isLoanByFund>
+        </securityLending>
+      </invstOrSec>
+      <invstOrSec>
+        <name>SEAGATE TECHNOLOGY HOLDINGS PUBLIC LIMITED COMPANY</name>
+        <lei>635400RUXIFEZSRU8X70</lei>
+        <title>SEAGATE TECHNOLOGY HOLDINGS PLC</title>
+        <cusip>G7997R103</cusip>
+        <identifiers>
+          <isin value="IE00BKVD2N49"/>
+          <other otherDesc="Internal" value="G7997R103"/>
+        </identifiers>
+        <balance>114052.00000000</balance>
+        <units>NS</units>
+        <curCd>USD</curCd>
+        <valUSD>110060180.00000000</valUSD>
+        <pctVal>2.800137592157</pctVal>
+        <payoffProfile>Long</payoffProfile>
+        <assetCat>EC</assetCat>
+        <issuerCat>CORP</issuerCat>
+        <invCountry>IE</invCountry>
+
+        <isRestrictedSec>N</isRestrictedSec>
+
+        <fairValLevel>1</fairValLevel>
+        <securityLending>
+          <isCashCollateral>N</isCashCollateral>
+          <isNonCashCollateral>N</isNonCashCollateral>
+          <isLoanByFund>N</isLoanByFund>
+        </securityLending>
+      </invstOrSec>
+      <invstOrSec>
+        <name>ADVANCED MICRO DEVICES, INC.</name>
+        <lei>R2I72C950HOYXII45366</lei>
+        <title>ADVANCED MICRO DEVICES INC</title>
+        <cusip>007903107</cusip>
+        <identifiers>
+          <isin value="US0079031078"/>
+          <other otherDesc="Internal" value="007903107"/>
+        </identifiers>
+        <balance>354088.00000000</balance>
+        <units>NS</units>
+        <curCd>USD</curCd>
+        <valUSD>205693260.08000000</valUSD>
+        <pctVal>5.233222678751</pctVal>
+        <payoffProfile>Long</payoffProfile>
+        <assetCat>EC</assetCat>
+        <issuerCat>CORP</issuerCat>
+        <invCountry>US</invCountry>
+        <isRestrictedSec>N</isRestrictedSec>
+
+        <fairValLevel>1</fairValLevel>
+        <securityLending>
+          <isCashCollateral>N</isCashCollateral>
+          <isNonCashCollateral>N</isNonCashCollateral>
+          <isLoanByFund>N</isLoanByFund>
+        </securityLending>
+      </invstOrSec>
+    </invstOrSecs>
+  </formData>
+</edgarSubmission>

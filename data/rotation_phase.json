@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-26T04:03:40Z",
+ "generated_at": "2026-09-26T07:06:23Z",
  "asof": "2026-09-25",
  "evidence_asof": "2026-09-25",
  "evidence_summary": {
@@ -2020,8 +2020,8 @@
      "label": "Physical uranium (Sprott U-UN.TO, in USD)",
      "window": 63,
      "s": 1,
-     "m": 0.03077,
-     "z": 0.189,
+     "m": 0.03028,
+     "z": 0.186,
      "status": "neutral",
      "value": "+3.1% over 63d",
      "note": "",
@@ -2055,12 +2055,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "producers / physical −5.9pp · SMR developers −2.3pp · the rest +2.0pp of the 63d −6.1%",
+     "value": "producers / physical −5.9pp · SMR developers −2.3pp · the rest +2.1pp of the 63d −6.1%",
      "note": "producers move with the fuel price; SMR developers are the speculative layer (some members have no 63d return; they sit in the rest)",
      "groups": [
       {
        "name": "producers / physical",
-       "c": -0.05873,
+       "c": -0.05898,
        "found": [
         "CCO.TO",
         "NXE.TO",
@@ -2081,7 +2081,7 @@
       },
       {
        "name": "the rest",
-       "c": 0.0205,
+       "c": 0.02075,
        "found": null
       }
      ],
@@ -2843,12 +2843,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "iron-ore miners +0.2pp · steelmakers +2.8pp · the rest +2.7pp of the 63d +5.7%",
+     "value": "iron-ore miners +0.1pp · steelmakers +2.8pp · the rest +2.8pp of the 63d +5.7%",
      "note": "SLX's largest weights are iron-ore miners; a move they carry is an ore trade, not a steel-price trade",
      "groups": [
       {
        "name": "iron-ore miners",
-       "c": 0.00159,
+       "c": 0.00146,
        "found": [
         "BHP",
         "RIO",
@@ -2858,7 +2858,7 @@
       },
       {
        "name": "steelmakers",
-       "c": 0.02831,
+       "c": 0.02785,
        "found": [
         "NUE",
         "STLD",
@@ -2870,7 +2870,7 @@
       },
       {
        "name": "the rest",
-       "c": 0.02716,
+       "c": 0.02776,
        "found": null
       }
      ],
@@ -3527,7 +3527,7 @@
      "groups": [
       {
        "name": "lithium miners",
-       "c": -0.01794,
+       "c": -0.01804,
        "found": [
         "ALB",
         "PLS.AX"
@@ -3542,7 +3542,7 @@
       },
       {
        "name": "cells / EV",
-       "c": -0.07522,
+       "c": -0.07512,
        "found": null
       }
      ],
@@ -3776,7 +3776,7 @@
      "label": "MP + Lynas share of the move",
      "window": 63,
      "s": 0,
-     "m": 0.701,
+     "m": 0.706,
      "z": null,
      "status": "info",
      "value": "0.7× their weight share of the 63d move (broader than the fund)",
@@ -3804,7 +3804,7 @@
      "groups": [
       {
        "name": "rare earths",
-       "c": -0.03329,
+       "c": -0.03346,
        "found": [
         "MP",
         "LYC.AX",
@@ -3813,7 +3813,7 @@
       },
       {
        "name": "lithium",
-       "c": -0.03304,
+       "c": -0.03324,
        "found": [
         "PLS.AX",
         "ALB",
@@ -3822,7 +3822,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.1633,
+       "c": -0.16292,
        "found": null
       }
      ],
@@ -13788,12 +13788,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "AI power −12.3pp · auto / industrial −6.3pp of the 63d −18.5%",
+     "value": "AI power −12.6pp · auto / industrial −7.0pp of the 63d −18.5%",
      "note": "two different end markets in one basket",
      "groups": [
       {
        "name": "AI power",
-       "c": -0.12276,
+       "c": -0.12577,
        "found": [
         "NVTS",
         "VICR",
@@ -13803,7 +13803,7 @@
       },
       {
        "name": "auto / industrial",
-       "c": -0.06258,
+       "c": -0.07021,
        "found": [
         "ON",
         "STM"
@@ -14212,7 +14212,7 @@
      "label": "Top-3 share of the move",
      "window": 63,
      "s": 0,
-     "m": 0.681,
+     "m": 0.651,
      "z": null,
      "status": "info",
      "value": "0.7× their weight share of the 63d move (broader than the fund)",
@@ -15196,7 +15196,7 @@
      "groups": [
       {
        "name": "operators",
-       "c": -0.00413,
+       "c": -0.0042,
        "found": [
         "CEG",
         "PEG",
@@ -15205,7 +15205,7 @@
       },
       {
        "name": "fuel",
-       "c": -0.03521,
+       "c": -0.03542,
        "found": [
         "CCO.TO",
         "UEC",
@@ -15222,7 +15222,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.05112,
+       "c": -0.05084,
        "found": null
       }
      ],
@@ -17021,11 +17021,11 @@
      "label": "Yen (Fanuc/Keyence translate, JPYUSD)",
      "window": 63,
      "s": 1,
-     "m": 0.02897,
-     "z": 0.713,
-     "status": "diverges",
-     "value": "+2.9% over 63d",
-     "note": "the yen strengthening",
+     "m": 0.01868,
+     "z": 0.461,
+     "status": "neutral",
+     "value": "+1.9% over 63d",
+     "note": "",
      "inputs": [
       "JPYUSD=X"
      ],
@@ -17053,10 +17053,10 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.517,
+     "m": 0.4411,
      "z": null,
      "status": "neutral",
-     "value": "52% of covered weight up over 63d · 4 of 10 names · 43% over 21d",
+     "value": "44% of covered weight up over 63d · 3 of 10 names · 31% over 21d",
      "note": "",
      "evidence": {
       "tag": "uncalibrated",
@@ -17099,7 +17099,7 @@
      }
     }
    ],
-   "read": "Steady down since 9/24 — 0 of 3 checks confirm the down-trend; the yen strengthening (JPYUSD=X +2.9% over 63d).",
+   "read": "Steady down since 9/24 — 0 of 3 checks confirm the down-trend; nothing diverging.",
    "topping": "BOTZ up on NVDA while it lags SMH and the yen weakens — the automation names not joining.",
    "bottoming": "BOTZ still down, but the yen firms and more automation names rise.",
    "phase_evidence": {

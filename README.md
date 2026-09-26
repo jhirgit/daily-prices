@@ -308,16 +308,47 @@ holding's own return over the ladder's windows (5, 21, 63 and 126 sessions), its
   does not date its list, so a `top10` row's `holdings_asof` is the fetch date. iShares
   holdings downloads were tried and now return an HTML page, so those rows stay on `top10`.
 - **Contributions:** ETF start weights are backed out of today's, `w0 = w(1+R)/(1+r)`, and
-  `c = w0 * r`. Baskets use the exact daily formula and `build()` asserts they sum to the
-  basket's return. Foreign listings are converted to USD with Yahoo's `<CCY>USD=X`.
+  `c = w0 * r`. Basket members are attributed buy-and-hold, `c = r / n` with n the members
+  priced at the window start, so every line is its weight times its own return; the basket's
+  own return minus those lines is its rest line with `kind: "rebalancing"`, what the daily
+  reset added or cost. Foreign listings are converted to USD with Yahoo's `<CCY>USD=X`.
 - **Top-3 concentration** is null unless the row moved more than one standard deviation in
   the window, because a small move cannot be attributed.
 - **Resilience:** a row whose holdings fetch fails keeps yesterday's holdings (with their
   old date) and says so in `errors`. The workflow step is `continue-on-error` with a
   timeout, so it can never stop the prices committing.
 
-Run `python rotation_members.py` (network, about 2.5 minutes). Tests:
-`python test_rotation_members.py` (no network).
+- **What is in the rest line (`rest.drivers`).** `rest.c` stays `R - sum(listed)`, so the
+  columns still add up to the ladder, and `rest.drivers` splits it into `names` and an `other`
+  line that add back to it in every window:
+  - `source: "sec_nport"` on a Yahoo top-10 row: the fund's latest public SEC N-PORT filing
+    (every security, weighted as of the filing's period end). The lines the listed ten do
+    not cover are mapped to Yahoo symbols by ISIN (Yahoo's own lookup, cached) and kept only
+    when the symbol's close on the filing date is within 15 percent of the filing's own value
+    per share. The heaviest 60 per fund are priced; their filing weights are drifted to today
+    with their own return against the fund's, then backed out per window like the listed
+    lines. Every priced name is in `names` (`show`, 15, are listed first and the board's
+    "show all" lists the others); `other` is what no name explains: the unpriced names, with
+    their weight, and whatever the method gets wrong. `breadth[k]` = how many of the names
+    rose over window k and their share of those names' weight.
+  - `source: "rebalance"` on a SPDR S&P Select Industry row (XBI, XPH, KRE and the rest:
+    modified equal weight, reset after the close on the third Friday of Mar/Jun/Sep/Dec).
+    One set of start weights backed out across a reset misattributes the move, so each
+    quarter is attributed from its own book: the issuer file for this quarter, the fund's
+    own quarter-end N-PORT (about eight sessions after each reset) for earlier ones. Each
+    name's figure is that contribution minus its line above; a name that left the fund at a
+    reset is flagged `gone`. A listed name carries only `t` and `c` (its name, weight and own
+    return are its line above); a gone one carries its own.
+  - The filings are cached in **`data/rotation_deep_holdings.json`** (committed; one security
+    per line, guard-clean). A fund's filings are listed once a week and a document is
+    downloaded once, so most days make no EDGAR call; the weekly check is about 60 listing
+    calls plus one download per new filing (about 150 when every fund has one), all through
+    `fetch_insiders.get` (its User-Agent, its 0.12s pacing). A fund SEC's
+    `company_tickers_mf.json` does not list (SILJ, DRAM on 2026-09-25) keeps the plain rest
+    line and says why in `errors`.
+
+Run `python rotation_members.py` (network, about 5 minutes: some 900 rest-line names are
+priced after the listed ones). Tests: `python test_rotation_members.py` (no network).
 
 ## Sector-ladder phase, thesis checks and evidence (`rotation_phase.py`, `rotation_evidence.py`)
 
