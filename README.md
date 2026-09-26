@@ -290,6 +290,65 @@ attempted and report what they return) are deliberately different facts: "no new
 — an outage must never cost the overnight board. Tests: `python test_news.py` (no
 network).
 
+## Sector-ladder holdings and contributions (`rotation_members.py`)
+
+jr-dash SPEC-86 part A. For every row of the Technicals sector ladder (`regime.REG_ETFS`,
+80 rows) it writes **`data/rotation_members.json`**: the row's holdings with weights, each
+holding's own return over the ladder's windows (5, 21, 63 and 126 sessions), its
+**contribution** to the row's return in each window, a rest-of-fund line, and participation
+(share of weight up, number up, top-3 concentration). The board's row expansion reads it.
+
+- **The row's return is never recomputed.** It is read from `data/technicals.json`, the
+  exact number on screen, and the rest-of-fund line is `R - sum(contributions)`, so every
+  column adds up to the ladder. The rest line therefore also carries unlisted holdings,
+  holdings with no price, and any rebalancing inside the window.
+- **Holdings tiers**, recorded per row: `basket` (the REG_ETFS members, equal weight,
+  exact), `trust` (SLV, one line), `issuer_full` (State Street's daily holdings file for the
+  SPDR funds), and `top10` (Yahoo's `funds_data.top_holdings` for everything else). Yahoo
+  does not date its list, so a `top10` row's `holdings_asof` is the fetch date. iShares
+  holdings downloads were tried and now return an HTML page, so those rows stay on `top10`.
+- **Contributions:** ETF start weights are backed out of today's, `w0 = w(1+R)/(1+r)`, and
+  `c = w0 * r`. Baskets use the exact daily formula and `build()` asserts they sum to the
+  basket's return. Foreign listings are converted to USD with Yahoo's `<CCY>USD=X`.
+- **Top-3 concentration** is null unless the row moved more than one standard deviation in
+  the window, because a small move cannot be attributed.
+- **Resilience:** a row whose holdings fetch fails keeps yesterday's holdings (with their
+  old date) and says so in `errors`. The workflow step is `continue-on-error` with a
+  timeout, so it can never stop the prices committing.
+
+Run `python rotation_members.py` (network, about 2.5 minutes). Tests:
+`python test_rotation_members.py` (no network).
+
+## Sector-ladder phase, thesis checks and evidence (`rotation_phase.py`, `rotation_evidence.py`)
+
+jr-dash SPEC-86 parts B-D. **`rotation_theses.py`** is the per-row table as data: for each of the
+63 primary rows, what its trend is a bet on, three to six row-specific checks (a driver, a ratio,
+the curve, a level, holdings concentration / split / participation) with an expected sign, and
+its own topping- and bottoming-side words. Twins inherit their primary's checks through
+`regime.REG_ETFS` `grp`. Changing a row's checks is a one-line edit there.
+
+- **`rotation_phase.py` (daily, after `rotation_members.py`)** writes
+  **`data/rotation_phase.json`** for all 80 rows: the phase (one of nine labels from the row's
+  own 126d log-price t-stat, 21/63/126d paces, acceleration in its own volatility, the 50d mean
+  and the 63d high/low structure), each check's status (direction-aware, dead zone = half the
+  measure's own window volatility), and a one-sentence read. Row closes come from `prices.db`;
+  check inputs `prices.db` does not hold (futures, yields, FX, a few ETFs) come from one batched
+  Yahoo download and are **not** added to `tickers.txt`. Holdings checks read
+  `data/rotation_members.json` and say `n/a` without it.
+- **`rotation_evidence.py` (on demand)** re-walks the same functions over Yahoo history from
+  1998 (cached, gitignored, in `data/cache/`) and writes **`data/rotation_evidence.json`**: per
+  phase label the episodes, persistence and median forward 63d return relative to SPY; per check
+  kind x family whether confirming vs diverging was followed by different relative returns (two
+  block-bootstrap intervals; `edge` only when both exclude 0 in the thesis direction with >= 20
+  episodes a side, else `descriptive`). Holdings checks cannot be calibrated and say so. It
+  re-proves no look-ahead on a real row every run. Re-run it when the thesis table changes.
+- **The words are states, not forecasts.** No generated sentence uses buy, sell, should, will,
+  likely, target or recommend; the tests enforce it on every row.
+
+Run `python rotation_evidence.py` (first run downloads about 130 series; later runs reuse the
+cache, `--refresh` re-downloads), then `python rotation_phase.py` (`--no-fetch` skips Yahoo).
+Tests: `python test_rotation_phase.py` (no network).
+
 ## Options flow (`options_flow.py`)
 
 A once-a-day chain snapshot for every optionable name in `tickers.txt`, over the

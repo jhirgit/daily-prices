@@ -120,6 +120,27 @@ jobs:
         if: steps.fallback-guard.outputs.run == 'true'
         run: python closes.py
 
+      # SPEC-86 (jr-dash): the sector ladder's holdings/contributions, then its
+      # phase + thesis checks. Placed after crowd.py rather than straight after
+      # "Export text data" because rotation_phase carries today's crowd.json
+      # ext_200d beside its own extension (which it computes from the row's
+      # adjusted closes); both need the fresh technicals.json that export wrote.
+      # DISPLAY-ONLY payloads, so a failure here must NEVER stop the prices
+      # committing: continue-on-error on each step, and a timeout so a hung
+      # Yahoo/SSGA call cannot hold the job. rotation_members keeps yesterday's
+      # data/rotation_members.json in place when pricing fails wholesale.
+      - name: Rotation ladder members + contributions (SPEC-86, display-only)
+        if: steps.fallback-guard.outputs.run == 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        run: python rotation_members.py
+
+      - name: Rotation ladder phase + thesis checks (SPEC-86, display-only)
+        if: steps.fallback-guard.outputs.run == 'true'
+        continue-on-error: true
+        timeout-minutes: 8
+        run: python rotation_phase.py
+
       - name: Commit updated database and exports
         if: steps.fallback-guard.outputs.run == 'true'
         run: |

@@ -7,3 +7,6 @@ venv/
 
 # Note: prices.db is intentionally NOT ignored — the database is committed
 # to the repo so it accumulates history across daily runs.
+
+# SPEC-86: rotation_evidence.py's long-history cache (reproducible by re-running it)
+data/cache/
