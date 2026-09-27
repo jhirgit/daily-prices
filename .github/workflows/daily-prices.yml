@@ -298,7 +298,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # If the emit crashed outright rather than exiting 1, the files will not
           # exist — git add would then fail and hide the real error behind it.
-          for f in data/options_flow.json data/options_iv_hist.json; do
+          for f in data/options_flow.json data/options_iv_hist.json data/options_oi_state.json; do
             if [ -f "$f" ]; then git add "$f"; fi
           done
           if git diff --staged --quiet; then

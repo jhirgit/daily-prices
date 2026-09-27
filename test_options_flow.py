@@ -327,6 +327,43 @@ class TestSizeGuard(unittest.TestCase):
         self.assertEqual(payload["iv_history"], "options_iv_hist.json")
 
 
+class TestOiStateFile(unittest.TestCase):
+    """2026-09-27: `oi_top` is carry-forward state, moved out of the payload at
+    89% of the 300 KB cap. The delta must survive the round trip."""
+
+    def test_split_moves_oi_top_out_of_the_payload(self):
+        names = {tk: row(tk) for tk in FX["chains"]}
+        display, state = of.split_oi_state(names)
+        self.assertTrue(all("oi_top" not in r for r in display.values()))
+        self.assertEqual(state["UNU"], names["UNU"]["oi_top"])
+        self.assertIn("oi_top", names["UNU"])               # input untouched
+        payload = of.assemble(display, {}, list(display), FX["as_of"], 1.0)
+        self.assertNotIn('"oi_top"', of.dump(payload))
+        self.assertEqual(payload["oi_state"], "options_oi_state.json")
+
+    def test_display_row_is_well_under_the_old_budget(self):
+        display, _ = of.split_oi_state({tk: row(tk) for tk in FX["chains"]})
+        payload = of.assemble(display, {}, list(display), FX["as_of"], 1.0)
+        med, mx, avg = of.per_name_bytes(payload)
+        self.assertLess(mx, 1300)
+
+    def test_round_trip_reproduces_the_per_contract_delta(self):
+        full = {tk: row(tk) for tk in FX["chains"]}
+        display, state = of.split_oi_state(full)
+        payload = of.assemble(display, {}, list(display), FX["as_of"], 1.0)
+        doc = json.loads(of.dump(of.oi_state_doc(payload["generated_at"], FX["as_of"], state)))
+        back = of.prior_rows(json.loads(of.dump(payload)), doc)
+        for tk in full:
+            self.assertEqual(back[tk]["oi_top"], full[tk]["oi_top"])
+            self.assertEqual(back[tk]["coi"], full[tk]["coi"])
+
+    def test_legacy_payload_with_inline_oi_top_still_seeds_the_delta(self):
+        legacy = {"names": {"UNU": {"coi": 1, "poi": 2, "oi_top": {"X": 5}}}}
+        self.assertEqual(of.prior_rows(legacy, {})["UNU"]["oi_top"], {"X": 5})
+        self.assertEqual(of.prior_rows(legacy, {"names": {"UNU": {"Y": 7}}})["UNU"]["oi_top"], {"Y": 7})
+        self.assertEqual(of.prior_rows({}, {}), {})
+
+
 class TestIvHistoryFile(unittest.TestCase):
     def test_appends_against_a_shared_axis(self):
         prev = {"cap": 252, "sessions": ["2026-09-03"], "names": {"A": [10.0]}}

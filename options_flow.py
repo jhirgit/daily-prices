@@ -65,6 +65,7 @@ DATA = os.path.join(HERE, "data")
 DEFAULT_TICKERS = os.path.join(HERE, "tickers.txt")
 DEFAULT_OUT = os.path.join(DATA, "options_flow.json")
 DEFAULT_IV_OUT = os.path.join(DATA, "options_iv_hist.json")
+DEFAULT_OI_OUT = os.path.join(DATA, "options_oi_state.json")
 EARNINGS = os.path.join(DATA, "earnings_dates.json")
 LATEST = os.path.join(DATA, "latest.json")
 FIXTURE = os.path.join(DATA, "fixtures", "options_flow_fixture.json")
@@ -104,6 +105,14 @@ COVERAGE_MIN = 0.80          # of the optionable universe
 # The IV history is the reason it is a SEPARATE artifact: 252 floats per name
 # projects to ~342 KB on its own, so carried inside options_flow.json the payload
 # would reach ~590 KB and breach the hard cap outright.
+#
+# 2026-09-27: the payload reached 272 KB (89% of the hard cap) at 217 optionable
+# names. Nothing in it is history -- it is linear in the universe, and tickers.txt
+# only grows. The 12-entry `oi_top` map (~339 B/name, ~27% of a row) is carry-
+# forward STATE that only the next run reads (for the per-contract `d_oi`); no
+# reader of the board displays it. It now lives in its own artifact,
+# options_oi_state.json, on the IV-history precedent: ~920 B/name in the payload,
+# ~200 KB at 217 names, headroom to roughly 320 optionable names under 300 KB.
 
 DISCLOSURE = ("PUBLIC repo, chain data only: public listed-option facts about tickers already in "
               "tickers.txt. A once-a-day snapshot is positioning arithmetic, not flow — it cannot see "
@@ -534,6 +543,7 @@ def assemble(names, skipped, universe, as_of, elapsed=None):
                        "kink": KINK_PTS, "iv_min_sessions": IV_MIN_SESSIONS,
                        "iv_full_sessions": IV_FULL_SESSIONS},
         "iv_history": os.path.basename(DEFAULT_IV_OUT),
+        "oi_state": os.path.basename(DEFAULT_OI_OUT),
         "universe_n": len(universe),
         "count": len(names),
         "elapsed_s": _r(elapsed, 1),
@@ -564,6 +574,42 @@ def per_name_bytes(payload):
     return sizes[len(sizes) // 2], sizes[-1], sum(sizes) // len(sizes)
 
 
+# ------------------------------------------------------------- OI state file
+def split_oi_state(rows):
+    """Take each row's `oi_top` (carry-forward state, not display) out of the
+    payload. Returns (display rows, {ticker: oi_top}). Pure; inputs untouched."""
+    display, state = {}, {}
+    for tk, r in rows.items():
+        r = dict(r)
+        top = r.pop("oi_top", None)
+        if top is not None:
+            state[tk] = top
+        display[tk] = r
+    return display, state
+
+
+def prior_rows(prior_payload, oi_doc):
+    """Yesterday's rows as summarize_name expects them: the payload's coi/poi plus
+    `oi_top` from the state file. A payload still carrying its own `oi_top`
+    (written before 2026-09-27) is honoured where the state file lacks the name,
+    so the first run after the split loses no delta."""
+    names = {tk: dict(r) for tk, r in ((prior_payload or {}).get("names") or {}).items()}
+    for tk, top in ((oi_doc or {}).get("names") or {}).items():
+        names.setdefault(tk, {})["oi_top"] = top
+    return names
+
+
+def oi_state_doc(generated_at, as_of, oi_state):
+    return {
+        "generated_at": generated_at, "as_of": as_of,
+        "source": "options_flow.py -- the %d largest-OI contracts per name, read back next run for d_oi"
+                  % OI_TOP_N,
+        "note": ("Carry-forward state, not display. Kept OUT of options_flow.json (2026-09-27) so the "
+                 "payload stays under its 300 KB cap as the universe grows; overwritten every run."),
+        "names": dict(sorted(oi_state.items())),
+    }
+
+
 # ------------------------------------------------------------------- live run
 def run_live(args):
     today = dt.date.today()
@@ -575,7 +621,7 @@ def run_live(args):
     prior = load_json(args.out)
     prev_hist = load_json(args.iv_out)
     earnings = load_earnings(args.earnings)
-    prior_names = prior.get("names") or {}
+    prior_names = prior_rows(prior, load_json(args.oi_out))
 
     names, skipped, universe, iv30_by_name = {}, {}, [], {}
     as_of_seen = set()
@@ -618,7 +664,9 @@ def run_live(args):
     elapsed = time.time() - t0
 
     as_of = max(as_of_seen) if as_of_seen else None
+    names, oi_state = split_oi_state(names)
     payload = assemble(names, skipped, universe, as_of, elapsed)
+    oi_body = dump(oi_state_doc(payload["generated_at"], as_of, oi_state))
     body = dump(payload)
     size = len(body.encode("utf-8"))
     med, mx, avg = per_name_bytes(payload)
@@ -640,6 +688,7 @@ def run_live(args):
           % (len(names), len(skipped), len(universe), as_of, elapsed))
     print("  payload %s (%d B) — per name median %d B, mean %d B, max %d B"
           % (args.out, size, med, avg, mx))
+    print("  oi state %s (%d B)" % (args.oi_out, len(oi_body.encode("utf-8"))))
     print("  iv history %s (%d B) — %d sessions x %d names, steady state ~%d B at %d sessions"
           % (args.iv_out, hist_size, len(hist["sessions"]), len(hist["names"]),
              _steady_state(hist_doc), IV_HIST_CAP))
@@ -672,6 +721,9 @@ def run_live(args):
             fh.write("\n")
         with io.open(args.iv_out, "w", encoding="utf-8") as fh:
             fh.write(hist_body)
+            fh.write("\n")
+        with io.open(args.oi_out, "w", encoding="utf-8") as fh:
+            fh.write(oi_body)
             fh.write("\n")
     else:
         print("  (--dry-run: nothing written)")
@@ -770,6 +822,7 @@ def main(argv=None):
     ap.add_argument("--tickers-file", default=DEFAULT_TICKERS)
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--iv-out", default=DEFAULT_IV_OUT)
+    ap.add_argument("--oi-out", default=DEFAULT_OI_OUT)
     ap.add_argument("--earnings", default=EARNINGS)
     ap.add_argument("--latest", default=LATEST)
     ap.add_argument("--dry-run", action="store_true", help="compute and print, write nothing")

@@ -399,12 +399,13 @@ to MODERATE, alert-never-action.
 
 | File | What it is |
 |---|---|
-| `data/options_flow.json` | the snapshot: one row per name, ~250 KB |
+| `data/options_flow.json` | the snapshot: one row per name, ~205 KB at 217 names |
 | `data/options_iv_hist.json` | the IV history: one `iv30` float per name per session, self-capping at 252 |
+| `data/options_oi_state.json` | carry-forward state: each name's 12 largest-OI contracts, read back next run for `d_oi`; overwritten every run |
 
 ```
 {"generated_at": <utc>, "as_of": <session>, "source": "yfinance", "expiries": 3,
- "thresholds": {...}, "iv_history": "options_iv_hist.json",
+ "thresholds": {...}, "iv_history": "options_iv_hist.json", "oi_state": "options_oi_state.json",
  "universe_n": 195, "count": 195, "elapsed_s": 69.8,
  "skipped": {"BTC-USD": "crypto", "IFNNY": "no listed options"},
  "names": {"NVDA": {
@@ -417,8 +418,8 @@ to MODERATE, alert-never-action.
     "iv_rank":, "iv_pct":, "iv_rank_n":, "iv_state":,
     "kink_event": {"date":, "estimated":},      # the print the kink is pricing, if known
     "n_unusual":, "flags": [],
-    "top": [{"s","t","e","k","v","oi","iv","px","n","d_oi"}],   # 5 by premium notional
-    "oi_top": {"<contract>": <oi>}}}}                           # 12 largest, the carried state
+    "top": [{"s","t","e","k","v","oi","iv","px","n","d_oi"}]}}} # 5 by premium notional
+# options_oi_state.json: {"names": {"NVDA": {"<contract>": <oi>, ...}}}  # 12 largest, the carried state
 ```
 
 ### The signals
@@ -462,10 +463,19 @@ scanned unattended.
 
 ### State, and the size of it
 
-The **only** state the job carries is its own previous output: it reads
-`data/options_flow.json` before overwriting it, and the 12-entry `oi_top` map is
-all the open-interest delta needs. No database, nothing to prune, no second
-artifact to keep in sync by hand.
+The state the job carries is its own previous output: it reads
+`data/options_flow.json` (yesterday's `coi`/`poi`) and `data/options_oi_state.json`
+(the 12-entry `oi_top` map per name) before overwriting both. No database,
+nothing to prune — both are whole-file snapshots of the current universe.
+
+**2026-09-27: `oi_top` moved out of the snapshot.** The payload had reached
+272 KB, 89% of the 300 KB hard cap, at 217 optionable names. None of it is
+history: the payload is linear in the universe, and `tickers.txt` only grows, so
+no rolling window or pruning applies. `oi_top` (~339 B/name, ~27% of a row) is
+state only the next run reads — no board reader displays it — so it went to its
+own file on the IV-history precedent. The payload is now ~935 B/name, ~205 KB at
+217 names, with headroom to roughly 320 optionable names. A payload written before
+the split still seeds the delta on the first run after it.
 
 The IV history is a separate file because it cannot be anything else: 252 floats
 per name projects to **~342 KB**, which inside the snapshot would put the payload
