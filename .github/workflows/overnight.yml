@@ -93,3 +93,14 @@ jobs:
       workflow: Overnight Snapshot
     permissions:
       issues: write
+
+  # The next green run closes the open issue (review F8; see _alert-failure.yml).
+  resolve:
+    needs: snapshot
+    if: always() && needs.snapshot.result == 'success'
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Overnight Snapshot
+      mode: resolve
+    permissions:
+      issues: write

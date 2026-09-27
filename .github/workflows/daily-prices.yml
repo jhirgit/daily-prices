@@ -346,3 +346,39 @@ jobs:
       workflow: Daily Prices - options flow
     permissions:
       issues: write
+
+  # The other half of each alert (review F8): the job's next green run closes
+  # its open issue, so a later failure opens a NEW issue (a notification)
+  # instead of commenting on a weeks-old one. `always() && result == 'success'`
+  # rather than a bare success(), which is transitive over the needs chain like
+  # failure() above: a red earnings-dates must not stop a green options job from
+  # resolving its own issue. A skipped fallback (run != 'true') resolves nothing.
+  resolve:
+    needs: fetch
+    if: always() && needs.fetch.result == 'success' && needs.fetch.outputs.run == 'true'
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Daily Prices
+      mode: resolve
+    permissions:
+      issues: write
+
+  resolve-earnings-dates:
+    needs: earnings-dates
+    if: always() && needs.earnings-dates.result == 'success'
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Daily Prices - earnings dates
+      mode: resolve
+    permissions:
+      issues: write
+
+  resolve-options:
+    needs: options
+    if: always() && needs.options.result == 'success'
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Daily Prices - options flow
+      mode: resolve
+    permissions:
+      issues: write
