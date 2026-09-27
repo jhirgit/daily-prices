@@ -14,6 +14,15 @@ Tables:
 
 Re-running is safe: daily bars are upserted by (ticker, date), so a run that
 follows a weekend, holiday, or outage backfills any gap in the lookback window.
+
+Adjusted closes stay consistent across runs. Yahoo's Adj Close for a date is
+that close times the product of every dividend factor AFTER it, so each new
+ex-date changes adj_close for the WHOLE history, and a split changes every
+older close too. A run fetches only the lookback window, so before it writes,
+`rebase_history` compares the oldest overlapping bar with the stored one and
+carries the change back to every older row. Without it (review H1, 2026-09-26)
+each dividend landed as a fake one-day loss that was credited back a week
+later, and adj_close was in effect a price series.
 """
 
 from __future__ import annotations
@@ -42,6 +51,17 @@ SLEEP_BETWEEN = 1.0
 
 # Retry attempts per ticker for transient network / rate-limit errors.
 ATTEMPTS = 3
+
+# "The adjustment basis moved" threshold on the adj/close ratio at the overlap
+# bar. Yahoo prices arrive as float32-grade values, so an unchanged ratio can
+# wobble by ~1e-7; the smallest real dividend in coverage moves it by ~5e-5
+# (one cent on a $200 stock). 1e-6 sits between the two.
+ADJ_TOL = 1e-6
+
+# A close at the overlap bar that moved by more than this is a split (when the
+# window carries a split event that explains it) or bad data (when it does not).
+# A one-cent revision of a settled close is ~1e-4, far below it.
+SPLIT_TOL = 0.02
 
 
 def utc_now_iso() -> str:
@@ -129,6 +149,83 @@ def _fast_get(fast_info, *keys):
     return None
 
 
+def rebase_history(conn, ticker, bars) -> dict:
+    """Carry an adjustment-basis change back to the stored rows older than `bars`.
+
+    Call BEFORE upsert_daily writes the window. Takes the oldest fetched bar
+    that is already stored (d0) and compares its two versions:
+
+      k_div   = (adj_new/close_new) / (adj_old/close_old)   a new dividend
+      k_close = close_new / close_old                        a new split
+
+    Every stored row older than d0 gets adj_close *= k_div * k_split and, on a
+    split, open/high/low/close *= k_split and volume /= k_split. d0 carries the
+    product of every factor the stored history has not seen yet, so one
+    comparison re-bases the whole tail however many ex-dates fell in the window.
+
+    k_div is a ratio of ratios, so a cent-level revision of a settled close
+    (which moves close and adj together) never reads as a dividend. A split is
+    applied only when the window's "Stock Splits" events explain the close
+    move; a move with no event to explain it is reported and never applied (a
+    bad bar, or a split Yahoo has not published yet -- repair_adj.py fixes the
+    history once it settles).
+
+    Returns {"status", "d0", "k_adj", "k_split", "rows"}; status is one of
+    "same", "rebased", "no-overlap", "empty", "close-mismatch".
+    """
+    fresh = []
+    for ts, row in bars.iterrows():
+        fresh.append((ts.strftime("%Y-%m-%d"), _f(row.get("Close")),
+                      _f(row.get("Adj Close")), _f(row.get("Stock Splits")) or 0.0))
+    if not fresh:
+        return {"status": "empty", "rows": 0}
+    stored = {d: (c, a) for d, c, a in conn.execute(
+        "SELECT date, close, adj_close FROM daily_prices WHERE ticker=? AND date>=? AND date<=?",
+        (ticker, fresh[0][0], fresh[-1][0]))}
+    d0 = None
+    for d, c_new, a_new, _ in fresh:
+        c_old, a_old = stored.get(d, (None, None))
+        if all(v is not None and v > 0 for v in (c_new, a_new, c_old, a_old)):
+            d0 = (d, c_new, a_new, c_old, a_old)
+            break
+    if d0 is None:
+        older = conn.execute("SELECT COUNT(*) FROM daily_prices WHERE ticker=? AND date<?",
+                             (ticker, fresh[0][0])).fetchone()[0]
+        return {"status": "no-overlap" if older else "empty", "rows": 0}
+    d, c_new, a_new, c_old, a_old = d0
+    k_div = (a_new / c_new) / (a_old / c_old)
+    k_close = c_new / c_old
+    out = {"d0": d, "k_adj": 1.0, "k_split": 1.0, "rows": 0}
+    # A split event stays inside the window for a week after it happens, so
+    # the event alone does not say whether the stored d0 predates it; the close
+    # move does. Unmoved: nothing new. Moved by exactly the events: a new split.
+    if abs(k_close - 1.0) <= SPLIT_TOL:
+        k_split = 1.0
+    else:
+        ratio = 1.0
+        for dd, _, _, s in fresh:
+            if dd > d and s > 0:
+                ratio *= s
+        if ratio == 1.0 or abs(k_close * ratio - 1.0) > SPLIT_TOL:
+            return dict(out, status="close-mismatch", k_close=k_close)
+        k_split = 1.0 / ratio
+    if abs(k_div - 1.0) <= ADJ_TOL and k_split == 1.0:
+        return dict(out, status="same")
+    k_adj = k_div * k_split
+    n = conn.execute("SELECT COUNT(*) FROM daily_prices WHERE ticker=? AND date<?",
+                     (ticker, d)).fetchone()[0]
+    if k_split != 1.0:
+        conn.execute(
+            "UPDATE daily_prices SET open=open*?, high=high*?, low=low*?, close=close*?, "
+            "adj_close=adj_close*?, volume=CAST(ROUND(volume/?) AS INTEGER) "
+            "WHERE ticker=? AND date<?",
+            (k_split, k_split, k_split, k_split, k_adj, k_split, ticker, d))
+    else:
+        conn.execute("UPDATE daily_prices SET adj_close=adj_close*? WHERE ticker=? AND date<?",
+                     (k_adj, ticker, d))
+    return dict(out, status="rebased", k_adj=k_adj, k_split=k_split, rows=n)
+
+
 def upsert_daily(conn, ticker, bars) -> int:
     """Insert/update every bar in the lookback window; returns rows touched."""
     now = utc_now_iso()
@@ -173,14 +270,31 @@ def record_spot(conn, ticker, tkr):
 
 def process_ticker(conn, symbol, lookback=LOOKBACK):
     tkr = yf.Ticker(symbol)
-    bars = tkr.history(period=lookback, auto_adjust=False, actions=False)
+    # actions=True only keeps the Dividends / Stock Splits columns (Yahoo sends
+    # the events either way); rebase_history reads the split events.
+    bars = tkr.history(period=lookback, auto_adjust=False, actions=True)
     if bars is None or bars.empty:
         raise RuntimeError("no daily bars returned (delisted or bad symbol?)")
+    rb = rebase_history(conn, symbol, bars)
     n = upsert_daily(conn, symbol, bars)
     spot = record_spot(conn, symbol, tkr)
     conn.commit()
     last = bars.iloc[-1]
-    return n, _f(last.get("Open")), _f(last.get("Close")), spot
+    return n, _f(last.get("Open")), _f(last.get("Close")), spot, rb
+
+
+def rebase_note(rb) -> str:
+    """One log suffix for rebase_history's result ('' when nothing happened)."""
+    st = rb.get("status")
+    if st == "rebased":
+        what = "split+adj" if rb["k_split"] != 1.0 else "adj"
+        return f"  rebased {what} x{rb['k_adj']:.6f} on {rb['rows']} rows before {rb['d0']}"
+    if st == "no-overlap":
+        return "  WARN no overlap with stored history: older rows NOT re-based (run repair_adj.py)"
+    if st == "close-mismatch":
+        return (f"  WARN close at {rb['d0']} moved x{rb['k_close']:.4f} with no split event: "
+                "older rows NOT re-based (run repair_adj.py once Yahoo settles)")
+    return ""
 
 
 def process_with_retry(conn, symbol, lookback=LOOKBACK):
@@ -213,12 +327,16 @@ def main() -> int:
     init_db(conn)
 
     print(f"Fetching {len(symbols)} ticker(s) into {args.db}")
-    ok, failed = 0, []
+    ok, failed, rebased, unsure = 0, [], 0, []
     for i, sym in enumerate(symbols):
         try:
-            n, o, c, spot = process_with_retry(conn, sym, args.lookback)
-            print(f"  [ok]   {sym:8s} bars+{n}  open={_fmt(o)} close={_fmt(c)} spot={_fmt(spot)}")
+            n, o, c, spot, rb = process_with_retry(conn, sym, args.lookback)
+            print(f"  [ok]   {sym:8s} bars+{n}  open={_fmt(o)} close={_fmt(c)} spot={_fmt(spot)}"
+                  + rebase_note(rb))
             ok += 1
+            rebased += rb.get("status") == "rebased"
+            if rb.get("status") in ("no-overlap", "close-mismatch"):
+                unsure.append(sym)
         except Exception as e:  # noqa: BLE001
             print(f"  [FAIL] {sym:8s} {e}")
             failed.append(sym)
@@ -229,6 +347,9 @@ def main() -> int:
     summary = f"{ok} ok, {len(failed)} failed"
     if failed:
         summary += f" ({', '.join(failed)})"
+    summary += f"; {rebased} re-based for a dividend or split"
+    if unsure:
+        summary += f"; {len(unsure)} NOT re-based ({', '.join(unsure)})"
     print(f"\nDone: {summary}")
 
     # Succeed if at least one ticker worked; fail the job only on a total
