@@ -79,9 +79,15 @@ def _f(v):
 
 
 def quote(symbol):
-    """Return (last, prev_close, currency) as robustly as possible."""
+    """Return (last, prev_close, currency, bar_date) as robustly as possible.
+
+    bar_date is the exchange-local date of the newest daily bar Yahoo has
+    (YYYY-MM-DD), or None when the history read fails. A market that was shut
+    still answers with its last session's move, so the date is what tells the
+    reader which session `pct` belongs to (review M4, 2026-09-26: KOSPI's 9/23
+    move was shown on 9/25, KRX shut for Chuseok)."""
     tkr = yf.Ticker(symbol)
-    last = prev = cur = None
+    last = prev = cur = bar_date = None
     try:
         fi = tkr.fast_info
         last = _f(getattr(fi, "last_price", None) or fi["lastPrice"] if fi else None)
@@ -96,31 +102,34 @@ def quote(symbol):
         cur = tkr.fast_info.currency
     except Exception:
         cur = None
-    # Fallback / repair from a short history window.
-    if last is None or prev is None:
-        try:
-            h = tkr.history(period="5d", auto_adjust=False, actions=False)
-            closes = [c for c in h["Close"].tolist() if c and not math.isnan(c)]
-            if last is None and closes:
-                last = _f(closes[-1])
-            if prev is None and len(closes) >= 2:
-                prev = _f(closes[-2])
-        except Exception:
-            pass
-    return last, prev, cur
+    # A short history window: always read, for the bar date; it also repairs a
+    # missing last / previous close.
+    try:
+        h = tkr.history(period="5d", auto_adjust=False, actions=False)
+        bars = [(ts, c) for ts, c in zip(h.index, h["Close"].tolist())
+                if c and not math.isnan(c)]
+        if bars:
+            bar_date = bars[-1][0].strftime("%Y-%m-%d")
+        if last is None and bars:
+            last = _f(bars[-1][1])
+        if prev is None and len(bars) >= 2:
+            prev = _f(bars[-2][1])
+    except Exception:
+        pass
+    return last, prev, cur, bar_date
 
 
 def quote_with_retry(symbol):
     for attempt in range(1, ATTEMPTS + 1):
         try:
-            last, prev, cur = quote(symbol)
+            last, prev, cur, bar_date = quote(symbol)
             if last is not None:
-                return last, prev, cur
+                return last, prev, cur, bar_date
         except Exception:
             pass
         if attempt < ATTEMPTS:
             time.sleep(2 ** attempt)
-    return None, None, None
+    return None, None, None, None
 
 
 def main():
@@ -129,7 +138,7 @@ def main():
     for group_name, members in BOARD:
         items = []
         for sym, name in members:
-            last, prev, cur = quote_with_retry(sym)
+            last, prev, cur, bar_date = quote_with_retry(sym)
             pct = None
             if last is not None and prev not in (None, 0):
                 pct = round((last / prev - 1.0) * 100, 3)
@@ -139,7 +148,7 @@ def main():
                 "ticker": sym, "name": name,
                 "last": round(last, 4) if last is not None else None,
                 "prev_close": round(prev, 4) if prev is not None else None,
-                "pct": pct, "currency": cur,
+                "pct": pct, "currency": cur, "bar_date": bar_date,
             })
             time.sleep(0.4)
         groups.append({"group": group_name, "items": items})
@@ -149,11 +158,13 @@ def main():
         "source": "Yahoo Finance via yfinance",
         "note": ("pct = last vs previous close. Asia = completed session; "
                  "Europe = session in progress; US futures = overnight vs prior "
-                 "settle; crypto = trailing 24h."),
+                 "settle; crypto = trailing 24h. bar_date = the exchange-local "
+                 "date of the session pct belongs to: an Asian market shut for a "
+                 "holiday still reports its last session's move, dated then."),
         "groups": groups,
     }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w") as f:
+    with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
     total = sum(len(m) for _, m in BOARD)
     print(f"overnight: {ok}/{total} quotes ok -> {OUT}")
