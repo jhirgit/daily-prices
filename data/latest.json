@@ -1,7 +1,35 @@
 {
-  "generated_at": "2026-09-27T03:31:56Z",
+  "generated_at": "2026-09-27T03:40:21Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
+  "session": "2026-09-25",
+  "session_note": "session = SPY's last settled bar. A row whose own date is older carries stale: true and is listed in lagging: its close is that older session's, not this one's.",
+  "lagging": [
+    {
+      "ticker": "000660.KS",
+      "date": "2026-09-23"
+    },
+    {
+      "ticker": "005930.KS",
+      "date": "2026-09-23"
+    },
+    {
+      "ticker": "MRAAF",
+      "date": "2026-09-24"
+    },
+    {
+      "ticker": "MRAAY",
+      "date": "2026-09-11"
+    },
+    {
+      "ticker": "PBS",
+      "date": "2026-07-17"
+    },
+    {
+      "ticker": "^KS11",
+      "date": "2026-09-23"
+    }
+  ],
   "count": 243,
   "tickers": [
     {
@@ -17,7 +45,8 @@
       "spot_captured_at": "2026-09-25T22:02:08Z",
       "currency": "KRW",
       "dma200": 1387190.0,
-      "dma200_n": 200
+      "dma200_n": 200,
+      "stale": true
     },
     {
       "ticker": "005930.KS",
@@ -32,7 +61,8 @@
       "spot_captured_at": "2026-09-25T22:02:06Z",
       "currency": "KRW",
       "dma200": 222461.75,
-      "dma200_n": 200
+      "dma200_n": 200,
+      "stale": true
     },
     {
       "ticker": "6981.T",
@@ -1877,7 +1907,8 @@
       "spot_captured_at": "2026-09-25T22:01:54Z",
       "currency": "USD",
       "dma200": 37.7779,
-      "dma200_n": 200
+      "dma200_n": 200,
+      "stale": true
     },
     {
       "ticker": "MRAAY",
@@ -1892,7 +1923,8 @@
       "spot_captured_at": "2026-09-11T23:57:51Z",
       "currency": "USD",
       "dma200": 18.0342,
-      "dma200_n": 200
+      "dma200_n": 200,
+      "stale": true
     },
     {
       "ticker": "MRNA",
@@ -2267,7 +2299,8 @@
       "spot_captured_at": "2026-09-02T16:45:06Z",
       "currency": "USD",
       "dma200": 58.4984,
-      "dma200_n": 200
+      "dma200_n": 200,
+      "stale": true
     },
     {
       "ticker": "PEJ",
@@ -3572,7 +3605,8 @@
       "spot_captured_at": "2026-09-25T22:05:46Z",
       "currency": "KRW",
       "dma200": 6252.5684,
-      "dma200_n": 200
+      "dma200_n": 200,
+      "stale": true
     },
     {
       "ticker": "^N225",

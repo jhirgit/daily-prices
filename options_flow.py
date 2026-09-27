@@ -497,11 +497,17 @@ def load_earnings(path=EARNINGS):
 
 
 def last_settled(path=LATEST):
-    """The most recent settled session the price feed knows about."""
+    """The most recent settled session the price feed knows about.
+
+    latest.json's `session` (SPY's bar) when present: the newest bar of ANY
+    ticker is a crypto print on a weekend, which is not an options session.
+    """
     if not os.path.exists(path):
         return None
     with io.open(path, "r", encoding="utf-8") as fh:
         j = json.load(fh)
+    if j.get("session"):
+        return j["session"]
     ds = [r.get("date") for r in (j.get("tickers") or []) if r.get("date")]
     return max(ds) if ds else None
 

@@ -70,11 +70,15 @@ jobs:
                      else now.date() - datetime.timedelta(days=1)).isoformat()
           try:
               d = json.load(open("data/latest.json", encoding="utf-8"))
-              dates = [t.get("date") for t in (d.get("tickers") or []) if t.get("date")]
               gen = d.get("generated_at") or ""
               age_h = (now - datetime.datetime.fromisoformat(
                   gen.replace("Z", "+00:00"))).total_seconds() / 3600.0
-              newest = max(dates) if dates else ""
+              # SPY's bar (latest.json `session`), not the newest bar of any
+              # ticker: crypto prints every day, so a run whose equities all
+              # failed would otherwise read as covered and the fallback skip.
+              newest = d.get("session") or next(
+                  (t.get("date") for t in (d.get("tickers") or [])
+                   if t.get("ticker") == "SPY"), None) or ""
           except Exception as err:
               print("run=true")
               print(f"latest.json unusable ({err!r}) -- running", file=sys.stderr)

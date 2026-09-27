@@ -14,8 +14,9 @@ can. Run it after fetch_prices.py (the GitHub Actions workflow does exactly
 this, then commits the refreshed files).
 
 daily_prices.csv is gzipped because the 10-year history is ~17.5MB raw, which
-is at the edge of what jsDelivr will serve; gzipped it is ~4MB. Nothing in the
-dashboard reads it directly -- it exists so a URL fetch can get the full history.
+is at the edge of what jsDelivr will serve; gzipped it is ~4MB. The dashboard's
+Macro tab and its analytics refresh read it, as does any URL fetch that wants
+the full history.
 """
 
 from __future__ import annotations
@@ -38,6 +39,9 @@ DEFAULT_OUT = os.path.join(HERE, "data")
 # Price columns are rounded on export: raw yfinance values carry float noise
 # (e.g. 194.8300018310547) that bloats the files and reads badly. Volume stays int.
 PRICE_DP = 4
+
+# latest.json's `session` is this ticker's last bar (the board's MARKSDATE).
+SESSION_TICKER = "SPY"
 
 
 def _round(v, dp=PRICE_DP):
@@ -105,7 +109,13 @@ def _latest_snapshot(conn: sqlite3.Connection) -> dict:
             """
         )
     }
-    tickers = []
+    # The session this file speaks for is SPY's last bar -- the same bar the
+    # board's MARKSDATE reads. A row whose own bar is older is STALE: a holiday
+    # abroad, a thin ADR, a dead listing, or a fetch that failed (the job
+    # succeeds while one ticker works). It keeps its old close, so it must say
+    # so rather than pass for today's (resilience review F3, 2026-09-26).
+    session = daily[SESSION_TICKER]["date"] if SESSION_TICKER in daily else None
+    tickers, lagging = [], []
     for sym in sorted(set(daily) | set(spot)):
         d, s = daily.get(sym), spot.get(sym)
         tickers.append(
@@ -125,6 +135,9 @@ def _latest_snapshot(conn: sqlite3.Connection) -> dict:
                 "dma200_n": m["n"] if m else 0,
             }
         )
+        if session and (not d or d["date"] < session):
+            tickers[-1]["stale"] = True
+            lagging.append({"ticker": sym, "date": d["date"] if d else None})
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": "Yahoo Finance via yfinance",
@@ -132,6 +145,13 @@ def _latest_snapshot(conn: sqlite3.Connection) -> dict:
             "close is the latest settled daily close; spot_price is the last "
             "delayed quote captured when the job ran, so they can differ intraday."
         ),
+        "session": session,
+        "session_note": (
+            f"session = {SESSION_TICKER}'s last settled bar. A row whose own date is "
+            "older carries stale: true and is listed in lagging: its close is "
+            "that older session's, not this one's."
+        ),
+        "lagging": lagging,
         "count": len(tickers),
         "tickers": tickers,
     }
