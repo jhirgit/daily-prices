@@ -9,8 +9,10 @@ Coverage, in the order a US-based reader scans it:
   - US overnight   : equity index futures (the live US read pre-open)
   - Asia (closed)  : the sessions that finished a few hours ago
   - Europe (open)  : the sessions in progress right now
-  - Rates/FX/Cmdty : 10Y yield, dollar, gold, oil
+  - Rates/FX/Cmdty : 10Y yield, dollar, gold, oil, won/TWD/yen per USD
   - Crypto (24h)   : the only thing that traded straight through
+  - Asia supply chain (closed): TSMC, SK Hynix, Samsung, Tokyo Electron,
+                    Advantest -- local listings, completed session
 
 Each item's `pct` is last vs previous close: for Asia that's the completed
 session, for Europe the session so far, for US futures the overnight move off
@@ -58,10 +60,27 @@ BOARD = [
         ("DX-Y.NYB", "Dollar index"),
         ("GC=F", "Gold"),
         ("CL=F", "WTI crude"),
+        # Yahoo quotes these as local currency per US dollar: + is a WEAKER
+        # won / Taiwan dollar / yen. The currencies of the Asian listings above.
+        ("KRW=X", "Korean won per USD"),
+        ("TWD=X", "Taiwan dollar per USD"),
+        ("JPY=X", "Japanese yen per USD"),
     ]),
     ("Crypto (24h)", [
         ("BTC-USD", "Bitcoin"),
         ("ETH-USD", "Ethereum"),
+    ]),
+    # The AI-hardware supply chain's local listings (data-enrichment 2026-09-26,
+    # the #73 C3 Taiwan/Korea geography cluster): the pre-open read for the US
+    # semis and memory names, with Asia's "completed session" semantics.
+    # Appended LAST so every earlier group keeps its position for a reader
+    # that lays the board out by order.
+    ("Asia supply chain (closed)", [
+        ("2330.TW", "TSMC (Taipei)"),
+        ("000660.KS", "SK Hynix (Seoul)"),
+        ("005930.KS", "Samsung Electronics (Seoul)"),
+        ("8035.T", "Tokyo Electron (Tokyo)"),
+        ("6857.T", "Advantest (Tokyo)"),
     ]),
 ]
 
