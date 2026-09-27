@@ -6,7 +6,7 @@ name: Tests
 # unnoticed). The bot's data commits touch only data/ and prices.db, so the path
 # filter keeps this off the daily runs.
 #
-# Offline by construction: the test step points every proxy variable at a closed
+# Offline by construction: the test steps point every proxy variable at a closed
 # local port, so a test that reaches for Yahoo or EDGAR fails here instead of
 # passing on live data. (yfinance 1.x talks through libcurl, which honours these
 # variables; urllib does too.)
@@ -41,15 +41,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      HTTP_PROXY: http://127.0.0.1:9
-      HTTPS_PROXY: http://127.0.0.1:9
-      ALL_PROXY: http://127.0.0.1:9
-      http_proxy: http://127.0.0.1:9
-      https_proxy: http://127.0.0.1:9
-      all_proxy: http://127.0.0.1:9
-      NO_PROXY: ""
-      no_proxy: ""
     steps:
       - uses: actions/checkout@v4
 
@@ -58,19 +49,16 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      # pip needs the network; the proxy block starts at the next step.
+      # pip needs the network; the test steps below export the proxy block themselves.
       - name: Install dependencies
-        env:
-          HTTP_PROXY: ""
-          HTTPS_PROXY: ""
-          ALL_PROXY: ""
-          http_proxy: ""
-          https_proxy: ""
-          all_proxy: ""
         run: pip install -r requirements.txt
 
       - name: Unit tests (network blocked)
         run: |
+          # GitHub rejects env keys that differ only by case (HTTP_PROXY vs http_proxy),
+          # so the offline proxy block is exported here rather than in an env: map.
+          export HTTP_PROXY=http://127.0.0.1:9 HTTPS_PROXY=http://127.0.0.1:9 ALL_PROXY=http://127.0.0.1:9
+          export http_proxy=$HTTP_PROXY https_proxy=$HTTPS_PROXY all_proxy=$ALL_PROXY NO_PROXY= no_proxy=
           fail=0
           for f in test_*.py; do
             echo "::group::$f"
@@ -83,5 +71,9 @@ jobs:
       # earnings_reactions on the committed prices.db (the #26 d-N convention).
       - name: Parity verifiers (network blocked)
         run: |
+          # GitHub rejects env keys that differ only by case (HTTP_PROXY vs http_proxy),
+          # so the offline proxy block is exported here rather than in an env: map.
+          export HTTP_PROXY=http://127.0.0.1:9 HTTPS_PROXY=http://127.0.0.1:9 ALL_PROXY=http://127.0.0.1:9
+          export http_proxy=$HTTP_PROXY https_proxy=$HTTPS_PROXY all_proxy=$ALL_PROXY NO_PROXY= no_proxy=
           python options_flow.py --verify
           python earnings_reactions.py --verify
