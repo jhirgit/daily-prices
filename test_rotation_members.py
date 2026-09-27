@@ -469,6 +469,17 @@ check("8 days on, same accession: one listing call, no document", (calls["edgar"
 cache, calls = M.refresh_deep(["NONE"], cache, "2026-10-03", fake_get, fake_search, log=lambda *a: None)
 check_true("a fund SEC does not list is recorded with the reason, not guessed",
            "company_tickers_mf" in cache["funds"]["NONE"]["error"])
+M.SERIES_FIX["NONE"] = "S000062201"
+try:
+    cache, calls = M.refresh_deep(["NONE"], cache, "2026-10-04", fake_get, fake_search, log=lambda *a: None)
+    check("a SERIES_FIX added after a 'no series' check is used the next day, not a week on",
+          (cache["funds"]["NONE"].get("series"), "error" in cache["funds"]["NONE"]), ("S000062201", False))
+    cache, calls = M.refresh_deep(["NONE"], cache, "2026-10-05", fake_get, fake_search, log=lambda *a: None)
+    check("...and once cached under that series it waits the week like any other", calls["edgar"], 0)
+finally:
+    del M.SERIES_FIX["NONE"]
+check_true("SILJ and DRAM carry series read from their own N-PORT-P",
+           M.SERIES_FIX.get("SILJ") == "S000082279" and M.SERIES_FIX.get("DRAM") == "S000102337")
 qc = {}
 qc, calls = M.refresh_deep(["XPH"], qc, "2026-09-25", fake_get, None, log=lambda *a: None, quarterly={"XPH"})
 check("a Select Industry fund keeps its last three quarter-end filings (1 listing + 3 documents... "

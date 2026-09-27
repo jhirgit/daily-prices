@@ -142,6 +142,8 @@ NPORT_DOC_URL = "https://www.sec.gov/Archives/edgar/data/{cik}/{acc}/primary_doc
 # the fund's own N-PORT-P (seriesName matched), never guessed.
 SERIES_FIX = {
     "HACK": "S000082278",   # Amplify Cybersecurity ETF (Amplify ETF Trust), found 2026-09-25
+    "SILJ": "S000082279",   # Amplify Junior Silver Miners ETF (Amplify ETF Trust, CIK 1633061), found 2026-09-27
+    "DRAM": "S000102337",   # Roundhill Memory ETF (Roundhill ETF Trust, CIK 1976517), found 2026-09-27
 }
 DEEP_STALE_DAYS = 7      # re-list a fund's filings when its check is older than this
 DEEP_STORE = 80          # filing lines kept per fund in the cache, heaviest first
@@ -571,7 +573,10 @@ def refresh_deep(tickers, cache, today, get, search=None, log=print,
     funds = cache.setdefault("funds", {})
     syms = cache.setdefault("symbols", {})
     calls = {"edgar": 0, "search": 0}
-    due = [t for t in tickers if deep_due(funds.get(t), today)]
+    # a SERIES_FIX added after the fund was cached as "no series" is picked up on
+    # the next run, not after DEEP_STALE_DAYS
+    due = [t for t in tickers if deep_due(funds.get(t), today)
+           or (t in SERIES_FIX and (funds.get(t) or {}).get("series") != SERIES_FIX[t])]
     smap = None
     for t in due:
         f = funds.get(t) or {}
