@@ -1,0 +1,89 @@
+name: Tests
+
+# Every test_*.py plus the two parity verifiers, on any push or PR that touches
+# code, fixtures, the ticker lists or the workflows (review H3, 2026-09-26: ~3,400
+# lines of tests existed and nothing ran them; a parity gate had been failing
+# unnoticed). The bot's data commits touch only data/ and prices.db, so the path
+# filter keeps this off the daily runs.
+#
+# Offline by construction: the test step points every proxy variable at a closed
+# local port, so a test that reaches for Yahoo or EDGAR fails here instead of
+# passing on live data. (yfinance 1.x talks through libcurl, which honours these
+# variables; urllib does too.)
+
+on:
+  push:
+    paths:
+      - "**.py"
+      - "parity/**"
+      - "data/fixtures/**"
+      - "tickers.txt"
+      - "insider_tickers.txt"
+      - "requirements*.txt"
+      - ".github/workflows/**"
+  pull_request:
+    paths:
+      - "**.py"
+      - "parity/**"
+      - "data/fixtures/**"
+      - "tickers.txt"
+      - "insider_tickers.txt"
+      - "requirements*.txt"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      HTTP_PROXY: http://127.0.0.1:9
+      HTTPS_PROXY: http://127.0.0.1:9
+      ALL_PROXY: http://127.0.0.1:9
+      http_proxy: http://127.0.0.1:9
+      https_proxy: http://127.0.0.1:9
+      all_proxy: http://127.0.0.1:9
+      NO_PROXY: ""
+      no_proxy: ""
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # pip needs the network; the proxy block starts at the next step.
+      - name: Install dependencies
+        env:
+          HTTP_PROXY: ""
+          HTTPS_PROXY: ""
+          ALL_PROXY: ""
+          http_proxy: ""
+          https_proxy: ""
+          all_proxy: ""
+        run: pip install -r requirements.txt
+
+      - name: Unit tests (network blocked)
+        run: |
+          fail=0
+          for f in test_*.py; do
+            echo "::group::$f"
+            python "$f" || { echo "::error file=$f::$f failed"; fail=1; }
+            echo "::endgroup::"
+          done
+          exit $fail
+
+      # Frozen-fixture parity: options_flow on a synthetic chain fixture,
+      # earnings_reactions on the committed prices.db (the #26 d-N convention).
+      - name: Parity verifiers (network blocked)
+        run: |
+          python options_flow.py --verify
+          python earnings_reactions.py --verify

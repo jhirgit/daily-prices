@@ -56,8 +56,8 @@ class ParseCalendarEventsTests(unittest.TestCase):
         self.assertEqual(date_str, "2026-12-01")
         self.assertIs(estimated, False)
         # The caveat this whole feature exists to enforce: False must never be
-        # read as "confirmed" -- it is merely "not Yahoo's own projection".
-        self.assertIsNot(estimated, "confirmed")
+        # read as "confirmed" -- it is merely "not Yahoo's own projection"
+        # (enforced where the payload is written, earnings_dates.py).
 
     def test_multiple_dates_picks_soonest(self):
         payload = _payload(_NOV_5_2026, True)

@@ -3,14 +3,18 @@
 
 Emits data/crowd.json beside technicals.json: for every ticker in tickers.txt,
 
-    relvol_20_60    avg volume last 20 sessions / avg volume last 60 sessions
-    ext_50d         close / SMA50  - 1
-    ext_200d        close / SMA200 - 1
-    insider_net_30d net shares SOLD (+) / BOUGHT (-) by insiders over the last
-                    ~30 days, from data/insiders_12m.json (EDGAR Form 4 P/S,
-                    monthly buckets [buy_sh, sell_sh, buy_n, sell_n, 10b5-1_sh]);
-                    null when the name is not covered by the insiders cron
-    asof            the last settled session used
+    relvol_20_60        avg volume last 20 sessions / avg volume last 60 sessions
+    ext_50d             close / SMA50  - 1
+    ext_200d            close / SMA200 - 1
+    insider_net_usd_30d net DOLLARS sold (+) / bought (-) by insiders in open-market
+                        Form 4 trades (codes S and P) dated in the 30 calendar days
+                        to today, from data/insiders.json; null when the name is not
+                        covered by the insiders cron (or has no Form 4 coverage)
+    insider_net_30d     the same number under its old name, kept until the board
+                        reads insider_net_usd_30d (review M3, 2026-09-26: it was
+                        always dollars, documented and shown as shares, and its
+                        "30d" was up to ~60 days of calendar-month buckets)
+    asof                the last settled session used
 
 Each proxy is null, never 0.0, where history is short (<60 / <50 / <200 bars) —
 a missing number must read as missing on the dashboard, not as "no extension".
@@ -22,27 +26,24 @@ measure positioning — and the dashboard labels them display-only until scored
 (SPEC-36 §6).
 
     python crowd.py                 # write data/crowd.json
-    python crowd.py --verify        # recompute the parity fixture and compare
-    python crowd.py --freeze T1,T2  # write parity/crowd_expected.json from a hand-verified run
 
-Parity discipline is the same as earnings_reactions.py / regime.py: the fixture
-is frozen from a first run on five names checked by hand, and --verify refuses
-to drift from it. Stdlib only.
+The arithmetic is pinned offline by test_crowd.py (an in-memory price history and
+inline transactions). It replaced the `--verify` parity fixture, which read the
+live insider file and so drifted every time a late Form 4 landed. Stdlib only.
 """
 import argparse
 import datetime as dt
 import json
 import os
 import sqlite3
-import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DB = os.path.join(HERE, "prices.db")
 DEFAULT_TICKERS = os.path.join(HERE, "tickers.txt")
-DEFAULT_INS = os.path.join(HERE, "data", "insiders_12m.json")
+DEFAULT_INS = os.path.join(HERE, "data", "insiders.json")
 DEFAULT_OUT = os.path.join(HERE, "data", "crowd.json")
-PARITY = os.path.join(HERE, "parity", "crowd_expected.json")
-TOL = 1e-6
+INSIDER_DAYS = 30
+BUY_CODES = {"P"}
 
 
 def load_tickers(path=DEFAULT_TICKERS):
@@ -58,9 +59,8 @@ def load_tickers(path=DEFAULT_TICKERS):
 def load_bars(conn, ticker, asof=None):
     """Settled daily bars, ascending: [(date, close, volume)].
 
-    `asof` (YYYY-MM-DD) truncates the series to bars on or before that session.
-    Production passes None and reads to the end of the file; --verify passes the
-    fixture's own asof, which is what makes the frozen numbers reproducible."""
+    `asof` (YYYY-MM-DD) truncates the series to bars on or before that session;
+    production passes None and reads to the end of the file."""
     if asof:
         rows = conn.execute(
             "SELECT date, close, volume FROM daily_prices "
@@ -92,50 +92,43 @@ def compute_one(bars, ins_entry, today):
     s50, s200 = sma(closes, 50), sma(closes, 200)
     out["ext_50d"] = round(last_close / s50 - 1.0, 4) if s50 else None
     out["ext_200d"] = round(last_close / s200 - 1.0, 4) if s200 else None
-    out["insider_net_30d"] = insider_net_30d(ins_entry, today)
+    net = insider_net_usd_30d(ins_entry, today)
+    out["insider_net_usd_30d"] = net
+    out["insider_net_30d"] = net
     return out
 
 
-def insider_net_30d(entry, today):
-    """Net shares sold (+) / bought (-) over the buckets that overlap the last 30
-    days. Buckets are calendar months, oldest -> newest; a bucket counts when its
-    month is the current month or the month containing today-30d."""
-    if not entry or entry.get("status") != "ok" or not entry.get("m"):
+def insider_net_usd_30d(entry, today, days=INSIDER_DAYS):
+    """Dollars sold (+) minus dollars bought (-) in open-market Form 4 trades
+    dated in [today - days, today]. None unless the insiders cron covers the
+    name with Form 4s (status "ok"); 0 when it does and nobody traded.
+
+    Form 144 notices (status "144") are left out on purpose: they are notices of
+    a PROPOSED sale, not executions, and the old bucket proxy left them out too."""
+    if not entry or entry.get("status") != "ok":
         return None
-    months = entry.get("_months")
-    if not months:
-        return None
-    cutoff = (today - dt.timedelta(days=30)).strftime("%Y-%m")
+    lo, hi = (today - dt.timedelta(days=days)).isoformat(), today.isoformat()
     net = 0
-    used = 0
-    for mkey, bucket in zip(months, entry["m"]):
-        if mkey >= cutoff:
-            b, s = bucket[0] or 0, bucket[1] or 0
-            net += s - b
-            used += 1
-    return int(net) if used else None
+    for x in entry.get("txns") or []:
+        d = x.get("d") or ""
+        if lo <= d <= hi:
+            v = x.get("v") or 0
+            net += -v if x.get("c") in BUY_CODES else v
+    return int(net)
 
 
 def build(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, today=None,
           asof=None):
-    """`asof` truncates every series to that session. Production leaves it None
-    (read to the end of prices.db); the parity gate passes the fixture's own
-    asof. Without it, relvol_20_60 / ext_50d / ext_200d / asof were computed from
-    whatever the LATEST bars happened to be, so parity/crowd_expected.json could
-    only pass on the day it was frozen -- `--verify` reported 22 drifted values
-    and had been doing so, silently to CI, since 2026-09-01."""
+    """`asof` truncates every series to that session (tests); production leaves
+    it None and reads to the end of prices.db."""
     today = today or dt.date.today()
     conn = sqlite3.connect(db)
-    ins = {}
-    months = []
+    ins, ins_gen = {}, None
     if os.path.exists(ins_path):
         with open(ins_path, "r", encoding="utf-8") as fh:
             j = json.load(fh)
-        months = j.get("months") or []
-        for t, e in (j.get("tickers") or {}).items():
-            e = dict(e)
-            e["_months"] = months
-            ins[t] = e
+        ins = j.get("tickers") or {}
+        ins_gen = j.get("generated_at")
     out = {}
     for t in load_tickers(tickers):
         row = compute_one(load_bars(conn, t, asof), ins.get(t), today)
@@ -145,70 +138,17 @@ def build(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, today=No
     return {
         "generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "method": ("SPEC-36 s3.4 positioning proxies: relvol_20_60 = mean(vol,20)/mean(vol,60); "
-                   "ext_50d/ext_200d = close/SMA-1; insider_net_30d = Form 4 sells-buys (shares) over the "
-                   "monthly buckets overlapping the last 30 days; null (never 0.0) where history is short. "
-                   "Display-only until scored against d5 (SPEC-36 s6); positioning, not information."),
-        "insider_months": months[-2:] if months else [],
+                   "ext_50d/ext_200d = close/SMA-1; insider_net_usd_30d = open-market Form 4 sales "
+                   "minus purchases in US DOLLARS, trades dated in the 30 days to insider_window.to "
+                   "(insider_net_30d is the same number under its old name); null (never 0.0) where "
+                   "history is short. Display-only until scored against d5 (SPEC-36 s6); "
+                   "positioning, not information."),
+        "insider_window": {"from": (today - dt.timedelta(days=INSIDER_DAYS)).isoformat(),
+                           "to": today.isoformat(), "unit": "USD",
+                           "insiders_generated_at": ins_gen},
         "count": len(out),
         "tickers": out,
     }
-
-
-def _close(a, b):
-    if a is None or b is None:
-        return a is None and b is None
-    return abs(a - b) <= TOL * max(1.0, abs(a), abs(b))
-
-
-def verify(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, path=PARITY):
-    with open(path, "r", encoding="utf-8") as fh:
-        fx = json.load(fh)
-    today = dt.date.fromisoformat(fx["today"])
-    # Fixtures frozen before 2026-09-13 carry no `asof`; their `today` IS the
-    # session they were frozen on, so it is the right cutoff for them too.
-    asof = fx.get("asof") or fx["today"]
-    got = build(db, tickers, ins_path, today, asof)["tickers"]
-    bad = 0
-    print("parity: %s (today=%s asof=%s)" % (fx.get("source", path), fx["today"], asof))
-    for t, exp in fx["cases"].items():
-        g = got.get(t)
-        for k in ("asof", "relvol_20_60", "ext_50d", "ext_200d", "insider_net_30d"):
-            want, have = exp.get(k), (g or {}).get(k)
-            same = (want == have) if k == "asof" else _close(want, have)
-            print("  %-6s %-16s want %-12s got %-12s %s" % (t, k, want, have, "ok" if same else "DRIFT"))
-            if not same:
-                bad += 1
-    if bad:
-        print("FAIL: %d value(s) drifted from the frozen fixture" % bad)
-        return 1
-    print("OK: parity holds")
-    return 0
-
-
-def freeze(names, db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, path=PARITY,
-           asof=None):
-    """Freeze the parity fixture at `asof` (default: today).
-
-    Prefer an asof a few weeks back. Two of the five inputs are NOT settled at
-    the moment a bar first appears: Yahoo revises recent VOLUMES for about a
-    week (so relvol_20_60 keeps moving under a fixed asof), and
-    data/insiders_12m.json's monthly buckets keep growing until every Form 4 for
-    that month is filed (so insider_net_30d moves for the current month). An
-    asof whose month has closed makes all five reproducible."""
-    asof = asof or dt.date.today().isoformat()
-    today = dt.date.fromisoformat(asof)
-    got = build(db, tickers, ins_path, today, asof)["tickers"]
-    cases = {t: got[t] for t in names if t in got}
-    fx = {"source": "crowd.py on five hand-checked names (SPEC-36 phase 3); re-frozen "
-                    "2026-09-13 at a settled asof after build() gained the cutoff. The "
-                    "original 2026-09-01 fixture's ext_50d/ext_200d reproduced EXACTLY "
-                    "under the cutoff -- the arithmetic never drifted, the inputs did.",
-          "today": today.isoformat(), "asof": asof, "cases": cases}
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as fh:
-        json.dump(fx, fh, indent=1)
-    print("froze %d cases into %s" % (len(cases), path))
-    return 0
 
 
 def main():
@@ -217,17 +157,7 @@ def main():
     ap.add_argument("--tickers", default=DEFAULT_TICKERS)
     ap.add_argument("--insiders", default=DEFAULT_INS)
     ap.add_argument("--out", default=DEFAULT_OUT)
-    ap.add_argument("--verify", action="store_true")
-    ap.add_argument("--freeze", default=None, help="comma-separated tickers to freeze as the parity fixture")
-    ap.add_argument("--asof", default=None,
-                    help="with --freeze: the session to freeze at (default today). "
-                         "Prefer a settled one -- see freeze().")
     a = ap.parse_args()
-    if a.verify:
-        sys.exit(verify(a.db, a.tickers, a.insiders))
-    if a.freeze:
-        sys.exit(freeze([t.strip().upper() for t in a.freeze.split(",") if t.strip()],
-                        a.db, a.tickers, a.insiders, asof=a.asof))
     payload = build(a.db, a.tickers, a.insiders)
     with open(a.out, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, separators=(",", ":"))

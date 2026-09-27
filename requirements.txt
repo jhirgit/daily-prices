@@ -9,6 +9,8 @@
 #
 # Bump deliberately: change the pin, then locally run
 #   python fetch_prices.py --lookback 7d && python test_technicals.py
-#   && python test_earnings_dates.py && python crowd.py --verify
-# 1.4.1 is the version the local venv and the parity fixtures already run against.
+#   && python test_earnings_dates.py
+# and let .github/workflows/tests.yml run every test_*.py plus the parity
+# verifiers on the push. 1.4.1 is the version the local venv and the parity
+# fixtures already run against.
 yfinance==1.4.1

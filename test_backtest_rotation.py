@@ -246,8 +246,8 @@ print("\n== spearman ==")
 
 check("monotone increasing -> +1", round(B.spearman([(1, 1), (2, 2), (3, 3), (4, 4)]), 10), 1.0)
 check("monotone decreasing -> -1", round(B.spearman([(1, 4), (2, 3), (3, 2), (4, 1)]), 10), -1.0)
-check("ties get average ranks", round(B.spearman([(1, 1), (1, 2), (2, 3), (2, 4)]), 6),
-      round(B.spearman([(1, 1), (1, 2), (2, 3), (2, 4)]), 6))
+# x ranks 1.5, 1.5, 3.5, 3.5 against y ranks 1..4: rho = 4/sqrt(20) by hand.
+check("ties get average ranks", round(B.spearman([(1, 1), (1, 2), (2, 3), (2, 4)]), 6), 0.894427)
 
 
 print("\n== the composite state series is causal ==")
@@ -262,9 +262,10 @@ full = RG.composite_series(legs)["state"]
 for cut in (4, 6, 8):
     part = RG.composite_series([L[:cut + 1] for L in legs])["state"]
     check(f"state prefix through bar {cut} is unchanged by later bars", part, full[:cut + 1])
-check("100/50/0 maps every state the composite can emit",
-      sorted({B.state_weight(s) for s in ("risk-on", "neutral", "defensive")}),
-      [0.0, 0.5, 1.0])
+# Every emitted state must be one the dial maps; anything else would fall to
+# the silent 0.5 default in state_weight.
+check_true("the composite only emits states the exposure dial knows",
+           set(full) <= {"risk-on", "neutral", "defensive"}, str(sorted(set(full))))
 check_true("and the synthetic legs really did flip state",
            len(set(full)) >= 2, str(sorted(set(full))))
 

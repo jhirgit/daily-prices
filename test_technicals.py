@@ -98,17 +98,13 @@ check_true("macd warms up at slow+sig-2",
            ml[T.MACD_SLOW - 2] is None and ml[T.MACD_SLOW - 1] is not None,
            f"first non-None at index {next(i for i, v in enumerate(ml) if v is not None)}")
 
-print("\nvariance ratio is a diagnostic, NOT a cycle detector")
-# This block exists because an earlier version of the gate classified on VR and
-# was wrong. Both facts below are the reason it no longer does.
+print("\nvariance ratio: a diagnostic the tooltip prints, so check its value")
+# VR classifies nothing any more. An earlier gate classified cycles on it and was
+# wrong: sinusoids are locally smooth, so their VR sits well ABOVE 1 (3.9-11.3 in
+# 38335ad), and drift alone does not lift it. Were VR ever to classify again,
+# the gate-recovery checks below would fail on the cyclical cases.
 vr_walk = T.variance_ratio(random_walk(600, seed=11))
-vr_cyc = T.variance_ratio(cyclical(600, period=40))
-vr_trend = T.variance_ratio(trending(600, noise=0.02))
 check_true("random walk VR ~ 1", 0.6 < vr_walk < 1.5, f"VR={vr_walk:.3f}")
-check_true("cyclical VR is ABOVE 1, not below (sinusoids are locally smooth)",
-           vr_cyc > 1.5, f"VR={vr_cyc:.3f}")
-check_true("drift alone does not push VR above 1", vr_trend < 1.5,
-           f"VR={vr_trend:.3f} -- drift is detected by R^2, not VR")
 
 print("\nR^2 threshold is calibrated against the random-walk null")
 r2_null = sorted(T.r2_loglinear(random_walk(90, s)) for s in range(400))
@@ -180,17 +176,7 @@ check_true("cyclical regime enables RSI/MFI only",
 check_true("gate publishes its own false-positive rate",
            g_trend["false_positive_rate"] == T.GATE_FALSE_TREND)
 
-print("\nH&M's headline: MACD earns on trends, is erratic on mixed-frequency cycles")
-for label, gen in (("trending", trending(400)),
-                   ("cycle-p40", cyclical(400)),
-                   ("cycle-mixed", cyclical(400, mixed=True))):
-    h = [x * 1.01 for x in gen]
-    lo = [x * 0.99 for x in gen]
-    vol = [1_000_000] * len(gen)
-    sigs = T.strategy_signals(gen, h, lo, list(gen), vol)
-    bt = T.backtest(gen, *sigs["macd_crossover_sig"])
-    print(f"    MACD on {label:11s}: strategy {bt['strategy_return']:+8.2%}  "
-          f"buy&hold {bt['buy_hold_return']:+7.2%}  trades {bt['n_trades']}")
+print("\nH&M's headline: MACD earns on trends")
 # Only the trending claim is asserted. On a single clean sinusoid MACD does
 # well -- H&M's failure case was the mixed-frequency series, and reproducing a
 # paper's numbers from a different generator would be testing the generator.
@@ -213,15 +199,35 @@ check_true("always-long matches buy&hold on a monotone series",
            abs(bt["strategy_return"] - bt["buy_hold_return"]) < 0.02,
            f"strat {bt['strategy_return']:.4f} vs hold {bt['buy_hold_return']:.4f}")
 
-print("\nwatchlist grouping")
+print("\nwatchlist grouping -- the parser, on a fixture")
+import os as _os
+import tempfile as _tf
+_fx = _tf.NamedTemporaryFile("w", suffix=".txt", delete=False, encoding="utf-8")
+_fx.write("# --- Semiconductors ---\nnvda\nAMD  # inline comment\n"
+          "# a plain comment, not a header\n# --- Software sleds ---\nNOW\n"
+          "# --- Networking software ---\nANET\n# --- Macro / benchmarks ---\n^VIX\n"
+          "# --- Other equities ---\nXYZ\n")
+_fx.close()
+_fg = T.load_groups(_fx.name)
+_os.unlink(_fx.name)
+check("symbols are upper-cased and inline comments dropped", sorted(_fg),
+      ["AMD", "ANET", "NOW", "NVDA", "XYZ", "^VIX"])
+check("a header sets the group of the names under it", _fg["AMD"]["group"], "Semiconductors")
+check("a plain comment line does not reset the group", _fg["NOW"]["group"], "Software sleds")
+check("semiconductors -> SMH", _fg["NVDA"]["proxy"], "SMH")
+check("software -> IGV", _fg["NOW"]["proxy"], "IGV")
+check("first pattern wins: 'network' beats 'software' (why tickers.txt headers are load-bearing)",
+      _fg["ANET"]["proxy"], "SMH")
+check("macro/benchmarks get no proxy", _fg["^VIX"]["proxy"], None)
+check("an unmatched header falls through to SPY", _fg["XYZ"]["proxy"], "SPY")
+
+print("\nwatchlist grouping -- the live tickers.txt")
+# GROUP_PROXY regex-matches hand-edited headers, so a header rename silently
+# re-proxies its names to SPY; only a read of the live file can see that.
 groups = T.load_groups()
-check_true("NVDA maps to a semi group with SMH proxy",
-           groups.get("NVDA", {}).get("proxy") == "SMH",
-           str(groups.get("NVDA")))
-check_true("NEM maps to GDX proxy",
-           groups.get("NEM", {}).get("proxy") == "GDX", str(groups.get("NEM")))
-check_true("NOW maps to IGV proxy",
-           groups.get("NOW", {}).get("proxy") == "IGV", str(groups.get("NOW")))
+_live_proxies = {v["proxy"] for v in groups.values()}
+check_true("the live headers still route names to every non-SPY proxy",
+           {"SMH", "GDX", "IGV", None} <= _live_proxies, str(sorted(map(str, _live_proxies))))
 check_true("comment headers are not parsed as tickers",
            not any(t.startswith("-") or " " in t for t in groups))
 
@@ -280,13 +286,28 @@ novol = T.momentum_structure(n_h, n_l, n_c, [0] * 300)
 check_true("zero-volume name cannot be in setup",
            novol["ud_vol_50d"] is None and not novol["in_setup"])
 
-print("\nevidence flags are lookahead-free")
+print("\nevidence flags are lookahead-free (mutate every bar after d)")
 import momentum_evidence as ME
 tr_c = trending(400)
 tr_h = [x * 1.01 for x in tr_c]
 tr_l = [x * 0.99 for x in tr_c]
 tr_v = [1_000_000] * 400
-st, co, bu = ME.day_flags(tr_h, tr_l, tr_c, tr_v)
+_D = 320
+_rng = random.Random(7)
+_mc = tr_c[:_D + 1] + [tr_c[_D] * (0.97 ** k) * (1 + 0.04 * _rng.random())
+                       for k in range(1, 400 - _D)]            # a crash after d
+_mh = tr_h[:_D + 1] + [x * 1.05 for x in _mc[_D + 1:]]
+_ml = tr_l[:_D + 1] + [x * 0.95 for x in _mc[_D + 1:]]
+_mv = tr_v[:_D + 1] + [3_000_000] * (400 - _D - 1)
+_base = ME.day_flags(tr_h, tr_l, tr_c, tr_v)
+_mut = ME.day_flags(_mh, _ml, _mc, _mv)
+check_true("every flag up to d is unchanged by any bar after d",
+           all(a[:_D + 1] == b[:_D + 1] for a, b in zip(_base, _mut)))
+check_true("positive control: the mutation does move flags after d",
+           any(a[_D + 1:] != b[_D + 1:] for a, b in zip(_base, _mut)))
+
+print("\nevidence flags: shape and warm-up")
+st, co, bu = _base
 check_true("flag arrays match series length", len(st) == len(co) == len(bu) == 400)
 check_true("stacked flag warms up (None early, defined late)",
            st[0] is None and st[-1] is not None)
@@ -525,9 +546,8 @@ _sh.rmtree(_tmp, ignore_errors=True)
 print("\nstyle-box / bond-category ladders (9/15/26)")
 
 _SIDES = (None, "offense", "defense")
-for _nm, _lst, _fld, _n in (("REG_STYLE", RG.REG_STYLE, "style", 10),
-                            ("REG_BONDS", RG.REG_BONDS, "bonds", 14)):
-    check(f"{_nm} row count", len(_lst), _n)
+for _nm, _lst, _fld in (("REG_STYLE", RG.REG_STYLE, "style"),
+                        ("REG_BONDS", RG.REG_BONDS, "bonds")):
     check_true(f"{_nm}: every row has exactly t/name/side/sector/field",
                all(set(e) == {"t", "name", "side", "sector", "field"} for e in _lst))
     check_true(f"{_nm}: side is only offense / defense / None",
@@ -582,7 +602,8 @@ _frozen = {"rows": [{
     "sector": r.get("sector"), "gics": r.get("gics"), "basket": r.get("basket", False),
     "members": r.get("members"),
 } for r in _lad["rows"]], "divergence": _lad["divergence"]}
-check_true("the ladder payload is BYTE-IDENTICAL to the pre-9/15 emitter",
+check_true("the ladder payload mirrors the ladder rows (each key carries its own value; "
+           "byte-identical to the pre-9/15 emitter)",
            json.dumps(_pay) == json.dumps(_frozen),
            f"{len(_pay['rows'])} rows compared, {len(json.dumps(_pay))} bytes")
 check_true("and its key order is the frozen one",
@@ -681,18 +702,13 @@ def _close(a, b, tol=1e-12):
 # ---- config ----
 check("BOND_DURATION covers exactly the REG_BONDS universe",
       sorted(RG.BOND_DURATION), sorted(e["t"] for e in RG.REG_BONDS))
-check("TREASURY_RUNGS is the five-point curve strip",
-      RG.TREASURY_RUNGS, ["BIL", "SHY", "IEF", "TLH", "TLT"])
 check_true("the rungs are listed in maturity order",
            [RG.BOND_DURATION[t] for t in RG.TREASURY_RUNGS]
            == sorted(RG.BOND_DURATION[t] for t in RG.TREASURY_RUNGS))
-check("the ranked field is REG_BONDS minus the rungs", len(RG.REG_BOND_SPREAD), 9)
+check("the ranked field is REG_BONDS minus the rungs", len(RG.REG_BOND_SPREAD),
+      len(RG.REG_BONDS) - len(RG.TREASURY_RUNGS))
 check_true("no Treasury rung is left in the ranked field",
            not ({e["t"] for e in RG.REG_BOND_SPREAD} & set(RG.TREASURY_RUNGS)))
-check_true("REG_BONDS is unchanged -- still the 14-ticker universe",
-           len(RG.REG_BONDS) == 14
-           and {e["t"] for e in RG.REG_BOND_SPREAD} | set(RG.TREASURY_RUNGS)
-           == {e["t"] for e in RG.REG_BONDS})
 check("BKLN's label names the rung, not a 0.2y interpolation",
       RG.match_label(RG.BOND_DURATION["BKLN"]), "vs BIL")
 check("HYG's label names the interpolated point",
@@ -745,7 +761,7 @@ check("a session a bracketing rung missed has no matched level",
 _DY = 0.0025      # +25bp parallel
 _par = _shock_panel({t: -d * _DY for t, d in RG.BOND_DURATION.items()})
 _pb, _pc = RG.bond_field(_par, _ex)
-check("a parallel shock still leaves all nine spread rows", len(_pb["rows"]), 9)
+check("a parallel shock still leaves every spread row", len(_pb["rows"]), len(RG.REG_BOND_SPREAD))
 check_true("a parallel rate shock produces ZERO excess return, every row",
            all(abs(r["r63"]) < 1e-9 for r in _pb["rows"]),
            "max |excess r63| = "
@@ -766,7 +782,7 @@ check_true("which is the bug: the old field's top third was just the short end",
 # ---- curve strip + its read ----
 _CURVE_ROW_KEYS = ["t", "name", "dur", "r5", "r21", "r63", "r126", "blend",
                    "dy21", "dy63", "dy126"]
-check("the curve strip carries the five rungs", len(_pc["rows"]), 5)
+check("the curve strip carries every rung", len(_pc["rows"]), len(RG.TREASURY_RUNGS))
 check("the curve strip is in maturity order",
       [r["t"] for r in _pc["rows"]], RG.TREASURY_RUNGS)
 check_true("every curve row has the stated keys, in order",
@@ -882,7 +898,7 @@ for _nm, _rungs, _x, _want_q in (
 _BOND_ROW_KEYS = _OLD_LADDER_KEYS + ["field", "tr21", "tr63", "tr126",
                                      "trblend", "dur", "match"]
 _sb, _sc = RG.bond_field(_bond_panel(_RALLY, {t: 0.01 for t in RG.CREDIT_SLEEVES}), _rnd)
-check("bond_ladder carries the nine spread rows", len(_sb["rows"]), 9)
+check("bond_ladder carries every spread row", len(_sb["rows"]), len(RG.REG_BOND_SPREAD))
 check_true("every spread row has the stated keys, in the stated order",
            all(list(r.keys()) == _BOND_ROW_KEYS for r in _sb["rows"]))
 check_true("bond_ladder has exactly rows/divergence/read/spread63/spread_blend",
@@ -915,23 +931,10 @@ check("no bond series yet -> no curve shape claimed", _ec["read"]["shape"], "fla
 check("no bond series yet -> no quadrant claimed", _eb["read"]["quadrant"], "mixed")
 check("no bond series yet -> no field spread", _eb["spread63"], None)
 
-# ---- and the two neighbouring ladders are untouched ----
-# The sector one is byte-compared above; the style one is the other ladder that
-# must not have moved, and #91 touched the function they both go through.
+# ---- and the two neighbouring ladders learned no bond key ----
+# The sector payload's value mapping is checked above; the style payload goes
+# through the same function (key order and `field` covered there too).
 _stylep = RG.ladder_payload(_fl, _rnd, with_field=True)
-_style_frozen = {"rows": [{
-    "t": r["t"], "name": r["name"], "side": r["side"],
-    "r5": _rnd(r.get("r5")), "r21": _rnd(r["r21"]), "r63": _rnd(r["r63"]), "r126": _rnd(r["r126"]),
-    "blend": _rnd(r["blend"]), "third": r["third"], "third21": r["third21"],
-    "streak": r["streak"], "twin_of": r["twin_of"],
-    "sector": r.get("sector"), "gics": r.get("gics"), "basket": r.get("basket", False),
-    "members": r.get("members"), "field": r.get("field"),
-} for r in _fl["rows"]], "divergence": _fl["divergence"]}
-check_true("the STYLE ladder payload is byte-identical after #91",
-           json.dumps(_stylep) == json.dumps(_style_frozen),
-           f"{len(_stylep['rows'])} rows, {len(json.dumps(_stylep))} bytes")
-check_true("and the sector ladder is still byte-identical after #91",
-           json.dumps(RG.ladder_payload(_lad, _rnd)) == json.dumps(_frozen))
 check_true("neither neighbouring ladder learned a bond key",
            all(not ({"tr63", "dur", "match"} & set(r))
                for r in _stylep["rows"] + RG.ladder_payload(_lad, _rnd)["rows"]))

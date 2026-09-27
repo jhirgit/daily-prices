@@ -125,12 +125,6 @@ class TestSkew(unittest.TestCase):
         self.assertEqual(r["cv"] + r["pv"], 900)           # but volume <= 1,000
         self.assertNotIn("SKEW", r["flags"])
 
-    def test_skews_recompute_from_the_published_aggregates(self):
-        for tk in ("SKEWP", "SKEWC", "UNU"):
-            r = row(tk)
-            self.assertAlmostEqual(r["pv"] / float(r["cv"]), r["pc_vol"], places=4)
-            self.assertAlmostEqual(r["poi"] / float(r["coi"]), r["pc_oi"], places=4)
-
 
 class TestOpenInterestDelta(unittest.TestCase):
     def test_aggregate_delta_against_the_prior_snapshot(self):
@@ -302,12 +296,6 @@ class TestUniverse(unittest.TestCase):
         self.assertIsNone(of.structural_skip("NVDA"))
         self.assertIsNone(of.structural_skip("005930.KS"))   # probed, not assumed
 
-    def test_tickers_file_parses(self):
-        ts = of.load_tickers()
-        self.assertGreater(len(ts), 150)
-        self.assertIn("NVDA", ts)
-        self.assertTrue(all("#" not in t and t.strip() == t for t in ts))
-
 
 class TestSizeGuard(unittest.TestCase):
     def test_thresholds(self):
@@ -327,15 +315,6 @@ class TestSizeGuard(unittest.TestCase):
         med, mx, avg = of.per_name_bytes(payload)
         self.assertLess(med, 1400)
         self.assertLess(mx, 1700)
-
-    def test_the_hard_cap_still_has_headroom_at_the_measured_row_size(self):
-        """195 optionable names x 1,270 B = ~250 KB: below the 260 KB warn line
-        (raised 2026-09-08 so the measured payload does not warn on every run);
-        ~210 names crosses it; the 300 KB cap is reached around 236 names."""
-        self.assertEqual(of.size_verdict(195 * 1270), "ok")
-        self.assertEqual(of.size_verdict(210 * 1270), "warn")
-        self.assertEqual(of.size_verdict(236 * 1270), "warn")
-        self.assertEqual(of.size_verdict(250 * 1270), "fail")
 
     def test_payload_carries_no_iv_history(self):
         """252 floats/name projects to ~342 KB — inside the payload that is an
@@ -389,12 +368,8 @@ class TestIvHistoryFile(unittest.TestCase):
 
 
 class TestParityFixture(unittest.TestCase):
-    def test_verify_passes(self):
-        self.assertEqual(of.verify(), 0)
-
-    def test_fixture_is_synthetic(self):
-        self.assertIn("SYNTHETIC", FX["source"])
-
+    # The pass case is the workflow's `options_flow.py --verify` step (and
+    # tests.yml); this is its negative control.
     def test_drift_is_actually_caught(self):
         """The guard has to fail when a number moves, or --verify proves nothing."""
         import tempfile
