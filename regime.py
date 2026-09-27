@@ -1689,8 +1689,9 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
             "frac": [_r(f) for f in frac],
             "leg": breadth_leg,
             "pool_size": len(book),
-            "pool": "BOOK",
-            "pool_tickers": book,
+            # The member list is not published: this file is public and the pool is a
+            # hand-kept coverage list; the board needs only the fraction and the count.
+            "pool": "COVERAGE",
         },
         "ladder": ladder_out,
         "style_ladder": style_out,
