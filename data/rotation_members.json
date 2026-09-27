@@ -1,5 +1,5 @@
 {
-"generated_at":"2026-09-27T06:41:51Z",
+"generated_at":"2026-09-27T08:47:59Z",
 "asof":"2026-09-25",
 "method":"Holdings by tier: 'basket' = the members in regime.REG_ETFS at equal weight (exact); 'trust' = SLV's one asset, physical silver, whose return is the trust's own; 'issuer_full' = State Street's daily holdings file for the SPDR funds (every holding, dated by the file); 'top10' = Yahoo's top-holdings list (undated; the date shown is the fetch date). Cash, money-market, currency and futures lines are excluded. R is the ladder row's own return from technicals.json, never recomputed. Member returns are Yahoo adjusted closes as-of aligned onto the ladder's session axis (SPY sessions); a member whose last bar trails it by more than 3 sessions has no return. Foreign listings are converted to USD, r_usd = (1+r_local)(1+r_fx) - 1, with Yahoo <CCY>USD=X. ETF contributions use start-of-window weights backed out of the current weights, w0 = w(1+R)/(1+r), c = w0 r -- exact only under full holdings and no rebalance inside the window. Baskets are daily-rebalanced equal weight; each member is attributed buy-and-hold, c_i = r_i / n with n the members priced at the window start, so every line is its weight times its own return, and the basket's own return minus those lines is the 'daily rebalancing' line (rest.kind), what the daily reset added or cost. The rest line is R minus the listed contributions: it holds the unlisted holdings, any listed holding with no return, rebalancing inside the window and the one-day lag of an issuer file dated the prior session. rest.drivers splits it into names and an other line (names + other = rest in every window): for a 'top10' row, source 'sec_nport' = the fund's latest public SEC N-PORT filing (every security, weight as of the filing's period end), the lines the listed ten do not cover, mapped to Yahoo symbols by ISIN and kept only when the symbol's close on the filing date matches the filing's own value per share within 15 percent; the top 60 by weight are priced, their filing weights drifted to today with their own return against the fund's, w_today = w_filing (1+r_i)/(1+R_fund) since the filing, then backed out per window like the listed lines; unpriced names stay in other with their weight. For a SPDR S&P Select Industry row (modified equal weight, reset after the close on the third Friday of Mar/Jun/Sep/Dec), source 'rebalance': today's weights are drifted back to the last reset and every earlier quarter is assumed to start from those same reset weights (an approximation: membership and caps change at each reset); each name's figure is its contribution with the resets modeled minus its one-piece line. Participation (21d, 63d): share_up = priced weight with r > 0 over priced weight; conc_top3 = the top-3 holdings' share of the window's contribution over their share of start weight, defined only when the window's move is at least 1 sigma of the row's own 126-session daily volatility scaled to the window (move_z).",
 "calls":{
@@ -2734,7 +2734,7 @@
 "r5":-0.090372,
 "r21":-0.202643,
 "r63":0.034707,
-"r126":-0.357605
+"r126":-0.357606
 },
 "c":{
 "r5":-0.000115,
@@ -5632,7 +5632,7 @@
 "r5":-0.05435,
 "r21":-0.171188,
 "r63":0.068274,
-"r126":-0.073273
+"r126":-0.073272
 },
 "c":{
 "r5":-2.5e-05,
@@ -6226,7 +6226,7 @@
 "r5":-0.039292,
 "r21":-0.077772,
 "r63":-0.127596,
-"r126":-0.132766
+"r126":-0.132767
 },
 "c":{
 "r5":-1.5e-05,
@@ -8062,7 +8062,7 @@
 "r5":-0.01586,
 "r21":-0.07563,
 "r63":0.056157,
-"r126":0.298387
+"r126":0.298388
 },
 "c":{
 "r5":-3e-06,
@@ -10294,7 +10294,7 @@
 "r5":-0.090372,
 "r21":-0.202643,
 "r63":0.034707,
-"r126":-0.357605
+"r126":-0.357606
 },
 "c":{
 "r5":-0.000333,
@@ -11088,7 +11088,7 @@
 "r5":-0.028963,
 "r21":-0.122858,
 "r63":-0.199592,
-"r126":-0.015887
+"r126":-0.015888
 },
 "c":{
 "r5":-6.4e-05,
@@ -11574,7 +11574,7 @@
 "r5":-0.007032,
 "r21":-0.010782,
 "r63":0.025578,
-"r126":0.136911
+"r126":0.136912
 },
 "c":{
 "r5":-2.1e-05,
@@ -13878,7 +13878,7 @@
 "r5":-0.045236,
 "r21":0.031721,
 "r63":0.01258,
-"r126":0.282209
+"r126":0.282208
 },
 "c":{
 "r5":-0.001004,
@@ -14110,7 +14110,7 @@
 "r5":-0.045236,
 "r21":0.031721,
 "r63":0.01258,
-"r126":0.282209
+"r126":0.282208
 },
 "c":{
 "r5":-0.00171,
@@ -44893,7 +44893,7 @@
 "r5":-0.01586,
 "r21":-0.07563,
 "r63":0.056157,
-"r126":0.298387
+"r126":0.298388
 },
 "c":{
 "r5":-0.000135,
@@ -57956,7 +57956,7 @@
 "r5":-0.05435,
 "r21":-0.171188,
 "r63":0.068274,
-"r126":-0.073273
+"r126":-0.073272
 },
 "c":{
 "r5":-0.000206,
@@ -58654,7 +58654,7 @@
 "r5":-0.009005,
 "r21":0.004323,
 "r63":0.025201,
-"r126":0.215301
+"r126":0.2153
 },
 "c":{
 "r5":-8.7e-05,
@@ -59500,7 +59500,7 @@
 "r5":-0.018854,
 "r21":-0.030802,
 "r63":0.033909,
-"r126":0.297496
+"r126":0.297495
 },
 "c":{
 "r5":-0.000177,
@@ -59932,7 +59932,7 @@
 "r5":-0.042335,
 "r21":-0.042052,
 "r63":0.072271,
-"r126":0.427767
+"r126":0.427766
 },
 "c":{
 "r5":-0.000398,
@@ -61841,7 +61841,7 @@
 "r5":-0.018854,
 "r21":-0.030802,
 "r63":0.033909,
-"r126":0.297496
+"r126":0.297495
 },
 "c":{
 "r5":-0.000209,
@@ -62867,7 +62867,7 @@
 "r5":-0.009005,
 "r21":0.004323,
 "r63":0.025201,
-"r126":0.215301
+"r126":0.2153
 },
 "c":{
 "r5":-4.8e-05,
@@ -63713,7 +63713,7 @@
 "r5":0.0,
 "r21":0.009043,
 "r63":0.058356,
-"r126":0.222832
+"r126":0.222833
 },
 "c":{
 "r5":0.0,
@@ -63911,7 +63911,7 @@
 "r5":-0.010089,
 "r21":-0.006218,
 "r63":0.041518,
-"r126":0.309344
+"r126":0.309345
 },
 "c":{
 "r5":-2.3e-05,
@@ -64037,7 +64037,7 @@
 "r5":-0.026504,
 "r21":-0.007103,
 "r63":0.050785,
-"r126":0.30908
+"r126":0.309079
 },
 "c":{
 "r5":-4.9e-05,
@@ -66364,7 +66364,7 @@
 "r5":-0.05435,
 "r21":-0.171188,
 "r63":0.068274,
-"r126":-0.073273
+"r126":-0.073272
 },
 "c":{
 "r5":-0.001405,
@@ -66400,7 +66400,7 @@
 "r5":-0.038513,
 "r21":-0.077481,
 "r63":0.271088,
-"r126":0.227002
+"r126":0.227001
 },
 "c":{
 "r5":-0.000157,
@@ -67082,7 +67082,7 @@
 "r5":-0.038513,
 "r21":-0.077481,
 "r63":0.271088,
-"r126":0.227002
+"r126":0.227001
 },
 "c":{
 "r5":-0.000634,
@@ -67442,7 +67442,7 @@
 "r5":-0.05435,
 "r21":-0.171188,
 "r63":0.068274,
-"r126":-0.073273
+"r126":-0.073272
 },
 "c":{
 "r5":-0.000844,
@@ -68793,7 +68793,7 @@
 "r5":-0.090372,
 "r21":-0.202643,
 "r63":0.034707,
-"r126":-0.357605
+"r126":-0.357606
 },
 "c":{
 "r5":-0.004254,
@@ -70649,7 +70649,7 @@
 "r5":-0.059101,
 "r21":-0.124133,
 "r63":-0.022469,
-"r126":0.155113
+"r126":0.155114
 },
 "c":{
 "r5":-0.001086,
@@ -72226,7 +72226,7 @@
 "r5":-0.090372,
 "r21":-0.202643,
 "r63":0.034707,
-"r126":-0.357605
+"r126":-0.357606
 },
 "c":{
 "r5":-0.000444,
@@ -73104,7 +73104,7 @@
 "r5":-0.090372,
 "r21":-0.202643,
 "r63":0.034707,
-"r126":-0.357605
+"r126":-0.357606
 },
 "c":{
 "r5":-0.00317,
@@ -82022,7 +82022,7 @@
 "r5":-0.039292,
 "r21":-0.077772,
 "r63":-0.127596,
-"r126":-0.132766
+"r126":-0.132767
 },
 "c":{
 "r5":-0.000769,
@@ -86362,7 +86362,7 @@
 "r5":0.012725,
 "r21":-0.032095,
 "r63":-0.03377,
-"r126":0.348314
+"r126":0.348313
 },
 "c":{
 "r5":3.3e-05,
