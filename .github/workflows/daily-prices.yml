@@ -134,16 +134,33 @@ jobs:
       # Yahoo/SSGA call cannot hold the job. rotation_members keeps yesterday's
       # data/rotation_members.json in place when pricing fails wholesale.
       - name: Rotation ladder members + contributions (SPEC-86, display-only)
+        id: rotation-members
         if: steps.fallback-guard.outputs.run == 'true'
         continue-on-error: true
         timeout-minutes: 12
         run: python rotation_members.py
 
       - name: Rotation ladder phase + thesis checks (SPEC-86, display-only)
+        id: rotation-phase
         if: steps.fallback-guard.outputs.run == 'true'
         continue-on-error: true
         timeout-minutes: 8
         run: python rotation_phase.py
+
+      # Review M1: one public-safe line per payload (data/health.json) -- the
+      # session each EOD payload speaks for, row counts, error fields, and the
+      # outcomes of the continue-on-error steps above, which otherwise fail
+      # silently behind a fresh generated_at. Display-only: it never exits
+      # non-zero without --strict, and continue-on-error besides, so it can
+      # never cost the price commit. The commit below picks it up with data/.
+      - name: Pipeline health snapshot (display-only)
+        if: steps.fallback-guard.outputs.run == 'true'
+        continue-on-error: true
+        env:
+          STEP_OUTCOMES: >-
+            rotation_members=${{ steps.rotation-members.outcome }}
+            rotation_phase=${{ steps.rotation-phase.outcome }}
+        run: python health.py
 
       - name: Commit updated database and exports
         if: steps.fallback-guard.outputs.run == 'true'
