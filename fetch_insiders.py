@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
-"""Weekly insider-transaction fetch for the jr-dash Book tab.
+"""Weekly insider-transaction fetch for every covered SEC filer in tickers.txt.
+
+Universe: tickers.txt, resolved against EDGAR's own files, so no hand-kept list
+decides who gets insider data (review L2, 2026-09-26: the old hand-kept
+insider_tickers.txt subset left most covered filers without data). Indexes
+(^) and futures/FX (=) are dropped; crypto (-USD) is labelled; a symbol with
+no CIK in EDGAR's company file is labelled `etf` when EDGAR's fund ticker file
+lists it, else `no-cik`. A filer with no Form 4s is `no-section16` when it files as a foreign
+private issuer (20-F/40-F/6-K, or F-6 for an ADR), else `etf` (a fund or trust:
+every US operating company files Form 4s for its directors' grants).
 
 Source: SEC EDGAR only — primary, free, no API key.
-  1. ticker -> CIK via company_tickers.json (one fetch per run)
+  1. ticker -> CIK via company_tickers.json, ETFs via company_tickers_mf.json
+     (one fetch each per run)
   2. per CIK: data.sec.gov submissions JSON (one fetch per name)
   3. Form 4 / 4/A raw XML, fetched ONLY for accessions not already stored
      (incremental: the committed data/insiders.json is also the state)
@@ -36,19 +46,17 @@ from datetime import date, datetime, timezone
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "data", "insiders.json")
 OUT_COMPACT = os.path.join(HERE, "data", "insiders_12m.json")
-TICKERS_FILE = os.path.join(HERE, "insider_tickers.txt")
+TICKERS_FILE = os.path.join(HERE, "tickers.txt")
+FUND_TICKERS_URL = "https://www.sec.gov/files/company_tickers_mf.json"
 
 UA = {"User-Agent": "jr-dash insider fetch jakeradencom@gmail.com"}
 SLEEP = 0.12
 RETENTION_MONTHS = 15   # raw transaction retention; export window is 12
 WINDOW_MONTHS = 12
 
-# Names with no Section 16 regime by construction — never fetched.
-SKIP = {
-    "BTC-USD": "crypto",
-    "EWY": "etf", "RING": "etf", "GDXJ": "etf", "ICOP": "etf",
-    "QQQ": "etf", "IGV": "etf", "MARS": "etf",
-}
+# Forms only a foreign private issuer (or an ADR's depositary) files. Its
+# insiders are exempt from Section 16, so "no Form 4s" is expected, not a gap.
+FPI_FORMS = {"20-F", "20-F/A", "40-F", "40-F/A", "6-K", "6-K/A", "F-6", "F-6EF", "F-6 POS"}
 
 BUY_CODES = {"P"}
 SELL_CODES = {"S"}
@@ -76,12 +84,15 @@ def month_floor(d: date, months_back: int) -> str:
     return f"{y:04d}-{m:02d}"
 
 
-def load_tickers():
-    out = []
-    with open(TICKERS_FILE, encoding="utf-8") as fh:
+def load_tickers(path=TICKERS_FILE):
+    """tickers.txt symbols that could have an issuer on EDGAR, in file order.
+    Indexes (^...) and futures / FX (...=F, ...=X) never do and are dropped."""
+    out, seen = [], set()
+    with open(path, encoding="utf-8") as fh:
         for line in fh:
             t = line.split("#")[0].strip().upper()
-            if t:
+            if t and not t.startswith("^") and "=" not in t and t not in seen:
+                seen.add(t)
                 out.append(t)
     return out
 
@@ -91,9 +102,65 @@ def cik_map():
     return {v["ticker"].upper(): f"{v['cik_str']:010d}" for v in data.values()}
 
 
+def fund_symbols():
+    """Symbols on EDGAR's fund/ETF ticker file. Empty on failure: the label
+    then reads no-cik, it never guesses."""
+    try:
+        data = json.loads(get(FUND_TICKERS_URL))
+        i = data["fields"].index("symbol")
+        return {str(r[i]).upper() for r in data["data"] if r[i]}
+    except Exception as e:  # noqa: BLE001
+        print(f"fund ticker file unavailable ({e}); ETFs will read no-cik", file=sys.stderr)
+        return set()
+
+
+def pre_status(tk, ciks, funds):
+    """The status of a symbol that is never fetched, or None to fetch it."""
+    if tk.endswith("-USD"):
+        return "crypto"
+    if tk in ciks:
+        return None
+    return "etf" if tk in funds else "no-cik"
+
+
+def final_status(has_ps, has_144, n_form4, fpi):
+    """Form-4 P/S coverage wins; then Form 144 notices (an FPI's only visible
+    insider-sale signal); then Form-4 coverage with no P/S (a real quiet); then
+    no Form 4 at all: a foreign private issuer, or a fund/trust."""
+    if has_ps:
+        return "ok"
+    if has_144:
+        return "144"
+    if n_form4:
+        return "ok"
+    return "no-section16" if fpi else "etf"
+
+
+def totals(use, months):
+    """(buy $, sell $) inside the month axis."""
+    tb = sum(x["v"] for x in use if x["c"] in BUY_CODES and x["d"][:7] >= months[0])
+    ts = sum(x["v"] for x in use if x["c"] not in BUY_CODES and x["d"][:7] >= months[0])
+    return tb, ts
+
+
+def carried(state, months):
+    """Prior state carried through a failed fetch, its buckets and totals re-cut
+    on THIS run's month axis (review L3: copied verbatim, a month boundary
+    shifted the compact export by a month)."""
+    if not state:
+        return {"status": "error"}
+    st = dict(state)
+    if st.get("status") in ("ok", "144"):
+        use = (st.get("txns") if st["status"] == "ok" else st.get("txns144")) or []
+        st["months"] = aggregate(use, months)
+        st["tot_b"], st["tot_s"] = totals(use, months)
+    return st
+
+
 def list_forms(cik, since_iso):
-    """{'f4': [...], 'f144': [...]} of (accession, primaryDocument, filingDate,
-    form) since since_iso.
+    """{'f4': [...], 'f144': [...], 'fpi': bool} -- (accession, primaryDocument,
+    filingDate, form) since since_iso, and whether the filer files as a foreign
+    private issuer (any FPI_FORMS in the fetched blocks, whatever their date).
 
     The 'recent' block covers the last 1000 filings; if that window doesn't
     reach back to since_iso, pull the older index pages it references.
@@ -111,8 +178,9 @@ def list_forms(cik, since_iso):
             if extra.get("filingTo", "") >= since_iso:
                 blocks.append(json.loads(get(
                     "https://data.sec.gov/submissions/" + extra["name"])))
-    out = {"f4": [], "f144": []}
+    out = {"f4": [], "f144": [], "fpi": False}
     for b in blocks:
+        out["fpi"] = out["fpi"] or any(f in FPI_FORMS for f in b["form"])
         for form, fdate, acc, doc in zip(
                 b["form"], b["filingDate"], b["accessionNumber"],
                 b["primaryDocument"]):
@@ -239,15 +307,14 @@ def main():
 
     tickers = load_tickers()
     ciks = cik_map()
+    funds = fund_symbols()
     out = {}
     for tk in tickers:
-        if tk in SKIP:
-            out[tk] = {"status": SKIP[tk]}
+        pre = pre_status(tk, ciks, funds)
+        if pre:
+            out[tk] = {"status": pre}
             continue
-        cik = ciks.get(tk)
-        if not cik:
-            out[tk] = {"status": "no-cik"}
-            continue
+        cik = ciks[tk]
         state = prev.get(tk, {})
         seen = {x["acc"] for x in state.get("txns", [])}
         seen |= set(state.get("empty_accs", []))
@@ -256,7 +323,7 @@ def main():
         except Exception as e:
             print(f"{tk}: submissions fetch failed ({e}); carrying prior state",
                   file=sys.stderr)
-            out[tk] = state or {"status": "error"}
+            out[tk] = carried(state, months)
             continue
         filings = forms["f4"]
         txns = [x for x in state.get("txns", []) if x["d"][:7] >= months[0] or
@@ -317,21 +384,16 @@ def main():
                 kset.add(k); ddd.append(x)
             t144 = ddd
 
-        if dd:
-            status, use = "ok", dd
-        elif [x for x in t144 if x["d"][:7] >= months[0]]:
-            status, use = "144", t144
-        elif filings:
-            status, use = "ok", dd      # Form-4 coverage exists, zero P/S — real quiet
-        else:
-            status, use = "no-section16", dd
+        status = final_status(bool(dd), any(x["d"][:7] >= months[0] for x in t144),
+                              len(filings), forms["fpi"])
+        use = t144 if status == "144" else dd
+        tb, ts = totals(use, months)
         out[tk] = {
             "status": status, "cik": cik,
             "txns": dd, "empty_accs": sorted(empty),
             "txns144": t144, "empty_accs144": sorted(e144),
             "months": aggregate(use, months),
-            "tot_b": sum(x["v"] for x in use if x["c"] in BUY_CODES and x["d"][:7] >= months[0]),
-            "tot_s": sum(x["v"] for x in use if x["c"] not in BUY_CODES and x["d"][:7] >= months[0]),
+            "tot_b": tb, "tot_s": ts,
         }
         print(f"{tk}: {len(filings)} f4 / {len(forms['f144'])} f144 filings, "
               f"+{new} new txns, +{new144} new 144s, status={out[tk]['status']}")

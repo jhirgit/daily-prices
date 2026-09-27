@@ -18,7 +18,6 @@ on:
       - "parity/**"
       - "data/fixtures/**"
       - "tickers.txt"
-      - "insider_tickers.txt"
       - "requirements*.txt"
       - ".github/workflows/**"
   pull_request:
@@ -27,7 +26,6 @@ on:
       - "parity/**"
       - "data/fixtures/**"
       - "tickers.txt"
-      - "insider_tickers.txt"
       - "requirements*.txt"
       - ".github/workflows/**"
   workflow_dispatch:
