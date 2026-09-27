@@ -48,8 +48,10 @@ DEFAULT_DB = os.path.join(HERE, "prices.db")
 CLOSE_TOL = 0.01
 # More than this share of a ticker's rows mismatched: skip the ticker whole.
 MAX_MISMATCH_SHARE = 0.02
-# A row "changes" when its adj_close moves by more than this (relative).
-CHANGE_TOL = 1e-7
+# A row "changes" when its adj_close moves by more than this (relative). Yahoo
+# re-rounds adjusted values by up to ~1e-6 on dates whose basis did not move
+# (9/26 dry run: 50+ tickers), so below this is rounding, not a repair.
+CHANGE_TOL = 5e-6
 SAMPLE_DATES = 6
 SLEEP_BETWEEN = 0.5
 

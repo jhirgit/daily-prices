@@ -53,10 +53,10 @@ SLEEP_BETWEEN = 1.0
 ATTEMPTS = 3
 
 # "The adjustment basis moved" threshold on the adj/close ratio at the overlap
-# bar. Yahoo prices arrive as float32-grade values, so an unchanged ratio can
-# wobble by ~1e-7; the smallest real dividend in coverage moves it by ~5e-5
-# (one cent on a $200 stock). 1e-6 sits between the two.
-ADJ_TOL = 1e-6
+# bar. Yahoo re-rounds its adjusted values, so an unchanged date's ratio can
+# wobble by ~1e-6 (measured in the 2026-09-26 repair dry run); the smallest
+# real dividend in coverage moves it by ~5e-5 (one cent on a $200 stock).
+ADJ_TOL = 1e-5
 
 # A close at the overlap bar that moved by more than this is a split (when the
 # window carries a split event that explains it) or bad data (when it does not).
