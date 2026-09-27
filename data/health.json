@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-27T04:15:33Z",
+ "generated_at": "2026-09-27T06:41:54Z",
  "session": "2026-09-25",
  "status": "ok",
  "degraded": [],
@@ -12,9 +12,9 @@
  "payloads": {
   "latest.json": {
    "present": true,
-   "bytes": 86530,
-   "generated_at": "2026-09-27T04:08:55Z",
-   "rows": 243,
+   "bytes": 86880,
+   "generated_at": "2026-09-27T06:35:16Z",
+   "rows": 244,
    "asof": "2026-09-25",
    "errors": {
     "lagging": [
@@ -26,29 +26,29 @@
   },
   "technicals.json": {
    "present": true,
-   "bytes": 1735677,
-   "generated_at": "2026-09-27T04:09:02Z",
+   "bytes": 1735771,
+   "generated_at": "2026-09-27T06:35:25Z",
    "rows": 233,
    "asof": "2026-09-25"
   },
   "closes.json": {
    "present": true,
-   "bytes": 1306865,
-   "generated_at": "2026-09-27T04:09:02Z",
-   "rows": 241,
+   "bytes": 1311624,
+   "generated_at": "2026-09-27T06:35:26Z",
+   "rows": 242,
    "asof": "2026-09-25"
   },
   "crowd.json": {
    "present": true,
-   "bytes": 33437,
-   "generated_at": "2026-09-27T04:09:02Z",
-   "rows": 241,
+   "bytes": 33574,
+   "generated_at": "2026-09-27T06:35:25Z",
+   "rows": 242,
    "asof": "2026-09-27"
   },
   "rotation_members.json": {
    "present": true,
-   "bytes": 1121158,
-   "generated_at": "2026-09-27T04:15:30Z",
+   "bytes": 1121164,
+   "generated_at": "2026-09-27T06:41:51Z",
    "rows": 80,
    "asof": "2026-09-25",
    "errors": {
@@ -61,31 +61,31 @@
   "rotation_phase.json": {
    "present": true,
    "bytes": 387437,
-   "generated_at": "2026-09-27T04:15:33Z",
+   "generated_at": "2026-09-27T06:41:54Z",
    "rows": 80,
    "asof": "2026-09-25"
   },
   "options_flow.json": {
    "present": true,
-   "bytes": 274561,
-   "generated_at": "2026-09-25T22:09:37Z",
+   "bytes": 273562,
+   "generated_at": "2026-09-27T04:18:35Z",
    "rows": 216,
    "asof": "2026-09-25",
-   "cap_share": 0.894
+   "cap_share": 0.891
   },
   "earnings_dates.json": {
    "present": true,
-   "bytes": 10247,
-   "generated_at": "2026-09-25T22:07:58Z",
+   "bytes": 10246,
+   "generated_at": "2026-09-27T04:16:50Z",
    "rows": 110,
-   "asof": "2026-09-25"
+   "asof": "2026-09-27"
   },
   "earnings_detected.json": {
    "present": true,
    "bytes": 682,
-   "generated_at": "2026-09-25T22:07:58Z",
+   "generated_at": "2026-09-27T04:16:50Z",
    "rows": 0,
-   "asof": "2026-09-25",
+   "asof": "2026-09-27",
    "errors": {
     "edgar": 0,
     "overdue": 0
