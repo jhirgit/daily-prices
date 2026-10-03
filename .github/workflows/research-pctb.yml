@@ -1,0 +1,78 @@
+name: Research - pctb study
+
+# Scratch research (see research/pctb/README.md). Runs only on a push to the
+# research/pctb branch or by hand; writes nothing back to the repo.
+on:
+  push:
+    branches: [research/pctb]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -r requirements.txt pandas numpy
+
+      # Does this plan serve daily history? Prints status and bar counts only,
+      # never the token.
+      - name: Probe Finnhub /stock/candle
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json, os, time, urllib.request, urllib.error
+          t = os.environ.get("FINNHUB_API_KEY", "")
+          print("key present:", bool(t))
+          for s in ("SPY", "QQQ", "IWM"):
+              u = f"https://finnhub.io/api/v1/stock/candle?symbol={s}&resolution=D&from=725846400&to={int(time.time())}&token={t}"
+              try:
+                  j = json.load(urllib.request.urlopen(u, timeout=30))
+                  ts = j.get("t") or []
+                  first = time.strftime("%Y-%m-%d", time.gmtime(ts[0])) if ts else None
+                  print(s, "-> s =", j.get("s"), "| bars:", len(ts), "| first:", first, "| error:", j.get("error"))
+              except urllib.error.HTTPError as e:
+                  print(s, "-> HTTP", e.code, e.read()[:200].decode("utf-8", "replace"))
+              except Exception as e:
+                  print(s, "-> error:", type(e).__name__)
+              time.sleep(1.2)
+          PY
+
+      - name: Backfill full history from Yahoo (research db only)
+        run: |
+          printf "SPY\nQQQ\nIWM\n" > research-tickers.txt
+          python fetch_prices.py --db research-prices.db --tickers research-tickers.txt --lookback max
+          python - <<'PY'
+          import sqlite3
+          c = sqlite3.connect("research-prices.db")
+          for t in ("SPY", "QQQ", "IWM"):
+              print(t, c.execute("select min(date), max(date), count(*) from daily_prices where ticker=?", (t,)).fetchone())
+          PY
+
+      - name: Run study
+        run: |
+          P="python research/pctb/pctb_backtest.py --db research-prices.db"
+          {
+            echo "=== 1. FULL HISTORY";               $P --tickers SPY,QQQ,IWM
+            echo; echo "=== 2. REPRO CHECK 2016-08-15+ (must match 42 bottoms, 104 eps, f20 +1.16%)"
+            $P --tickers SPY --start 2016-08-15
+            echo; echo "=== 3. BEAR 2000-01..2003-03";   $P --tickers SPY,QQQ,IWM --start 2000-01-01 --end 2003-03-31
+            echo; echo "=== 4. BEAR 2007-06..2009-06";   $P --tickers SPY,QQQ,IWM --start 2007-06-01 --end 2009-06-30
+            echo; echo "=== 5. OUT OF SAMPLE: pre 2016-08-15"; $P --tickers SPY,QQQ,IWM --end 2016-08-14
+            echo; echo "=== 6. IN SAMPLE: 2016-08-15+";  $P --tickers QQQ,IWM --start 2016-08-15
+          } 2>&1 | tee results.txt
+          { echo '```'; cat results.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pctb-results
+          path: results.txt
