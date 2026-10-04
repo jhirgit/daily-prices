@@ -1,0 +1,23 @@
+name: Research - macro release dates
+
+# Scratch research (one-off): prints the official ISM and University of Michigan
+# release schedules so they can be transcribed into jr-dash macro-calendar.json.
+# Runs only on a push to research/macro-dates or by hand; writes nothing back.
+on:
+  push:
+    branches: [research/macro-dates]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pypdf
+      - run: python research/macro-dates/fetch_schedules.py
