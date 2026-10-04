@@ -1,58 +1,41 @@
-"""Dump the official ISM and University of Michigan release schedules as text.
-
-Prints the lines that carry 2026/2027 dates, plus the links that look like a
-schedule, so the dates can be transcribed into jr-dash macro-calendar.json.
-Public pages only; nothing is written back to the repo.
+"""Pass 2: show what the ISM calendar page actually returns, and list every link
+on the UMich pages, so a full-year release schedule can be found and transcribed
+into jr-dash macro-calendar.json. Public pages only; writes nothing back.
 """
-import io, re, sys, urllib.request
-from html.parser import HTMLParser
+import re, urllib.request
 
-UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"}
-PAGES = [
-    "https://www.ismworld.org/supply-management-news-and-reports/reports/rob-report-calendar/",
-    "https://www.sca.isr.umich.edu/",
-    "https://www.sca.isr.umich.edu/release-schedule.html",
-    "https://data.sca.isr.umich.edu/",
-]
-MON = r"(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)"
-
-class Text(HTMLParser):
-    def __init__(s): super().__init__(); s.out = []; s.links = []; s.skip = 0
-    def handle_starttag(s, t, a):
-        if t in ("script", "style"): s.skip += 1
-        if t == "a":
-            h = dict(a).get("href") or ""
-            s.links.append(h)
-        if t in ("tr", "p", "li", "br", "div", "h1", "h2", "h3", "h4", "td", "th"): s.out.append("\n" if t != "td" and t != "th" else " | ")
-    def handle_endtag(s, t):
-        if t in ("script", "style"): s.skip -= 1
-    def handle_data(s, d):
-        if not s.skip: s.out.append(d)
+UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36",
+      "Accept": "text/html,application/xhtml+xml", "Accept-Language": "en-US,en;q=0.9"}
 
 def get(u):
-    r = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30)
-    return r.read(), r.headers.get("content-type", "")
-
-def dump(u, depth=0):
-    print(f"\n######## {u}")
     try:
-        b, ct = get(u)
+        r = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=30)
+        return r.status, r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode("utf-8", "replace")
     except Exception as e:
-        print("  FETCH FAILED:", type(e).__name__, str(e)[:150]); return
-    if "pdf" in ct or u.lower().endswith(".pdf"):
-        from pypdf import PdfReader
-        txt = "\n".join(p.extract_text() or "" for p in PdfReader(io.BytesIO(b)).pages)
-        links = []
-    else:
-        p = Text(); p.feed(b.decode("utf-8", "replace")); txt = "".join(p.out); links = p.links
-    lines = [re.sub(r"\s+", " ", l).strip() for l in txt.splitlines()]
-    hits = [l for l in lines if l and (re.search(r"202[67]", l) or re.search(MON + r"\.? \d{1,2}\b", l))]
-    print(f"  {len(lines)} lines, {len(hits)} with dates")
-    for l in hits[:200]: print("  ", l[:220])
-    if depth == 0:
-        sch = sorted({urllib.request.urljoin(u, h) for h in links if re.search(r"schedul|calendar|release", h, re.I)})
-        print("  schedule-like links:", sch[:30])
-        for s in sch[:6]:
-            if s.rstrip("/") != u.rstrip("/"): dump(s, 1)
+        return None, type(e).__name__ + " " + str(e)[:150]
 
-for u in PAGES: dump(u)
+def text(h):
+    h = re.sub(r"(?is)<(script|style)[^>]*>.*?</\1>", " ", h)
+    h = re.sub(r"(?i)<(br|/p|/tr|/li|/div|/h\d)[^>]*>", "\n", h)
+    h = re.sub(r"(?i)</t[dh]>", " | ", h)
+    return [re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", l)).strip() for l in h.splitlines()]
+
+MON = r"(January|February|March|April|May|June|July|August|September|October|November|December)"
+for u in ["https://www.ismworld.org/supply-management-news-and-reports/reports/rob-report-calendar/",
+          "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-report-on-business/",
+          "https://www.prnewswire.com/news/institute-for-supply-management/"]:
+    st, h = get(u)
+    print(f"\n######## {u}\n  status {st}, {len(h)} bytes; title: {re.search(r'(?is)<title>(.*?)</title>', h).group(1).strip()[:120] if re.search(r'(?is)<title>', h) else None}")
+    lines = [l for l in text(h) if l]
+    hits = [l for l in lines if re.search(MON + r" \d{1,2}", l) and re.search(r"202[67]", l)]
+    for l in (hits or lines[:25])[:80]: print("   ", l[:220])
+    cal = sorted(set(re.findall(r'href="([^"]*(?:calendar|schedule|\.pdf)[^"]*)"', h, re.I)))
+    print("  calendar/pdf links:", cal[:25])
+
+for u in ["https://www.sca.isr.umich.edu/", "https://data.sca.isr.umich.edu/"]:
+    st, h = get(u)
+    print(f"\n######## {u}  status {st}")
+    links = sorted(set(re.findall(r'href="([^"#]+)"', h)))
+    print("  links:", links[:120])
