@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-05T22:19:44Z",
+  "generated_at": "2026-10-06T22:17:04Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 110,
@@ -178,11 +178,11 @@
     },
     "ALAB": {
       "date": "2026-11-03",
-      "estimated": true
+      "estimated": false
     },
     "AMD": {
       "date": "2026-11-03",
-      "estimated": true
+      "estimated": false
     },
     "AMSC": {
       "date": "2026-11-04",
@@ -266,7 +266,7 @@
     },
     "ENPH": {
       "date": "2026-10-27",
-      "estimated": true
+      "estimated": false
     },
     "EQIX": {
       "date": "2026-10-28",
@@ -341,8 +341,8 @@
       "estimated": false
     },
     "INTC": {
-      "date": "2026-10-22",
-      "estimated": true
+      "date": "2026-10-29",
+      "estimated": false
     },
     "INVH": {
       "date": "2026-10-28",
@@ -361,8 +361,8 @@
       "estimated": false
     },
     "KGC": {
-      "date": "2026-11-10",
-      "estimated": true
+      "date": "2026-10-28",
+      "estimated": false
     },
     "LITE": {
       "date": "2026-11-05",
@@ -502,7 +502,7 @@
     },
     "SHOP": {
       "date": "2026-11-03",
-      "estimated": true
+      "estimated": false
     },
     "SIEGY": {
       "date": "2026-11-12",
