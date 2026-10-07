@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-06T22:17:04Z",
+  "generated_at": "2026-10-07T22:19:06Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
-  "count": 110,
+  "count": 109,
   "asked": 242,
   "missing": [
     "AGG",
@@ -138,7 +138,9 @@
     "^TYX",
     "^VIX"
   ],
-  "errors": {},
+  "errors": {
+    "TSM": "YFRateLimitError"
+  },
   "dates": {
     "000660.KS": {
       "date": "2026-10-27",
@@ -157,7 +159,7 @@
       "estimated": true
     },
     "AAPL": {
-      "date": "2026-10-29",
+      "date": "2026-11-02",
       "estimated": false
     },
     "AEHR": {
@@ -346,7 +348,7 @@
     },
     "INVH": {
       "date": "2026-10-28",
-      "estimated": true
+      "estimated": false
     },
     "IONQ": {
       "date": "2026-11-04",
@@ -394,7 +396,7 @@
     },
     "MSFT": {
       "date": "2026-10-28",
-      "estimated": true
+      "estimated": false
     },
     "MU": {
       "date": "2026-12-23",
@@ -453,16 +455,16 @@
       "estimated": true
     },
     "PAAS": {
-      "date": "2026-11-16",
-      "estimated": true
+      "date": "2026-11-04",
+      "estimated": false
     },
     "PANW": {
       "date": "2026-11-19",
       "estimated": true
     },
     "PENG": {
-      "date": "2026-10-06",
-      "estimated": false
+      "date": "2027-01-05",
+      "estimated": true
     },
     "POWI": {
       "date": "2026-11-05",
@@ -540,10 +542,6 @@
       "date": "2026-11-04",
       "estimated": false
     },
-    "TSM": {
-      "date": "2026-10-15",
-      "estimated": false
-    },
     "TXN": {
       "date": "2026-10-21",
       "estimated": false
@@ -570,7 +568,7 @@
     },
     "WPM": {
       "date": "2026-11-05",
-      "estimated": true
+      "estimated": false
     },
     "WULF": {
       "date": "2026-11-09",

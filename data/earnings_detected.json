@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-10-06T22:17:04Z",
+  "generated_at": "2026-10-07T22:19:07Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
   "grace_sessions": 2,
   "counts": {
-    "in_window": 2,
-    "checked": 2,
+    "in_window": 1,
+    "checked": 1,
     "detected": 1,
-    "awaiting": 1,
+    "awaiting": 0,
     "overdue": 0,
     "errors": 0
   },
@@ -16,20 +16,16 @@
   "names": {
     "APLD": {
       "expected": "2026-10-07",
-      "status": "awaiting"
-    },
-    "PENG": {
-      "expected": "2026-10-06",
       "status": "detected",
       "form": "8-K",
-      "filed": "2026-10-06",
-      "period": "2026-10-06",
-      "accession": "0001616533-26-000046",
+      "filed": "2026-10-07",
+      "period": "2026-10-07",
+      "accession": "0001144879-26-000057",
       "items": [
         "2.02",
         "9.01"
       ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1616533/000161653326000046/peng-20261006.htm"
+      "url": "https://www.sec.gov/Archives/edgar/data/1144879/000114487926000057/apld-20261007.htm"
     }
   }
 }
