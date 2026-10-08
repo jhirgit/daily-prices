@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-07T22:19:06Z",
+  "generated_at": "2026-10-08T22:16:00Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
-  "count": 109,
+  "count": 110,
   "asked": 242,
   "missing": [
     "AGG",
@@ -138,9 +138,7 @@
     "^TYX",
     "^VIX"
   ],
-  "errors": {
-    "TSM": "YFRateLimitError"
-  },
+  "errors": {},
   "dates": {
     "000660.KS": {
       "date": "2026-10-27",
@@ -164,15 +162,15 @@
     },
     "AEHR": {
       "date": "2026-11-02",
-      "estimated": true
+      "estimated": false
     },
     "AEM": {
       "date": "2026-10-28",
       "estimated": false
     },
     "AG": {
-      "date": "2026-10-29",
-      "estimated": true
+      "date": "2026-11-05",
+      "estimated": false
     },
     "AGI": {
       "date": "2026-10-28",
@@ -199,8 +197,8 @@
       "estimated": true
     },
     "APLD": {
-      "date": "2026-10-07",
-      "estimated": false
+      "date": "2027-01-06",
+      "estimated": true
     },
     "ASML": {
       "date": "2026-10-14",
@@ -279,8 +277,8 @@
       "estimated": true
     },
     "EXK": {
-      "date": "2026-11-05",
-      "estimated": true
+      "date": "2026-11-09",
+      "estimated": false
     },
     "FLEX": {
       "date": "2026-10-28",
@@ -542,6 +540,10 @@
       "date": "2026-11-04",
       "estimated": false
     },
+    "TSM": {
+      "date": "2026-10-15",
+      "estimated": false
+    },
     "TXN": {
       "date": "2026-10-21",
       "estimated": false
@@ -552,7 +554,7 @@
     },
     "VPG": {
       "date": "2026-11-04",
-      "estimated": true
+      "estimated": false
     },
     "VRT": {
       "date": "2026-10-21",
