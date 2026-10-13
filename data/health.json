@@ -1,11 +1,11 @@
 {
- "generated_at": "2026-10-12T22:14:48Z",
- "session": "2026-10-12",
+ "generated_at": "2026-10-13T22:14:27Z",
+ "session": "2026-10-13",
  "status": "degraded",
  "degraded": [
-  "options_flow.json speaks for 2026-10-09, behind the 2026-10-12 session",
-  "earnings_dates.json speaks for 2026-10-09, behind the 2026-10-12 session",
-  "earnings_detected.json speaks for 2026-10-09, behind the 2026-10-12 session"
+  "options_flow.json speaks for 2026-10-12, behind the 2026-10-13 session",
+  "earnings_dates.json speaks for 2026-10-12, behind the 2026-10-13 session",
+  "earnings_detected.json speaks for 2026-10-12, behind the 2026-10-13 session"
  ],
  "warnings": [],
  "steps": {
@@ -16,47 +16,44 @@
  "payloads": {
   "latest.json": {
    "present": true,
-   "bytes": 87147,
-   "generated_at": "2026-10-12T22:08:00Z",
+   "bytes": 86876,
+   "generated_at": "2026-10-13T22:07:09Z",
    "rows": 244,
-   "asof": "2026-10-12",
+   "asof": "2026-10-13",
    "errors": {
     "lagging": [
-     "000660.KS",
-     "005930.KS",
-     "6981.T",
-     "^KS11",
-     "^N225"
+     "MRAAF",
+     "^KS11"
     ]
    }
   },
   "technicals.json": {
    "present": true,
-   "bytes": 1745676,
-   "generated_at": "2026-10-12T22:08:06Z",
+   "bytes": 1745976,
+   "generated_at": "2026-10-13T22:07:18Z",
    "rows": 235,
-   "asof": "2026-10-12"
+   "asof": "2026-10-13"
   },
   "closes.json": {
    "present": true,
-   "bytes": 1314147,
-   "generated_at": "2026-10-12T22:08:06Z",
+   "bytes": 1314227,
+   "generated_at": "2026-10-13T22:07:19Z",
    "rows": 242,
-   "asof": "2026-10-12"
+   "asof": "2026-10-13"
   },
   "crowd.json": {
    "present": true,
-   "bytes": 33611,
-   "generated_at": "2026-10-12T22:08:06Z",
+   "bytes": 33592,
+   "generated_at": "2026-10-13T22:07:18Z",
    "rows": 242,
-   "asof": "2026-10-12"
+   "asof": "2026-10-13"
   },
   "rotation_members.json": {
    "present": true,
-   "bytes": 1138628,
-   "generated_at": "2026-10-12T22:14:45Z",
+   "bytes": 1139598,
+   "generated_at": "2026-10-13T22:14:24Z",
    "rows": 80,
-   "asof": "2026-10-12",
+   "asof": "2026-10-13",
    "errors": {
     "rows": [
      "LIT"
@@ -65,32 +62,32 @@
   },
   "rotation_phase.json": {
    "present": true,
-   "bytes": 390182,
-   "generated_at": "2026-10-12T22:14:48Z",
+   "bytes": 390793,
+   "generated_at": "2026-10-13T22:14:27Z",
    "rows": 80,
-   "asof": "2026-10-12"
+   "asof": "2026-10-13"
   },
   "options_flow.json": {
    "present": true,
-   "bytes": 206438,
-   "generated_at": "2026-10-09T22:14:26Z",
+   "bytes": 206605,
+   "generated_at": "2026-10-12T22:18:50Z",
    "rows": 217,
-   "asof": "2026-10-09",
-   "cap_share": 0.672
+   "asof": "2026-10-12",
+   "cap_share": 0.673
   },
   "earnings_dates.json": {
    "present": true,
-   "bytes": 10277,
-   "generated_at": "2026-10-09T22:12:23Z",
+   "bytes": 10282,
+   "generated_at": "2026-10-12T22:16:35Z",
    "rows": 110,
-   "asof": "2026-10-09"
+   "asof": "2026-10-12"
   },
   "earnings_detected.json": {
    "present": true,
-   "bytes": 682,
-   "generated_at": "2026-10-09T22:12:24Z",
-   "rows": 0,
-   "asof": "2026-10-09",
+   "bytes": 763,
+   "generated_at": "2026-10-12T22:16:36Z",
+   "rows": 1,
+   "asof": "2026-10-12",
    "errors": {
     "edgar": 0,
     "overdue": 0
@@ -98,8 +95,8 @@
   },
   "overnight.json": {
    "present": true,
-   "bytes": 7267,
-   "generated_at": "2026-10-12T11:31:50Z",
+   "bytes": 7255,
+   "generated_at": "2026-10-13T11:32:01Z",
    "rows": 27,
    "errors": {
     "no_quote": []
@@ -107,9 +104,9 @@
   },
   "news.json": {
    "present": true,
-   "bytes": 255065,
-   "generated_at": "2026-10-12T11:31:50Z",
-   "rows": 109,
+   "bytes": 599464,
+   "generated_at": "2026-10-13T11:32:01Z",
+   "rows": 172,
    "errors": {
     "unavailable": 20,
     "of": 242
@@ -117,8 +114,8 @@
   },
   "intraday.json": {
    "present": true,
-   "bytes": 58013,
-   "generated_at": "2026-10-12T19:45:16.116878Z",
+   "bytes": 57903,
+   "generated_at": "2026-10-13T19:46:47.763668Z",
    "rows": 222
   },
   "insiders_12m.json": {
