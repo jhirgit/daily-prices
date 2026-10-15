@@ -1,5 +1,5 @@
 {
-"generated_at":"2026-10-13T22:07:53Z",
+"generated_at":"2026-10-15T22:07:30Z",
 "source":"SEC EDGAR NPORT-P primary_doc.xml: the latest public filing per fund series (the last three for a Select Industry fund)",
 "line_fields":["name","isin","ticker","ccy","w","px"],
 "funds":{
@@ -285,7 +285,7 @@
 },
 "DRAM":{
 "acc":"0000894189-26-023623",
-"checked":"2026-10-07",
+"checked":"2026-10-15",
 "cik":"1976517",
 "excluded":{"n":6,"w":0.430696820549},
 "filed":"2026-08-26",
@@ -3827,7 +3827,7 @@
 },
 "SILJ":{
 "acc":"0001193125-26-372658",
-"checked":"2026-10-07",
+"checked":"2026-10-15",
 "cik":"1633061",
 "excluded":{"n":3,"w":0.09679184953},
 "filed":"2026-08-28",
