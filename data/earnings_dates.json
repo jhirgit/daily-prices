@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-14T22:12:42Z",
+  "generated_at": "2026-10-15T22:15:30Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 110,
@@ -154,7 +154,7 @@
     },
     "AAOI": {
       "date": "2026-11-05",
-      "estimated": true
+      "estimated": false
     },
     "AAPL": {
       "date": "2026-11-02",
@@ -190,7 +190,7 @@
     },
     "AMZN": {
       "date": "2026-10-29",
-      "estimated": true
+      "estimated": false
     },
     "AOSL": {
       "date": "2026-11-05",
@@ -229,7 +229,7 @@
       "estimated": false
     },
     "CDE": {
-      "date": "2026-10-28",
+      "date": "2026-11-04",
       "estimated": false
     },
     "CEG": {
@@ -245,8 +245,8 @@
       "estimated": false
     },
     "CORZ": {
-      "date": "2026-10-23",
-      "estimated": true
+      "date": "2026-11-05",
+      "estimated": false
     },
     "CRWD": {
       "date": "2026-12-01",
@@ -257,8 +257,8 @@
       "estimated": false
     },
     "DDOG": {
-      "date": "2026-11-05",
-      "estimated": true
+      "date": "2026-11-04",
+      "estimated": false
     },
     "DPC": {
       "date": "2026-11-09",
@@ -446,7 +446,7 @@
     },
     "ON": {
       "date": "2026-11-02",
-      "estimated": true
+      "estimated": false
     },
     "ORCL": {
       "date": "2026-12-14",
