@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-15T22:15:30Z",
+  "generated_at": "2026-10-16T15:03:54Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
-  "count": 110,
-  "asked": 242,
+  "count": 111,
+  "asked": 243,
   "missing": [
     "AGG",
     "AMLP",
@@ -159,6 +159,10 @@
     "AAPL": {
       "date": "2026-11-02",
       "estimated": false
+    },
+    "ADUR": {
+      "date": "2026-10-20",
+      "estimated": true
     },
     "AEHR": {
       "date": "2026-11-02",
@@ -465,7 +469,7 @@
       "estimated": true
     },
     "POWI": {
-      "date": "2026-11-05",
+      "date": "2026-11-04",
       "estimated": false
     },
     "PYPL": {
@@ -541,8 +545,8 @@
       "estimated": false
     },
     "TSM": {
-      "date": "2026-10-15",
-      "estimated": false
+      "date": "2027-01-14",
+      "estimated": true
     },
     "TXN": {
       "date": "2026-10-21",
