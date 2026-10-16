@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-15T22:14:08Z",
+ "generated_at": "2026-10-16T15:02:00Z",
  "asof": "2026-10-15",
  "evidence_asof": "2026-09-25",
  "evidence_summary": {
@@ -237,7 +237,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -709,10 +709,10 @@
      "label": "Korean won (KRWUSD)",
      "window": 63,
      "s": 1,
-     "m": 0.09769,
-     "z": 1.859,
+     "m": 0.09908,
+     "z": 1.885,
      "status": "leans_up",
-     "value": "+10.3% over 63d",
+     "value": "+10.4% over 63d",
      "note": "",
      "inputs": [
       "KRWUSD=X"
@@ -821,7 +821,7 @@
      }
     }
    ],
-   "read": "Flat since 10/12 — no 126d trend; 1 of 3 checks lean up, 0 lean down; strongest lean up: KRWUSD=X +10.3% over 63d.",
+   "read": "Flat since 10/12 — no 126d trend; 1 of 3 checks lean up, 0 lean down; strongest lean up: KRWUSD=X +10.4% over 63d.",
    "topping": "EWY higher but carried by two memory names while Micron lags the semis and the won weakens — a narrow, currency-unconfirmed memory trade.",
    "bottoming": "EWY still down, but Micron starts beating the semis and the won firms — the memory cycle and the currency turning under the index.",
    "phase_evidence": {
@@ -878,10 +878,10 @@
      "label": "WTI crude (CL=F)",
      "window": 63,
      "s": 1,
-     "m": 0.15302,
-     "z": 0.55,
+     "m": 0.17198,
+     "z": 0.618,
      "status": "confirms",
-     "value": "+16.5% over 63d",
+     "value": "+18.8% over 63d",
      "note": "",
      "inputs": [
       "CL=F"
@@ -979,12 +979,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "XOM + CVX +7.6pp · the rest +8.4pp of the 63d +16.1%",
+     "value": "XOM + CVX +7.7pp · the rest +8.4pp of the 63d +16.1%",
      "note": "XOM and CVX are about 40% of XLE; a majors-only move is a defensive bid, not an oil cycle",
      "groups": [
       {
        "name": "XOM + CVX",
-       "c": 0.07648,
+       "c": 0.0767,
        "found": [
         "XOM",
         "CVX"
@@ -992,7 +992,7 @@
       },
       {
        "name": "the rest",
-       "c": 0.08433,
+       "c": 0.08411,
        "found": null
       }
      ],
@@ -1127,10 +1127,10 @@
      "label": "WTI crude over 126d (CL=F)",
      "window": 126,
      "s": 1,
-     "m": 0.01509,
-     "z": 0.038,
+     "m": 0.03405,
+     "z": 0.086,
      "status": "neutral",
-     "value": "+1.5% over 126d",
+     "value": "+3.5% over 126d",
      "note": "",
      "inputs": [
       "CL=F"
@@ -1193,10 +1193,10 @@
      "label": "Natural gas (NG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.09528,
-     "z": 0.191,
+     "m": 0.10584,
+     "z": 0.212,
      "status": "neutral",
-     "value": "+10.0% over 63d",
+     "value": "+11.2% over 63d",
      "note": "",
      "inputs": [
       "NG=F"
@@ -1353,10 +1353,10 @@
      "label": "WTI crude over 126d (CL=F)",
      "window": 126,
      "s": 1,
-     "m": 0.01509,
-     "z": 0.038,
+     "m": 0.03405,
+     "z": 0.086,
      "status": "neutral",
-     "value": "+1.5% over 126d",
+     "value": "+3.5% over 126d",
      "note": "",
      "inputs": [
       "CL=F"
@@ -1419,10 +1419,10 @@
      "label": "Natural gas (NG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.09528,
-     "z": 0.191,
+     "m": 0.10584,
+     "z": 0.212,
      "status": "neutral",
-     "value": "+10.0% over 63d",
+     "value": "+11.2% over 63d",
      "note": "",
      "inputs": [
       "NG=F"
@@ -1459,7 +1459,7 @@
      "groups": [
       {
        "name": "SLB + HAL + BKR",
-       "c": -0.00196,
+       "c": -0.002,
        "found": [
         "SLB",
         "HAL",
@@ -1468,7 +1468,7 @@
       },
       {
        "name": "offshore / drillers",
-       "c": 0.01752,
+       "c": 0.01761,
        "found": [
         "RIG",
         "VAL",
@@ -1483,7 +1483,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.08034,
+       "c": -0.08039,
        "found": null
       }
      ],
@@ -1586,10 +1586,10 @@
      "label": "WTI crude over 21d (CL=F)",
      "window": 21,
      "s": 1,
-     "m": -0.06348,
-     "z": -0.395,
+     "m": -0.04452,
+     "z": -0.277,
      "status": "neutral",
-     "value": "−6.2% over 21d",
+     "value": "−4.4% over 21d",
      "note": "",
      "inputs": [
       "CL=F"
@@ -1618,10 +1618,10 @@
      "label": "WTI crude over 63d (CL=F)",
      "window": 63,
      "s": 1,
-     "m": 0.15302,
-     "z": 0.55,
+     "m": 0.17198,
+     "z": 0.618,
      "status": "confirms",
-     "value": "+16.5% over 63d",
+     "value": "+18.8% over 63d",
      "note": "",
      "inputs": [
       "CL=F"
@@ -1650,10 +1650,10 @@
      "label": "Natural gas (NG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.09528,
-     "z": 0.191,
+     "m": 0.10584,
+     "z": 0.212,
      "status": "neutral",
-     "value": "+10.0% over 63d",
+     "value": "+11.2% over 63d",
      "note": "",
      "inputs": [
       "NG=F"
@@ -1715,10 +1715,10 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.9052,
+     "m": 0.9066,
      "z": null,
      "status": "confirms",
-     "value": "91% of covered weight up over 63d · 42 of 51 names · 72% over 21d",
+     "value": "91% of covered weight up over 63d · 42 of 51 names · 73% over 21d",
      "note": "",
      "evidence": {
       "tag": "uncalibrated",
@@ -1818,7 +1818,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -2003,10 +2003,10 @@
      "label": "Physical uranium (Sprott U-UN.TO, in USD)",
      "window": 63,
      "s": 1,
-     "m": 0.00631,
-     "z": 0.039,
+     "m": 0.00456,
+     "z": 0.028,
      "status": "neutral",
-     "value": "+0.6% over 63d",
+     "value": "+0.5% over 63d",
      "note": "",
      "inputs": [
       "U-UN.TO"
@@ -2043,7 +2043,7 @@
      "groups": [
       {
        "name": "producers / physical",
-       "c": -0.03544,
+       "c": -0.03489,
        "found": [
         "CCO.TO",
         "NXE.TO",
@@ -2064,7 +2064,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.00551,
+       "c": -0.00607,
        "found": null
       }
      ],
@@ -2220,10 +2220,10 @@
      "label": "Copper (HG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.05406,
-     "z": 0.398,
+     "m": 0.0458,
+     "z": 0.337,
      "status": "neutral",
-     "value": "+5.6% over 63d",
+     "value": "+4.7% over 63d",
      "note": "",
      "inputs": [
       "HG=F"
@@ -2319,12 +2319,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "chemicals +0.2pp · metals / mining +3.0pp · gases −0.4pp · the rest −2.2pp of the 63d +0.5%",
+     "value": "chemicals +0.2pp · metals / mining +3.0pp · gases −0.4pp · the rest −2.3pp of the 63d +0.5%",
      "note": "gases and gold are not the industrial cycle; chemicals and base metals are",
      "groups": [
       {
        "name": "chemicals",
-       "c": 0.00204,
+       "c": 0.00206,
        "found": [
         "SHW",
         "ECL",
@@ -2339,7 +2339,7 @@
       },
       {
        "name": "metals / mining",
-       "c": 0.02986,
+       "c": 0.03002,
        "found": [
         "NEM",
         "FCX",
@@ -2349,7 +2349,7 @@
       },
       {
        "name": "gases",
-       "c": -0.00442,
+       "c": -0.00433,
        "found": [
         "LIN",
         "APD"
@@ -2357,7 +2357,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.02228,
+       "c": -0.02255,
        "found": null
       }
      ],
@@ -2476,10 +2476,10 @@
      "label": "Hot-rolled coil steel (HRC=F)",
      "window": 63,
      "s": 1,
-     "m": 0.15093,
-     "z": 2.296,
+     "m": 0.10752,
+     "z": 1.724,
      "status": "diverges",
-     "value": "+16.3% over 63d",
+     "value": "+11.4% over 63d",
      "note": "steel prices rising",
      "inputs": [
       "HRC=F"
@@ -2508,10 +2508,10 @@
      "label": "Copper (HG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.05406,
-     "z": 0.398,
+     "m": 0.0458,
+     "z": 0.337,
      "status": "neutral",
-     "value": "+5.6% over 63d",
+     "value": "+4.7% over 63d",
      "note": "",
      "inputs": [
       "HG=F"
@@ -2604,7 +2604,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.6715,
+     "m": 0.666,
      "z": null,
      "status": "diverges",
      "value": "67% of covered weight up over 63d · 19 of 38 names · 25% over 21d",
@@ -2684,7 +2684,7 @@
      }
     }
    ],
-   "read": "Steady down since 10/5 — 1 of 6 checks confirm the down-trend; steel prices rising (HRC=F +16.3% over 63d); also most of the fund's names rising while the fund falls; washed out: 4th pct of its 3y range.",
+   "read": "Steady down since 10/5 — 1 of 6 checks confirm the down-trend; steel prices rising (HRC=F +11.4% over 63d); also most of the fund's names rising while the fund falls; washed out: 4th pct of its 3y range.",
    "topping": "XME rising on fewer names while steel and copper roll over — gold alone carrying an equal-weight metals fund.",
    "bottoming": "XME still down, but steel and copper firm and more members rise — the equal-weight basket turning from the inside.",
    "phase_evidence": {
@@ -2741,10 +2741,10 @@
      "label": "Hot-rolled coil steel (HRC=F)",
      "window": 63,
      "s": 1,
-     "m": 0.15093,
-     "z": 2.296,
+     "m": 0.10752,
+     "z": 1.724,
      "status": "leans_up",
-     "value": "+16.3% over 63d",
+     "value": "+11.4% over 63d",
      "note": "",
      "inputs": [
       "HRC=F"
@@ -2814,7 +2814,7 @@
      "groups": [
       {
        "name": "iron-ore miners",
-       "c": -0.00116,
+       "c": -0.00077,
        "found": [
         "BHP",
         "RIO",
@@ -2836,7 +2836,7 @@
       },
       {
        "name": "the rest",
-       "c": 0.00203,
+       "c": 0.00163,
        "found": null
       }
      ],
@@ -2881,7 +2881,7 @@
      }
     }
    ],
-   "read": "Flat since 10/12 — no 126d trend; 2 of 3 checks lean up, 0 lean down; strongest lean up: HRC=F +16.3% over 63d.",
+   "read": "Flat since 10/12 — no 126d trend; 2 of 3 checks lean up, 0 lean down; strongest lean up: HRC=F +11.4% over 63d.",
    "topping": "SLX up while hot-rolled coil prices fall and the iron-ore miners, not the steelmakers, carry it — the tariff premium fading.",
    "bottoming": "SLX still down, but HRC turns up and the steelmakers start leading the iron-ore names.",
    "phase_evidence": {
@@ -2938,10 +2938,10 @@
      "label": "Copper (HG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.05406,
-     "z": 0.398,
+     "m": 0.0458,
+     "z": 0.337,
      "status": "neutral",
-     "value": "+5.6% over 63d",
+     "value": "+4.7% over 63d",
      "note": "",
      "inputs": [
       "HG=F"
@@ -2970,10 +2970,10 @@
      "label": "Miners vs copper (COPX/HG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.04305,
-     "z": 0.269,
+     "m": 0.05131,
+     "z": 0.32,
      "status": "neutral",
-     "value": "+4.4% over 63d",
+     "value": "+5.3% over 63d",
      "note": "",
      "inputs": [
       "COPX",
@@ -3203,10 +3203,10 @@
      "label": "Copper (HG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.05406,
-     "z": 0.398,
+     "m": 0.0458,
+     "z": 0.337,
      "status": "neutral",
-     "value": "+5.6% over 63d",
+     "value": "+4.7% over 63d",
      "note": "",
      "inputs": [
       "HG=F"
@@ -3235,10 +3235,10 @@
      "label": "Miners vs copper (COPX/HG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.04305,
-     "z": 0.269,
+     "m": 0.05131,
+     "z": 0.32,
      "status": "neutral",
-     "value": "+4.4% over 63d",
+     "value": "+5.3% over 63d",
      "note": "",
      "inputs": [
       "COPX",
@@ -3725,7 +3725,7 @@
      "label": "MP + Lynas share of the move",
      "window": 63,
      "s": 0,
-     "m": 0.939,
+     "m": 0.925,
      "z": null,
      "status": "info",
      "value": "0.9× their weight share of the 63d move (in line with the fund)",
@@ -3748,12 +3748,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "rare earths −2.9pp · lithium −4.4pp · the rest −16.0pp of the 63d −23.3%",
+     "value": "rare earths −2.8pp · lithium −4.3pp · the rest −16.1pp of the 63d −23.3%",
      "note": "about a fifth of REMX is lithium, a different price cycle",
      "groups": [
       {
        "name": "rare earths",
-       "c": -0.02899,
+       "c": -0.02848,
        "found": [
         "MP",
         "LYC.AX",
@@ -3762,7 +3762,7 @@
       },
       {
        "name": "lithium",
-       "c": -0.04395,
+       "c": -0.04342,
        "found": [
         "PLS.AX",
         "ALB",
@@ -3771,7 +3771,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.16003,
+       "c": -0.16107,
        "found": null
       }
      ],
@@ -4006,7 +4006,7 @@
      "label": "10y yield (^TNX, the real-rate leg by proxy)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -4288,7 +4288,7 @@
      "label": "10y yield (^TNX, the real-rate leg by proxy)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "leans_down",
      "value": "+55bp over 63d, now 5.09%",
@@ -4555,7 +4555,7 @@
      "label": "10y yield (^TNX, the real-rate leg by proxy)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -4974,10 +4974,10 @@
      "label": "Copper (the industrial leg, HG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.05406,
-     "z": 0.398,
+     "m": 0.0458,
+     "z": 0.337,
      "status": "neutral",
-     "value": "+5.6% over 63d",
+     "value": "+4.7% over 63d",
      "note": "",
      "inputs": [
       "HG=F"
@@ -5246,10 +5246,10 @@
      "label": "Copper (HG=F)",
      "window": 63,
      "s": 1,
-     "m": 0.05406,
-     "z": 0.398,
+     "m": 0.0458,
+     "z": 0.337,
      "status": "neutral",
-     "value": "+5.6% over 63d",
+     "value": "+4.7% over 63d",
      "note": "",
      "inputs": [
       "HG=F"
@@ -5608,7 +5608,7 @@
      "groups": [
       {
        "name": "defense primes",
-       "c": -0.00712,
+       "c": -0.00704,
        "found": [
         "LMT",
         "RTX",
@@ -5619,7 +5619,7 @@
       },
       {
        "name": "commercial aero",
-       "c": -0.01438,
+       "c": -0.01432,
        "found": [
         "GE",
         "BA",
@@ -5629,7 +5629,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.10836,
+       "c": -0.1085,
        "found": null
       }
      ],
@@ -6233,10 +6233,10 @@
      "label": "Hot-rolled coil steel (HRC=F)",
      "window": 63,
      "s": 1,
-     "m": 0.15093,
-     "z": 2.296,
+     "m": 0.10752,
+     "z": 1.724,
      "status": "diverges",
-     "value": "+16.3% over 63d",
+     "value": "+11.4% over 63d",
      "note": "steel prices rising",
      "inputs": [
       "HRC=F"
@@ -6265,7 +6265,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -6343,7 +6343,7 @@
      }
     }
    ],
-   "read": "Slowing down since 10/9 — 1 of 4 checks confirm the down-trend; steel prices rising (HRC=F +16.3% over 63d); also most of the fund's names rising while the fund falls; washed out: 6th pct of its 3y range.",
+   "read": "Slowing down since 10/9 — 1 of 4 checks confirm the down-trend; steel prices rising (HRC=F +11.4% over 63d); also most of the fund's names rising while the fund falls; washed out: 6th pct of its 3y range.",
    "topping": "PAVE up but lagging XLI while steel prices fall and yields rise — spending priced ahead of the inputs.",
    "bottoming": "PAVE still down, but it begins beating XLI, steel firms and more members rise.",
    "phase_evidence": {
@@ -6466,10 +6466,10 @@
      "label": "WTI crude (fuel cost, CL=F)",
      "window": 63,
      "s": -1,
-     "m": 0.15302,
-     "z": 0.55,
+     "m": 0.17198,
+     "z": 0.618,
      "status": "leans_down",
-     "value": "+16.5% over 63d",
+     "value": "+18.8% over 63d",
      "note": "",
      "inputs": [
       "CL=F"
@@ -6681,10 +6681,10 @@
      "label": "WTI crude (fuel cost, CL=F)",
      "window": 63,
      "s": -1,
-     "m": 0.15302,
-     "z": 0.55,
+     "m": 0.17198,
+     "z": 0.618,
      "status": "confirms",
-     "value": "+16.5% over 63d",
+     "value": "+18.8% over 63d",
      "note": "",
      "inputs": [
       "CL=F"
@@ -6721,7 +6721,7 @@
      "groups": [
       {
        "name": "rails",
-       "c": -0.00309,
+       "c": -0.00304,
        "found": [
         "UNP",
         "CSX",
@@ -6730,7 +6730,7 @@
       },
       {
        "name": "trucking",
-       "c": -0.04115,
+       "c": -0.04127,
        "found": [
         "ODFL",
         "JBHT",
@@ -6750,7 +6750,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.09679,
+       "c": -0.09671,
        "found": null
       }
      ],
@@ -6853,11 +6853,11 @@
      "label": "Heating oil (about jet fuel, HO=F)",
      "window": 63,
      "s": -1,
-     "m": 0.12589,
-     "z": 0.429,
-     "status": "neutral",
-     "value": "+13.4% over 63d",
-     "note": "",
+     "m": 0.17576,
+     "z": 0.604,
+     "status": "diverges",
+     "value": "+19.2% over 63d",
+     "note": "jet fuel rising under the airline rally",
      "inputs": [
       "HO=F"
      ],
@@ -7002,7 +7002,7 @@
      }
     }
    ],
-   "read": "Steady up since 10/15 — 0 of 3 checks confirm; airlines lagging the market (JETS/SPY −16.2% over 63d).",
+   "read": "Steady up since 10/15 — 0 of 3 checks confirm; airlines lagging the market (JETS/SPY −16.2% over 63d); also jet fuel rising under the airline rally.",
    "topping": "Airlines up while jet fuel climbs and PEJ softens — the demand leg fading as costs rise.",
    "bottoming": "Airlines still down, but jet fuel falls and PEJ turns up — margins and demand repairing together.",
    "phase_evidence": {
@@ -7145,7 +7145,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -7468,7 +7468,7 @@
      "label": "10y yield (mortgage rates track it, ^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -7675,7 +7675,7 @@
      "label": "10y yield (mortgage rates track it, ^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -8084,10 +8084,10 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.5477,
+     "m": 0.5468,
      "z": null,
      "status": "neutral",
-     "value": "55% of covered weight up over 63d · 37 of 74 names · 81% over 21d",
+     "value": "55% of covered weight up over 63d · 37 of 74 names · 80% over 21d",
      "note": "",
      "evidence": {
       "tag": "uncalibrated",
@@ -8133,7 +8133,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "leans_down",
      "value": "+55bp over 63d, now 5.09%",
@@ -8302,7 +8302,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -8700,12 +8700,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "pharma +3.2pp · managed care −0.2pp · devices / tools +1.8pp · the rest +5.6pp of the 63d +10.4%",
+     "value": "pharma +3.3pp · managed care −0.2pp · devices / tools +1.8pp · the rest +5.5pp of the 63d +10.4%",
      "note": "three businesses with three different drivers",
      "groups": [
       {
        "name": "pharma",
-       "c": 0.03239,
+       "c": 0.03258,
        "found": [
         "LLY",
         "JNJ",
@@ -8716,7 +8716,7 @@
       },
       {
        "name": "managed care",
-       "c": -0.002,
+       "c": -0.00207,
        "found": [
         "UNH",
         "ELV",
@@ -8727,7 +8727,7 @@
       },
       {
        "name": "devices / tools",
-       "c": 0.01795,
+       "c": 0.01829,
        "found": [
         "TMO",
         "ABT",
@@ -8738,7 +8738,7 @@
       },
       {
        "name": "the rest",
-       "c": 0.05582,
+       "c": 0.05536,
        "found": null
       }
      ],
@@ -8786,7 +8786,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.893,
+     "m": 0.8918,
      "z": null,
      "status": "confirms",
      "value": "89% of covered weight up over 63d · 50 of 60 names · 84% over 21d",
@@ -8922,7 +8922,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -9266,7 +9266,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -9364,7 +9364,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.4213,
+     "m": 0.4225,
      "z": null,
      "status": "neutral",
      "value": "42% of covered weight up over 63d · 46 of 157 names · 37% over 21d",
@@ -9533,7 +9533,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -9801,7 +9801,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.4927,
+     "m": 0.4924,
      "z": null,
      "status": "neutral",
      "value": "49% of covered weight up over 63d · 25 of 61 names · 44% over 21d",
@@ -9817,7 +9817,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -9985,7 +9985,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -10105,7 +10105,7 @@
      "label": "Yield curve, 10y minus 3m (^TNX - ^IRX)",
      "window": 63,
      "s": 1,
-     "m": 16.69996,
+     "m": 16.70005,
      "z": 0.518,
      "status": "confirms",
      "value": "+17bp over 63d, now +100bp",
@@ -10207,12 +10207,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "banks −1.2pp · payments +1.4pp · brokers −1.3pp · the rest −0.3pp of the 63d −1.4%",
+     "value": "banks −1.2pp · payments +1.4pp · brokers −1.3pp · the rest −0.4pp of the 63d −1.4%",
      "note": "lending, payments and capital markets are three different trades",
      "groups": [
       {
        "name": "banks",
-       "c": -0.01179,
+       "c": -0.01173,
        "found": [
         "JPM",
         "BAC",
@@ -10222,7 +10222,7 @@
       },
       {
        "name": "payments",
-       "c": 0.01376,
+       "c": 0.01387,
        "found": [
         "V",
         "MA",
@@ -10231,7 +10231,7 @@
       },
       {
        "name": "brokers",
-       "c": -0.01266,
+       "c": -0.01255,
        "found": [
         "GS",
         "MS",
@@ -10240,7 +10240,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.00343,
+       "c": -0.00371,
        "found": null
       }
      ],
@@ -10375,7 +10375,7 @@
      "label": "Yield curve, 10y minus 3m (^TNX - ^IRX)",
      "window": 63,
      "s": 1,
-     "m": 16.69996,
+     "m": 16.70005,
      "z": 0.518,
      "status": "confirms",
      "value": "+17bp over 63d, now +100bp",
@@ -10474,7 +10474,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.0783,
+     "m": 0.0781,
      "z": null,
      "status": "diverges",
      "value": "8% of covered weight up over 63d · 8 of 107 names · 3% over 21d",
@@ -10577,7 +10577,7 @@
      "label": "3-month bill yield (^IRX)",
      "window": 63,
      "s": -1,
-     "m": 38.10003,
+     "m": 38.09998,
      "z": 2.529,
      "status": "diverges",
      "value": "+38bp over 63d, now 4.09%",
@@ -10609,7 +10609,7 @@
      "label": "Yield curve, 10y minus 3m (^TNX - ^IRX)",
      "window": 63,
      "s": 1,
-     "m": 16.69996,
+     "m": 16.70005,
      "z": 0.518,
      "status": "confirms",
      "value": "+17bp over 63d, now +100bp",
@@ -10708,7 +10708,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.1035,
+     "m": 0.1032,
      "z": null,
      "status": "diverges",
      "value": "10% of covered weight up over 63d · 34 of 167 names · 4% over 21d",
@@ -11077,7 +11077,7 @@
      "groups": [
       {
        "name": "GS + MS + SCHW",
-       "c": -0.00631,
+       "c": -0.00619,
        "found": [
         "GS",
         "MS",
@@ -11086,7 +11086,7 @@
       },
       {
        "name": "HOOD + IBKR + COIN",
-       "c": 0.00216,
+       "c": 0.00226,
        "found": [
         "HOOD",
         "IBKR",
@@ -11095,7 +11095,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.02927,
+       "c": -0.0295,
        "found": null
       }
      ],
@@ -11295,7 +11295,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "leans_down",
      "value": "+55bp over 63d, now 5.09%",
@@ -11452,7 +11452,7 @@
      "label": "10y yield (investment income, ^TNX)",
      "window": 63,
      "s": 1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -11484,7 +11484,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.4239,
+     "m": 0.4234,
      "z": null,
      "status": "neutral",
      "value": "42% of covered weight up over 63d · 22 of 54 names · 39% over 21d",
@@ -11661,7 +11661,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -11879,7 +11879,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -12118,7 +12118,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -13474,7 +13474,7 @@
      "groups": [
       {
        "name": "compute",
-       "c": 0.00313,
+       "c": 0.00307,
        "found": [
         "NVDA",
         "AVGO",
@@ -13488,7 +13488,7 @@
       },
       {
        "name": "memory",
-       "c": 0.00197,
+       "c": 0.00201,
        "found": [
         "MU"
        ]
@@ -13500,7 +13500,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.04018,
+       "c": -0.04015,
        "found": null
       }
      ],
@@ -14162,12 +14162,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "ads +3.1pp · media +0.8pp · telecom −0.7pp · the rest −1.2pp of the 63d +2.0%",
+     "value": "ads +3.0pp · media +0.8pp · telecom −0.7pp · the rest −1.2pp of the 63d +2.0%",
      "note": "telecom is the ballast; ads and streaming are the growth",
      "groups": [
       {
        "name": "ads",
-       "c": 0.03072,
+       "c": 0.03024,
        "found": [
         "META",
         "GOOGL",
@@ -14176,7 +14176,7 @@
       },
       {
        "name": "media",
-       "c": 0.00814,
+       "c": 0.00817,
        "found": [
         "NFLX",
         "DIS"
@@ -14184,7 +14184,7 @@
       },
       {
        "name": "telecom",
-       "c": -0.00736,
+       "c": -0.00728,
        "found": [
         "T",
         "VZ",
@@ -14194,7 +14194,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.01198,
+       "c": -0.01161,
        "found": null
       }
      ],
@@ -14242,10 +14242,10 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.5883,
+     "m": 0.5839,
      "z": null,
      "status": "neutral",
-     "value": "59% of covered weight up over 63d · 10 of 22 names · 62% over 21d",
+     "value": "58% of covered weight up over 63d · 10 of 22 names · 62% over 21d",
      "note": "",
      "evidence": {
       "tag": "uncalibrated",
@@ -14345,7 +14345,7 @@
      "label": "Top-3 share of the move",
      "window": 63,
      "s": 0,
-     "m": 0.002,
+     "m": 0.003,
      "z": null,
      "status": "info",
      "value": "0.0× their weight share of the 63d move (broader than the fund)",
@@ -14557,7 +14557,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "diverges",
      "value": "+55bp over 63d, now 5.09%",
@@ -14679,12 +14679,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "IPPs +0.1pp · regulated −7.3pp of the 63d −7.1%",
+     "value": "IPPs +0.1pp · regulated −7.2pp of the 63d −7.1%",
      "note": "the AI-power trade vs the bond proxy",
      "groups": [
       {
        "name": "IPPs",
-       "c": 0.00147,
+       "c": 0.0013,
        "found": [
         "VST",
         "CEG",
@@ -14693,7 +14693,7 @@
       },
       {
        "name": "regulated",
-       "c": -0.07261,
+       "c": -0.07245,
        "found": null
       }
      ],
@@ -14708,7 +14708,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -14775,7 +14775,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.0785,
+     "m": 0.0775,
      "z": null,
      "status": "confirms",
      "value": "8% of covered weight up over 63d · 2 of 31 names · 71% over 21d",
@@ -14878,7 +14878,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -15067,7 +15067,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -15132,7 +15132,7 @@
      "label": "Top-3 share of the move",
      "window": 63,
      "s": 0,
-     "m": 0.909,
+     "m": 0.938,
      "z": null,
      "status": "info",
      "value": "0.9× their weight share of the 63d move (in line with the fund)",
@@ -15156,7 +15156,7 @@
      "m": 0.078,
      "z": null,
      "status": "confirms",
-     "value": "8% of covered weight up over 63d · 1 of 10 names · 33% over 21d",
+     "value": "8% of covered weight up over 63d · 1 of 10 names · 25% over 21d",
      "note": "",
      "evidence": {
       "tag": "uncalibrated",
@@ -15324,12 +15324,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "operators +0.7pp · fuel −0.4pp · SMR developers −2.7pp · the rest −5.1pp of the 63d −7.4%",
+     "value": "operators +0.7pp · fuel −0.4pp · SMR developers −2.7pp · the rest −5.0pp of the 63d −7.4%",
      "note": "operators earn on PPAs today; SMR developers are the speculative layer",
      "groups": [
       {
        "name": "operators",
-       "c": 0.00734,
+       "c": 0.00651,
        "found": [
         "CEG",
         "PEG",
@@ -15338,7 +15338,7 @@
       },
       {
        "name": "fuel",
-       "c": -0.00441,
+       "c": -0.00373,
        "found": [
         "CCO.TO",
         "NXE.TO",
@@ -15355,7 +15355,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.05058,
+       "c": -0.05044,
        "found": null
       }
      ],
@@ -15490,7 +15490,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -15577,7 +15577,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.1731,
+     "m": 0.1741,
      "z": null,
      "status": "confirms",
      "value": "17% of covered weight up over 63d · 5 of 30 names · 47% over 21d",
@@ -15714,7 +15714,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -16004,7 +16004,7 @@
      "label": "10y Treasury yield (^TNX)",
      "window": 63,
      "s": -1,
-     "m": 54.79999,
+     "m": 54.80003,
      "z": 1.688,
      "status": "confirms",
      "value": "+55bp over 63d, now 5.09%",
@@ -17176,8 +17176,8 @@
      "label": "Yen (Fanuc/Keyence translate, JPYUSD)",
      "window": 63,
      "s": 1,
-     "m": 0.02735,
-     "z": 0.708,
+     "m": 0.02759,
+     "z": 0.714,
      "status": "diverges",
      "value": "+2.8% over 63d",
      "note": "the yen strengthening",

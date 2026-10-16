@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T22:07:20Z",
+  "generated_at": "2026-10-16T14:55:16Z",
   "source": "Yahoo Finance via yfinance",
   "note": "close is the latest settled daily close; spot_price is the last delayed quote captured when the job ran, so they can differ intraday.",
   "session": "2026-10-15",
@@ -18,7 +18,7 @@
       "date": "2026-10-14"
     }
   ],
-  "count": 244,
+  "count": 245,
   "tickers": [
     {
       "ticker": "000660.KS",
@@ -93,6 +93,21 @@
       "spot_captured_at": "2026-10-15T22:03:49Z",
       "currency": "USD",
       "dma200": 292.1128,
+      "dma200_n": 200
+    },
+    {
+      "ticker": "ADUR",
+      "date": "2026-10-16",
+      "open": 10.39,
+      "high": 10.39,
+      "low": 10.1,
+      "close": 10.19,
+      "adj_close": 10.19,
+      "volume": 101901,
+      "spot_price": 10.19,
+      "spot_captured_at": "2026-10-16T14:55:11Z",
+      "currency": "USD",
+      "dma200": 13.0913,
       "dma200_n": 200
     },
     {

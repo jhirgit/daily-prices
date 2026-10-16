@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T22:07:27Z",
+  "generated_at": "2026-10-16T14:55:23Z",
   "method": {
     "regime_gate": "Over the last 90 sessions: trending if log-price R^2 >= 0.85; mean_reverting if R^2 < 0.35 and SMA20 crossings <= 7.0 per 100 sessions; else neither.",
     "regime_calibration": "Thresholds are Monte-Carlo calibrated against a random-walk null (2,000 draws, 90-session windows). R^2 >= 0.85 is the p90 of that null -- note that R^2 >= 0.50 would be met by 44.7% of pure random walks, which is why the common 'it looks trendy' threshold is useless. The Lo-MacKinlay variance ratio is reported as a diagnostic but does NOT classify: a sinusoid is locally smooth, so cyclical data returns VR of 3.9-11.3, far above 1, not below it.",
@@ -125,6 +125,11 @@
     {
       "ticker": "6981.T",
       "bars": 48,
+      "reason": "insufficient_history"
+    },
+    {
+      "ticker": "ADUR",
+      "bars": 252,
       "reason": "insufficient_history"
     },
     {
