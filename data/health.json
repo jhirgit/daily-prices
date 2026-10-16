@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-16T15:02:00Z",
- "session": "2026-10-15",
+ "generated_at": "2026-10-16T22:14:36Z",
+ "session": "2026-10-16",
  "status": "ok",
  "degraded": [],
  "warnings": [],
@@ -12,43 +12,43 @@
  "payloads": {
   "latest.json": {
    "present": true,
-   "bytes": 87165,
-   "generated_at": "2026-10-16T14:55:16Z",
+   "bytes": 87173,
+   "generated_at": "2026-10-16T22:07:50Z",
    "rows": 245,
-   "asof": "2026-10-15",
+   "asof": "2026-10-16",
    "errors": {
     "lagging": [
-     "^KS11"
+     "MRAAF"
     ]
    }
   },
   "technicals.json": {
    "present": true,
-   "bytes": 1746866,
-   "generated_at": "2026-10-16T14:55:23Z",
+   "bytes": 1747168,
+   "generated_at": "2026-10-16T22:07:55Z",
    "rows": 235,
-   "asof": "2026-10-15"
+   "asof": "2026-10-16"
   },
   "closes.json": {
    "present": true,
-   "bytes": 1318592,
-   "generated_at": "2026-10-16T14:55:24Z",
+   "bytes": 1318668,
+   "generated_at": "2026-10-16T22:07:56Z",
    "rows": 243,
-   "asof": "2026-10-15"
+   "asof": "2026-10-16"
   },
   "crowd.json": {
    "present": true,
-   "bytes": 33702,
-   "generated_at": "2026-10-16T14:55:23Z",
+   "bytes": 33721,
+   "generated_at": "2026-10-16T22:07:56Z",
    "rows": 243,
    "asof": "2026-10-16"
   },
   "rotation_members.json": {
    "present": true,
-   "bytes": 1076517,
-   "generated_at": "2026-10-16T15:01:57Z",
+   "bytes": 1139130,
+   "generated_at": "2026-10-16T22:14:33Z",
    "rows": 80,
-   "asof": "2026-10-15",
+   "asof": "2026-10-16",
    "errors": {
     "rows": [
      "LIT"
@@ -57,32 +57,32 @@
   },
   "rotation_phase.json": {
    "present": true,
-   "bytes": 390861,
-   "generated_at": "2026-10-16T15:02:00Z",
+   "bytes": 390312,
+   "generated_at": "2026-10-16T22:14:36Z",
    "rows": 80,
-   "asof": "2026-10-15"
+   "asof": "2026-10-16"
   },
   "options_flow.json": {
    "present": true,
-   "bytes": 208383,
-   "generated_at": "2026-10-15T22:17:29Z",
-   "rows": 217,
-   "asof": "2026-10-15",
-   "cap_share": 0.678
+   "bytes": 207828,
+   "generated_at": "2026-10-16T15:06:28Z",
+   "rows": 218,
+   "asof": "2026-10-16",
+   "cap_share": 0.677
   },
   "earnings_dates.json": {
    "present": true,
-   "bytes": 10293,
-   "generated_at": "2026-10-15T22:15:30Z",
-   "rows": 110,
-   "asof": "2026-10-15"
+   "bytes": 10365,
+   "generated_at": "2026-10-16T15:03:54Z",
+   "rows": 111,
+   "asof": "2026-10-16"
   },
   "earnings_detected.json": {
    "present": true,
-   "bytes": 869,
-   "generated_at": "2026-10-15T22:15:31Z",
-   "rows": 2,
-   "asof": "2026-10-15",
+   "bytes": 790,
+   "generated_at": "2026-10-16T15:03:54Z",
+   "rows": 1,
+   "asof": "2026-10-16",
    "errors": {
     "edgar": 0,
     "overdue": 0
@@ -109,9 +109,9 @@
   },
   "intraday.json": {
    "present": true,
-   "bytes": 57040,
-   "generated_at": "2026-10-16T14:45:28.020245Z",
-   "rows": 222
+   "bytes": 57529,
+   "generated_at": "2026-10-16T19:45:31.523920Z",
+   "rows": 223
   },
   "insiders_12m.json": {
    "present": true,
