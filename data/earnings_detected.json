@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-10-20T22:15:01Z",
+  "generated_at": "2026-10-21T22:12:57Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
   "grace_sessions": 2,
   "counts": {
-    "in_window": 6,
-    "checked": 6,
-    "detected": 2,
+    "in_window": 9,
+    "checked": 9,
+    "detected": 5,
     "awaiting": 3,
     "overdue": 1,
     "errors": 0
@@ -17,14 +17,46 @@
     "ASML": {
       "expected": "2026-10-14",
       "status": "overdue",
-      "sessions_late": 4
+      "sessions_late": 5
+    },
+    "BE": {
+      "expected": "2026-10-22",
+      "status": "awaiting"
     },
     "LRCX": {
       "expected": "2026-10-21",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-21",
+      "period": "2026-10-21",
+      "accession": "0000707549-26-000052",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000052/lrcx-20261021.htm"
     },
     "META": {
       "expected": "2026-10-21",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-21",
+      "period": "2026-10-19",
+      "accession": "0001628280-26-066700",
+      "items": [
+        "1.01",
+        "2.02",
+        "8.01",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066700/meta-20261019.htm"
+    },
+    "NEM": {
+      "expected": "2026-10-22",
+      "status": "awaiting"
+    },
+    "NOK": {
+      "expected": "2026-10-22",
       "status": "awaiting"
     },
     "SPCX": {
@@ -42,7 +74,16 @@
     },
     "TXN": {
       "expected": "2026-10-21",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-21",
+      "period": "2026-10-21",
+      "accession": "0000097476-26-000165",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000165/txn-20261021.htm"
     },
     "VICR": {
       "expected": "2026-10-20",
