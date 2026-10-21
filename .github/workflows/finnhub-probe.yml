@@ -31,3 +31,22 @@ jobs:
               except Exception as e:
                   print(p, "-> HTTP/parse error:", str(e)[:120])
           PY
+      - name: Probe estimate endpoints (HTTP status and field names only)
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          SYMBOL: ${{ inputs.symbol }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, urllib.error
+          t = os.environ["FINNHUB_API_KEY"]; s = os.environ.get("SYMBOL") or "NVDA"
+          for p in ("stock/price-target", "stock/recommendation", "stock/eps-estimate", "stock/revenue-estimate"):
+              try:
+                  r = urllib.request.urlopen(f"https://finnhub.io/api/v1/{p}?symbol={s}&token={t}", timeout=30)
+                  j = json.load(r)
+                  shape = sorted(j.keys())[:20] if isinstance(j, dict) else f"list[{len(j)}]" + (str(sorted(j[0].keys())) if j and isinstance(j[0], dict) else "")
+                  print(p, "->", r.status, shape, "| sample:", json.dumps(j if isinstance(j, dict) else j[:1])[:300])
+              except urllib.error.HTTPError as e:
+                  print(p, "->", e.code, e.read()[:200])
+              except Exception as e:
+                  print(p, "-> error:", str(e)[:120])
+          PY
