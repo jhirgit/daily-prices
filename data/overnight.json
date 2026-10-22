@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-21T11:30:57Z",
+  "generated_at": "2026-10-22T11:30:55Z",
   "source": "Yahoo Finance via yfinance",
   "note": "pct = last vs previous close. Asia = completed session; Europe = session in progress; US futures = overnight vs prior settle; crypto = trailing 24h. bar_date = the exchange-local date of the session pct belongs to: an Asian market shut for a holiday still reports its last session's move, dated then.",
   "groups": [
@@ -9,38 +9,38 @@
         {
           "ticker": "ES=F",
           "name": "S&P 500",
-          "last": 7773.5,
-          "prev_close": 7778.75,
-          "pct": -0.067,
+          "last": 7715.75,
+          "prev_close": 7750.75,
+          "pct": -0.452,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "NQ=F",
           "name": "Nasdaq 100",
-          "last": 29846.25,
-          "prev_close": 29919.75,
-          "pct": -0.246,
+          "last": 29470.75,
+          "prev_close": 29626.75,
+          "pct": -0.527,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "YM=F",
           "name": "Dow",
-          "last": 52744.0,
-          "prev_close": 52728.0,
-          "pct": 0.03,
+          "last": 52688.0,
+          "prev_close": 52914.0,
+          "pct": -0.427,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "RTY=F",
           "name": "Russell 2000",
-          "last": 2789.3999,
-          "prev_close": 2784.5,
-          "pct": 0.176,
+          "last": 2773.3999,
+          "prev_close": 2776.6001,
+          "pct": -0.115,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         }
       ]
     },
@@ -50,47 +50,47 @@
         {
           "ticker": "^N225",
           "name": "Nikkei 225 (Tokyo)",
-          "last": 64621.2383,
-          "prev_close": 64037.2617,
-          "pct": 0.912,
+          "last": 62907.8398,
+          "prev_close": 64676.9297,
+          "pct": -2.735,
           "currency": "JPY",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "^HSI",
           "name": "Hang Seng (Hong Kong)",
-          "last": 23651.8691,
-          "prev_close": 23867.7402,
-          "pct": -0.904,
+          "last": 22934.6797,
+          "prev_close": 23651.8691,
+          "pct": -3.032,
           "currency": "HKD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "^KS11",
           "name": "KOSPI (Seoul)",
-          "last": 5735.6602,
-          "prev_close": 5552.74,
-          "pct": 3.294,
+          "last": 5533.77,
+          "prev_close": 5703.27,
+          "pct": -2.972,
           "currency": "KRW",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "^TWII",
           "name": "Taiwan Weighted",
-          "last": 46887.7695,
-          "prev_close": 46234.2891,
-          "pct": 1.413,
+          "last": 46041.4297,
+          "prev_close": 46709.1992,
+          "pct": -1.43,
           "currency": "TWD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "000001.SS",
           "name": "Shanghai Composite",
-          "last": 3713.0276,
-          "prev_close": 3732.7017,
-          "pct": -0.527,
+          "last": 3658.0256,
+          "prev_close": 3715.512,
+          "pct": -1.547,
           "currency": "CNY",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         }
       ]
     },
@@ -100,38 +100,38 @@
         {
           "ticker": "^FTSE",
           "name": "FTSE 100 (London)",
-          "last": 10740.0703,
-          "prev_close": 10731.1201,
-          "pct": 0.083,
+          "last": 10708.9902,
+          "prev_close": 10751.9199,
+          "pct": -0.399,
           "currency": "GBP",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "^GDAXI",
           "name": "DAX (Frankfurt)",
-          "last": 25491.3496,
-          "prev_close": 25305.3105,
-          "pct": 0.735,
+          "last": 25407.5293,
+          "prev_close": 25646.0801,
+          "pct": -0.93,
           "currency": "EUR",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "^STOXX50E",
           "name": "Euro Stoxx 50",
-          "last": 6169.6299,
-          "prev_close": 6124.9399,
-          "pct": 0.73,
-          "currency": "EUR",
-          "bar_date": "2026-10-21"
+          "last": 6108.7202,
+          "prev_close": 6202.8198,
+          "pct": -1.517,
+          "currency": null,
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "^FCHI",
           "name": "CAC 40 (Paris)",
-          "last": 7885.3901,
-          "prev_close": 7843.1401,
-          "pct": 0.539,
+          "last": 7813.6802,
+          "prev_close": 7919.6499,
+          "pct": -1.338,
           "currency": "EUR",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         }
       ]
     },
@@ -141,65 +141,65 @@
         {
           "ticker": "^TNX",
           "name": "US 10Y yield",
-          "last": 5.117,
-          "prev_close": 5.136,
-          "pct": -0.37,
+          "last": 5.146,
+          "prev_close": 5.117,
+          "pct": 0.567,
           "currency": "USD",
-          "bar_date": "2026-10-20"
+          "bar_date": "2026-10-21"
         },
         {
           "ticker": "DX-Y.NYB",
           "name": "Dollar index",
-          "last": 101.714,
-          "prev_close": 101.771,
-          "pct": -0.056,
+          "last": 101.742,
+          "prev_close": 101.601,
+          "pct": 0.139,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "GC=F",
           "name": "Gold",
-          "last": 4148.2002,
-          "prev_close": 4135.8999,
-          "pct": 0.297,
+          "last": 4085.3999,
+          "prev_close": 4107.2998,
+          "pct": -0.533,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "CL=F",
           "name": "WTI crude",
-          "last": 99.24,
-          "prev_close": 99.25,
-          "pct": -0.01,
+          "last": 99.25,
+          "prev_close": 98.52,
+          "pct": 0.741,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "KRW=X",
           "name": "Korean won per USD",
-          "last": 1325.08,
-          "prev_close": 1325.9399,
-          "pct": -0.065,
+          "last": 1324.1801,
+          "prev_close": 1326.0699,
+          "pct": -0.143,
           "currency": "KRW",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "TWD=X",
           "name": "Taiwan dollar per USD",
-          "last": 32.369,
-          "prev_close": 32.577,
-          "pct": -0.638,
+          "last": 32.547,
+          "prev_close": 32.392,
+          "pct": 0.479,
           "currency": "TWD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "JPY=X",
           "name": "Japanese yen per USD",
-          "last": 157.913,
-          "prev_close": 158.27,
-          "pct": -0.226,
+          "last": 156.865,
+          "prev_close": 158.158,
+          "pct": -0.818,
           "currency": "JPY",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         }
       ]
     },
@@ -209,20 +209,20 @@
         {
           "ticker": "BTC-USD",
           "name": "Bitcoin",
-          "last": 83456.4297,
-          "prev_close": 82936.7031,
-          "pct": 0.627,
+          "last": 81802.3984,
+          "prev_close": 84024.6562,
+          "pct": -2.645,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "ETH-USD",
           "name": "Ethereum",
-          "last": 2464.3601,
-          "prev_close": 2446.6201,
-          "pct": 0.725,
+          "last": 2399.5701,
+          "prev_close": 2471.78,
+          "pct": -2.921,
           "currency": "USD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         }
       ]
     },
@@ -232,47 +232,47 @@
         {
           "ticker": "2330.TW",
           "name": "TSMC (Taipei)",
-          "last": 2420.0,
-          "prev_close": 2400.0,
-          "pct": 0.833,
+          "last": 2385.0,
+          "prev_close": 2405.0,
+          "pct": -0.832,
           "currency": "TWD",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "000660.KS",
           "name": "SK Hynix (Seoul)",
-          "last": 1294000.0,
-          "prev_close": 1223000.0,
-          "pct": 5.805,
+          "last": 1223000.0,
+          "prev_close": 1287000.0,
+          "pct": -4.973,
           "currency": "KRW",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "005930.KS",
           "name": "Samsung Electronics (Seoul)",
-          "last": 223500.0,
-          "prev_close": 211500.0,
-          "pct": 5.674,
+          "last": 214500.0,
+          "prev_close": 221000.0,
+          "pct": -2.941,
           "currency": "KRW",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "8035.T",
           "name": "Tokyo Electron (Tokyo)",
-          "last": 10160.0,
-          "prev_close": 10115.0,
-          "pct": 0.445,
+          "last": 9450.0,
+          "prev_close": 10250.0,
+          "pct": -7.805,
           "currency": "JPY",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         },
         {
           "ticker": "6857.T",
           "name": "Advantest (Tokyo)",
-          "last": 34440.0,
-          "prev_close": 33880.0,
-          "pct": 1.653,
+          "last": 32370.0,
+          "prev_close": 34390.0,
+          "pct": -5.874,
           "currency": "JPY",
-          "bar_date": "2026-10-21"
+          "bar_date": "2026-10-22"
         }
       ]
     }
