@@ -116,6 +116,18 @@ jobs:
         if: steps.fallback-guard.outputs.run == 'true'
         run: python export_data.py
 
+      # AI-hardware thesis gauge: two dials (demand, financing) and a quadrant,
+      # from market proxies in prices.db. Straight after the export because that
+      # step is where technicals.py runs and refreshes the panel inputs. Pure
+      # prices.db reads, no network; DISPLAY-ONLY, so continue-on-error and a
+      # timeout keep it from ever costing the price commit.
+      - name: AI-hardware thesis gauge (display-only)
+        id: thesis-gauge
+        if: steps.fallback-guard.outputs.run == 'true'
+        continue-on-error: true
+        timeout-minutes: 5
+        run: python thesis_gauge.py
+
       - name: Positioning proxies (SPEC-36 crowd block, display-only)
         if: steps.fallback-guard.outputs.run == 'true'
         run: python crowd.py
@@ -160,6 +172,7 @@ jobs:
           STEP_OUTCOMES: >-
             rotation_members=${{ steps.rotation-members.outcome }}
             rotation_phase=${{ steps.rotation-phase.outcome }}
+            thesis_gauge=${{ steps.thesis-gauge.outcome }}
         run: python health.py
 
       - name: Commit updated database and exports

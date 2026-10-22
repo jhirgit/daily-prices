@@ -380,6 +380,37 @@ Run `python rotation_evidence.py` (first run downloads about 130 series; later r
 cache, `--refresh` re-downloads), then `python rotation_phase.py` (`--no-fetch` skips Yahoo).
 Tests: `python test_rotation_phase.py` (no network).
 
+## AI-hardware thesis gauge (`thesis_gauge.py`)
+
+Two dials and a quadrant, recomputed in the daily EOD job straight after the
+export step (where `technicals.py` runs), written to `data/thesis_gauge.json`.
+
+```
+python thesis_gauge.py            # writes data/thesis_gauge.json
+python thesis_gauge.py --stdout   # print instead
+python test_thesis_gauge.py       # offline tests
+```
+
+- **Demand dial:** SMH and SOXX vs SPY (21d, 63d), the OPTICS and POWERSEMI
+  baskets vs SPY, memory (MU, DRAM) vs SMH, a semi-equipment basket vs SMH, and
+  the share of a fixed AI-hardware list above its 50-day average.
+- **Financing dial:** the NEOCLOUD basket vs the HYPERSCALE basket, CRWV and ORCL
+  vs SPY, HYG vs IEF, the 10-year yield level and its 21d change, and the
+  NEOCLOUD basket's drawdown from its 63d high.
+- Each input is z-scored against its own trailing 252 sessions, sign-aligned so
+  + = healthy, clipped at 3; a dial is the mean of its available scores (3
+  needed). Quadrants: A demand up / financing open, B demand up / financing
+  tightening, C both down, D demand down / financing open. A dial inside the
+  neutral band (0.25) puts the day on an edge (`zone` = A/B, B/C, C/D, A/D or
+  center).
+- Every input is a **market proxy**. Hard-data events (capex guides, memory
+  contract prices) enter only through `thesis_gauge.combine(market_z, events)`,
+  called by a private consumer; this repo never reads them.
+- `evidence`: label persistence and forward 21/63-session SMH returns by
+  quadrant, with days and episodes. With about two years of history no label
+  earns an edge, and the payload says so: the quadrants are states, not
+  forecasts.
+
 ## Options flow (`options_flow.py`)
 
 A once-a-day chain snapshot for every optionable name in `tickers.txt`, over the
