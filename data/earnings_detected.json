@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-21T22:12:57Z",
+  "generated_at": "2026-10-22T22:12:01Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
@@ -7,8 +7,8 @@
   "counts": {
     "in_window": 9,
     "checked": 9,
-    "detected": 5,
-    "awaiting": 3,
+    "detected": 7,
+    "awaiting": 1,
     "overdue": 1,
     "errors": 0
   },
@@ -17,11 +17,21 @@
     "ASML": {
       "expected": "2026-10-14",
       "status": "overdue",
-      "sessions_late": 5
+      "sessions_late": 6
     },
     "BE": {
       "expected": "2026-10-22",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-22",
+      "period": "2026-10-22",
+      "accession": "0001628280-26-066890",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/be-20261022.htm"
     },
     "LRCX": {
       "expected": "2026-10-21",
@@ -53,7 +63,16 @@
     },
     "NEM": {
       "expected": "2026-10-22",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-22",
+      "period": "2026-10-22",
+      "accession": "0001164727-26-000041",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1164727/000116472726000041/nem-20261022.htm"
     },
     "NOK": {
       "expected": "2026-10-22",

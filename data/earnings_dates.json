@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-21T22:12:55Z",
+  "generated_at": "2026-10-22T22:11:54Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 111,
-  "asked": 243,
+  "asked": 245,
   "missing": [
     "AGG",
     "AMLP",
@@ -43,6 +43,7 @@
     "ICLN",
     "ICOP",
     "IEF",
+    "IGM",
     "IGPT",
     "IGV",
     "IHF",
@@ -65,6 +66,7 @@
     "KCE",
     "KIE",
     "KRE",
+    "KXI",
     "LIT",
     "LQD",
     "MARS",
@@ -358,7 +360,7 @@
     },
     "IREN": {
       "date": "2026-11-05",
-      "estimated": true
+      "estimated": false
     },
     "JPM": {
       "date": "2027-01-14",
