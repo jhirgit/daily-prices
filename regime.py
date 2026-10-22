@@ -928,7 +928,11 @@ REG_ETFS = [
     {"t": "FINX", "name": "Fintech / payments", "side": "offense", "gics": "40201060", "sector": "Financials"},
     {"t": "KIE", "name": "Insurance", "side": None, "gics": "403010", "sector": "Financials"},
     # ---- 45 Information Technology ----
-    {"t": "XLK", "name": "Information technology (sector)", "side": "offense", "gics": "45", "sector": "Information Technology"},
+    {"t": "XLK", "name": "Information technology (sector)", "side": "offense", "gics": "45", "sector": "Information Technology", "grp": "tech"},
+    # IGM (Jake 10/22): IT plus interactive media (GOOGL, META, NFLX) -- the
+    # "tech" most people mean. A twin of XLK, so it ranks for comparison but
+    # never re-thirds the field; the IGM - XLK gap is the internet-megacap leg.
+    {"t": "IGM", "name": "Expanded tech (IGM, incl. internet)", "side": "offense", "gics": "45", "sector": "Information Technology", "grp": "tech"},
     {"t": "IGV", "name": "Software", "side": "offense", "gics": "451030", "sector": "Information Technology", "grp": "software"},
     {"t": "WCLD", "name": "High-multiple SaaS (WCLD)", "side": "offense", "gics": "45103010", "sector": "Information Technology", "grp": "software"},
     {"t": "CIBR", "name": "Cybersecurity", "side": "offense", "gics": "45103020", "sector": "Information Technology", "grp": "cyber"},
