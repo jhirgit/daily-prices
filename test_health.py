@@ -39,6 +39,7 @@ def healthy():
         "crowd.json": {"generated_at": S + "T22:06:00Z", "tickers": tick},
         "rotation_members.json": {"generated_at": S + "T22:20:00Z", "asof": S, "rows": {}, "errors": {}},
         "rotation_phase.json": {"generated_at": S + "T22:21:00Z", "asof": S, "rows": {}, "errors": {}},
+        "thesis_gauge.json": {"generated_at": S + "T22:06:00Z", "asof": S, "inputs": []},
         "options_flow.json": {"generated_at": S + "T22:09:00Z", "as_of": S, "names": {"NVDA": {}}},
         "earnings_dates.json": {"generated_at": S + "T22:07:00Z", "dates": {}, "errors": {}},
         "earnings_detected.json": {"generated_at": S + "T22:07:00Z", "names": {},
