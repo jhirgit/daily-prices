@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-22T22:12:01Z",
+  "generated_at": "2026-10-23T22:15:54Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
@@ -17,7 +17,7 @@
     "ASML": {
       "expected": "2026-10-14",
       "status": "overdue",
-      "sessions_late": 6
+      "sessions_late": 7
     },
     "BE": {
       "expected": "2026-10-22",
@@ -76,7 +76,8 @@
     },
     "NOK": {
       "expected": "2026-10-22",
-      "status": "awaiting"
+      "status": "awaiting",
+      "sessions_late": 1
     },
     "SPCX": {
       "expected": "2026-10-20",
