@@ -1,11 +1,11 @@
 {
- "generated_at": "2026-10-23T22:13:56Z",
- "session": "2026-10-23",
+ "generated_at": "2026-10-26T22:14:55Z",
+ "session": "2026-10-26",
  "status": "degraded",
  "degraded": [
-  "options_flow.json speaks for 2026-10-22, behind the 2026-10-23 session",
-  "earnings_dates.json speaks for 2026-10-22, behind the 2026-10-23 session",
-  "earnings_detected.json speaks for 2026-10-22, behind the 2026-10-23 session",
+  "options_flow.json speaks for 2026-10-23, behind the 2026-10-26 session",
+  "earnings_dates.json speaks for 2026-10-23, behind the 2026-10-26 session",
+  "earnings_detected.json speaks for 2026-10-23, behind the 2026-10-26 session",
   "earnings_detected.json: 1 print(s) overdue"
  ],
  "warnings": [],
@@ -18,94 +18,90 @@
  "payloads": {
   "latest.json": {
    "present": true,
-   "bytes": 87752,
-   "generated_at": "2026-10-23T22:07:08Z",
+   "bytes": 87843,
+   "generated_at": "2026-10-26T22:06:39Z",
    "rows": 247,
-   "asof": "2026-10-23",
+   "asof": "2026-10-26",
    "errors": {
     "lagging": [
-     "MRAAF"
+     "MRAAF",
+     "^KS11"
     ]
    }
   },
   "technicals.json": {
    "present": true,
-   "bytes": 1755470,
-   "generated_at": "2026-10-23T22:07:18Z",
+   "bytes": 1756006,
+   "generated_at": "2026-10-26T22:06:49Z",
    "rows": 237,
-   "asof": "2026-10-23"
+   "asof": "2026-10-26"
   },
   "closes.json": {
    "present": true,
-   "bytes": 1331807,
-   "generated_at": "2026-10-23T22:07:20Z",
+   "bytes": 1331878,
+   "generated_at": "2026-10-26T22:06:51Z",
    "rows": 245,
-   "asof": "2026-10-23"
+   "asof": "2026-10-26"
   },
   "crowd.json": {
    "present": true,
-   "bytes": 34003,
-   "generated_at": "2026-10-23T22:07:20Z",
+   "bytes": 34008,
+   "generated_at": "2026-10-26T22:06:51Z",
    "rows": 245,
-   "asof": "2026-10-23"
+   "asof": "2026-10-26"
   },
   "rotation_members.json": {
    "present": true,
-   "bytes": 1151616,
-   "generated_at": "2026-10-23T22:13:52Z",
+   "bytes": 1143058,
+   "generated_at": "2026-10-26T22:14:52Z",
    "rows": 81,
-   "asof": "2026-10-23",
+   "asof": "2026-10-26",
    "errors": {
     "rows": [
-     "LIT"
+     "ARTY",
+     "DTCR",
+     "ESPO",
+     "LIT",
+     "REMX",
+     "RING"
     ]
    }
   },
   "rotation_phase.json": {
    "present": true,
-   "bytes": 395736,
-   "generated_at": "2026-10-23T22:13:55Z",
+   "bytes": 394853,
+   "generated_at": "2026-10-26T22:14:55Z",
    "rows": 81,
-   "asof": "2026-10-23",
-   "errors": {
-    "rows": [
-     "PAVE",
-     "SLX",
-     "SPY",
-     "URA",
-     "XME",
-     "_fetch"
-    ]
-   }
+   "asof": "2026-10-26"
   },
   "thesis_gauge.json": {
    "present": true,
-   "bytes": 96555,
-   "generated_at": "2026-10-23T22:07:19Z",
+   "bytes": 96571,
+   "generated_at": "2026-10-26T22:06:50Z",
    "rows": null,
-   "asof": "2026-10-23"
+   "asof": "2026-10-26"
   },
   "options_flow.json": {
    "present": true,
-   "bytes": 210387,
-   "generated_at": "2026-10-22T22:14:20Z",
+   "bytes": 210239,
+   "generated_at": "2026-10-23T22:17:44Z",
    "rows": 219,
-   "asof": "2026-10-22",
-   "cap_share": 0.685
+   "asof": "2026-10-23",
+   "cap_share": 0.684
   },
   "earnings_dates.json": {
    "present": true,
-   "bytes": 10396,
-   "generated_at": "2026-10-22T22:11:54Z",
+   "bytes": 10397,
+   "generated_at": "2026-10-23T22:15:52Z",
    "rows": 111,
-   "asof": "2026-10-22"
+   "asof": "2026-10-23"
   },
   "earnings_detected.json": {
    "present": true,
-   "bytes": 3428,
-   "generated_at": "2026-10-22T22:12:01Z",
+   "bytes": 3454,
+   "generated_at": "2026-10-23T22:15:54Z",
    "rows": 9,
-   "asof": "2026-10-22",
+   "asof": "2026-10-23",
    "errors": {
     "edgar": 0,
     "overdue": 1
@@ -113,8 +109,8 @@
   },
   "overnight.json": {
    "present": true,
-   "bytes": 7275,
-   "generated_at": "2026-10-23T11:31:54Z",
+   "bytes": 7263,
+   "generated_at": "2026-10-26T11:31:31Z",
    "rows": 27,
    "errors": {
     "no_quote": []
@@ -122,9 +118,9 @@
   },
   "news.json": {
    "present": true,
-   "bytes": 533995,
-   "generated_at": "2026-10-23T11:31:54Z",
-   "rows": 128,
+   "bytes": 237594,
+   "generated_at": "2026-10-26T11:31:32Z",
+   "rows": 144,
    "errors": {
     "unavailable": 20,
     "of": 245
@@ -132,15 +128,15 @@
   },
   "intraday.json": {
    "present": true,
-   "bytes": 58018,
-   "generated_at": "2026-10-23T19:45:41.255877Z",
+   "bytes": 57797,
+   "generated_at": "2026-10-26T19:44:59.263567Z",
    "rows": 225
   },
   "insiders_12m.json": {
    "present": true,
-   "bytes": 29505,
-   "generated_at": "2026-10-17T16:03:13Z",
-   "rows": 228,
+   "bytes": 29602,
+   "generated_at": "2026-10-24T16:23:28Z",
+   "rows": 230,
    "errors": {
     "fetch_error": []
    }
