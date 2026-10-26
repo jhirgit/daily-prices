@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-23T22:15:52Z",
+  "generated_at": "2026-10-26T22:16:32Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 111,
@@ -335,8 +335,8 @@
       "estimated": false
     },
     "HL": {
-      "date": "2026-11-05",
-      "estimated": true
+      "date": "2026-11-03",
+      "estimated": false
     },
     "HUBS": {
       "date": "2026-11-04",
@@ -483,12 +483,12 @@
       "estimated": true
     },
     "QLYS": {
-      "date": "2026-11-03",
-      "estimated": true
+      "date": "2026-11-09",
+      "estimated": false
     },
     "QUBT": {
       "date": "2026-11-09",
-      "estimated": true
+      "estimated": false
     },
     "RDDT": {
       "date": "2026-10-29",
