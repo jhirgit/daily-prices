@@ -1,19 +1,18 @@
 {
-  "generated_at": "2026-10-27T22:17:11Z",
+  "generated_at": "2026-10-28T22:15:42Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
   "grace_sessions": 2,
   "counts": {
-    "in_window": 26,
-    "checked": 24,
-    "detected": 10,
-    "awaiting": 13,
+    "in_window": 32,
+    "checked": 31,
+    "detected": 19,
+    "awaiting": 11,
     "overdue": 1,
     "errors": 0
   },
   "not_sec_filers": [
-    "000660.KS",
     "005930.KS"
   ],
   "names": {
@@ -23,6 +22,14 @@
     },
     "AGI": {
       "expected": "2026-10-28",
+      "status": "awaiting"
+    },
+    "AMZN": {
+      "expected": "2026-10-29",
+      "status": "awaiting"
+    },
+    "AXTI": {
+      "expected": "2026-10-29",
       "status": "awaiting"
     },
     "BE": {
@@ -39,6 +46,10 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/be-20261022.htm"
     },
+    "CAT": {
+      "expected": "2026-10-29",
+      "status": "awaiting"
+    },
     "ENPH": {
       "expected": "2026-10-27",
       "status": "detected",
@@ -54,40 +65,85 @@
     },
     "EQIX": {
       "expected": "2026-10-28",
-      "status": "awaiting"
-    },
-    "FLEX": {
-      "expected": "2026-10-28",
-      "status": "awaiting"
-    },
-    "FTNT": {
-      "expected": "2026-10-28",
-      "status": "awaiting"
-    },
-    "GEV": {
-      "expected": "2026-10-28",
-      "status": "awaiting"
-    },
-    "GLW": {
-      "expected": "2026-10-27",
       "status": "detected",
       "form": "8-K",
-      "filed": "2026-10-27",
-      "period": "2026-10-27",
-      "accession": "0000024741-26-000273",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001101239-26-000178",
       "items": [
         "2.02",
         "9.01"
       ],
-      "url": "https://www.sec.gov/Archives/edgar/data/24741/000002474126000273/glw-20261027.htm"
+      "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123926000178/eqix-20261028.htm"
+    },
+    "FLEX": {
+      "expected": "2026-10-28",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0000866374-26-000039",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000039/flex-20261028.htm"
+    },
+    "FTNT": {
+      "expected": "2026-10-28",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001262039-26-000024",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000024/ftnt-20261028.htm"
+    },
+    "GEV": {
+      "expected": "2026-10-28",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001996810-26-000162",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gev-20261028.htm"
     },
     "GOOGL": {
       "expected": "2026-10-28",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001652044-26-000080",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/goog-20261028.htm"
+    },
+    "INTC": {
+      "expected": "2026-10-29",
       "status": "awaiting"
     },
     "INVH": {
       "expected": "2026-10-28",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001687229-26-000053",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1687229/000168722926000053/invh-20261028.htm"
     },
     "KGC": {
       "expected": "2026-10-28",
@@ -121,9 +177,22 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066700/meta-20261019.htm"
     },
+    "MPWR": {
+      "expected": "2026-10-29",
+      "status": "awaiting"
+    },
     "MSFT": {
       "expected": "2026-10-28",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001193125-26-436122",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-20261028.htm"
     },
     "NEM": {
       "expected": "2026-10-22",
@@ -141,11 +210,20 @@
     "NOK": {
       "expected": "2026-10-22",
       "status": "overdue",
-      "sessions_late": 3
+      "sessions_late": 4
     },
     "NOW": {
       "expected": "2026-10-28",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001373715-26-000092",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000092/erq3fy26-8xk.htm"
     },
     "PYPL": {
       "expected": "2026-10-27",
@@ -160,6 +238,14 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1633917/000163391726000086/pypl-20261027.htm"
     },
+    "RDDT": {
+      "expected": "2026-10-29",
+      "status": "awaiting"
+    },
+    "SNDK": {
+      "expected": "2026-10-29",
+      "status": "awaiting"
+    },
     "SPCX": {
       "expected": "2026-10-20",
       "status": "detected",
@@ -173,9 +259,22 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066482/spcx-20261020.htm"
     },
+    "STM": {
+      "expected": "2026-10-29",
+      "status": "awaiting"
+    },
     "TENB": {
       "expected": "2026-10-28",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001660280-26-000050",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000050/tenb-20261028.htm"
     },
     "TXN": {
       "expected": "2026-10-21",
@@ -205,7 +304,17 @@
     },
     "VRT": {
       "expected": "2026-10-28",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-10-28",
+      "period": "2026-10-28",
+      "accession": "0001628280-26-067707",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/vrt-20261028.htm"
     }
   }
 }
