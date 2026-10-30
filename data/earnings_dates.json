@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-29T22:15:54Z",
+  "generated_at": "2026-10-30T22:17:14Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 111,
@@ -231,7 +231,7 @@
       "estimated": true
     },
     "CAT": {
-      "date": "2026-10-29",
+      "date": "2027-01-28",
       "estimated": false
     },
     "CDE": {
@@ -299,7 +299,7 @@
       "estimated": false
     },
     "FRVO": {
-      "date": "2026-11-16",
+      "date": "2026-11-09",
       "estimated": false
     },
     "FTNT": {
@@ -347,8 +347,8 @@
       "estimated": false
     },
     "INTC": {
-      "date": "2026-10-29",
-      "estimated": false
+      "date": "2027-01-28",
+      "estimated": true
     },
     "INVH": {
       "date": "2026-10-28",
@@ -407,7 +407,7 @@
       "estimated": true
     },
     "NBIS": {
-      "date": "2026-11-10",
+      "date": "2026-11-12",
       "estimated": false
     },
     "NEM": {
@@ -531,7 +531,7 @@
       "estimated": false
     },
     "STM": {
-      "date": "2026-10-29",
+      "date": "2027-01-28",
       "estimated": false
     },
     "TENB": {
