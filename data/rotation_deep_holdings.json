@@ -1,5 +1,5 @@
 {
-"generated_at":"2026-10-29T22:07:24Z",
+"generated_at":"2026-10-30T22:06:53Z",
 "source":"SEC EDGAR NPORT-P primary_doc.xml: the latest public filing per fund series (the last three for a Select Industry fund)",
 "line_fields":["name","isin","ticker","ccy","w","px"],
 "funds":{
@@ -1322,7 +1322,7 @@
 },
 "IGM":{
 "acc":"0002071691-26-019738",
-"checked":"2026-10-22",
+"checked":"2026-10-30",
 "cik":"1100663",
 "excluded":{"n":5,"w":0.01419110419265},
 "filed":"2026-08-25",
@@ -7352,7 +7352,7 @@
 "NZXROE0001S2":["XRO.AX","2026-09-26"],
 "PA1436583006":["CCL1N.MX","2026-09-26"],
 "PAP310761054":["CPA","2026-09-26"],
-"PEP648014202":[null,"2026-09-29"],
+"PEP648014202":[null,"2026-10-30"],
 "PLKGHM000017":["KGH.WA","2026-09-26"],
 "PLOPTTC00011":["CDR.WA","2026-09-26"],
 "PR3186727065":["FBP","2026-09-26"],
