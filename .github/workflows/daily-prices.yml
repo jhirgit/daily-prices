@@ -105,12 +105,12 @@ jobs:
           LOOKBACK: ${{ inputs.lookback || '7d' }}
           TICKERS: ${{ inputs.tickers || '' }}
         run: |
-          ARGS="--lookback $LOOKBACK"
+          ARGS=(--lookback "$LOOKBACK")
           if [ -n "$TICKERS" ]; then
             echo "$TICKERS" | tr ',' '\n' > dispatch-tickers.txt
-            ARGS="$ARGS --tickers dispatch-tickers.txt"
+            ARGS+=(--tickers dispatch-tickers.txt)
           fi
-          python fetch_prices.py $ARGS
+          python fetch_prices.py "${ARGS[@]}"
 
       - name: Export text data (CSV + JSON for public URLs)
         if: steps.fallback-guard.outputs.run == 'true'

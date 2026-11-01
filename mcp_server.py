@@ -25,8 +25,9 @@ Transports
 Default is ``streamable-http`` (what Claude.ai custom connectors speak). Use
 ``--transport stdio`` for a local Claude Desktop connection.
 
-  # Remote connector (host this, then add the URL in Claude.ai -> Connectors)
-  python mcp_server.py --host 0.0.0.0 --port 8000
+  # Remote connector (host this, then add the URL in Claude.ai -> Connectors).
+  # A non-loopback host requires MCP_AUTH_TOKEN (or --allow-public-unauthenticated).
+  MCP_AUTH_TOKEN=... python mcp_server.py --host 0.0.0.0 --port 8000
 
   # Local, for Claude Desktop
   python mcp_server.py --transport stdio
@@ -41,6 +42,8 @@ import os
 import re
 import sqlite3
 import sys
+import time
+from contextlib import closing
 from typing import Any
 
 from mcp.server.fastmcp import FastMCP
@@ -51,6 +54,26 @@ DB_PATH = os.environ.get("PRICES_DB", os.path.join(HERE, "prices.db"))
 
 # Hard cap on rows returned by any single tool call, to keep responses bounded.
 MAX_ROWS = 1000
+
+# Max tickers per compare_performance call (each one costs two queries).
+MAX_COMPARE_TICKERS = 25
+
+
+def _env_float(name: str, default: float) -> float:
+    try:
+        val = float(os.environ.get(name, "") or default)
+    except ValueError:
+        return default
+    return val if val > 0 else default
+
+
+# Wall-clock budget for one tool call's SQL work. A progress handler aborts the
+# statement once it is exceeded, so a pathological query (e.g. a recursive CTE
+# or a huge cross join through run_sql) can't pin a CPU indefinitely.
+QUERY_TIMEOUT_S = _env_float("MCP_QUERY_TIMEOUT_S", 5.0)
+
+# How many SQLite VM instructions run between deadline checks.
+_PROGRESS_STEPS = 10_000
 
 # Optional shared secret. When set, the MCP endpoint is served at an
 # unguessable path (/<token>/mcp) instead of the public /mcp, so the URL itself
@@ -69,8 +92,14 @@ mcp = FastMCP("daily-prices")
 # --------------------------------------------------------------------------- #
 # Database helpers (read-only)
 # --------------------------------------------------------------------------- #
-def _connect() -> sqlite3.Connection:
-    """Open prices.db strictly read-only via a file: URI."""
+def _connect(timeout_s: float | None = None) -> sqlite3.Connection:
+    """Open prices.db strictly read-only via a file: URI.
+
+    Every statement on the returned connection is aborted (sqlite3
+    OperationalError "interrupted") once ``timeout_s`` seconds (default
+    QUERY_TIMEOUT_S) have elapsed since the connection was opened. Callers
+    should wrap it in ``contextlib.closing`` so the handle is released.
+    """
     if not os.path.exists(DB_PATH):
         raise FileNotFoundError(
             f"Database not found at {DB_PATH}. Run fetch_prices.py first, "
@@ -79,7 +108,20 @@ def _connect() -> sqlite3.Connection:
     uri = f"file:{DB_PATH}?mode=ro"
     conn = sqlite3.connect(uri, uri=True)
     conn.row_factory = sqlite3.Row
+    deadline = time.monotonic() + (QUERY_TIMEOUT_S if timeout_s is None else timeout_s)
+    # A non-zero return from the handler aborts the running statement.
+    conn.set_progress_handler(lambda: int(time.monotonic() > deadline), _PROGRESS_STEPS)
     return conn
+
+
+def _query_timeout_error(exc: sqlite3.OperationalError) -> Exception:
+    """Translate a progress-handler abort into a clear error for the client."""
+    if "interrupted" in str(exc).lower():
+        return ValueError(
+            f"Query exceeded the {QUERY_TIMEOUT_S:g}s time limit and was aborted. "
+            "Narrow it (add WHERE/LIMIT, avoid large joins or recursive CTEs)."
+        )
+    return exc
 
 
 def _rows(cur: sqlite3.Cursor, limit: int = MAX_ROWS) -> list[dict[str, Any]]:
@@ -119,7 +161,7 @@ def list_tickers() -> list[dict[str, Any]]:
     first/last trading dates available. Use this to discover what data exists
     before asking for specific history.
     """
-    with _connect() as conn:
+    with closing(_connect()) as conn:
         cur = conn.execute(
             """
             SELECT ticker,
@@ -161,7 +203,7 @@ def get_price_history(
         clauses.append("date <= ?")
         params.append(end)
     params.append(limit)
-    with _connect() as conn:
+    with closing(_connect()) as conn:
         cur = conn.execute(
             f"""
             SELECT date, open, high, low, close, adj_close, volume
@@ -187,7 +229,7 @@ def get_latest_quote(ticker: str) -> dict[str, Any]:
     last trade captured when the job last ran, so they can differ intraday.
     """
     sym = ticker.upper()
-    with _connect() as conn:
+    with closing(_connect()) as conn:
         daily = conn.execute(
             """
             SELECT date, open, high, low, close, adj_close, volume
@@ -228,9 +270,14 @@ def compare_performance(
 
     For each ticker returns the first/last close in the window and the percent
     change between them, sorted best to worst. Tickers with no data are skipped.
+    At most 25 tickers per call.
     """
+    if len(tickers) > MAX_COMPARE_TICKERS:
+        raise ValueError(
+            f"Too many tickers ({len(tickers)}); at most {MAX_COMPARE_TICKERS} per call."
+        )
     out: list[dict[str, Any]] = []
-    with _connect() as conn:
+    with closing(_connect()) as conn:
         for raw in tickers:
             sym = raw.upper()
             clauses = ["ticker = ?", "close IS NOT NULL"]
@@ -309,7 +356,8 @@ def run_sql(query: str) -> list[dict[str, Any]]:
 
     Use this for ad-hoc analysis the curated tools don't cover. Only a single
     read-only statement is permitted; anything that writes or modifies schema
-    is rejected. At most 1000 rows are returned.
+    is rejected. At most 1000 rows are returned, and a query that runs longer
+    than the server's time limit (default 5s) is aborted.
 
     Schema:
       daily_prices(ticker, date, open, high, low, close, adj_close, volume,
@@ -321,15 +369,54 @@ def run_sql(query: str) -> list[dict[str, Any]]:
       ORDER BY hi DESC LIMIT 5
     """
     safe = _validate_select(query)
-    with _connect() as conn:
-        cur = conn.execute(safe)
-        return _rows(cur)
+    with closing(_connect()) as conn:
+        try:
+            cur = conn.execute(safe)
+            return _rows(cur)
+        except sqlite3.OperationalError as exc:
+            raise _query_timeout_error(exc) from exc
 
 
 # --------------------------------------------------------------------------- #
 # Entry point
 # --------------------------------------------------------------------------- #
-def main() -> None:
+_LOOPBACK_HOSTS = {"127.0.0.1", "::1", "localhost"}
+
+
+def _startup_error(transport: str, host: str, allow_public: bool) -> str | None:
+    """Return why the server must refuse to start, or None if it may start.
+
+    Fails closed: an HTTP transport bound beyond loopback needs MCP_AUTH_TOKEN
+    unless the operator explicitly opts out with --allow-public-unauthenticated.
+    The secret path is only wired for streamable-http, so sse + token is refused
+    rather than silently serving sse at its public default paths.
+    """
+    if transport not in ("streamable-http", "sse"):
+        return None
+    if AUTH_TOKEN:
+        if not _TOKEN_RE.match(AUTH_TOKEN):
+            return (
+                "MCP_AUTH_TOKEN must be URL-safe (letters, digits, '-._~'). "
+                "Generate one with: python -c "
+                '"import secrets; print(secrets.token_urlsafe(32))"'
+            )
+        if transport == "sse":
+            return (
+                "MCP_AUTH_TOKEN protects only the streamable-http endpoint; the sse "
+                "transport would still be served at the public /sse and /messages/ "
+                "paths. Use --transport streamable-http (the default)."
+            )
+        return None
+    if host.strip().lower() not in _LOOPBACK_HOSTS and not allow_public:
+        return (
+            f"Refusing to serve an unauthenticated endpoint on host {host!r}: "
+            "MCP_AUTH_TOKEN is not set. Set MCP_AUTH_TOKEN, bind to 127.0.0.1, "
+            "or pass --allow-public-unauthenticated if you really mean it."
+        )
+    return None
+
+
+def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description="MCP server for the daily-prices DB.")
     ap.add_argument(
         "--transport",
@@ -339,21 +426,25 @@ def main() -> None:
     )
     ap.add_argument("--host", default="0.0.0.0", help="Bind host for HTTP transports.")
     ap.add_argument("--port", type=int, default=8000, help="Bind port for HTTP transports.")
-    args = ap.parse_args()
+    ap.add_argument(
+        "--allow-public-unauthenticated",
+        action="store_true",
+        help="Allow serving without MCP_AUTH_TOKEN on a non-loopback host "
+        "(the endpoint is then readable by anyone who can reach it).",
+    )
+    args = ap.parse_args(argv)
+
+    err = _startup_error(args.transport, args.host, args.allow_public_unauthenticated)
+    if err:
+        print(f"[auth] ERROR: {err}", file=sys.stderr)
+        sys.exit(2)
 
     if args.transport in ("streamable-http", "sse"):
         mcp.settings.host = args.host
         mcp.settings.port = args.port
         if AUTH_TOKEN:
-            if not _TOKEN_RE.match(AUTH_TOKEN):
-                print(
-                    "MCP_AUTH_TOKEN must be URL-safe (letters, digits, '-._~'). "
-                    "Generate one with: python -c "
-                    '"import secrets; print(secrets.token_urlsafe(32))"',
-                    file=sys.stderr,
-                )
-                sys.exit(2)
             # Serve at a secret path; the full URL is the credential.
+            # (_startup_error guarantees the transport is streamable-http here.)
             mcp.settings.streamable_http_path = f"/{AUTH_TOKEN}/mcp"
             masked = AUTH_TOKEN[:4] + "…" + AUTH_TOKEN[-2:]
             print(
@@ -362,10 +453,12 @@ def main() -> None:
                 file=sys.stderr,
             )
         else:
+            path = "/sse" if args.transport == "sse" else "/mcp"
             print(
-                "[auth] WARNING: no MCP_AUTH_TOKEN set — endpoint is PUBLIC at "
-                "/mcp. Anyone with the host can read your data. Set "
-                "MCP_AUTH_TOKEN before exposing this to the internet.",
+                f"[auth] WARNING: no MCP_AUTH_TOKEN set — endpoint is "
+                f"UNAUTHENTICATED at {path} on {args.host}. Anyone who can reach "
+                "the host can read your data. Set MCP_AUTH_TOKEN before exposing "
+                "this to the internet.",
                 file=sys.stderr,
             )
     mcp.run(transport=args.transport)

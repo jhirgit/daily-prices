@@ -7,7 +7,8 @@
 # With MCP_AUTH_TOKEN set, the endpoint is served at the secret path
 # /<token>/mcp (the startup log prints a masked confirmation). Expose port 8000
 # publicly over HTTPS and add https://<host>/<token>/mcp in Claude.ai under
-# Settings -> Connectors. Without the token it serves an unauthenticated /mcp.
+# Settings -> Connectors. Without the token the server refuses to start (it
+# binds 0.0.0.0); --allow-public-unauthenticated overrides that.
 FROM python:3.12-slim
 
 WORKDIR /app

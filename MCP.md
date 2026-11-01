@@ -19,8 +19,12 @@ outbound internet access from wherever the server runs.)
 | `get_price_history` | Daily OHLC bars for one ticker over a date range |
 | `get_latest_quote` | Newest daily close + newest delayed spot quote |
 | `get_intraday_quotes` | **Live** delayed quotes for a batch of tickers, fetched from Yahoo on demand (not the DB) |
-| `compare_performance` | % return of several tickers over a window, ranked |
+| `compare_performance` | % return of several tickers over a window, ranked (max 25 tickers) |
 | `run_sql` | A single read-only `SELECT`/`WITH` query (escape hatch, max 1000 rows) |
+
+Every tool call's SQL work is bounded by a wall-clock deadline (default 5 s);
+a query that runs past it is aborted with an error. Tune it with
+`MCP_QUERY_TIMEOUT_S=<seconds>`.
 
 ## Run it
 
@@ -39,6 +43,11 @@ python mcp_server.py --transport stdio
 
 Point it at a database elsewhere with `PRICES_DB=/path/to/prices.db`.
 
+On an HTTP transport bound to anything other than loopback (`127.0.0.1`, `::1`,
+`localhost`) the server **refuses to start** without `MCP_AUTH_TOKEN`, unless you
+pass `--allow-public-unauthenticated`. The secret path applies to the
+`streamable-http` transport only, so `--transport sse` with a token is refused.
+
 ## Connect to Claude.ai chat (remote connector)
 
 Claude.ai custom connectors talk to a **public HTTPS** MCP endpoint, so the
@@ -49,7 +58,7 @@ laptop. Two common paths:
 
 ```bash
 docker build -t daily-prices-mcp .
-docker run -p 8000:8000 daily-prices-mcp
+docker run -p 8000:8000 -e MCP_AUTH_TOKEN="$MCP_AUTH_TOKEN" daily-prices-mcp
 ```
 
 Put it behind HTTPS (the platform's TLS, or a reverse proxy), then in Claude.ai:
@@ -97,8 +106,10 @@ consent and revocation, the heavier upgrade is a full **OAuth 2.1** flow — the
 MCP Python SDK supports it via a token verifier, but it requires running (or
 proxying to) an authorization server, which is overkill for one user.
 
-Without `MCP_AUTH_TOKEN` the server logs a warning and serves an unauthenticated
-`/mcp` — only do that on a trusted network or a throwaway tunnel.
+Without `MCP_AUTH_TOKEN` the server refuses to start on a non-loopback host.
+Bound to `127.0.0.1` (or with `--allow-public-unauthenticated`) it logs a warning
+and serves an unauthenticated `/mcp` — only do that on a trusted network.
+Note a tunnel to a loopback-bound server is public: give it a token too.
 
 ## Claude Desktop (local, no hosting)
 
