@@ -1,14 +1,13 @@
 {
-  "generated_at": "2026-10-30T22:17:14Z",
+  "generated_at": "2026-11-02T22:17:54Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
-  "count": 111,
+  "count": 112,
   "asked": 245,
   "missing": [
     "AGG",
     "AMLP",
     "ARKX",
-    "ARQQ",
     "ARTY",
     "BIL",
     "BKLN",
@@ -206,8 +205,12 @@
       "date": "2027-01-06",
       "estimated": true
     },
+    "ARQQ": {
+      "date": "2026-12-09",
+      "estimated": true
+    },
     "ASML": {
-      "date": "2026-10-14",
+      "date": "2027-01-27",
       "estimated": false
     },
     "AU": {
@@ -243,8 +246,8 @@
       "estimated": false
     },
     "CIEN": {
-      "date": "2026-09-03",
-      "estimated": false
+      "date": "2026-12-10",
+      "estimated": true
     },
     "COHR": {
       "date": "2026-11-04",
@@ -256,7 +259,7 @@
     },
     "CRWD": {
       "date": "2026-12-01",
-      "estimated": false
+      "estimated": true
     },
     "CRWV": {
       "date": "2026-11-10",
@@ -371,16 +374,16 @@
       "estimated": false
     },
     "LITE": {
-      "date": "2026-11-05",
+      "date": "2026-11-02",
       "estimated": false
     },
     "LRCX": {
-      "date": "2026-10-21",
-      "estimated": false
+      "date": "2027-01-27",
+      "estimated": true
     },
     "META": {
-      "date": "2026-10-21",
-      "estimated": false
+      "date": "2027-01-27",
+      "estimated": true
     },
     "MPWR": {
       "date": "2026-10-29",
@@ -423,7 +426,7 @@
       "estimated": false
     },
     "NOK": {
-      "date": "2026-10-22",
+      "date": "2027-01-28",
       "estimated": false
     },
     "NOW": {
@@ -503,8 +506,8 @@
       "estimated": false
     },
     "S": {
-      "date": "2026-08-27",
-      "estimated": false
+      "date": "2026-12-03",
+      "estimated": true
     },
     "SHOP": {
       "date": "2026-11-03",
@@ -551,8 +554,8 @@
       "estimated": true
     },
     "TXN": {
-      "date": "2026-10-21",
-      "estimated": false
+      "date": "2027-01-26",
+      "estimated": true
     },
     "VICR": {
       "date": "2026-10-20",
