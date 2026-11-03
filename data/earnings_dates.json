@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T22:17:54Z",
+  "generated_at": "2026-11-03T22:17:00Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 112,
@@ -158,8 +158,8 @@
       "estimated": false
     },
     "AAPL": {
-      "date": "2026-11-02",
-      "estimated": false
+      "date": "2027-01-28",
+      "estimated": true
     },
     "ADUR": {
       "date": "2027-01-14",
@@ -294,8 +294,8 @@
       "estimated": true
     },
     "FN": {
-      "date": "2026-11-02",
-      "estimated": false
+      "date": "2027-02-01",
+      "estimated": true
     },
     "FNV": {
       "date": "2026-11-11",
@@ -374,8 +374,8 @@
       "estimated": false
     },
     "LITE": {
-      "date": "2026-11-02",
-      "estimated": false
+      "date": "2027-02-02",
+      "estimated": true
     },
     "LRCX": {
       "date": "2027-01-27",
@@ -466,8 +466,8 @@
       "estimated": false
     },
     "PANW": {
-      "date": "2026-11-19",
-      "estimated": true
+      "date": "2026-11-18",
+      "estimated": false
     },
     "PENG": {
       "date": "2027-01-05",
