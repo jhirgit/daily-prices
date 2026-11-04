@@ -435,8 +435,24 @@ python test_fundamentals.py         # offline tests
   `known` date is the FIRST filing that carried it. D&A is one combined tag or depreciation +
   intangibles amortization, picked per company and recorded in `da_method` (amortization tagged
   for only 2-3 quarters is annualised and flagged `da_partial`). No operating-income line: pretax
-  + interest, flagged `oi_proxy`. Debt = long-term noncurrent + current portion + CP/short-term
-  borrowings (operating leases excluded); cash = cash + short-term marketable securities.
+  + interest, flagged `oi_proxy`. Cash = cash + short-term marketable securities. Capex includes
+  capitalized software (`PaymentsToDevelopSoftware`) when tagged.
+- **Debt is never defaulted to zero** (coordinator review 2026-11-04: ORCL had been valued with
+  debt = 0 and flagged on it). `DEBT_CHAIN`, best first, at each balance-sheet date:
+  LongTermDebtNoncurrent + current | LongTermDebt | LongTermNotesPayable + NotesPayableCurrent |
+  DebtLongtermAndShorttermCombinedAmount | convertible notes | DebtInstrumentCarryingAmount, plus
+  CP/short-term borrowings where not included; the tag is recorded in `debt_src`. No tag at that
+  date: the newest earlier balance sheet within 200 days, labelled `debt_asof` (EV multiples
+  partial). Zero only if the filer never tagged debt or every debt tag it ever used reads zero
+  ("no debt reported"); otherwise `debt_why` and EV multiples are n/a. A revolver or short-term
+  borrowings alone are never taken as total debt. `DEBT_OVERRIDE` takes hand values (with the filing
+  and page) for custom-tag filers; it is empty.
+- **Partial inputs never flag.** A metric is shown with its reason and kept out of every flag and peer
+  median when: its debt is from an earlier balance sheet; D&A is partly tagged (EV/EBITDA); EBIT is
+  the pretax proxy; net income exceeds 1.5x operating income or is positive on an operating loss (P/E:
+  investment gains, not earnings power); or the TTM rise in contract liabilities exceeds half of CFO
+  (P/FCF, FCF yield: customer advances, not free cash flow). A history point with unknown debt has no
+  EV value; it is dropped, never zero-filled.
 - **Shares** are point-in-time per filing: dei cover (classes summed), else us-gaap
   CommonStockSharesOutstanding, else the weighted-average diluted count. Because prices.db closes
   are split-adjusted, shares are put on today's basis: a step in the count by a split ratio (2x-50x
@@ -457,7 +473,8 @@ python test_fundamentals.py         # offline tests
 - **Stats and flags.** Per metric: own 5-year median, percentile and z-score (only with 24+ months
   of values, else "short history (N months)"), peer median from peers current on both price and
   statements, premium/discount, and EV/EBITDA per point of revenue growth vs peers. The thresholds
-  are one constants block, `THRESHOLDS`, copied into the payload. Kinds: OPPORTUNITY (cheap vs own
+  are one constants block, `THRESHOLDS`, copied into the payload. Every kind needs at least
+  `min_agree` (2) evaluable, non-partial core multiples agreeing; fewer, and the name gets no flag. Kinds: OPPORTUNITY (cheap vs own
   history AND peers on 2+ core metrics, revenue growing and operating margin not down > 2 pts),
   VALUE-TRAP WATCH (same, fundamentals deteriorating), STRETCHED (rich vs both), DISLOCATION
   (2+ core metrics beyond the 10th/90th percentile or 1.5 sd of own history, same side), PEER GAP
