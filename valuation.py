@@ -53,7 +53,6 @@ THRESHOLDS = {
     "own_rich_pct": 90,           # at/above = rich vs itself
     "own_z": 1.5,                 # ...or a z-score beyond +/- this many standard deviations
     "peer_gap": 0.30,             # >= 30% below / above the peer median = cheap / rich vs peers
-    "peer_gap_dislocation": 0.50, # peer-only DISLOCATION needs a 50% gap on 2+ core metrics, same side
     "peer_min": 2,                # a peer median needs at least this many peers with a value
     "min_agree": 2,               # core metrics that must agree (same side) for any flag
     "fund_min_rev_m": 100.0,      # below $100M TTM revenue, growth/margin moves are noise: no fundamentals read
@@ -382,9 +381,10 @@ def name_flags(tk, rec_v, peers_used):
                     "text": "%s, and %s - expensive against its own history and its peers at once (%s)." % (
                         own_bit(k), peer_bit(k), fund_bit())})
     if not out:
-        # DISLOCATION: at least min_agree core metrics (or every one available, when fewer)
-        # beyond the own-history bands on the SAME side; else, failing that, a peer gap of
-        # peer_gap_dislocation on 2+ core metrics on the same side.
+        # DISLOCATION: at least min_agree core metrics beyond the own-history bands on
+        # the SAME side. A peer gap on its own is NOT a flag (Jake, 2026-11-04, "Ship
+        # it" on the coordinator's defaults): it is often business mix, so it stays
+        # in the multiples and peer tables (prem, "cheap/rich vs peers") as information.
         own_ok = [k for k in ev if M[k].get("pct") is not None]
         need_own = T["min_agree"]
         for side in ("cheap", "rich"):
@@ -396,26 +396,14 @@ def name_flags(tk, rec_v, peers_used):
                             "text": "%s - %s against itself on %d of %d multiples.%s" % (
                                 own_bit(k), side, len(own_x), len(own_ok), tail)})
                 break
-        if not out:
-            for side, sgn in (("cheap", -1), ("rich", 1)):
-                peer_x = [k for k in ev if M[k].get("prem") is not None and sgn * M[k]["prem"] >= T["peer_gap_dislocation"]]
-                if len(peer_x) >= 2:
-                    k = max(peer_x, key=lambda k: abs(M[k]["prem"]))
-                    # its own, weaker kind: a peer gap alone is often business mix
-                    # (royalty vs miner), not a dislocation of the name from itself
-                    out.append({"kind": "PEER GAP", "metrics": peer_x, "side": side,
-                                "text": "%s %s is %s, and %d of its core multiples sit that far %s the peer set; "
-                                        "its own history does not mark it as unusual." % (
-                                            label[k], fmt_val(k, M[k]["now"]), peer_bit(k), len(peer_x),
-                                            "below" if sgn < 0 else "above")})
-                    break
     score = 0.0
     for k in ev:
         score = max(score, abs(M[k].get("z") or 0), abs(M[k].get("prem") or 0) * 3)
     return out, round(score, 2)
 
 
-KIND_ORDER = {"OPPORTUNITY": 0, "VALUE-TRAP WATCH": 1, "STRETCHED": 2, "DISLOCATION": 3, "PEER GAP": 4}
+KIND_ORDER = {"OPPORTUNITY": 0, "VALUE-TRAP WATCH": 1, "STRETCHED": 2, "DISLOCATION": 3}
+FLAG_KINDS = tuple(KIND_ORDER)   # the only kinds a flag line may carry
 
 
 # ---- main ----------------------------------------------------------------------

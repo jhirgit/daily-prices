@@ -155,10 +155,57 @@ DEBT_ST = {"us-gaap": ["CommercialPaper", "ShortTermBorrowings", "OtherShortTerm
 # A debt value from an earlier balance sheet is used (labelled, partial) only if it
 # is at most this old relative to the balance sheet the cash comes from.
 DEBT_ASOF_MAX_DAYS = 200
-# Hand values for filers whose debt lives only in custom extension tags. Each entry:
-# {end: {"v": $M, "source": "<filing, page>"}}. Empty until someone reads the filing:
-# a guessed number here is worse than n/a.
-DEBT_OVERRIDE = {}
+# Hand values read from the filing itself, for filers whose XBRL debt tags miss part
+# of the borrowings (segmented or custom tags) or stop at an older balance sheet.
+# Each entry: {end: {"v": $M, "form", "accession", "items": [(line, $M), ...]}}.
+# Total debt = every borrowing on the balance sheet (short-term, current portion of
+# long-term, long-term, convertibles) at carrying amount; leases excluded, as in
+# DEBT_CHAIN. "v" must equal the sum of "items" (a test checks it). An override is
+# labelled "filing (hand-entered)" and is used at its own balance-sheet date only; at
+# any later date it is an earlier balance sheet (debt_asof): EV multiples partial,
+# never flagged. Read 2026-11-04 (inv-valuation2) from EDGAR; a guessed number here
+# is worse than n/a.
+DEBT_OVERRIDE = {
+    # CAT: XBRL gave LongTermDebtNoncurrent + ShortTermBorrowings = 36,210 at 2025-12-31,
+    # which leaves out "Long-term debt due within one year" (7,120); the override
+    # supersedes it. Consolidated, so Financial Products (Cat Financial) debt is in.
+    "CAT": {
+        "2026-09-30": {"v": 45201.0, "form": "10-Q", "accession": "0000018230-26-000057", "items": [
+            ("Short-term borrowings: Financial Products", 4855.0),
+            ("Long-term debt due within one year: Machinery, Power & Energy", 36.0),
+            ("Long-term debt due within one year: Financial Products", 8144.0),
+            ("Long-term debt due after one year: Machinery, Power & Energy", 10614.0),
+            ("Long-term debt due after one year: Financial Products", 21552.0)]},
+        "2025-12-31": {"v": 43330.0, "form": "10-Q (comparative column)", "accession": "0000018230-26-000057", "items": [
+            ("Short-term borrowings: Financial Products", 5514.0),
+            ("Long-term debt due within one year: Machinery, Power & Energy", 35.0),
+            ("Long-term debt due within one year: Financial Products", 7085.0),
+            ("Long-term debt due after one year: Machinery, Power & Energy", 10678.0),
+            ("Long-term debt due after one year: Financial Products", 20018.0)]},
+    },
+    # HUBS: no borrowing line on the balance sheet; the 2025 convertible notes were
+    # repaid in June 2025 and Note 10 says "no outstanding borrowings" under the
+    # $500M revolving credit facility at June 30, 2026. Genuinely zero.
+    "HUBS": {
+        "2026-06-30": {"v": 0.0, "form": "10-Q", "accession": "0001193125-26-335232", "items": [
+            ("no borrowing line on the balance sheet; revolving credit facility undrawn (Note 10)", 0.0)]},
+        "2025-12-31": {"v": 0.0, "form": "10-Q (comparative column)", "accession": "0001193125-26-335232", "items": [
+            ("no borrowing line on the balance sheet", 0.0)]},
+    },
+    # ZS: the 2028 convertible senior notes are its only borrowing (principal
+    # 1,725.0 less issuance costs and a fair-value hedge adjustment); no revolver or CP.
+    "ZS": {
+        "2026-07-31": {"v": 1696.355, "form": "10-K", "accession": "0001713683-26-000157", "items": [
+            ("Convertible senior notes (2028 Notes, net carrying amount)", 1696.355)]},
+        "2025-07-31": {"v": 1700.727, "form": "10-K (comparative column)", "accession": "0001713683-26-000157", "items": [
+            ("Convertible senior notes (2028 Notes, net carrying amount)", 1700.727)]},
+    },
+}
+
+
+def override_src(tk, end, o):
+    return "filing (hand-entered): %s %s balance sheet %s, accession %s: %s" % (
+        tk, o["form"], end, o["accession"], " + ".join("%s %s" % (n, format(v, ",.1f")) for n, v in o["items"]))
 
 # Tags whose presence marks a balance sheet where EV and EBITDA are not meaningful.
 BANK_TAGS = ["Deposits", "InterestBearingDepositLiabilities"]
@@ -619,7 +666,7 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
     def at(end):
         if end in over:
             o = over[end]
-            return {"v": o["v"] * 1e6, "src": "override: " + o["source"], "asof": end}
+            return {"v": o["v"] * 1e6, "src": override_src(tk, end, o), "asof": end, "override": True}
         for label, base, cur, incl_st in chain:
             b = first(base, end)
             if b is None:
@@ -637,7 +684,9 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
             return {"v": v, "src": " + ".join(used), "asof": end}
         return None
 
-    all_dates = sorted({e for p in pts.values() for e in p})
+    # override dates join the walk-back, so a later balance sheet can fall back to a
+    # hand-entered one (labelled debt_asof: partial, never flagged)
+    all_dates = sorted({e for p in pts.values() for e in p} | set(over))
 
     def resolve(end):
         r = at(end)
