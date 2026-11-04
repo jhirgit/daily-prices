@@ -1,0 +1,43 @@
+{
+  "about": "Peer groups for valuation.py (jr-dash Name tab, Valuation multiples). HAND-EDITABLE: edit `overrides` and re-run valuation.py.",
+  "default_rule": "A name with no override is compared with up to 6 other operating companies from its own tickers.txt section (the board's theme grouping), nearest first by market cap. gics_structure.json carries MSCI's GICS tree but no stock-to-sub-industry assignment, and rotation_members.json lists ETF constituents rather than classifying names, so neither can place a single stock in a sub-industry on its own; the tickers.txt sections are the board's own grouping and are already curated.",
+  "rules": [
+    "A peer without price history in prices.db shows as 'price history pending' and is left out of the peer median until the daily-prices workflow backfills it.",
+    "A peer whose multiple is not meaningful (a loss for P/E, negative EBITDA for EV/EBITDA) is left out of that metric's median, never counted as zero.",
+    "Overrides are a judgement about which businesses a name is priced against; they are Jake's to change."
+  ],
+  "seeded": "2026-11-04 (inv-valuation worker); NVDA and GOOGL sets as named in the coordinator's brief",
+  "overrides": {
+    "NVDA": {"peers": ["AMD", "AVGO", "MRVL", "TSM"], "why": "AI accelerators and custom silicon, plus the foundry that makes them"},
+    "AMD": {"peers": ["NVDA", "INTC", "AVGO", "MRVL", "QCOM"], "why": "CPU/GPU compute and the merchant/custom silicon it competes with"},
+    "AVGO": {"peers": ["MRVL", "NVDA", "AMD", "QCOM", "ALAB"], "why": "custom AI ASICs and datacenter networking silicon"},
+    "MRVL": {"peers": ["AVGO", "ALAB", "CRDO", "AMD", "NVDA"], "why": "custom ASICs, electro-optics and AI connectivity"},
+    "ALAB": {"peers": ["MRVL", "CRDO", "AVGO"], "why": "AI connectivity silicon"},
+    "TSM": {"peers": ["INTC", "GFS", "ASML", "AVGO", "NVDA"], "why": "foundry, its equipment supplier and its largest customers"},
+    "INTC": {"peers": ["AMD", "TSM", "GFS", "QCOM"], "why": "x86 compute and foundry"},
+    "ASML": {"peers": ["LRCX", "AMAT", "KLAC"], "why": "wafer-fab equipment"},
+    "LRCX": {"peers": ["AMAT", "KLAC", "ASML"], "why": "wafer-fab equipment"},
+    "MU": {"peers": ["SNDK", "WDC", "STX"], "why": "memory and storage (Samsung and SK Hynix have no SEC filings)"},
+    "SNDK": {"peers": ["MU", "WDC", "STX"], "why": "NAND flash and storage"},
+    "TXN": {"peers": ["ADI", "ON", "MPWR", "STM"], "why": "analog and power semis"},
+    "MPWR": {"peers": ["TXN", "ADI", "ON", "VICR", "POWI"], "why": "power semis"},
+    "GOOGL": {"peers": ["MSFT", "META", "AMZN"], "why": "hyperscale platforms funding AI capex"},
+    "META": {"peers": ["GOOGL", "MSFT", "AMZN", "RDDT"], "why": "ad-funded platforms"},
+    "MSFT": {"peers": ["GOOGL", "AMZN", "ORCL", "AAPL"], "why": "hyperscale cloud and software platforms"},
+    "AMZN": {"peers": ["MSFT", "GOOGL", "META", "ORCL"], "why": "hyperscale cloud and platforms"},
+    "AAPL": {"peers": ["MSFT", "GOOGL", "AMZN", "META"], "why": "mega-cap platforms"},
+    "ORCL": {"peers": ["MSFT", "AMZN", "GOOGL", "NOW"], "why": "cloud infrastructure and enterprise software"},
+    "CRWV": {"peers": ["NBIS", "IREN", "APLD", "ORCL"], "why": "AI compute rental (neoclouds) and OCI"},
+    "NBIS": {"peers": ["CRWV", "IREN", "APLD", "CORZ"], "why": "neoclouds"},
+    "COHR": {"peers": ["LITE", "AAOI", "FN", "CIEN"], "why": "optical components for AI networks"},
+    "LITE": {"peers": ["COHR", "AAOI", "FN", "CIEN"], "why": "optical components for AI networks"},
+    "AAOI": {"peers": ["COHR", "LITE", "FN"], "why": "optical transceivers"},
+    "CIEN": {"peers": ["NOK", "CSCO", "ANET", "COHR"], "why": "optical and IP networking systems"},
+    "VRT": {"peers": ["ETN", "GEV", "FLEX", "BE"], "why": "datacenter power and thermal"},
+    "GEV": {"peers": ["ETN", "VRT", "CAT", "BE"], "why": "power generation and grid equipment"},
+    "EQIX": {"peers": ["DLR"], "why": "datacenter REITs"},
+    "JPM": {"peers": ["BAC", "WFC", "C"], "why": "US money-centre banks (P/E and P/B only)"},
+    "NOW": {"peers": ["CRM", "WDAY", "ADBE", "HUBS"], "why": "enterprise application software"}
+  },
+  "added_to_tickers_for_peers": ["QCOM", "CRDO", "GFS", "AMAT", "KLAC", "WDC", "STX", "ADI", "CSCO", "ANET", "DLR", "BAC", "WFC", "C", "CRM", "WDAY", "ADBE"]
+}
