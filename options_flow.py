@@ -161,6 +161,8 @@ def structural_skip(ticker):
         return "futures"
     if ticker.endswith("-USD"):
         return "crypto"
+    if ticker.endswith("=X"):
+        return "fx"
     return None
 
 

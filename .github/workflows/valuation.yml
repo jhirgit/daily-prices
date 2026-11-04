@@ -1,0 +1,97 @@
+name: Valuation Multiples
+
+# jr-dash Name tab, "Valuation multiples" (SPEC-78 amendment, 2026-11-04).
+#
+# fundamentals.py reads SEC XBRL companyfacts for every operating company in
+# tickers.txt (and every peer in data/peers.json) and writes data/fundamentals.json;
+# valuation.py joins it with prices.db closes and writes data/valuation.json (the
+# tab's payload) and data/valuation_history.json (its charts).
+#
+# SCHEDULED BY cron-dispatch (the jr-dash Worker), weekdays 22:50 UTC: after the
+# Daily Prices job (22:00) has committed the session's closes. No GitHub cron:
+# workflow_dispatch has never failed, GitHub's own schedule has (see README).
+# Daily is fine: SEC is cheap (~130 requests at <= 5/s, about a minute), and a
+# filing lands within a day of its date.
+#
+# Stdlib only - no pip install. The raw SEC JSON lands in data/cache/sec
+# (gitignored) for the life of the runner and is never committed.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: valuation
+  cancel-in-progress: false
+
+jobs:
+  valuation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # A bad parse must never ship: the offline unit tests run first.
+      - name: Unit tests (fundamentals + valuation, offline)
+        run: python test_fundamentals.py
+
+      # continue-on-error so a partial EDGAR outage still commits what it got (each
+      # name's failure is recorded in fundamentals.json `errors`), then go red below.
+      - name: Fundamentals from SEC companyfacts
+        id: fundamentals
+        continue-on-error: true
+        timeout-minutes: 12
+        run: python fundamentals.py
+
+      - name: Valuation multiples
+        id: valuation
+        run: python valuation.py
+
+      - name: Commit the payloads
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/fundamentals.json data/valuation.json data/valuation_history.json
+          if git diff --staged --quiet; then
+            echo "No valuation changes to commit."
+          else
+            git commit -m "valuation: $(date -u +'%Y-%m-%d %H:%M UTC') [skip ci]"
+            # Whole-file snapshots, regenerated and never merged -- see daily-prices.yml
+            # for why `-X theirs` plus a jittered retry loop.
+            for i in 1 2 3 4 5; do
+              git pull --rebase -X theirs && git push && exit 0
+              sleep $((RANDOM % 20 + 5))
+            done
+            exit 1
+          fi
+
+      - name: Fail if the fundamentals step failed
+        if: steps.fundamentals.outcome == 'failure'
+        run: |
+          echo "fundamentals.py failed - valuation.json was rebuilt from the last fundamentals.json"
+          exit 1
+
+  alert:
+    needs: valuation
+    if: failure() && needs.valuation.result == 'failure'
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Valuation Multiples
+    permissions:
+      issues: write
+
+  resolve:
+    needs: valuation
+    if: always() && needs.valuation.result == 'success'
+    uses: ./.github/workflows/_alert-failure.yml
+    with:
+      workflow: Valuation Multiples
+      mode: resolve
+    permissions:
+      issues: write
