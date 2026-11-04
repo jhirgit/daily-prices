@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-03T22:17:00Z",
+  "generated_at": "2026-11-04T18:53:21Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
-  "count": 112,
-  "asked": 245,
+  "count": 129,
+  "asked": 266,
   "missing": [
     "AGG",
     "AMLP",
@@ -16,9 +16,11 @@
     "BOTZ",
     "BTC-USD",
     "BZ=F",
+    "CADUSD=X",
     "CIBR",
     "COPX",
     "CPER",
+    "DKKUSD=X",
     "DRAM",
     "DRIV",
     "DTCR",
@@ -26,6 +28,7 @@
     "ESPO",
     "ETH-USD",
     "ETHA",
+    "EURUSD=X",
     "EWY",
     "FDN",
     "FINX",
@@ -99,6 +102,7 @@
     "TIP",
     "TLH",
     "TLT",
+    "TWDUSD=X",
     "UFO",
     "URA",
     "UUP",
@@ -161,6 +165,14 @@
       "date": "2027-01-28",
       "estimated": true
     },
+    "ADBE": {
+      "date": "2026-12-09",
+      "estimated": false
+    },
+    "ADI": {
+      "date": "2026-11-24",
+      "estimated": false
+    },
     "ADUR": {
       "date": "2027-01-14",
       "estimated": true
@@ -185,9 +197,13 @@
       "date": "2026-11-03",
       "estimated": false
     },
-    "AMD": {
-      "date": "2026-11-03",
+    "AMAT": {
+      "date": "2026-11-12",
       "estimated": false
+    },
+    "AMD": {
+      "date": "2027-02-02",
+      "estimated": true
     },
     "AMSC": {
       "date": "2026-11-04",
@@ -195,6 +211,10 @@
     },
     "AMZN": {
       "date": "2026-10-29",
+      "estimated": false
+    },
+    "ANET": {
+      "date": "2026-11-03",
       "estimated": false
     },
     "AOSL": {
@@ -225,6 +245,10 @@
       "date": "2026-10-29",
       "estimated": false
     },
+    "BAC": {
+      "date": "2027-01-15",
+      "estimated": false
+    },
     "BE": {
       "date": "2026-10-22",
       "estimated": false
@@ -232,6 +256,10 @@
     "BMNR": {
       "date": "2026-11-20",
       "estimated": true
+    },
+    "C": {
+      "date": "2027-01-14",
+      "estimated": false
     },
     "CAT": {
       "date": "2027-01-28",
@@ -257,16 +285,32 @@
       "date": "2026-11-05",
       "estimated": false
     },
+    "CRDO": {
+      "date": "2026-11-30",
+      "estimated": true
+    },
+    "CRM": {
+      "date": "2026-12-02",
+      "estimated": true
+    },
     "CRWD": {
       "date": "2026-12-01",
-      "estimated": true
+      "estimated": false
     },
     "CRWV": {
       "date": "2026-11-10",
       "estimated": false
     },
+    "CSCO": {
+      "date": "2026-11-12",
+      "estimated": false
+    },
     "DDOG": {
       "date": "2026-11-04",
+      "estimated": false
+    },
+    "DLR": {
+      "date": "2026-10-29",
       "estimated": false
     },
     "DPC": {
@@ -282,8 +326,8 @@
       "estimated": false
     },
     "ETN": {
-      "date": "2026-11-03",
-      "estimated": false
+      "date": "2027-02-02",
+      "estimated": true
     },
     "EXK": {
       "date": "2026-11-09",
@@ -311,6 +355,10 @@
     },
     "GEV": {
       "date": "2027-01-27",
+      "estimated": false
+    },
+    "GFS": {
+      "date": "2026-11-04",
       "estimated": false
     },
     "GLW": {
@@ -373,9 +421,13 @@
       "date": "2026-10-28",
       "estimated": false
     },
+    "KLAC": {
+      "date": "2027-01-28",
+      "estimated": true
+    },
     "LITE": {
       "date": "2027-02-02",
-      "estimated": true
+      "estimated": false
     },
     "LRCX": {
       "date": "2027-01-27",
@@ -485,6 +537,10 @@
       "date": "2026-11-10",
       "estimated": false
     },
+    "QCOM": {
+      "date": "2026-11-04",
+      "estimated": false
+    },
     "QLYS": {
       "date": "2026-11-09",
       "estimated": false
@@ -537,6 +593,10 @@
       "date": "2027-01-28",
       "estimated": false
     },
+    "STX": {
+      "date": "2027-01-26",
+      "estimated": true
+    },
     "TENB": {
       "date": "2026-10-28",
       "estimated": false
@@ -571,6 +631,18 @@
     },
     "VST": {
       "date": "2026-11-06",
+      "estimated": false
+    },
+    "WDAY": {
+      "date": "2026-11-24",
+      "estimated": false
+    },
+    "WDC": {
+      "date": "2027-01-28",
+      "estimated": true
+    },
+    "WFC": {
+      "date": "2027-01-14",
       "estimated": false
     },
     "WOLF": {
