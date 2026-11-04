@@ -80,6 +80,35 @@ METRICS = [
 # shown as n/m with that reason and kept out of history stats and peer medians.
 MAX_MEANINGFUL = {"pe": 150.0, "ev_ebitda": 150.0, "ev_ebit": 150.0, "p_fcf": 150.0,
                   "ev_s": 100.0, "ps": 100.0, "pb": 100.0}
+EV_METRICS = {"ev_s", "ev_ebitda", "ev_ebit"}
+
+
+def partial_inputs(row):
+    """{metric: reason} for metrics whose CURRENT inputs are incomplete. Such a metric
+    is shown with its reason, never flagged, and kept out of peer medians."""
+    out = {}
+    if not row:
+        return out
+    if row.get("debt_asof"):
+        for k in EV_METRICS:
+            out[k] = "debt as of %s (no debt tag on the %s balance sheet)" % (row["debt_asof"], row.get("end"))
+    if row.get("da_partial"):
+        out.setdefault("ev_ebitda", "D&A only partly tagged (amortization missing or annualised)")
+    if row.get("oi_proxy"):
+        for k in ("ev_ebit", "ev_ebitda"):
+            out.setdefault(k, "no operating-income line; EBIT is pretax income + interest")
+    ni, oi = row.get("ni"), row.get("oi")
+    if ni is not None and ni > 0 and oi is not None and (oi <= 0 or ni > 1.5 * oi):
+        out["pe"] = ("net income is mostly non-operating (TTM net income %s vs operating income %s): "
+                     "gains on investments or tax items, not earnings power" % (round(ni), round(oi)))
+    if row.get("cfo_advances"):
+        for k in ("p_fcf", "fcf_y"):
+            out.setdefault(k, "operating cash flow is mostly customer advances (the rise in contract "
+                              "liabilities equals %d%% of TTM CFO), not recurring free cash flow"
+                           % round(row["cfo_advances"] * 100))
+    return out
+
+
 BANK_METRICS = {"pe", "pb", "ps"}
 BANK_CORE = {"pe", "pb"}
 HIST_METRICS = ["ev_ebitda", "ev_s", "pe", "p_fcf", "pb"]
@@ -122,14 +151,17 @@ def multiples(row, mcap, kind):
         return out
     rev, ni, oi, ebitda, fcf, eq = (row.get(k) for k in ("rev", "ni", "oi", "ebitda", "fcf", "equity"))
     bank = kind in ("bank", "insurer")
-    ev = None if bank else mcap + (row.get("debt") or 0.0) - (row.get("cash") or 0.0)
+    # Debt or cash unknown -> EV unknown. Never a zero fill (coordinator review,
+    # 2026-11-04: ORCL had been valued with debt = 0 and flagged on it).
+    ev = None if bank or row.get("debt") is None or row.get("cash") is None else \
+        mcap + row["debt"] - row["cash"]
     out["pe"] = mcap / ni if ni and ni > 0 else None
     out["ps"] = mcap / rev if rev and rev > 0 else None
     out["pb"] = mcap / eq if eq and eq > 0 else None
     if not bank:
-        out["ev_s"] = ev / rev if rev and rev > 0 else None
-        out["ev_ebitda"] = ev / ebitda if ebitda and ebitda > 0 and ev > 0 else None
-        out["ev_ebit"] = ev / oi if oi and oi > 0 and ev > 0 else None
+        out["ev_s"] = ev / rev if ev is not None and rev and rev > 0 else None
+        out["ev_ebitda"] = ev / ebitda if ev is not None and ebitda and ebitda > 0 and ev > 0 else None
+        out["ev_ebit"] = ev / oi if ev is not None and oi and oi > 0 and ev > 0 else None
         out["p_fcf"] = mcap / fcf if fcf and fcf > 0 else None
         out["fcf_y"] = fcf / mcap * 100.0 if fcf is not None else None
     for k, cap in MAX_MEANINGFUL.items():
@@ -146,6 +178,10 @@ def why_none(key, row, kind):
         return kind + ": EV-based multiples are not meaningful for a balance-sheet business"
     if row is None:
         return "no statements filed before this date"
+    if key in EV_METRICS and row.get("debt") is None:
+        return row.get("debt_why") or "debt not tagged in XBRL"
+    if key in EV_METRICS and row.get("cash") is None:
+        return "cash not tagged in XBRL for this balance sheet"
     need = {"pe": ("ni", "a loss (TTM net income is negative)"), "ps": ("rev", "no revenue"),
             "pb": ("equity", "negative or untagged book equity"), "ev_s": ("rev", "no revenue"),
             "ev_ebitda": ("ebitda", "EBITDA is negative" if row.get("ebitda") is not None else
@@ -272,6 +308,9 @@ def metric_flags(m, kind):
     """Annotate one metric dict with own / peer reads ('cheap' / 'rich' / None)."""
     T = THRESHOLDS
     own = peer = None
+    if m.get("partial"):               # partial / stale inputs never raise a flag
+        m["own"], m["peer"] = None, None
+        return m
     if m.get("now") is not None and m.get("n", 0) >= T["own_min_sessions"] and m.get("pct") is not None:
         if m["pct"] <= T["own_cheap_pct"] or (m.get("z") is not None and m["z"] <= -T["own_z"]):
             own = "cheap"
@@ -292,11 +331,15 @@ def name_flags(tk, rec_v, peers_used):
     kind = rec_v.get("kind")
     core = BANK_CORE if kind in ("bank", "insurer") else {m[0] for m in METRICS if m[3]}
     M = rec_v["metrics"]
-    ev = [k for k in core if M.get(k, {}).get("now") is not None]
+    # a metric with partial/stale inputs neither votes nor counts toward "of N"
+    ev = [k for k in core if M.get(k, {}).get("now") is not None and not M[k].get("partial")]
     both = [k for k in ev if M[k].get("n", 0) >= T["own_min_sessions"] and M[k].get("peer_med") is not None]
     cheap = [k for k in both if M[k]["own"] == "cheap" and M[k]["peer"] == "cheap"]
     rich = [k for k in both if M[k]["own"] == "rich" and M[k]["peer"] == "rich"]
-    need = min(T["min_agree"], len(both)) if both else 99
+    # Strictly min_agree metrics (coordinator review 2026-11-04): a name with fewer
+    # evaluable core multiples than that gets no flag at all, rather than a flag
+    # resting on its one remaining multiple.
+    need = T["min_agree"]
     g = rec_v.get("growth", {})
     holds = g.get("holds")
     out = []
@@ -343,7 +386,7 @@ def name_flags(tk, rec_v, peers_used):
         # beyond the own-history bands on the SAME side; else, failing that, a peer gap of
         # peer_gap_dislocation on 2+ core metrics on the same side.
         own_ok = [k for k in ev if M[k].get("pct") is not None]
-        need_own = min(T["min_agree"], len(own_ok)) if own_ok else 99
+        need_own = T["min_agree"]
         for side in ("cheap", "rich"):
             own_x = [k for k in own_ok if M[k].get("own") == side]
             if own_x and len(own_x) >= need_own:
@@ -475,10 +518,12 @@ def build(at=None, only=None):
         if rec.get("currency", "USD") != "USD":
             fx = fx_cache[rec["currency"]][1][-1]
         ev_now = None
-        if c["px"] and c["shares"] and row and kind not in ("bank", "insurer"):
+        if c["px"] and c["shares"] and row and kind not in ("bank", "insurer") \
+                and row.get("debt") is not None and row.get("cash") is not None:
             mc = mcaps.get(tk) if not (at and tk in at) else at[tk] * c["shares"]["adj"] / (rec.get("adr_ratio") or 1.0)
             k_fx = fx or 1.0
-            ev_now = mc + ((row.get("debt") or 0) - (row.get("cash") or 0)) * k_fx
+            ev_now = mc + (row["debt"] - row["cash"]) * k_fx
+        part = partial_inputs(row)
         # No entity name: a registrant's legal name can carry a word the public repo's
         # rule-18 guard watches for (JPMORGAN CHASE), and the tab never shows it.
         rv = {"status": rec.get("status"), "why": rec.get("why"), "kind": kind,
@@ -488,7 +533,9 @@ def build(at=None, only=None):
               "shares": c["shares"], "stale": stale,
               "fund": {k: row.get(k) for k in ("end", "known", "rev", "gp", "oi", "da", "ebitda", "ni", "cfo", "capex",
                                                "fcf", "sbc", "cash", "debt", "equity", "da_partial", "oi_proxy",
-                                               "debt_untagged") if row and row.get(k) is not None} if row else None,
+                                               "debt_src", "debt_asof", "debt_why", "capex_incl_software",
+                                               "cfo_advances")
+                       if row and row.get(k) is not None} if row else None,
               "da_method": rec.get("da_method"),
               "splits": rec.get("splits"),
               "growth": {k: (r3(v, 4) if isinstance(v, float) else v) for k, v in g.items()},
@@ -507,6 +554,8 @@ def build(at=None, only=None):
                 continue
             if now is None:
                 m["why"] = why_none(key, row, kind)
+            elif key in part:
+                m["partial"] = part[key]
             st = own_stats(d, s[key], now, c["end"])
             m["n"], m["from"] = st["n"], st["from"]
             yrs = st["n"] / 252.0
@@ -520,7 +569,8 @@ def build(at=None, only=None):
                 for k2 in ("med", "pct", "z", "lo", "hi"):
                     if k2 in st:
                         m[k2] = r3(st[k2])
-            vals = [cur[p]["now"].get(key) for p in current_peers]
+            # a peer whose own inputs for this metric are partial stays out of the median
+            vals = [cur[p]["now"].get(key) for p in current_peers if key not in partial_inputs(cur[p]["row"])]
             vals = [v for v in vals if v is not None and (key == "fcf_y" or v > 0)]
             if len(vals) >= THRESHOLDS["peer_min"]:
                 m["peer_med"] = r3(statistics.median(vals))

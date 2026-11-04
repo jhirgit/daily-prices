@@ -71,6 +71,13 @@ FLOW = {
               "ifrs-full": ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
                             "PurchaseOfPropertyPlantAndEquipment",
                             "PurchaseOfPropertyPlantAndEquipmentIntangibleAssetsOtherThanGoodwillInvestmentPropertyAndOtherNoncurrentAssets"]},
+    # Capitalized software is capital spending (HUBS: 2/3 of its capex); added to capex
+    # whenever tagged, so FCF is not overstated for software companies.
+    "capsw": {"us-gaap": ["PaymentsToDevelopSoftware", "PaymentsForSoftware"], "ifrs-full": []},
+    # Customer advances: a CFO that is mostly a rise in contract liabilities (GEV
+    # 2026: +$19.5B vs $16.7B CFO over nine months) is not recurring free cash flow.
+    "dcl": {"us-gaap": ["IncreaseDecreaseInContractWithCustomerLiability", "IncreaseDecreaseInCustomerAdvances"],
+            "ifrs-full": []},
     # EBIT proxy for filers that tag no operating-income line: pretax income + interest
     "pretax": {"us-gaap": ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
                            "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
@@ -105,20 +112,54 @@ INSTANT = {
                         "AvailableForSaleSecuritiesDebtSecuritiesCurrent", "AvailableForSaleSecuritiesCurrent"],
             "ifrs-full": ["CurrentInvestments", "ShorttermDepositsNotClassifiedAsCashEquivalents",
                           "OtherCurrentFinancialAssets"]},
-    "ltd_nc": {"us-gaap": ["LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations",
-                           "LongTermNotesPayable", "ConvertibleNotesPayableNoncurrent", "ConvertibleDebtNoncurrent",
-                           "SeniorLongTermNotes", "LongTermLineOfCredit"],
-               "ifrs-full": ["NoncurrentPortionOfNoncurrentBorrowings", "LongtermBorrowings", "NoncurrentBorrowings"]},
-    "ltd_cur": {"us-gaap": ["LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent", "DebtCurrent",
-                            "ConvertibleNotesPayableCurrent", "ConvertibleDebtCurrent"],
-                "ifrs-full": ["CurrentPortionOfNoncurrentBorrowings", "CurrentPortionOfLongtermBorrowings"]},
-    "ltd_total": {"us-gaap": ["LongTermDebt"], "ifrs-full": ["Borrowings"]},
-    "st_borrow": {"us-gaap": ["CommercialPaper", "ShortTermBorrowings", "OtherShortTermBorrowings"],
-                  "ifrs-full": ["ShorttermBorrowings", "CurrentBorrowings"]},
     "equity": {"us-gaap": ["StockholdersEquity",
                            "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"],
                "ifrs-full": ["EquityAttributableToOwnersOfParent", "Equity"]},
 }
+# ---- debt: an explicit fallback chain, best first, per balance-sheet date --------
+# Each method is (label, noncurrent-or-total tags, current tags added when present,
+# includes_short_term). A method applies at a date only if its first group has a
+# value AT that date; the tag actually used is recorded in `debt_src`. Commercial
+# paper / short-term borrowings are added on top unless the method already includes
+# short-term debt. Operating leases are never debt here.
+# THE RULE (coordinator review, 2026-11-04, after ORCL valued with debt = 0): debt is
+# NEVER defaulted to zero. Zero only when the filer has never tagged any debt concept,
+# or its latest tagged debt is itself zero ("no debt reported"); otherwise the EV
+# metrics are n/a with "debt not tagged in XBRL".
+DEBT_CHAIN = {
+    "us-gaap": [
+        ("LongTermDebtNoncurrent + LongTermDebtCurrent",
+         ["LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations"],
+         ["LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent", "DebtCurrent"], False),
+        ("LongTermDebt (total, includes current maturities)", ["LongTermDebt"], [], False),
+        ("LongTermNotesPayable + NotesPayableCurrent", ["LongTermNotesPayable", "SeniorLongTermNotes"],
+         ["NotesPayableCurrent"], False),
+        ("DebtLongtermAndShorttermCombinedAmount", ["DebtLongtermAndShorttermCombinedAmount"], [], True),
+        ("ConvertibleDebt / ConvertibleNotesPayable", ["ConvertibleDebtNoncurrent", "ConvertibleNotesPayableNoncurrent",
+                                                       "ConvertibleLongTermNotesPayable", "ConvertibleNotesPayable"],
+         ["ConvertibleDebtCurrent", "ConvertibleNotesPayableCurrent"], False),
+        ("DebtInstrumentCarryingAmount", ["DebtInstrumentCarryingAmount"], [], False),
+        # NOT a method: LineOfCredit / short-term borrowings alone. They are one
+        # instrument, and a filer whose notes moved to custom tags would read as its
+        # revolver (DLR: $708M of an ~$18B balance sheet).
+    ],
+    "ifrs-full": [
+        ("NoncurrentBorrowings + current portion",
+         ["NoncurrentPortionOfNoncurrentBorrowings", "LongtermBorrowings", "NoncurrentBorrowings"],
+         ["CurrentPortionOfNoncurrentBorrowings", "CurrentPortionOfLongtermBorrowings"], False),
+        ("Borrowings (total)", ["Borrowings"], [], True),
+    ],
+}
+DEBT_ST = {"us-gaap": ["CommercialPaper", "ShortTermBorrowings", "OtherShortTermBorrowings"],
+           "ifrs-full": ["ShorttermBorrowings", "CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings"]}
+# A debt value from an earlier balance sheet is used (labelled, partial) only if it
+# is at most this old relative to the balance sheet the cash comes from.
+DEBT_ASOF_MAX_DAYS = 200
+# Hand values for filers whose debt lives only in custom extension tags. Each entry:
+# {end: {"v": $M, "source": "<filing, page>"}}. Empty until someone reads the filing:
+# a guessed number here is worse than n/a.
+DEBT_OVERRIDE = {}
+
 # Tags whose presence marks a balance sheet where EV and EBITDA are not meaningful.
 BANK_TAGS = ["Deposits", "InterestBearingDepositLiabilities"]
 INSURER_TAGS = ["PremiumsEarnedNet", "LiabilityForFuturePolicyBenefits"]
@@ -553,6 +594,79 @@ def split_adjust(obs, splits):
     return obs
 
 
+def debt_resolver(facts, taxonomy, ccy, tk=None):
+    """A function end -> {"v", "src", "asof", "stale"} or {"v": None, "why"}.
+
+    Walks DEBT_CHAIN at the balance-sheet date; failing that, the newest earlier
+    date (<= DEBT_ASOF_MAX_DAYS) where any method applies, labelled stale. Zero only
+    for a filer with no debt concept ever tagged, or whose newest tagged debt is 0."""
+    chain = DEBT_CHAIN.get(taxonomy, [])
+    names = set(DEBT_ST.get(taxonomy, []))
+    for _, a, b, _ in chain:
+        names.update(a)
+        names.update(b)
+    pts = {n: instant_points(facts, taxonomy, [n], ccy) for n in names}
+    st = DEBT_ST.get(taxonomy, [])
+    over = DEBT_OVERRIDE.get(tk or "", {})
+
+    def first(tags, end):
+        for t in tags:
+            p = pts.get(t, {}).get(end)
+            if p is not None:
+                return p["v"], t
+        return None
+
+    def at(end):
+        if end in over:
+            o = over[end]
+            return {"v": o["v"] * 1e6, "src": "override: " + o["source"], "asof": end}
+        for label, base, cur, incl_st in chain:
+            b = first(base, end)
+            if b is None:
+                continue
+            v, used = b[0], [b[1]]
+            c = first(cur, end)
+            if c is not None:
+                v += c[0]
+                used.append(c[1])
+            if not incl_st:
+                s = first(st, end)
+                if s is not None:
+                    v += s[0]
+                    used.append(s[1])
+            return {"v": v, "src": " + ".join(used), "asof": end}
+        return None
+
+    all_dates = sorted({e for p in pts.values() for e in p})
+
+    def resolve(end):
+        r = at(end)
+        if r:
+            return r
+        for e in reversed([d for d in all_dates if d < end]):
+            if _days(e, end) > DEBT_ASOF_MAX_DAYS:
+                break
+            r = at(e)
+            if r:
+                r["stale"] = True
+                return r
+        earlier = [d for d in all_dates if d <= end]
+        if not all_dates:
+            return {"v": 0.0, "src": "no debt reported (no debt concept ever tagged)", "asof": end, "zero": True}
+        if not earlier:
+            return {"v": None, "why": "debt not tagged in XBRL before %s" % end}
+        last = earlier[-1]
+        # Debt-free only if EVERY debt concept this filer ever used reads zero at its
+        # own newest fact: one zero DebtCurrent beside convertibles parked in a custom
+        # tag (DDOG) is not a debt-free balance sheet.
+        newest = [p[max(e for e in p if e <= end)]["v"] for p in pts.values() if any(e <= end for e in p)]
+        if newest and all(v == 0 for v in newest):
+            return {"v": 0.0, "src": "no debt reported (every debt tag it has used reads zero, latest %s)" % last,
+                    "asof": end, "zero": True}
+        return {"v": None, "why": "debt not tagged in XBRL for this balance sheet (last tagged %s)" % last}
+    return resolve
+
+
 # ---- one company ---------------------------------------------------------------
 def build_company(cf, tk, adr_ratio=None):
     facts = cf.get("facts", {})
@@ -634,6 +748,7 @@ def build_company(cf, tk, adr_ratio=None):
         return None
 
     I = {k: instant_points(facts, taxonomy, spec.get(taxonomy, []), ccy) for k, spec in INSTANT.items()}
+    debt_at = debt_resolver(facts, taxonomy, ccy, tk)
 
     # the quarter-end grid is the revenue line's (fall back to operating income)
     grid = sorted(set(Q["rev"]) | {e for (s, e) in P["rev"] if FY_MIN <= _days(s, e) <= FY_MAX})
@@ -667,6 +782,13 @@ def build_company(cf, tk, adr_ratio=None):
                 row["da_partial"] = True
         if "oi" in row and "da" in row:
             row["ebitda"] = row["oi"] + row["da"]
+        sw = ttm_at(P["capsw"], Q["capsw"], end)
+        if sw and "capex" in row:
+            row["capex"] += sw[0]
+            row["capex_incl_software"] = True
+        dcl = ttm_at(P["dcl"], Q["dcl"], end)
+        if dcl and "cfo" in row and row["cfo"] > 0 and dcl[0] > 0.5 * row["cfo"]:
+            row["cfo_advances"] = round(dcl[0] / row["cfo"], 2)   # share of CFO from customer advances
         if "cfo" in row and "capex" in row:
             row["fcf"] = row["cfo"] - row["capex"]
         if end in Q["rev"]:
@@ -677,20 +799,14 @@ def build_company(cf, tk, adr_ratio=None):
             row["cash"] = cc["v"]
         elif end in I["cash"]:
             row["cash"] = I["cash"][end]["v"] + (I["sti"][end]["v"] if end in I["sti"] else 0.0)
-        debt, any_debt = 0.0, False
-        if end in I["ltd_nc"]:
-            debt += I["ltd_nc"][end]["v"]; any_debt = True
-            if end in I["ltd_cur"]:
-                debt += I["ltd_cur"][end]["v"]
-        elif end in I["ltd_total"]:
-            debt += I["ltd_total"][end]["v"]; any_debt = True
-        elif end in I["ltd_cur"]:
-            debt += I["ltd_cur"][end]["v"]; any_debt = True
-        if end in I["st_borrow"]:
-            debt += I["st_borrow"][end]["v"]; any_debt = True
-        row["debt"] = debt
-        if not any_debt:
-            row["debt_untagged"] = True
+        d = debt_at(end)
+        if d.get("v") is None:
+            row["debt_why"] = d["why"]          # no "debt" key: EV is n/a, never debt = 0
+        else:
+            row["debt"] = d["v"]
+            row["debt_src"] = d["src"]
+            if d.get("stale"):
+                row["debt_asof"] = d["asof"]    # an earlier balance sheet: EV metrics partial
         if end in I["equity"]:
             row["equity"] = I["equity"][end]["v"]
         # when it became public: the first filing that carried the quarter's revenue
@@ -743,7 +859,7 @@ def _round(rec):
     """Store money in millions (one decimal) and shares in millions (three)."""
     for r in rec.get("quarters", []):
         for k, v in list(r.items()):
-            if isinstance(v, float):
+            if isinstance(v, float) and k != "cfo_advances":    # a ratio, not money
                 r[k] = round(v, 4) if k == "eps" else round(v / 1e6, 1)
     for s in rec.get("shares", []):
         s["raw"] = round(s["raw"] / 1e6, 3)

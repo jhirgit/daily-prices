@@ -208,7 +208,108 @@ class Multiples(unittest.TestCase):
         self.assertIsNone(m["pe"])
         self.assertIsNone(m["ev_ebitda"])       # 2000x is not meaningful
         self.assertEqual(V.why_none("pe", {"ni": -5.0}, "operating"), "a loss (TTM net income is negative)")
-        self.assertIn("near zero", V.why_none("ev_ebitda", {"ebitda": 0.5}, "operating"))
+        self.assertIn("near zero", V.why_none("ev_ebitda", {"ebitda": 0.5, "debt": 0.0, "cash": 0.0}, "operating"))
+
+
+class Debt(unittest.TestCase):
+    """Coordinator review 2026-11-04: ORCL had been valued with debt = 0. Debt is never
+    zero-filled; each shape below is a real filer's tagging pattern."""
+
+    def resolve(self, concepts, end):
+        f = facts_with({k: ("USD", v) for k, v in concepts.items()})
+        return F.debt_resolver(f, "us-gaap", "USD", "X")(end)
+
+    def test_orcl_shape_notes_payable(self):
+        r = self.resolve({"LongTermNotesPayable": [fact(None, "2026-08-31", 122342e6, "2026-09-11")],
+                          "NotesPayableCurrent": [fact(None, "2026-08-31", 7625e6, "2026-09-11")],
+                          "CommercialPaper": [fact(None, "2026-08-31", 1000e6, "2026-09-11")]}, "2026-08-31")
+        self.assertAlmostEqual(r["v"], 130967e6)
+        self.assertIn("LongTermNotesPayable", r["src"])
+        self.assertIn("CommercialPaper", r["src"])
+        self.assertFalse(r.get("stale"))
+
+    def test_crwv_shape_tag_switch_midyear(self):
+        tags = {"LongTermDebtNoncurrent": [fact(None, "2026-03-31", 17312e6, "2026-05-10")],
+                "LongTermDebtCurrent": [fact(None, "2026-03-31", 7547e6, "2026-05-10")],
+                "DebtInstrumentCarryingAmount": [fact(None, "2026-06-30", 35551e6, "2026-08-12")]}
+        q1, q2 = self.resolve(tags, "2026-03-31"), self.resolve(tags, "2026-06-30")
+        self.assertAlmostEqual(q1["v"], 24859e6)
+        self.assertAlmostEqual(q2["v"], 35551e6)
+        self.assertEqual(q2["src"], "DebtInstrumentCarryingAmount")
+
+    def test_cat_shape_no_tag_this_period_is_na(self):
+        # tagged once, long ago, then only custom extensions: n/a, never zero
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2015-12-31", 25000e6, "2016-02-15")]}, "2026-06-30")
+        self.assertIsNone(r["v"])
+        self.assertIn("debt not tagged in XBRL", r["why"])
+
+    def test_truly_debt_free_is_zero_with_label(self):
+        r = self.resolve({"Revenues": [fact("2026-01-01", "2026-03-31", 1, "x")]}, "2026-06-30")
+        self.assertEqual(r["v"], 0.0)
+        self.assertIn("no debt reported", r["src"])
+
+    def test_latest_tagged_debt_zero_is_zero(self):
+        r = self.resolve({"LongTermDebt": [fact(None, "2025-12-31", 0, "2026-02-01")]}, "2026-06-30")
+        self.assertEqual(r["v"], 0.0)
+
+    def test_earlier_balance_sheet_is_used_labelled_stale(self):
+        r = self.resolve({"LongTermDebt": [fact(None, "2026-03-31", 500e6, "2026-05-01")]}, "2026-06-30")
+        self.assertEqual((r["v"], r["asof"], r.get("stale")), (500e6, "2026-03-31", True))
+
+    def test_unknown_debt_means_no_ev(self):
+        m = V.multiples({"rev": 100.0, "ni": 10.0, "ebitda": 20.0, "oi": 15.0, "fcf": 5.0, "cash": 1.0,
+                         "debt_why": "debt not tagged"}, 1000.0, "operating")
+        self.assertIsNone(m["ev_ebitda"])
+        self.assertIsNone(m["ev_s"])
+        self.assertEqual(m["pe"], 100.0)               # equity multiples still stand
+        self.assertEqual(V.why_none("ev_ebitda", {"debt_why": "debt not tagged in XBRL for this balance sheet"},
+                                    "operating"), "debt not tagged in XBRL for this balance sheet")
+
+    def test_partial_inputs_never_flag(self):
+        self.assertIn("ev_ebitda", V.partial_inputs({"end": "2026-06-30", "debt_asof": "2026-03-31"}))
+        self.assertIn("ev_ebitda", V.partial_inputs({"da_partial": True}))
+        m = V.metric_flags({"now": 5.0, "n": 1260, "pct": 1.0, "z": -3.0, "prem": -0.6, "partial": "x"}, "operating")
+        self.assertEqual((m["own"], m["peer"]), (None, None))
+
+
+class FreeCashFlow(unittest.TestCase):
+    def _company(self, extra):
+        q = lambda s, e, v, f: fact(s, e, v, f)
+        base = {"Revenues": [q("2025-01-01", "2025-12-31", 4000e6, "2026-02-01")],
+                "NetCashProvidedByUsedInOperatingActivities": [q("2025-01-01", "2025-12-31", 1000e6, "2026-02-01")],
+                "PaymentsToAcquirePropertyPlantAndEquipment": [q("2025-01-01", "2025-12-31", 50e6, "2026-02-01")]}
+        base.update(extra)
+        cf = {"entityName": "X", "facts": facts_with({k: ("USD", v) for k, v in base.items()})}
+        return F.build_company(cf, "X")["quarters"][-1]
+
+    def test_capitalized_software_is_capex(self):
+        r = self._company({"PaymentsToDevelopSoftware": [fact("2025-01-01", "2025-12-31", 100e6, "2026-02-01")]})
+        self.assertAlmostEqual(r["capex"], 150e6)
+        self.assertAlmostEqual(r["fcf"], 850e6)
+        self.assertTrue(r["capex_incl_software"])
+
+    def test_cfo_mostly_customer_advances_marks_fcf_partial(self):
+        r = self._company({"IncreaseDecreaseInContractWithCustomerLiability":
+                           [fact("2025-01-01", "2025-12-31", 900e6, "2026-02-01")]})
+        self.assertEqual(r["cfo_advances"], 0.9)
+        p = V.partial_inputs(r)
+        self.assertIn("p_fcf", p)
+        self.assertIn("customer advances", p["p_fcf"])
+
+    def test_ordinary_cfo_is_not_partial(self):
+        r = self._company({"IncreaseDecreaseInContractWithCustomerLiability":
+                           [fact("2025-01-01", "2025-12-31", 100e6, "2026-02-01")]})
+        self.assertNotIn("cfo_advances", r)
+
+
+class HistoryDropsUnknownDebt(NoLookAhead):
+    def test_history_point_with_unknown_debt_is_dropped(self):
+        self.rec["quarters"][0].pop("debt")
+        self.rec["quarters"][0]["debt_why"] = "debt not tagged"
+        d, s, info = V.series_for("X", self.rec, self.con, {})
+        self.assertIsNone(s["ev_ebitda"][0])          # the Dec-quarter sessions: no EV, not debt = 0
+        self.assertIsNotNone(s["ps"][0])
+        self.assertIsNotNone(s["ev_ebitda"][2])
 
 
 class Flags(unittest.TestCase):
