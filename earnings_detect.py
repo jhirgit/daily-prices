@@ -127,7 +127,23 @@ EARNINGS_ITEM = "2.02"
 
 def recent_8k(cik, since):
     """The most recent EARNINGS 8-K (Item 2.02) filed on/after `since`, or None."""
-    sub = get("https://data.sec.gov/submissions/CIK%s.json" % cik)
+    return scan_submissions(get("https://data.sec.gov/submissions/CIK%s.json" % cik), since, cik)[0]
+
+
+def files_8k(sub):
+    """Does this issuer file 8-Ks at all? A foreign private issuer (AEM, KGC, AGI: 6-K and
+    40-F) has a CIK but never files an 8-K, so 'no Item 2.02 8-K' says nothing about its
+    print and must never read as overdue (2026-11-04: four false OVERDUEs failed the job)."""
+    forms = sub.get("filings", {}).get("recent", {}).get("form", [])
+    return any(f in ("8-K", "8-K/A") for f in forms)
+
+
+def scan_submissions(sub, since, cik):
+    """(earnings 8-K hit or None, files_8k) from one EDGAR submissions payload."""
+    return _earnings_8k(sub, since, cik), files_8k(sub)
+
+
+def _earnings_8k(sub, since, cik):
     r = sub.get("filings", {}).get("recent", {})
     n = len(r.get("form", []))
     items_col = r.get("items", [""] * n)
@@ -175,7 +191,7 @@ def main(argv=None):
                  if lo.isoformat() <= d <= hi.isoformat()}
 
     ciks = cik_map(refresh=args.refresh_ciks)
-    names, overdue, skipped = {}, [], []
+    names, overdue, skipped, foreign = {}, [], [], []
 
     for tk in sorted(in_window):
         exp = in_window[tk]
@@ -186,12 +202,16 @@ def main(argv=None):
         exp_d = date.fromisoformat(exp)
         since = (exp_d - timedelta(days=2)).isoformat()
         try:
-            hit = recent_8k(cik, since)
+            hit, eight_k = scan_submissions(
+                get("https://data.sec.gov/submissions/CIK%s.json" % cik), since, cik)
         except Exception as exc:
             names[tk] = {"expected": exp, "status": "error", "error": type(exc).__name__}
             continue
         time.sleep(0.15)                  # EDGAR fair access: well under 10/sec
 
+        if not hit and not eight_k:       # 6-K/40-F/20-F filer: an 8-K will never come
+            foreign.append(tk)
+            continue
         if hit:
             names[tk] = dict(expected=exp, status="detected", **hit)
         elif exp_d >= today:
@@ -221,6 +241,7 @@ def main(argv=None):
             "errors": sum(1 for v in names.values() if v["status"] == "error"),
         },
         "not_sec_filers": sorted(skipped),
+        "not_8k_filers": sorted(foreign),
         "names": names,
     }
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
@@ -229,8 +250,8 @@ def main(argv=None):
         fh.write("\n")
 
     c = doc["counts"]
-    print("earnings_detect: %d in window - %d detected, %d awaiting, %d OVERDUE, %d error(s); %d not SEC filers"
-          % (c["in_window"], c["detected"], c["awaiting"], c["overdue"], c["errors"], len(skipped)))
+    print("earnings_detect: %d in window - %d detected, %d awaiting, %d OVERDUE, %d error(s); %d not SEC filers, %d not 8-K filers"
+          % (c["in_window"], c["detected"], c["awaiting"], c["overdue"], c["errors"], len(skipped), len(foreign)))
     for tk, exp, late in overdue:
         print("  OVERDUE  %-7s expected %s, %d sessions ago, no 8-K on EDGAR" % (tk, exp, late))
 
