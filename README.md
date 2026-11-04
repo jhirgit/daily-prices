@@ -445,8 +445,14 @@ python test_fundamentals.py         # offline tests
   date: the newest earlier balance sheet within 200 days, labelled `debt_asof` (EV multiples
   partial). Zero only if the filer never tagged debt or every debt tag it ever used reads zero
   ("no debt reported"); otherwise `debt_why` and EV multiples are n/a. A revolver or short-term
-  borrowings alone are never taken as total debt. `DEBT_OVERRIDE` takes hand values (with the filing
-  and page) for custom-tag filers; it is empty.
+  borrowings alone are never taken as total debt. `DEBT_OVERRIDE` takes hand values read from the
+  filing (form, accession, balance-sheet date and the line items summed; all borrowings at carrying
+  amount, leases excluded) and is labelled "debt from filing (hand-entered)". It applies at its own
+  balance-sheet date; at a later quarter it is an earlier balance sheet (`debt_asof`, partial, never
+  flagged). Entries (2026-11-04): CAT (XBRL left out long-term debt due within one year), HUBS (no
+  borrowings: 0, cited), ZS (2028 convertible notes).
+- **Peer sets for precious metals** are explicit overrides: royalty/streaming companies (FNV, WPM,
+  RGLD, TFPM) are compared only with each other, miners only with miners.
 - **Partial inputs never flag.** A metric is shown with its reason and kept out of every flag and peer
   median when: its debt is from an earlier balance sheet; D&A is partly tagged (EV/EBITDA); EBIT is
   the pretax proxy; net income exceeds 1.5x operating income or is positive on an operating loss (P/E:
@@ -477,8 +483,10 @@ python test_fundamentals.py         # offline tests
   `min_agree` (2) evaluable, non-partial core multiples agreeing; fewer, and the name gets no flag. Kinds: OPPORTUNITY (cheap vs own
   history AND peers on 2+ core metrics, revenue growing and operating margin not down > 2 pts),
   VALUE-TRAP WATCH (same, fundamentals deteriorating), STRETCHED (rich vs both), DISLOCATION
-  (2+ core metrics beyond the 10th/90th percentile or 1.5 sd of own history, same side), PEER GAP
-  (2+ core metrics 50%+ from the peer median, same side; often business mix). The words are
+  (2+ core metrics beyond the 10th/90th percentile or 1.5 sd of own history, same side). Those four
+  are the only flags. A gap to peers on its own is NOT a flag (Jake, 2026-11-04): it is often
+  business mix, so it is shown in the multiples table ("cheap/rich vs peers", the gap) and the peer
+  table as information, and never reaches the cross-name list or a name's flag line. The words are
   states; the tests refuse buy/sell/should/will/target/recommend. Flags never move an anchor.
 - **Peers** (`data/peers.json`, hand-editable): `overrides` win; otherwise up to 6 names from the
   same `tickers.txt` section, nearest by market cap. A peer with no prices yet is "price history

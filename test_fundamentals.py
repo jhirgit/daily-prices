@@ -353,6 +353,91 @@ class Flags(unittest.TestCase):
         rv["stale"] = True
         self.assertEqual(V.name_flags("X", rv, ["A", "B"])[0], [])
 
+    def test_peer_gap_alone_is_not_a_flag(self):
+        # Jake 2026-11-04 ("Ship it"): a gap to peers alone never reaches a flag line or
+        # the cross-name list; it stays on the metric as information.
+        for prem in (-0.7, 0.9):
+            rv = self.rv(None, prem)
+            self.assertEqual(V.name_flags("X", rv, ["A", "B"])[0], [])
+            self.assertEqual(rv["metrics"]["ev_ebitda"]["peer"], "cheap" if prem < 0 else "rich")
+            self.assertEqual(rv["metrics"]["ev_ebitda"]["prem"], prem)
+
+    def test_flag_kinds_are_the_four(self):
+        self.assertEqual(set(V.KIND_ORDER), {"OPPORTUNITY", "VALUE-TRAP WATCH", "STRETCHED", "DISLOCATION"})
+        self.assertNotIn("peer_gap_dislocation", V.THRESHOLDS)
+        for own, prem, holds in (("cheap", -0.4, True), ("cheap", -0.4, False), ("rich", 0.5, True),
+                                 ("cheap", 0.0, True), (None, -0.8, True), (None, 0.8, True)):
+            for fl in V.name_flags("X", self.rv(own, prem, holds), ["A", "B"])[0]:
+                self.assertIn(fl["kind"], V.FLAG_KINDS)
+
+
+class DebtOverride(unittest.TestCase):
+    """Hand-entered debt from the filing (CAT, HUBS, ZS; 2026-11-04)."""
+
+    def setUp(self):
+        self._saved = F.DEBT_OVERRIDE
+        F.DEBT_OVERRIDE = dict(self._saved, X={"2026-09-30": {"v": 700.0, "form": "10-Q", "accession": "0000000000-26-000001",
+                                                             "items": [("Short-term borrowings", 200.0), ("Long-term debt", 500.0)]}})
+
+    def tearDown(self):
+        F.DEBT_OVERRIDE = self._saved
+
+    def resolve(self, end):
+        f = facts_with({"LongTermDebtNoncurrent": ("USD", [fact(None, "2026-06-30", 300e6, "2026-08-01")])})
+        return F.debt_resolver(f, "us-gaap", "USD", "X")(end)
+
+    def test_override_at_its_own_date_is_used_and_labelled(self):
+        r = self.resolve("2026-09-30")
+        self.assertAlmostEqual(r["v"], 700e6)
+        self.assertTrue(r["src"].startswith("filing (hand-entered)"))
+        self.assertIn("0000000000-26-000001", r["src"])
+        self.assertFalse(r.get("stale"))
+        # at its own date it is not partial: it may flag
+        self.assertEqual(V.partial_inputs({"end": "2026-09-30", "debt": 700e6, "debt_src": r["src"]}), {})
+
+    def test_override_at_a_later_date_is_partial(self):
+        r = self.resolve("2026-12-31")
+        self.assertEqual((r["v"], r["asof"], r.get("stale")), (700e6, "2026-09-30", True))
+        self.assertIn("ev_ebitda", V.partial_inputs({"end": "2026-12-31", "debt_asof": r["asof"]}))
+
+    def test_tag_dates_without_override_still_use_tags(self):
+        self.assertAlmostEqual(self.resolve("2026-06-30")["v"], 300e6)
+
+    def test_entries_are_cited_and_sum_to_their_items(self):
+        for tk in ("CAT", "HUBS", "ZS"):
+            self.assertIn(tk, self._saved)
+            for end, o in self._saved[tk].items():
+                self.assertRegex(end, r"^\d{4}-\d{2}-\d{2}$")
+                self.assertRegex(o["accession"], r"^\d{10}-\d{2}-\d{6}$")
+                self.assertTrue(o["form"].startswith(("10-Q", "10-K")))
+                self.assertTrue(o["items"])
+                self.assertAlmostEqual(o["v"], sum(v for _, v in o["items"]), places=3)
+
+    def test_cat_includes_current_portion_of_long_term_debt(self):
+        o = self._saved["CAT"]["2025-12-31"]
+        self.assertTrue(any("due within one year" in n for n, _ in o["items"]))
+        self.assertGreater(o["v"], 36210.0)   # the XBRL figure that left it out
+
+    def test_hubs_zero_is_cited_not_defaulted(self):
+        for o in self._saved["HUBS"].values():
+            self.assertEqual(o["v"], 0.0)
+            self.assertTrue(o["accession"] and o["items"][0][0])
+
+
+class GoldPeers(unittest.TestCase):
+    ROYALTY = {"FNV", "WPM", "RGLD", "TFPM"}
+    MINERS = {"NEM", "GOLD", "AU", "AEM", "KGC", "AGI", "HL", "PAAS", "AG", "CDE", "EXK", "SSRM"}
+
+    def test_royalty_and_miners_never_mix(self):
+        ov = V.load_peers()["overrides"]
+        for grp, other in ((self.ROYALTY, self.MINERS), (self.MINERS, self.ROYALTY)):
+            for tk in grp:
+                self.assertIn(tk, ov, tk)
+                ps = set(ov[tk]["peers"])
+                self.assertTrue(ps and ps <= grp - {tk}, (tk, ps))
+                self.assertFalse(ps & other)
+                self.assertTrue(ov[tk].get("why"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -6,7 +6,7 @@
     "A peer whose multiple is not meaningful (a loss for P/E, negative EBITDA for EV/EBITDA) is left out of that metric's median, never counted as zero.",
     "Overrides are a judgement about which businesses a name is priced against; they are Jake's to change."
   ],
-  "seeded": "2026-11-04 (inv-valuation worker); NVDA and GOOGL sets as named in the coordinator's brief",
+  "seeded": "2026-11-04 (inv-valuation worker); NVDA and GOOGL sets as named in the coordinator's brief; precious-metals sets split royalty/streaming vs miners 2026-11-04 (inv-valuation2, Jake: 'Ship it')",
   "overrides": {
     "NVDA": {"peers": ["AMD", "AVGO", "MRVL", "TSM"], "why": "AI accelerators and custom silicon, plus the foundry that makes them"},
     "AMD": {"peers": ["NVDA", "INTC", "AVGO", "MRVL", "QCOM"], "why": "CPU/GPU compute and the merchant/custom silicon it competes with"},
@@ -37,7 +37,23 @@
     "GEV": {"peers": ["ETN", "VRT", "CAT", "BE"], "why": "power generation and grid equipment"},
     "EQIX": {"peers": ["DLR"], "why": "datacenter REITs"},
     "JPM": {"peers": ["BAC", "WFC", "C"], "why": "US money-centre banks (P/E and P/B only)"},
-    "NOW": {"peers": ["CRM", "WDAY", "ADBE", "HUBS"], "why": "enterprise application software"}
+    "NOW": {"peers": ["CRM", "WDAY", "ADBE", "HUBS"], "why": "enterprise application software"},
+    "FNV": {"peers": ["WPM", "RGLD", "TFPM"], "why": "royalty/streaming: margins and multiples a miner cannot carry, so royalty companies only"},
+    "WPM": {"peers": ["FNV", "RGLD", "TFPM"], "why": "royalty/streaming: margins and multiples a miner cannot carry, so royalty companies only"},
+    "RGLD": {"peers": ["FNV", "WPM", "TFPM"], "why": "royalty/streaming: margins and multiples a miner cannot carry, so royalty companies only"},
+    "TFPM": {"peers": ["RGLD", "FNV", "WPM"], "why": "royalty/streaming: margins and multiples a miner cannot carry, so royalty companies only"},
+    "NEM": {"peers": ["AEM", "GOLD", "AU", "KGC", "PAAS", "CDE"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "GOLD": {"peers": ["AEM", "AU", "NEM", "KGC", "PAAS", "CDE"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "AU": {"peers": ["GOLD", "KGC", "AEM", "PAAS", "NEM", "CDE"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "AEM": {"peers": ["GOLD", "NEM", "AU", "KGC", "PAAS", "CDE"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "KGC": {"peers": ["PAAS", "AU", "CDE", "AGI", "HL", "GOLD"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "AGI": {"peers": ["CDE", "HL", "PAAS", "AG", "KGC", "SSRM"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "HL": {"peers": ["AG", "AGI", "CDE", "SSRM", "PAAS", "KGC"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "PAAS": {"peers": ["CDE", "AGI", "KGC", "HL", "AG", "AU"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "AG": {"peers": ["HL", "SSRM", "AGI", "CDE", "PAAS", "KGC"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "CDE": {"peers": ["PAAS", "AGI", "HL", "KGC", "AG", "SSRM"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "EXK": {"peers": ["SSRM", "AG", "HL", "AGI", "CDE", "PAAS"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"},
+    "SSRM": {"peers": ["AG", "HL", "AGI", "CDE", "EXK", "PAAS"], "why": "precious-metals miners only (royalty companies excluded), nearest by market cap"}
   },
   "added_to_tickers_for_peers": ["QCOM", "CRDO", "GFS", "AMAT", "KLAC", "WDC", "STX", "ADI", "CSCO", "ANET", "DLR", "BAC", "WFC", "C", "CRM", "WDAY", "ADBE"]
 }
