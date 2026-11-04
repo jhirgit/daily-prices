@@ -33,6 +33,12 @@ PENG       # Penguin Solutions
 SIVEF      # Sivers Semiconductors (Stockholm = SIVE.ST)
 WOLF       # Wolfspeed
 AMSC       # American Superconductor
+QCOM       # Qualcomm (valuation peer for AMD/AVGO/INTC, added 11/4/26)
+CRDO       # Credo Technology (AI connectivity; valuation peer for MRVL/ALAB, added 11/4/26)
+GFS        # GlobalFoundries (foundry; valuation peer for TSM/INTC, added 11/4/26)
+AMAT       # Applied Materials (WFE; valuation peer for ASML/LRCX, added 11/4/26)
+KLAC       # KLA (WFE process control; valuation peer for ASML/LRCX, added 11/4/26)
+ADI        # Analog Devices (analog/power; valuation peer for TXN/MPWR, added 11/4/26)
 
 # --- Memory & storage ---
 MU         # Micron
@@ -41,6 +47,8 @@ NLST       # Netlist (OTCQB - delisted from Nasdaq; thin, wide spreads)
 005930.KS  # Samsung Electronics
 000660.KS  # SK Hynix
 DRAM       # memory ETF
+WDC        # Western Digital (HDD; valuation peer for MU/SNDK, added 11/4/26)
+STX        # Seagate (HDD; valuation peer for MU/SNDK, added 11/4/26)
 
 # --- Optics / networking ---
 COHR       # Coherent
@@ -50,6 +58,8 @@ CIEN       # Ciena
 FN         # Fabrinet (optical/photonic contract manufacturer; Optics basket, Stream D 9/2/26)
 GLW        # Corning
 NOK        # Nokia
+CSCO       # Cisco (valuation peer for CIEN, added 11/4/26)
+ANET       # Arista Networks (valuation peer for CIEN, added 11/4/26)
 
 # --- AI compute / datacenter operators ---
 IREN       # Iris Energy
@@ -129,6 +139,9 @@ OKTA       # Okta (identity)
 NET        # Cloudflare
 TENB       # Tenable
 QLYS       # Qualys
+CRM        # Salesforce (valuation peer for NOW, added 11/4/26)
+WDAY       # Workday (valuation peer for NOW, added 11/4/26)
+ADBE       # Adobe (valuation peer for NOW, added 11/4/26)
 
 # --- Other equities ---
 JPM        # JPMorgan
@@ -227,6 +240,9 @@ VRT        # Vertiv (datacenter thermal + power)
 # --- Financials & banks (added 9/2/26, Stream D) ---
 XLF        # Financial Select Sector SPDR - ladder sled
 KRE        # SPDR S&P Regional Banking - grp twin of XLF (regionals)
+BAC        # Bank of America (valuation peer for JPM, added 11/4/26)
+WFC        # Wells Fargo (valuation peer for JPM, added 11/4/26)
+C          # Citigroup (valuation peer for JPM, added 11/4/26)
 
 # --- Space (added 9/2/26, Stream D) ---
 UFO        # Procure Space ETF - ladder sled (side: offense)
@@ -248,6 +264,7 @@ ARQQ       # Arqit
 # --- Real estate / REITs ---
 INVH       # Invitation Homes (single-family rental REIT; state file + DCF 8/21)
 EQIX       # Equinix (data-center REIT; state file + DCF 8/21)
+DLR        # Digital Realty (data-center REIT; valuation peer for EQIX, added 11/4/26)
 
 # --- Broad / thematic / crypto ETFs ---
 SPY        # S&P 500
@@ -299,6 +316,14 @@ TLT        # 20+yr Treasuries (iShares) - stocks-bonds correlation leg (regime #
 IEF        # 7-10yr Treasuries (iShares) - curve proxy ETF
 BTC-USD    # Bitcoin
 ETH-USD    # Ethereum
+
+# --- Macro FX rates, USD per unit (valuation.py converts 20-F/40-F filers' statements; added 11/4/26) ---
+# Header carries "macro" so technicals.GROUP_PROXY gives these no RS proxy, like the
+# benchmarks above; news.py and options_flow.py skip "=X" symbols structurally.
+TWDUSD=X   # Taiwan dollar (TSM reports in TWD)
+EURUSD=X   # euro (ASML, NOK report in EUR)
+DKKUSD=X   # Danish krone (NVO reports in DKK)
+CADUSD=X   # Canadian dollar (ADUR reports in CAD)
 
 # Kioxia omitted — needs a verified Yahoo symbol (285A.T returns implausible data).
 

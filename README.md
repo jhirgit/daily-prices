@@ -137,6 +137,7 @@ scheduled runs entirely for 12h+ on 2026-08-27 while the workflows still read
 | Intraday Prices | :03 and :33, 13:00–19:59, Mon–Fri | Worker | **none** (deleted 2026-09-13) |
 | Overnight Snapshot | 11:30, Mon–Fri | Worker | **none** (deleted 2026-09-13) |
 | Daily Prices | 22:00, Mon–Fri | Worker | gated fallback |
+| Valuation Multiples | 22:50, Mon–Fri | Worker | **none** |
 | Weekly Insiders | 13:00, Sat | Worker | fallback |
 
 The two deleted crons were not free redundancy. Intraday's delivered 12% of its
@@ -410,6 +411,61 @@ python test_thesis_gauge.py       # offline tests
   quadrant, with days and episodes. With about two years of history no label
   earns an edge, and the payload says so: the quadrants are states, not
   forecasts.
+
+## Valuation multiples (`fundamentals.py`, `valuation.py`)
+
+jr-dash's Name tab "Valuation multiples" section (SPEC-78 amendment, 2026-11-04). Workflow
+`valuation.yml`, dispatched by cron-dispatch weekdays at 22:50 UTC (after Daily Prices).
+Stdlib only.
+
+```
+python fundamentals.py              # SEC companyfacts -> data/fundamentals.json (network, <= 5 req/s)
+python fundamentals.py --offline    # from the gitignored cache in data/cache/sec
+python valuation.py                 # -> data/valuation.json + data/valuation_history.json
+python valuation.py --at GOOGL=285.16 --show GOOGL   # a one-name check at a quoted price, writes nothing
+python test_fundamentals.py         # offline tests
+```
+
+- **Fundamentals** (`fundamentals.py`, `sec_facts.py`). Every operating company in `tickers.txt`
+  plus every peer in `data/peers.json` that has a CIK in `data/cik_map.json` (`CIK_OVERRIDE` pins
+  a symbol whose SEC map entry is a different company: GOLD -> Barrick). Quarterly values are
+  reported 3-month facts or derived (a longer period minus the same-start period one quarter
+  shorter: Q4 = FY - 9M, and every 10-Q cash-flow quarter). TTM = the FY fact at a fiscal year
+  end, else four consecutive quarters. A restated period keeps the LATEST filing's value; its
+  `known` date is the FIRST filing that carried it. D&A is one combined tag or depreciation +
+  intangibles amortization, picked per company and recorded in `da_method` (amortization tagged
+  for only 2-3 quarters is annualised and flagged `da_partial`). No operating-income line: pretax
+  + interest, flagged `oi_proxy`. Debt = long-term noncurrent + current portion + CP/short-term
+  borrowings (operating leases excluded); cash = cash + short-term marketable securities.
+- **Shares** are point-in-time per filing: dei cover (classes summed), else us-gaap
+  CommonStockSharesOutstanding, else the weighted-average diluted count. Because prices.db closes
+  are split-adjusted, shares are put on today's basis: a step in the count by a split ratio (2x-50x
+  or the inverse) is a split ONLY if the filer restated an earlier period's share count or EPS by
+  the same ratio. Mergers, IPOs and buybacks never restate, so they never rescale history (3-for-2
+  is excluded outright: on this universe every 1.5x step was a merger). A mis-scaled filing (more
+  than 3x off its neighbours) is dropped.
+- **Honest n/a.** Banks/insurers get P/E and P/B only (no EBITDA, no EV). ETFs, trusts, indices,
+  FX and crypto, foreign listings without SEC filings, and listings with fewer than four quarters
+  of XBRL revenue each say why. 20-F/40-F filers file statements once a year (quarters go on 6-K,
+  which has no XBRL); statements more than 400 days old are shown and never flagged. Non-USD
+  filers convert at the session's `<CCY>USD=X` close from prices.db (the FX block in
+  `tickers.txt`); until it is backfilled the name says "FX history pending".
+- **Multiples** (`valuation.py`), daily from each name's closes: P/E (TTM), P/S, EV/S, EV/EBITDA,
+  EV/EBIT, P/FCF, FCF yield, P/B. Forward P/E is n/a: the DCF street blocks carry targets, not EPS.
+  A quarter applies from its `known` date and the share count from its filing date - no look-ahead.
+  Above 150x (100x for sales/book) a multiple is "denominator near zero", n/m.
+- **Stats and flags.** Per metric: own 5-year median, percentile and z-score (only with 24+ months
+  of values, else "short history (N months)"), peer median from peers current on both price and
+  statements, premium/discount, and EV/EBITDA per point of revenue growth vs peers. The thresholds
+  are one constants block, `THRESHOLDS`, copied into the payload. Kinds: OPPORTUNITY (cheap vs own
+  history AND peers on 2+ core metrics, revenue growing and operating margin not down > 2 pts),
+  VALUE-TRAP WATCH (same, fundamentals deteriorating), STRETCHED (rich vs both), DISLOCATION
+  (2+ core metrics beyond the 10th/90th percentile or 1.5 sd of own history, same side), PEER GAP
+  (2+ core metrics 50%+ from the peer median, same side; often business mix). The words are
+  states; the tests refuse buy/sell/should/will/target/recommend. Flags never move an anchor.
+- **Peers** (`data/peers.json`, hand-editable): `overrides` win; otherwise up to 6 names from the
+  same `tickers.txt` section, nearest by market cap. A peer with no prices yet is "price history
+  pending" and out of every median.
 
 ## Options flow (`options_flow.py`)
 

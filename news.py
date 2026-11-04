@@ -77,6 +77,8 @@ def skip_reason(ticker):
         return "futures contract, not a company symbol"
     if ticker.endswith("-USD"):
         return "crypto pair, not a company symbol"
+    if ticker.endswith("=X"):
+        return "FX rate, not a company symbol"
     return None
 
 
