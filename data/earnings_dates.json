@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-04T22:16:21Z",
+  "generated_at": "2026-11-05T22:17:05Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 129,
@@ -206,8 +206,8 @@
       "estimated": true
     },
     "AMSC": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-03",
+      "estimated": true
     },
     "AMZN": {
       "date": "2026-10-29",
@@ -278,8 +278,8 @@
       "estimated": true
     },
     "COHR": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-03",
+      "estimated": true
     },
     "CORZ": {
       "date": "2026-11-05",
@@ -370,8 +370,8 @@
       "estimated": true
     },
     "GOLD": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-04",
+      "estimated": true
     },
     "GOOGL": {
       "date": "2026-10-28",
@@ -494,7 +494,7 @@
       "estimated": false
     },
     "NVO": {
-      "date": "2026-11-04",
+      "date": "2027-02-03",
       "estimated": false
     },
     "NVTS": {
@@ -526,8 +526,8 @@
       "estimated": true
     },
     "POWI": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-04",
+      "estimated": true
     },
     "PYPL": {
       "date": "2026-10-27",
@@ -538,8 +538,8 @@
       "estimated": false
     },
     "QCOM": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-03",
+      "estimated": true
     },
     "QLYS": {
       "date": "2026-11-09",
@@ -646,8 +646,8 @@
       "estimated": false
     },
     "WOLF": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-03",
+      "estimated": true
     },
     "WPM": {
       "date": "2026-11-05",
@@ -658,8 +658,8 @@
       "estimated": false
     },
     "ZS": {
-      "date": "2026-11-24",
-      "estimated": true
+      "date": "2026-12-02",
+      "estimated": false
     }
   }
 }
