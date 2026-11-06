@@ -1,11 +1,11 @@
 {
-"generated_at":"2026-11-02T22:06:45Z",
+"generated_at":"2026-11-06T22:07:54Z",
 "source":"SEC EDGAR NPORT-P primary_doc.xml: the latest public filing per fund series (the last three for a Select Industry fund)",
 "line_fields":["name","isin","ticker","ccy","w","px"],
 "funds":{
 "AMLP":{
 "acc":"0001049169-26-002778",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1414040",
 "excluded":{"n":1,"w":0.00051332488424},
 "filed":"2026-10-29",
@@ -34,7 +34,7 @@
 },
 "ARTY":{
 "acc":"0001004726-26-007038",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":15,"w":0.062103394122150005},
 "filed":"2026-08-24",
@@ -98,7 +98,7 @@
 },
 "BOTZ":{
 "acc":"0002048251-26-009598",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1432353",
 "excluded":{"n":8,"w":0.031141435294709998},
 "filed":"2026-10-29",
@@ -173,7 +173,7 @@
 },
 "CIBR":{
 "acc":"0000940400-26-032759",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1364608",
 "excluded":{"n":2,"w":0.019769845058179997},
 "filed":"2026-08-21",
@@ -230,7 +230,7 @@
 },
 "COPX":{
 "acc":"0002048251-26-008644",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1432353",
 "excluded":{"n":23,"w":0.025940026201990003},
 "filed":"2026-09-29",
@@ -312,7 +312,7 @@
 },
 "DRIV":{
 "acc":"0002048251-26-009603",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1432353",
 "excluded":{"n":6,"w":0.06195437607485999},
 "filed":"2026-10-29",
@@ -401,7 +401,7 @@
 },
 "DTCR":{
 "acc":"0002048251-26-009612",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1432353",
 "excluded":{"n":7,"w":0.04251255501275},
 "filed":"2026-10-29",
@@ -441,7 +441,7 @@
 },
 "ESPO":{
 "acc":"0001410368-26-086929",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.00506593546867},
 "filed":"2026-08-26",
@@ -481,7 +481,7 @@
 },
 "EWY":{
 "acc":"0001004726-26-010083",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"930667",
 "excluded":{"n":4,"w":0.059179896343340005},
 "filed":"2026-10-23",
@@ -574,7 +574,7 @@
 },
 "FDN":{
 "acc":"0000940400-26-033095",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1329377",
 "excluded":{"n":2,"w":0.0012700895159300002},
 "filed":"2026-08-21",
@@ -630,7 +630,7 @@
 },
 "FINX":{
 "acc":"0002048251-26-009582",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1432353",
 "excluded":{"n":6,"w":0.014155498231249999},
 "filed":"2026-10-29",
@@ -719,7 +719,7 @@
 },
 "GDX":{
 "acc":"0001410368-26-086986",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.00422903039678},
 "filed":"2026-08-26",
@@ -795,7 +795,7 @@
 },
 "GDXJ":{
 "acc":"0001410368-26-086989",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.010496750966779999},
 "filed":"2026-08-26",
@@ -890,7 +890,7 @@
 },
 "GRID":{
 "acc":"0000940400-26-032766",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1364608",
 "excluded":{"n":2,"w":0.005777459112520001},
 "filed":"2026-08-21",
@@ -985,7 +985,7 @@
 },
 "HACK":{
 "acc":"0001193125-26-372674",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1633061",
 "excluded":{"n":2,"w":0.011770157925},
 "filed":"2026-08-28",
@@ -1023,7 +1023,7 @@
 },
 "IAI":{
 "acc":"0001004726-26-007034",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":4,"w":0.009428391427069999},
 "filed":"2026-08-24",
@@ -1072,7 +1072,7 @@
 },
 "IBB":{
 "acc":"0002071691-26-019768",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":4,"w":0.12042443047683},
 "filed":"2026-08-25",
@@ -1167,7 +1167,7 @@
 },
 "ICLN":{
 "acc":"0001004726-26-008852",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":26,"w":0.09017787527179001},
 "filed":"2026-09-23",
@@ -1262,7 +1262,7 @@
 },
 "ICOP":{
 "acc":"0001004726-26-007021",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":14,"w":0.019022966186339998},
 "filed":"2026-08-24",
@@ -1417,7 +1417,7 @@
 },
 "IGV":{
 "acc":"0002071691-26-019778",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":4,"w":0.05928066012416},
 "filed":"2026-08-25",
@@ -1512,7 +1512,7 @@
 },
 "IHF":{
 "acc":"0001004726-26-007033",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.03405688842956},
 "filed":"2026-08-24",
@@ -1588,7 +1588,7 @@
 },
 "IHI":{
 "acc":"0001004726-26-007024",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":4,"w":0.02288792201885},
 "filed":"2026-08-24",
@@ -1649,7 +1649,7 @@
 },
 "ITA":{
 "acc":"0001004726-26-007012",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.01610137681022},
 "filed":"2026-08-24",
@@ -1713,7 +1713,7 @@
 },
 "ITB":{
 "acc":"0001004726-26-007002",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.05064173951192},
 "filed":"2026-08-24",
@@ -1773,7 +1773,7 @@
 },
 "IWM":{
 "acc":"0002071691-26-019749",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.17026002429763},
 "filed":"2026-08-25",
@@ -1868,7 +1868,7 @@
 },
 "IYT":{
 "acc":"0001004726-26-008794",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.019762440508369998},
 "filed":"2026-09-23",
@@ -1926,7 +1926,7 @@
 },
 "JETS":{
 "acc":"0001193125-26-370745",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1540305",
 "excluded":{"n":2,"w":0.048082514935},
 "filed":"2026-08-27",
@@ -1988,7 +1988,7 @@
 ]
 },
 "KBE":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Bank ETF",
 "series":"S000006977",
 "quarters":{
@@ -2338,7 +2338,7 @@
 }
 },
 "KCE":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Capital Markets ETF",
 "series":"S000006978",
 "quarters":{
@@ -2575,7 +2575,7 @@
 }
 },
 "KIE":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Insurance ETF",
 "series":"S000006979",
 "quarters":{
@@ -2780,7 +2780,7 @@
 }
 },
 "KRE":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Regional Banking ETF",
 "series":"S000012325",
 "quarters":{
@@ -3282,7 +3282,7 @@
 },
 "LIT":{
 "acc":"0002048251-26-008611",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1432353",
 "excluded":{"n":7,"w":0.00963725007072},
 "filed":"2026-09-29",
@@ -3338,7 +3338,7 @@
 },
 "NLR":{
 "acc":"0001410368-26-086985",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.02130049218289},
 "filed":"2026-08-26",
@@ -3378,7 +3378,7 @@
 },
 "OIH":{
 "acc":"0001410368-26-086988",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1137360",
 "excluded":{"n":1,"w":9.485551654e-05},
 "filed":"2026-08-26",
@@ -3418,7 +3418,7 @@
 },
 "PAVE":{
 "acc":"0002048251-26-009604",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1432353",
 "excluded":{"n":0,"w":0.0},
 "filed":"2026-10-29",
@@ -3513,7 +3513,7 @@
 },
 "PBJ":{
 "acc":"0001209466-26-001311",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1209466",
 "excluded":{"n":3,"w":0.11748918003308},
 "filed":"2026-09-28",
@@ -3558,7 +3558,7 @@
 },
 "PEJ":{
 "acc":"0001209466-26-001313",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1209466",
 "excluded":{"n":3,"w":0.19262267525729002},
 "filed":"2026-09-28",
@@ -3603,7 +3603,7 @@
 },
 "PJP":{
 "acc":"0001209466-26-001330",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1209466",
 "excluded":{"n":5,"w":0.11762618559606002},
 "filed":"2026-09-28",
@@ -3646,7 +3646,7 @@
 },
 "PPA":{
 "acc":"0001209466-26-001448",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1209466",
 "excluded":{"n":3,"w":0.05165345267831},
 "filed":"2026-09-29",
@@ -3722,7 +3722,7 @@
 },
 "QQQ":{
 "acc":"0001067839-26-000030",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1067839",
 "excluded":{"n":3,"w":0.00355229848015},
 "filed":"2026-08-28",
@@ -3817,7 +3817,7 @@
 },
 "REMX":{
 "acc":"0001410368-26-086516",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.02998047305512},
 "filed":"2026-08-26",
@@ -3862,7 +3862,7 @@
 },
 "RING":{
 "acc":"0001004726-26-010099",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"930667",
 "excluded":{"n":11,"w":0.030092123111889996},
 "filed":"2026-10-23",
@@ -3995,7 +3995,7 @@
 },
 "SLX":{
 "acc":"0001410368-26-086918",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.0310464260593},
 "filed":"2026-08-26",
@@ -4049,7 +4049,7 @@
 },
 "SMH":{
 "acc":"0001410368-26-086937",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1137360",
 "excluded":{"n":1,"w":3.490686976e-05},
 "filed":"2026-08-26",
@@ -4089,7 +4089,7 @@
 },
 "SOXX":{
 "acc":"0002071691-26-019781",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.012663487910419999},
 "filed":"2026-08-25",
@@ -4133,54 +4133,58 @@
 ]
 },
 "TAN":{
-"acc":"0001378872-26-001381",
-"checked":"2026-10-29",
+"acc":"0001378872-26-001878",
+"checked":"2026-11-06",
 "cik":"1378872",
-"excluded":{"n":3,"w":0.22049009769204},
-"filed":"2026-07-29",
+"excluded":{"n":2,"w":0.34330172438150003},
+"filed":"2026-10-30",
 "fund":"Invesco Solar ETF",
-"n_sec":31,
-"period":"2026-05-31",
+"n_sec":35,
+"period":"2026-08-31",
 "series":"S000060822",
 "tail":{"n":0,"w":0},
-"w_sec":1.00026289936496,
+"w_sec":0.9999959537384701,
 "lines":[
-["First Solar, Inc.","US3364331070",null,"USD",0.11743872,306.79],
-["Nextpower Inc.","US65290E1010",null,"USD",0.09811479,156.4],
-["Enphase Energy, Inc.","US29355A1079",null,"USD",0.08753819,68.36],
-["Enlight Renewable Energy Ltd.","IL0007200111",null,"ILS",0.07583865,107.753827],
-["SolarEdge Technologies, Inc.","US83417M1045",null,"USD",0.06316795,76.35],
-["Doral Group Renewable Energy Resources Ltd.","IL0011667685",null,"ILS",0.05087107,36.875322],
-["Sunrun Inc.","US86771W1053",null,"USD",0.04828886,16.72],
-["O.Y. Nofar Energy Ltd.","IL0011708778",null,"ILS",0.04215902,100.07708],
-["HA Sustainable Infrastructure Capital, Inc.","US41068X1000",null,"USD",0.03462188,41.0],
-["Shoals Technologies Group, Inc.","US82489W1071",null,"USD",0.03385134,12.45],
-["Solaria Energia y Medio Ambiente, S.A.","ES0165386014",null,"EUR",0.03074506,27.400524],
-["GCL-Poly Energy Holdings Ltd.","KYG3774X1088",null,"HKD",0.02995455,0.106013],
-["Energix Renewable Energies Ltd.","IL0011233553",null,"ILS",0.02691855,10.294633],
-["Clearway Energy, Inc.","US18539C2044",null,"USD",0.02514021,41.16],
-["Array Technologies, Inc.","US04271T1007",null,"USD",0.02421595,9.08],
-["Grenergy Renovables S.A.","ES0105079000",null,"EUR",0.02253904,143.605981],
-["SMA Solar Technology AG","DE000A0DJ6J9",null,"EUR",0.02133329,76.460633],
-["Xinyi Solar Holdings Ltd.","KYG9829N1025",null,"HKD",0.02099713,0.341055],
-["Canadian Solar Inc.","CA1366351098",null,"USD",0.01453133,18.99],
-["Daqo New Energy Corp.","US23703Q2030",null,"USD",0.01402707,16.64],
-["United Renewable Energy Co., Ltd.","TW0003576005",null,"TWD",0.01392378,0.583068],
-["JinkoSolar Holding Co., Ltd.","US47759T1007",null,"USD",0.01287514,23.31],
-["Scatec ASA","NO0010715139",null,"NOK",0.01285866,11.170033],
-["HD Hyundai Energy Solutions Co., Ltd.","KR7322000001",null,"KRW",0.01204296,116.252439],
-["TSEC Corp.","TW0006443005",null,"TWD",0.01174057,1.290775],
-["ReNew Energy Global PLC","GB00BNQMPN80",null,"USD",0.01021756,6.39],
-["Flat Glass Group Co., Ltd.","CNE100002375",null,"HKD",0.00943866,1.060739],
-["West Holdings Corp.","JP3154750008",null,"JPY",0.00927014,16.924673],
-["MOTECH Industries Inc.","TW0006244007",null,"TWD",0.00913425,0.957525],
-["Gigastorage Corp.","TW0002406006",null,"TWD",0.00881935,1.095628],
-["Xinyi Energy Holdings Ltd.","VGG9833A1049",null,"HKD",0.00764918,0.159587]
+["First Solar, Inc.","US3364331070",null,"USD",0.09851529,201.9],
+["Nextpower Inc.","US65290E1010",null,"USD",0.08778553,82.03],
+["Enlight Renewable Energy Ltd.","IL0007200111",null,"ILS",0.07192805,77.91291],
+["Enphase Energy, Inc.","US29355A1079",null,"USD",0.06528037,36.42],
+["Doral Group Renewable Energy Resources Ltd.","IL0011667685",null,"ILS",0.0466427,21.855069],
+["HA Sustainable Infrastructure Capital, Inc.","US41068X1000",null,"USD",0.0460612,39.55],
+["GCL-Poly Energy Holdings Ltd.","KYG3774X1088",null,"HKD",0.04037884,0.089032],
+["Sunrun Inc.","US86771W1053",null,"USD",0.03781998,8.57],
+["Clearway Energy, Inc.","US18539C2044",null,"USD",0.03650591,31.75],
+["SolarEdge Technologies, Inc.","US83417M1045",null,"USD",0.03490975,32.2],
+["Solaria Energia y Medio Ambiente, S.A.","ES0165386014",null,"EUR",0.03314325,19.655821],
+["O.Y. Nofar Energy Ltd.","IL0011708778",null,"ILS",0.03211156,55.304461],
+["SMA Solar Technology AG","DE000A0DJ6J9",null,"EUR",0.03089974,68.602584],
+["Xinyi Solar Holdings Ltd.","KYG9829N1025",null,"HKD",0.02992027,0.287241],
+["Shoals Technologies Group, Inc.","US82489W1071",null,"USD",0.02524949,6.92],
+["Energix Renewable Energies Ltd.","IL0011233553",null,"ILS",0.02300882,6.840401],
+["Grenergy Renovables S.A.","ES0105079000",null,"EUR",0.02141413,102.936656],
+["T1 Energy Inc.","US35834F1049",null,"USD",0.0208389,4.45],
+["Scatec ASA","NO0010715139",null,"NOK",0.01953657,10.311978],
+["United Renewable Energy Co., Ltd.","TW0003576005",null,"TWD",0.01917269,0.573063],
+["Daqo New Energy Corp.","US23703Q2030",null,"USD",0.01746985,12.89],
+["HD Hyundai Energy Solutions Co., Ltd.","KR7322000001",null,"KRW",0.0172732,103.501301],
+["Array Technologies, Inc.","US04271T1007",null,"USD",0.01640303,4.42],
+["Canadian Solar Inc.","CA1366351098",null,"USD",0.01542737,12.33],
+["ReNew Energy Global PLC","GB00BNQMPN80",null,"USD",0.01405809,6.8],
+["West Holdings Corp.","JP3154750008",null,"JPY",0.0132646,16.361523],
+["Flat Glass Group Co., Ltd.","CNE100002375",null,"HKD",0.0121102,0.833745],
+["JinkoSolar Holding Co., Ltd.","US47759T1007",null,"USD",0.01145825,12.58],
+["TSEC Corp.","TW0006443005",null,"TWD",0.01128256,0.818787],
+["MOTECH Industries Inc.","TW0006244007",null,"TWD",0.00932818,0.757794],
+["CW Enerji Muhendislik Ticaret VE Sanayi A.S.","TRECWEN00012",null,"TRY",0.00919378,0.777795],
+["Xinyi Energy Holdings Ltd.","VGG9833A1049",null,"HKD",0.00880482,0.100765],
+["Gigastorage Corp.","TW0002406006",null,"TWD",0.00861347,0.884031],
+["TESS Holdings Co., Ltd.","JP3545270005",null,"JPY",0.00734694,4.034625],
+["BCPG PCL","TH7411010R10",null,"THB",0.00683857,0.222848]
 ]
 },
 "UFO":{
 "acc":"0000894189-26-029075",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1727398",
 "excluded":{"n":2,"w":0.13225362635000001},
 "filed":"2026-09-29",
@@ -4259,7 +4263,7 @@
 },
 "URA":{
 "acc":"0002048251-26-008623",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1432353",
 "excluded":{"n":30,"w":0.034049535411539995},
 "filed":"2026-09-29",
@@ -4331,7 +4335,7 @@
 },
 "VNQ":{
 "acc":"0000734383-26-000299",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"734383",
 "excluded":{"n":12,"w":0.00563961484691},
 "filed":"2026-09-28",
@@ -4426,7 +4430,7 @@
 },
 "WCLD":{
 "acc":"0000940400-26-036220",
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "cik":"1350487",
 "excluded":{"n":2,"w":0.015471538512350001},
 "filed":"2026-08-31",
@@ -4504,7 +4508,7 @@
 ]
 },
 "XAR":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Aerospace & Defense ETF",
 "series":"S000012318",
 "quarters":{
@@ -4676,7 +4680,7 @@
 }
 },
 "XBI":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Biotech ETF",
 "series":"S000010018",
 "quarters":{
@@ -5162,7 +5166,7 @@
 }
 },
 "XES":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Oil & Gas Equipment & Services ETF",
 "series":"S000012334",
 "quarters":{
@@ -5302,7 +5306,7 @@
 }
 },
 "XHB":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Homebuilders ETF",
 "series":"S000010019",
 "quarters":{
@@ -5450,7 +5454,7 @@
 }
 },
 "XME":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Metals & Mining ETF",
 "series":"S000012333",
 "quarters":{
@@ -5604,7 +5608,7 @@
 }
 },
 "XOP":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Oil & Gas Exploration & Production ETF",
 "series":"S000012319",
 "quarters":{
@@ -5799,7 +5803,7 @@
 }
 },
 "XPH":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Pharmaceuticals ETF",
 "series":"S000012321",
 "quarters":{
@@ -6025,7 +6029,7 @@
 }
 },
 "XRT":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Retail ETF",
 "series":"S000012322",
 "quarters":{
@@ -6290,7 +6294,7 @@
 }
 },
 "XSD":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Semiconductor ETF",
 "series":"S000010020",
 "quarters":{
@@ -6466,7 +6470,7 @@
 }
 },
 "XTN":{
-"checked":"2026-10-29",
+"checked":"2026-11-06",
 "fund":"State Street(R) SPDR(R) S&P(R) Transportation ETF",
 "series":"S000012324",
 "quarters":{
@@ -7149,6 +7153,7 @@
 "JP3497800007":["6622.T","2026-09-26"],
 "JP3526600006":["9502.T","2026-09-26"],
 "JP3538800008":["6762.T","2026-09-26"],
+"JP3545270005":["5074.T","2026-11-06"],
 "JP3551500006":["6902.T","2026-09-26"],
 "JP3560800009":["5301.T","2026-09-26"],
 "JP3592600005":["6104.T","2026-09-26"],
@@ -7374,9 +7379,11 @@
 "SG9999014716":["WVE","2026-09-26"],
 "TH0765010Z08":["AOT.BK","2026-09-26"],
 "TH3545010R19":["EA-R.BK","2026-09-26"],
+"TH7411010R10":["BCPG-R.BK","2026-11-06"],
 "TRAEREGL91G3":["EREGL.IS","2026-09-26"],
 "TRATHYAO91M5":["THYAO.IS","2026-09-26"],
 "TREASTR00013":["ASTOR.IS","2026-09-26"],
+"TRECWEN00012":["CWENE.IS","2026-11-06"],
 "TREKOAL00014":["TRALT.IS","2026-09-26"],
 "TREMARN00027":["MAGEN.IS","2026-09-26"],
 "TREPEGS00016":["PGSUS.IS","2026-09-26"],
