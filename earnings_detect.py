@@ -189,7 +189,7 @@ def build_window(expected, prev_names, today, window=LOOKBACK):
         if row.get("status") not in CARRY_STATUSES or tk in in_window:
             continue
         exp = row.get("expected")
-        if not exp or exp > hi:           # no date, or not yet due: nothing late to chase
+        if not exp or exp > hi:           # no date, or not yet due: nothing late to look for
             continue
         if exp >= lo:
             in_window[tk] = exp

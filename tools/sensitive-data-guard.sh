@@ -28,7 +28,7 @@ set -u
 # Added lines only. Diff-scoped so a NEW leak is caught without tripping on the
 # pre-existing prose that legitimately names these words to DISCLAIM them
 # (options_flow.py's "No holding, weight, basis, custodian or account data
-# touches this file", README.md on why the options source is not Schwab).
+# touches this file", README.md on why the options source is not the broker's API).
 added=$(git diff --cached -U0 --diff-filter=ACM -- \
           . ':(exclude)tools/sensitive-data-guard.sh' \
         | grep '^+' | grep -v '^+++')
@@ -37,10 +37,13 @@ added=$(git diff --cached -U0 --diff-filter=ACM -- \
 hits=""
 
 # Rule #18 in prose: one of the position words on the same added line as a
-# FIGURE. The figure is what separates "no custodian data touches this file"
+# FIGURE. The words are generic on purpose: this repo is PUBLIC, and a list
+# that names particular firms says where the book is kept (C-05, 2026-11-07).
+# rotation_members.py carries the same list; test_guard_words.py keeps the
+# copies identical. The figure is what separates "no custodian data touches this file"
 # (fine, and true) from "held 1,200 shares at a $38.10 basis" (never).
 prose=$(printf '%s\n' "$added" \
-        | grep -iE '(held|holdings?|cost basis|basis|custodian|Schwab|Chase|Empower|sleeve weight|book value|realized)' \
+        | grep -iE '(held|holdings?|cost basis|basis|custodian|broker|account|sleeve weight|book value|realized)' \
         | grep -E '\$[0-9]|[0-9][0-9,.]*[[:space:]]*(shares|%)|[0-9][0-9,.]*[kKmM][[:space:]]|[0-9][0-9,.]*[kKmM]$')
 [ -n "$prose" ] && hits="$hits
   position facts in prose (rule #18):

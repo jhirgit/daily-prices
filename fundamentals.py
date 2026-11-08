@@ -991,10 +991,10 @@ def main(argv=None):
         rec = build_company(cf, tk)
         rec["cik"] = cik
         # The legal name stays out of the committed payload (CIK identifies the
-        # registrant): JPMORGAN CHASE & CO trips the public repo's rule-18 prose guard.
+        # registrant): a legal name can carry a word the public repo's rule-18 prose guard watches for.
         rec.pop("entity", None)
-        # Same reason for the per-key concept lists (IFRS "PurchaseOfPropertyPlant..."
-        # contains "chase"); they are diagnostics, reproducible with --stdout locally.
+        # Same reason for the per-key concept lists (a concept name is free text
+        # too); they are diagnostics, reproducible with --stdout locally.
         if not a.stdout:
             rec.pop("concepts", None)
         out["names"][tk] = _round(rec)

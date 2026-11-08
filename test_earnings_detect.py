@@ -84,7 +84,7 @@ class BuildWindowTests(unittest.TestCase):
         self.assertEqual(aged, [])
 
     def test_future_awaiting_name_dropped_by_the_feed_is_not_carried(self):
-        # Not yet due, so nothing late to chase: the feed is the authority.
+        # Not yet due, so nothing late to look for: the feed is the authority.
         prev = {"X": {"expected": "2026-11-20", "status": "awaiting"}}
         self.assertEqual(build_window({}, prev, TODAY, 10), ({}, {}, []))
 
