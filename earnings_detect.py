@@ -23,6 +23,12 @@ records one of three states:
               missed - both need a human, so this EXITS NONZERO and the
               workflow's alert job opens an issue.
 
+The window is the feed's dates PLUS every name the previous artifact still held
+unresolved (awaiting, overdue or error), kept on its old expected date until it
+is detected or the look-back passes - a feed that rolls a name to next quarter
+before its 8-K lands must not silence it (B-05). A name that passes the
+look-back unresolved is listed once under `aged_out` and printed.
+
 Overdue is deliberately loud. The failure this whole design is aimed at is
 SILENCE (jr-filings' scan died 2026-08-21 on an unset key and nobody was told),
 and a nagging issue for a slipped date is correct: the calendar is wrong and
@@ -151,6 +157,50 @@ def recent_8k(cik, since):
     return None
 
 
+# B-05 (2026-11-07 review): the feed can roll a name to its NEXT quarter before the
+# 8-K for the one just reported reaches EDGAR (AMSC moved to 2027-02-03 one day
+# after its 11/04 report). Keyed only on the feed's date, the name then left the
+# window with no detection and no OVERDUE - silence, the failure this file exists
+# to prevent. So a name the previous artifact still held as unresolved stays in
+# the window on its OLD expected date until it is detected or the look-back
+# passes, and a name that ages out unresolved is reported, never dropped quietly.
+CARRY_STATUSES = ("awaiting", "overdue", "error")
+
+
+def build_window(expected, prev_names, today, window=LOOKBACK):
+    """Which names to check today, and on which expected date.
+
+    expected    ticker -> feed date (YYYY-MM-DD), today's earnings_dates feed
+    prev_names  the previous artifact's `names` map ({} on a first run)
+    Returns (in_window, carried, aged_out):
+      in_window  ticker -> the expected date to check against
+      carried    ticker -> the feed's current date (or None) for each name kept
+                 from the previous artifact rather than from the feed
+      aged_out   [{ticker, expected, last_status, days, feed_date}] - names the
+                 previous artifact held unresolved that are now past the
+                 look-back and are no longer checked
+    """
+    lo = (today - timedelta(days=window)).isoformat()
+    hi = (today + timedelta(days=1)).isoformat()
+    in_window = {tk: d for tk, d in expected.items() if lo <= d <= hi}
+    carried, aged_out = {}, []
+    for tk in sorted(prev_names or {}):
+        row = prev_names[tk] or {}
+        if row.get("status") not in CARRY_STATUSES or tk in in_window:
+            continue
+        exp = row.get("expected")
+        if not exp or exp > hi:           # no date, or not yet due: nothing late to look for
+            continue
+        if exp >= lo:
+            in_window[tk] = exp
+            carried[tk] = expected.get(tk)
+        else:                             # unresolved past the look-back: say so, once
+            aged_out.append({"ticker": tk, "expected": exp, "last_status": row["status"],
+                             "days": (today - date.fromisoformat(exp)).days,
+                             "feed_date": expected.get(tk)})
+    return in_window, carried, aged_out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--window", type=int, default=LOOKBACK, help="days of expected dates to check")
@@ -169,10 +219,16 @@ def main(argv=None):
     expected = {tk: (v["date"] if isinstance(v, dict) else v) for tk, v in expected.items()
                 if (v.get("date") if isinstance(v, dict) else v)}
 
+    prev = {}
+    if os.path.exists(args.out):
+        try:
+            with io.open(args.out, encoding="utf-8") as fh:
+                prev = json.load(fh).get("names", {}) or {}
+        except (ValueError, OSError):
+            prev = {}                     # an unreadable artifact carries nothing; today's feed still runs
+
     today = date.today()
-    lo, hi = today - timedelta(days=args.window), today + timedelta(days=1)
-    in_window = {tk: d for tk, d in expected.items()
-                 if lo.isoformat() <= d <= hi.isoformat()}
+    in_window, carried, aged_out = build_window(expected, prev, today, args.window)
 
     ciks = cik_map(refresh=args.refresh_ciks)
     names, overdue, skipped = {}, [], []
@@ -202,6 +258,10 @@ def main(argv=None):
             names[tk] = {"expected": exp, "status": status, "sessions_late": late}
             if status == "overdue":
                 overdue.append((tk, exp, late))
+        if tk in carried and tk in names:
+            # B-05: kept from the previous artifact after the feed moved the name on.
+            names[tk]["carried"] = True
+            names[tk]["feed_date"] = carried[tk]
 
     asof = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     doc = {
@@ -219,7 +279,10 @@ def main(argv=None):
             "awaiting": sum(1 for v in names.values() if v["status"] == "awaiting"),
             "overdue": len(overdue),
             "errors": sum(1 for v in names.values() if v["status"] == "error"),
+            "carried": len(carried),
+            "aged_out": len(aged_out),
         },
+        "aged_out": aged_out,
         "not_sec_filers": sorted(skipped),
         "names": names,
     }
@@ -233,6 +296,12 @@ def main(argv=None):
           % (c["in_window"], c["detected"], c["awaiting"], c["overdue"], c["errors"], len(skipped)))
     for tk, exp, late in overdue:
         print("  OVERDUE  %-7s expected %s, %d sessions ago, no 8-K on EDGAR" % (tk, exp, late))
+    for tk in sorted(carried):
+        print("  CARRIED  %-7s expected %s, the feed now says %s; still checked until detected"
+              % (tk, in_window[tk], carried[tk] or "no date"))
+    for row in aged_out:
+        print("  AGED OUT %-7s expected %s, %s for %d days with no earnings 8-K; no longer checked"
+              % (row["ticker"], row["expected"], row["last_status"], row["days"]))
 
     if overdue:
         print("\nFAIL - a covered name's expected date passed with no filing. Either the date in")

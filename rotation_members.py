@@ -165,13 +165,15 @@ RESET_MONTHS = (3, 6, 9, 12)
 # The public repo's pre-commit guard (tools/sensitive-data-guard.sh), line by
 # line: one of these words on the same line as a figure is refused. Names from
 # a filing are free text, so every name this file writes passes guard_safe().
-_GUARD_WORD = re.compile(r"(held|holdings?|cost basis|basis|custodian|Schwab|Chase|Empower|"
+# Generic words only: this repo is PUBLIC, and a list naming particular firms
+# says where the book is kept (C-05, 2026-11-07). test_guard_words.py keeps the
+# three copies of this list identical and closed to proper nouns.
+_GUARD_WORD = re.compile(r"(held|holdings?|cost basis|basis|custodian|broker|account|"
                          r"sleeve weight|book value|realized)", re.I)
 _GUARD_FIG = re.compile(r"\$[0-9]|[0-9][0-9,.]*[ \t]*(shares|%)|[0-9][0-9,.]*[kKmM][ \t]|"
                         r"[0-9][0-9,.]*[kKmM]$", re.I)
 _GUARD_ABBR = (("holdings", "Hldgs"), ("holding", "Hldg"), ("held", "Hld"), ("basis", "Bss"),
-               ("chase", "Chs"), ("custodian", "Cust"), ("realized", "Rlzd"), ("schwab", "Schwb"),
-               ("empower", "Empwr"))
+               ("custodian", "Cust"), ("realized", "Rlzd"), ("broker", "Brkr"), ("account", "Acct"))
 
 # Yahoo's top_holdings symbols that are not Yahoo price symbols. Each fix here
 # was found by a failed price fetch, not guessed.

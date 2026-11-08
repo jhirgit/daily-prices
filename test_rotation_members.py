@@ -377,7 +377,7 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FIX = os.path.join(HERE, "data", "fixtures", "nport_arty_trimmed.xml")
-GUARD_W = __import__("re").compile(r"(held|holdings?|cost basis|basis|custodian|Schwab|Chase|Empower|"
+GUARD_W = __import__("re").compile(r"(held|holdings?|cost basis|basis|custodian|broker|account|"
                                    r"sleeve weight|book value|realized)", __import__("re").I)
 GUARD_F = __import__("re").compile(r"\$[0-9]|[0-9][0-9,.]*[ \t]*(shares|%)|[0-9][0-9,.]*[kKmM][ \t]|"
                                    r"[0-9][0-9,.]*[kKmM]$", __import__("re").I)

@@ -513,7 +513,7 @@ def build(at=None, only=None):
             ev_now = mc + (row["debt"] - row["cash"]) * k_fx
         part = partial_inputs(row)
         # No entity name: a registrant's legal name can carry a word the public repo's
-        # rule-18 guard watches for (JPMORGAN CHASE), and the tab never shows it.
+        # rule-18 guard watches for, and the tab never shows it.
         rv = {"status": rec.get("status"), "why": rec.get("why"), "kind": kind,
               "px": r3(at[tk] if at and tk in at else c["px"]), "px_date": c["end"],
               "mcap": r3(mcaps.get(tk) if not (at and tk in at) else at[tk] * c["shares"]["adj"] / (rec.get("adr_ratio") or 1.0), 0),

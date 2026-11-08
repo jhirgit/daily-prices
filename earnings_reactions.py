@@ -83,10 +83,14 @@ HORIZONS = (1, 5, 10)
 # "# --- ... ---" headers in tickers.txt so the two cannot disagree. SPY is
 # carried alongside for every name as a common cross-cohort denominator: without
 # it a semis print and a software print have no shared axis.
+# Order matters - the first pattern that matches a header wins - so power|energy
+# sits BEFORE ai compute|datacenter: "Datacenter power / energy" is a power
+# cohort and benchmarks on SPY, not SMH (B-13, 2026-11-07). technicals.py
+# carries the same list byte for byte; test_group_proxy.py holds them equal.
 GROUP_PROXY = [
     (r"semiconduct|memory|storage|optic|network", "SMH"),
-    (r"ai compute|datacenter", "SMH"),
     (r"power|energy", "SPY"),
+    (r"ai compute|datacenter", "SMH"),
     (r"miner|royalty|metals", "GDX"),
     (r"software", "IGV"),
     (r"macro|benchmark", None),
