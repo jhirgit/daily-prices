@@ -131,9 +131,28 @@ def sessions_between(a, b):
 EARNINGS_ITEM = "2.02"
 
 
+_SUBMISSIONS = {}
+
+
+def submissions(cik):
+    """One EDGAR submissions fetch per CIK per run; recent_8k and files_8k_for share it."""
+    if cik not in _SUBMISSIONS:
+        _SUBMISSIONS[cik] = get("https://data.sec.gov/submissions/CIK%s.json" % cik)
+    return _SUBMISSIONS[cik]
+
+
 def recent_8k(cik, since):
     """The most recent EARNINGS 8-K (Item 2.02) filed on/after `since`, or None."""
-    return scan_submissions(get("https://data.sec.gov/submissions/CIK%s.json" % cik), since, cik)[0]
+    return _earnings_8k(submissions(cik), since, cik)
+
+
+def files_8k_for(cik):
+    """True when the issuer files 8-Ks. A fetch error also returns True: an unreadable answer
+    must never reclassify a name as a foreign filer and silence it."""
+    try:
+        return files_8k(submissions(cik))
+    except Exception:
+        return True
 
 
 def files_8k(sub):
@@ -258,8 +277,8 @@ def main(argv=None):
         exp_d = date.fromisoformat(exp)
         since = (exp_d - timedelta(days=2)).isoformat()
         try:
-            hit, eight_k = scan_submissions(
-                get("https://data.sec.gov/submissions/CIK%s.json" % cik), since, cik)
+            hit = recent_8k(cik, since)
+            eight_k = True if hit else files_8k_for(cik)
         except Exception as exc:
             names[tk] = {"expected": exp, "status": "error", "error": type(exc).__name__}
             continue
