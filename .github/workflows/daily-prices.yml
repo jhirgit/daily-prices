@@ -224,10 +224,15 @@ jobs:
       - name: Emit the forward earnings calendar
         run: python earnings_dates.py
 
-      # continue-on-error so an OVERDUE name still gets COMMITTED before the job
-      # goes red. Without it the detector would fail, skip the commit, and the
-      # evidence for why it failed would never land — loud but useless.
-      - name: Detect prints against EDGAR
+      # continue-on-error so a detector that FAILED (no dates feed, EDGAR answering
+      # nothing) still gets its artifact COMMITTED before the job goes red. Without it
+      # the evidence for why it failed would never land — loud but useless.
+      # An OVERDUE name is not a failure any more (review F-01, 2026-11-08): the
+      # detector exits 0 and leaves the overdue list in data/earnings_detected.json,
+      # where the Brief and the watchdog read it. 13 of the 14 runs before that date
+      # went red on overdue names alone, and the alert issue could no longer tell a
+      # wrong date from a broken feed.
+      - name: Detect filings against EDGAR
         id: detect
         continue-on-error: true
         run: python earnings_detect.py
@@ -250,12 +255,14 @@ jobs:
             exit 1
           fi
 
-      # Now go red, after the artifact is safely committed. An overdue name means
-      # the expected date is wrong or the print was missed; both need a human.
-      - name: Fail if a print is overdue
+      # Now go red, after the artifact is safely committed — but ONLY for a detector
+      # that could not do its job (exit non-zero: no dates feed, every EDGAR lookup
+      # errored). An overdue name exits 0 and never reaches this step, so the
+      # alert-earnings-dates issue below opens for real failures alone (review F-01).
+      - name: Fail if the detector could not run
         if: steps.detect.outcome == 'failure'
         run: |
-          echo "earnings_detect reported an OVERDUE name — see data/earnings_detected.json"
+          echo "earnings_detect could not complete (not an overdue name — those are data) — see the step above and data/earnings_detected.json"
           exit 1
 
   # The options-chain snapshot (SPEC-62 phase 1). Same 22:00 UTC trigger, no new
@@ -270,8 +277,8 @@ jobs:
   # enough to serialise the pushes; a third running in parallel with
   # earnings-dates would race it, and `git pull --rebase && git push` loses that
   # race roughly as often as it wins. The `always()` guard keeps the two jobs
-  # UNCOUPLED in outcome while still ordering them: earnings-dates goes red on an
-  # overdue print, and that must not take the options snapshot down with it. Only
+  # UNCOUPLED in outcome while still ordering them: a red earnings-dates job (the
+  # detector could not run) must not take the options snapshot down with it. Only
   # `fetch` is a real prerequisite — the staleness check reads data/latest.json.
   #
   # Actions budget: ~70 s of fetching over ~195 optionable names plus setup and
@@ -340,11 +347,11 @@ jobs:
   # A silent cron is the failure mode this repo actually has: nothing here
   # reported a broken run until someone noticed stale prices downstream.
   # Each alert is conditional on ITS OWN job. A bare `failure()` is transitive
-  # over the needs chain ("true if any ancestor job fails"), so the DESIGNED loud
-  # path -- earnings_detect exits 1 on an overdue name, earnings-dates goes red,
-  # options still runs and succeeds -- would also open "cron failure: Daily
-  # Prices - options flow", and a fetch failure would open all three issues for
-  # one root cause.
+  # over the needs chain ("true if any ancestor job fails"), so a red
+  # earnings-dates job (the detector could not run) would also open "cron
+  # failure: Daily Prices - options flow", and a fetch failure would open all
+  # three issues for one root cause. (An overdue name no longer reddens anything:
+  # review F-01, 2026-11-08.)
   alert:
     needs: fetch
     if: failure() && needs.fetch.result == 'failure'

@@ -343,10 +343,22 @@ def main(argv=None):
         print("  AGED OUT %-7s expected %s, %s for %d days with no earnings 8-K; no longer checked"
               % (row["ticker"], row["expected"], row["last_status"], row["days"]))
 
-    if overdue:
-        print("\nFAIL - a covered name's expected date passed with no filing. Either the date in")
-        print("       var EARN / the feed is wrong, or the print was missed. Both need a human.")
+    # OVERDUE IS DATA, NOT A JOB FAILURE (review F-01, 2026-11-08; decision 13a). Until then an
+    # overdue name exited 1, the earnings-dates job went red, and the alert issue stayed open
+    # for weeks on names whose dates were simply wrong (MRAAF, the foreign filers before B-02):
+    # 13 of 14 close-job runs ended "failure" and a real EDGAR or price failure would have
+    # looked exactly like that noise. The overdue list stays in the artifact (`names[*].status
+    # == "overdue"`, `counts.overdue`) and in the lines printed above; the Brief and the
+    # watchdog read it from there. What still exits non-zero here is a run that could not do
+    # its job at all: a missing dates feed (above), or EDGAR answering nothing for every
+    # name it checked — silence dressed as a clean run is the failure this file exists against.
+    if c["checked"] and c["errors"] == c["checked"]:
+        print("\nFAIL - every EDGAR lookup errored (%d of %d); the detector saw nothing this run." % (c["errors"], c["checked"]))
         return 1
+    if overdue:
+        print("\nOVERDUE - %d covered name(s) passed the expected date with no filing on EDGAR. Either the"
+              " date in the feed is wrong or the report was missed; a person decides. This is DATA"
+              " in the artifact, not a job failure (review F-01)." % len(overdue))
     return 0
 
 
