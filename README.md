@@ -497,9 +497,10 @@ python test_fundamentals.py         # offline tests
 A once-a-day chain snapshot for every optionable name in `tickers.txt`, over the
 **three nearest monthly expiries** (nearest three of any kind if a name lists
 fewer than three monthlies). SPEC-62 phase 1. Source is **yfinance** — the same
-OPRA end-of-day figures Schwab returns, but Schwab's token grants account read,
-expires every 7 days behind an interactive browser login, and carries no
-per-contract IV, none of which survives an unattended job in a **public** repo.
+OPRA end-of-day figures a brokerage API returns, but a brokerage token grants
+account read, expires every few days behind an interactive browser login, and
+carries no per-contract IV, none of which survives an unattended job in a
+**public** repo.
 
 **Read this first:** a daily snapshot is *positioning arithmetic, not flow*. It
 cannot see the trade tape, the aggressor side, or whether a print opened or

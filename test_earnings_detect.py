@@ -153,16 +153,63 @@ class MainEndToEndTests(unittest.TestCase):
         win, carried, _ = build_window({"AMSC": "2027-02-03"}, doc["names"], date(2026, 11, 9), 10)
         self.assertEqual(win, {"AMSC": "2026-11-04"})
 
-    def test_carried_name_can_go_overdue_and_fail_the_run(self):
+    def test_carried_name_goes_overdue_as_data_and_the_run_still_exits_0(self):
+        # Review F-01 (2026-11-08): an overdue name is DATA — in the artifact and on the
+        # printed line — not a job failure. Until then this run exited 1, the close job
+        # went red 13 runs out of 14, and the alert issue stayed open for weeks.
         global TODAY
         saved, TODAY = TODAY, date(2026, 11, 9)                  # Monday: 3 sessions after 11/04
         try:
             rc, doc, _, text = self._run(None)
         finally:
             TODAY = saved
-        self.assertEqual(rc, 1)
+        self.assertEqual(rc, 0)
         self.assertEqual(doc["names"]["AMSC"]["status"], "overdue")
-        self.assertIn("OVERDUE  AMSC", text)
+        self.assertEqual(doc["counts"]["overdue"], 1)
+        self.assertIn("OVERDUE  AMSC", text)                      # the per-name line
+        self.assertIn("OVERDUE - 1 covered name", text)           # the summary line
+        self.assertNotIn("FAIL", text)
+
+    def test_every_lookup_erroring_still_fails_the_run(self):
+        # The one detector failure that stays loud: EDGAR answered nothing for every name,
+        # which is silence dressed as a clean run (the negative control for F-01).
+        def boom(cik, since):
+            raise ConnectionError("edgar down")
+        with mock.patch.object(ED, "DATES", self.dates), \
+             mock.patch.object(ED, "date", FixedDate), \
+             mock.patch.object(ED, "cik_map", lambda refresh=False: {"AMSC": "0000880807", "OLD": "1"}), \
+             mock.patch.object(ED, "recent_8k", boom), \
+             mock.patch.object(ED.time, "sleep", lambda s: None), \
+             mock.patch("sys.stdout", new_callable=io.StringIO) as out:
+            rc = ED.main(["--out", self.out])
+        with io.open(self.out, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        self.assertEqual(rc, 1)
+        self.assertEqual(doc["names"]["AMSC"]["status"], "error")
+        self.assertEqual(doc["counts"]["errors"], doc["counts"]["checked"])
+        self.assertIn("FAIL - every EDGAR lookup errored", out.getvalue())
+
+    def test_one_error_among_several_names_is_carried_not_failed(self):
+        # A single EDGAR hiccup is carried to tomorrow's run (CARRY_STATUSES), as before.
+        self._write(self.dates, {"dates": {"AMSC": {"date": "2027-02-03", "estimated": True},
+                                           "MU": {"date": "2026-11-05", "estimated": False}}})
+        def flaky(cik, since):
+            if cik == "0000880807":
+                raise ConnectionError("one bad lookup")
+            return {"form": "8-K", "filed": "2026-11-05", "period": "2026-09-30",
+                    "accession": "0000723125-26-000001", "items": ["2.02"], "url": "u"}
+        with mock.patch.object(ED, "DATES", self.dates), \
+             mock.patch.object(ED, "date", FixedDate), \
+             mock.patch.object(ED, "cik_map", lambda refresh=False: {"AMSC": "0000880807", "MU": "0000723125", "OLD": "1"}), \
+             mock.patch.object(ED, "recent_8k", flaky), \
+             mock.patch.object(ED.time, "sleep", lambda s: None), \
+             mock.patch("sys.stdout", new_callable=io.StringIO):
+            rc = ED.main(["--out", self.out])
+        with io.open(self.out, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        self.assertEqual(rc, 0)
+        self.assertEqual(doc["names"]["AMSC"]["status"], "error")
+        self.assertEqual(doc["names"]["MU"]["status"], "detected")
 
 
 if __name__ == "__main__":
