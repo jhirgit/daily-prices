@@ -35,11 +35,11 @@ DISCLOSURE (#15): this repo is PUBLIC. Every field here is a public fact about a
 ticker already listed in tickers.txt — its own listed chain. No holding, weight,
 basis, custodian or account data touches this file or its artifacts.
 
-SOURCE: yfinance, not Schwab (SPEC-62 s3). Not because Schwab's numbers are
-worse — they are the same OPRA end-of-day figures — but because this job runs in
-GitHub Actions on a PUBLIC repo, a Schwab refresh token grants account and
-position read, it dies every 7 days and renews only through an interactive
-browser login, and that entitlement returns no per-contract IV at all.
+SOURCE: yfinance, not a brokerage API (SPEC-62 s3). Not because a broker's
+numbers are worse — they are the same OPRA end-of-day figures — but because this
+job runs in GitHub Actions on a PUBLIC repo, a brokerage refresh token grants
+account and position read, it expires every few days and renews only through an
+interactive browser login, and that entitlement returns no per-contract IV at all.
 
     python options_flow.py                        # write both artifacts
     python options_flow.py --tickers NVDA,MU      # small live run
