@@ -702,10 +702,13 @@ def strategy_signals(closes, highs, lows, opens, vols):
 
 # tickers.txt already carries the sector structure in its "# --- ... ---"
 # headers, so the mapping is derived from it rather than duplicated here.
+# Order matters: power|energy before ai compute|datacenter (B-13, 2026-11-07).
+# earnings_reactions.py carries this list byte for byte; test_group_proxy.py
+# holds them equal.
 GROUP_PROXY = [
     (r"semiconduct|memory|storage|optic|network", "SMH"),
-    (r"ai compute|datacenter", "SMH"),
     (r"power|energy", "SPY"),
+    (r"ai compute|datacenter", "SMH"),
     (r"miner|royalty|metals", "GDX"),
     (r"software", "IGV"),
     (r"macro|benchmark", None),
