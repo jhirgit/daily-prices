@@ -241,6 +241,11 @@ VNQ        # REITs — twin of XLRE
 # Header carries "power" so technicals.GROUP_PROXY proxies the block to SPY, like
 # the datacenter-power block above.
 XLU        # Utilities Select Sector SPDR - the ladder sled (side: defense)
+
+# WHY THIS HEADER (2026-11-10): the six names below are operating companies, and under the
+# sector-proxy header above fundamentals.py read them as funds (its header rule), so Vistra had no
+# filing-derived financials. "power" keeps technicals.GROUP_PROXY on SPY, as the note above intends.
+# --- Power generators and electrical equipment: operating companies (setups table only) ---
 VST        # Vistra (AI-power IPP)
 CEG        # Constellation Energy (nuclear fleet)
 NRG        # NRG Energy
