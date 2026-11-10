@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-09T22:18:07Z",
+  "generated_at": "2026-11-10T22:18:17Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
-  "count": 129,
-  "asked": 266,
+  "count": 140,
+  "asked": 277,
   "missing": [
     "AGG",
     "AMLP",
@@ -181,6 +181,10 @@
       "date": "2026-11-02",
       "estimated": false
     },
+    "AEIS": {
+      "date": "2026-11-02",
+      "estimated": false
+    },
     "AEM": {
       "date": "2026-10-28",
       "estimated": false
@@ -225,6 +229,10 @@
       "date": "2027-01-06",
       "estimated": true
     },
+    "APP": {
+      "date": "2026-11-04",
+      "estimated": false
+    },
     "ARQQ": {
       "date": "2026-12-09",
       "estimated": true
@@ -253,6 +261,10 @@
       "date": "2026-10-22",
       "estimated": false
     },
+    "BFLY": {
+      "date": "2026-10-29",
+      "estimated": false
+    },
     "BMNR": {
       "date": "2026-11-20",
       "estimated": true
@@ -275,6 +287,10 @@
     },
     "CIEN": {
       "date": "2026-12-10",
+      "estimated": true
+    },
+    "CLS": {
+      "date": "2027-01-27",
       "estimated": true
     },
     "COHR": {
@@ -315,6 +331,10 @@
     },
     "DPC": {
       "date": "2026-11-12",
+      "estimated": false
+    },
+    "ELMT": {
+      "date": "2026-11-10",
       "estimated": false
     },
     "ENPH": {
@@ -389,6 +409,10 @@
       "date": "2026-11-03",
       "estimated": false
     },
+    "HPQ": {
+      "date": "2026-11-24",
+      "estimated": false
+    },
     "HUBS": {
       "date": "2026-11-04",
       "estimated": false
@@ -429,8 +453,20 @@
       "date": "2027-02-02",
       "estimated": false
     },
+    "LLY": {
+      "date": "2026-10-29",
+      "estimated": false
+    },
+    "LPKFF": {
+      "date": "2026-10-29",
+      "estimated": false
+    },
     "LRCX": {
       "date": "2027-01-27",
+      "estimated": true
+    },
+    "LULU": {
+      "date": "2026-12-10",
       "estimated": true
     },
     "META": {
@@ -493,6 +529,10 @@
       "date": "2026-11-17",
       "estimated": false
     },
+    "NVEC": {
+      "date": "2027-01-20",
+      "estimated": true
+    },
     "NVO": {
       "date": "2027-02-03",
       "estimated": false
@@ -542,8 +582,8 @@
       "estimated": true
     },
     "QLYS": {
-      "date": "2026-11-09",
-      "estimated": false
+      "date": "2027-02-02",
+      "estimated": true
     },
     "QUBT": {
       "date": "2026-11-09",
@@ -575,6 +615,10 @@
     },
     "SIVEF": {
       "date": "2026-11-26",
+      "estimated": true
+    },
+    "SKHY": {
+      "date": "2027-01-27",
       "estimated": true
     },
     "SNDK": {
