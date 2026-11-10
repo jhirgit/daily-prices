@@ -10,6 +10,9 @@ NVDA       # Nvidia
 AMD        # AMD
 AVGO       # Broadcom
 MRVL       # Marvell
+AEIS       # Advanced Energy (state file 7/1/26; price history added 11/10/26)
+NVEC       # NVE Corp (state file 7/24/26; price history added 11/10/26)
+LPKFF      # LPKF Laser & Electronics, US OTC line (state file lpkf 6/19/26; price history added 11/10/26)
 INTC       # Intel
 TSM        # Taiwan Semiconductor
 ASML       # ASML
@@ -49,10 +52,12 @@ NLST       # Netlist (OTCQB - delisted from Nasdaq; thin, wide spreads)
 DRAM       # memory ETF
 WDC        # Western Digital (HDD; valuation peer for MU/SNDK, added 11/4/26)
 STX        # Seagate (HDD; valuation peer for MU/SNDK, added 11/4/26)
+SKHY       # SK Hynix ADR (state file 8/16/26; price history added 11/10/26)
 
 # --- Optics / networking ---
 COHR       # Coherent
 LITE       # Lumentum
+CLS        # Celestica (state file 7/1/26; price history added 11/10/26)
 AAOI       # Applied Optoelectronics
 CIEN       # Ciena
 FN         # Fabrinet (optical/photonic contract manufacturer; Optics basket, Stream D 9/2/26)
@@ -152,6 +157,12 @@ HIMS       # Hims & Hers
 RDDT       # Reddit
 SPCX       # SpaceX (IPO 2026-06-12)
 GME        # GameStop (coverage init 9/22/26)
+ELMT       # Elmet Technologies (state file 6/1/26; price history added 11/10/26)
+HPQ        # HP Inc. (state file 6/1/26; price history added 11/10/26)
+BFLY       # Butterfly Network (state file 6/18/26; price history added 11/10/26)
+LULU       # lululemon (state file 6/26/26; price history added 11/10/26)
+APP        # AppLovin (state file 7/1/26; price history added 11/10/26)
+LLY        # Eli Lilly (state file 7/16/26; price history added 11/10/26)
 
 # --- Mega-cap platforms / hyperscalers (coverage init 9/1/26) ---
 # Coverage-only: the AI-compute DEMAND / capex side — hyperscaler capex funds the
