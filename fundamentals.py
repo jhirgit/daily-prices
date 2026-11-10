@@ -842,6 +842,15 @@ def build_company(cf, tk, adr_ratio=None):
             row["fcf"] = row["cfo"] - row["capex"]
         if end in Q["rev"]:
             row["rev_q"] = Q["rev"][end]["v"]
+        # The quarter's OWN cash flow (2026-11-10): the earnings record's free-cash-flow sign is
+        # read per report, and a trailing-twelve-month figure hides the quarter that turned.
+        # Same quarter derivation as every other flow line (reported 3 months, or YTD minus the
+        # prior YTD); capitalized software joins capex exactly as it does in the TTM line.
+        if end in Q["cfo"] and end in Q["capex"]:
+            cq = Q["capex"][end]["v"] + (Q["capsw"][end]["v"] if end in Q["capsw"] else 0.0)
+            row["cfo_q"] = Q["cfo"][end]["v"]
+            row["capex_q"] = cq
+            row["fcf_q"] = Q["cfo"][end]["v"] - cq
         # balance sheet at the quarter end
         cc = I["cash_combined"].get(end)
         if cc:

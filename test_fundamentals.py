@@ -288,6 +288,19 @@ class FreeCashFlow(unittest.TestCase):
         self.assertAlmostEqual(r["fcf"], 850e6)
         self.assertTrue(r["capex_incl_software"])
 
+    def test_the_quarters_own_cash_flow_is_ytd_minus_the_prior_ytd(self):
+        # 10-Qs report cash flow year to date; the fourth quarter is the year minus nine months.
+        q = lambda s, e, v: fact(s, e, v, "2026-02-01")
+        r = self._company({
+            "Revenues": [q("2025-01-01", "2025-09-30", 2900e6), q("2025-01-01", "2025-12-31", 4000e6)],
+            "NetCashProvidedByUsedInOperatingActivities": [q("2025-01-01", "2025-09-30", 1100e6), q("2025-01-01", "2025-12-31", 1000e6)],
+            "PaymentsToAcquirePropertyPlantAndEquipment": [q("2025-01-01", "2025-09-30", 20e6), q("2025-01-01", "2025-12-31", 50e6)],
+            "PaymentsToDevelopSoftware": [q("2025-01-01", "2025-09-30", 60e6), q("2025-01-01", "2025-12-31", 100e6)]})
+        self.assertAlmostEqual(r["cfo_q"], -100e6)          # the year was positive, the quarter was not
+        self.assertAlmostEqual(r["capex_q"], 70e6)          # 30 of plant + 40 of capitalized software
+        self.assertAlmostEqual(r["fcf_q"], -170e6)
+        self.assertAlmostEqual(r["fcf"], 850e6)             # the TTM line is unchanged
+
     def test_cfo_mostly_customer_advances_marks_fcf_partial(self):
         r = self._company({"IncreaseDecreaseInContractWithCustomerLiability":
                            [fact("2025-01-01", "2025-12-31", 900e6, "2026-02-01")]})
