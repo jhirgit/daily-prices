@@ -1,21 +1,23 @@
 {
-  "generated_at": "2026-11-10T22:18:27Z",
+  "generated_at": "2026-11-11T22:16:14Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
   "grace_sessions": 2,
   "counts": {
-    "in_window": 44,
-    "checked": 34,
+    "in_window": 48,
+    "checked": 37,
     "detected": 34,
-    "awaiting": 0,
+    "awaiting": 3,
     "overdue": 0,
     "errors": 0,
     "carried": 0,
     "aged_out": 0
   },
   "aged_out": [],
-  "not_sec_filers": [],
+  "not_sec_filers": [
+    "SIEGY"
+  ],
   "not_8k_filers": [
     "AG",
     "AU",
@@ -23,7 +25,7 @@
     "FNV",
     "GFS",
     "HIMX",
-    "IFNNY",
+    "NBIS",
     "PAAS",
     "TFPM",
     "WPM"
@@ -80,6 +82,10 @@
         "9.01"
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/alab-20261103.htm"
+    },
+    "AMAT": {
+      "expected": "2026-11-12",
+      "status": "awaiting"
     },
     "ANET": {
       "expected": "2026-11-03",
@@ -175,6 +181,10 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/crwv-20261110.htm"
     },
+    "CSCO": {
+      "expected": "2026-11-12",
+      "status": "awaiting"
+    },
     "DDOG": {
       "expected": "2026-11-04",
       "status": "detected",
@@ -187,6 +197,10 @@
         "9.01"
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026069792/ddog-20261104.htm"
+    },
+    "DPC": {
+      "expected": "2026-11-12",
+      "status": "awaiting"
     },
     "ELMT": {
       "expected": "2026-11-10",
