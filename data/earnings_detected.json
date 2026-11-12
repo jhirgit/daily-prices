@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-12T18:07:12Z",
+  "generated_at": "2026-11-12T22:16:45Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
@@ -7,8 +7,8 @@
   "counts": {
     "in_window": 48,
     "checked": 37,
-    "detected": 35,
-    "awaiting": 2,
+    "detected": 37,
+    "awaiting": 0,
     "overdue": 0,
     "errors": 0,
     "carried": 0,
@@ -85,7 +85,16 @@
     },
     "AMAT": {
       "expected": "2026-11-12",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-11-12",
+      "period": "2026-11-12",
+      "accession": "0001628280-26-073360",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026073360/amat-20261112.htm"
     },
     "ANET": {
       "expected": "2026-11-03",
@@ -183,7 +192,16 @@
     },
     "CSCO": {
       "expected": "2026-11-12",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-11-12",
+      "period": "2026-11-12",
+      "accession": "0000858877-26-000170",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000170/csco-20261112.htm"
     },
     "DDOG": {
       "expected": "2026-11-04",
