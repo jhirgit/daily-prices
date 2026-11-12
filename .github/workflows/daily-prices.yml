@@ -159,6 +159,16 @@ jobs:
         timeout-minutes: 8
         run: python rotation_phase.py
 
+      # 2026-11-12 (jr-dash v251): how the ladder's sleeves move together --
+      # correlation matrix, volatilities, and the rolling history. prices.db
+      # only, no network, a few seconds. Display-only like its two siblings.
+      - name: Rotation ladder correlation (display-only)
+        id: rotation-corr
+        if: steps.fallback-guard.outputs.run == 'true'
+        continue-on-error: true
+        timeout-minutes: 5
+        run: python rotation_corr.py
+
       # Review M1: one public-safe line per payload (data/health.json) -- the
       # session each EOD payload speaks for, row counts, error fields, and the
       # outcomes of the continue-on-error steps above, which otherwise fail
@@ -172,6 +182,7 @@ jobs:
           STEP_OUTCOMES: >-
             rotation_members=${{ steps.rotation-members.outcome }}
             rotation_phase=${{ steps.rotation-phase.outcome }}
+            rotation_corr=${{ steps.rotation-corr.outcome }}
             thesis_gauge=${{ steps.thesis-gauge.outcome }}
         run: python health.py
 

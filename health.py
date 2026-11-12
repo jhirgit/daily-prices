@@ -54,6 +54,7 @@ EOD = [
                                  default=None) or None),
     ("rotation_members.json", lambda j: j.get("asof")),
     ("rotation_phase.json", lambda j: j.get("asof")),
+    ("rotation_corr.json", lambda j: j.get("asof")),
     ("thesis_gauge.json", lambda j: j.get("asof")),
     ("options_flow.json", lambda j: j.get("as_of")),
     ("earnings_dates.json", lambda j: (j.get("generated_at") or "")[:10] or None),
@@ -169,7 +170,7 @@ def build(data=DATA, tickers_path=TICKERS, steps_env=None, now=None):
         payloads["technicals.json"]["errors"] = {"regime": et}
         degraded.append("technicals.json: the regime layer failed (%s); ladders render nothing" % et)
 
-    for name in ("rotation_members.json", "rotation_phase.json"):
+    for name in ("rotation_members.json", "rotation_phase.json", "rotation_corr.json"):
         j = docs.get(name) or {}
         if j.get("errors"):
             payloads[name]["errors"] = {"rows": sorted(j["errors"])}

@@ -351,6 +351,24 @@ holding's own return over the ladder's windows (5, 21, 63 and 126 sessions), its
 Run `python rotation_members.py` (network, about 5 minutes: some 900 rest-line names are
 priced after the listed ones). Tests: `python test_rotation_members.py` (no network).
 
+## Sector-ladder correlation (`rotation_corr.py`)
+
+How the ladder's sleeves move together, for the jr-dash Macro tab. Daily, after `rotation_phase.py`;
+reads `prices.db` only (no network) and writes **`data/rotation_corr.json`**:
+
+- `tickers` — every ladder row (`regime.REG_ETFS`, baskets as the ladder's own basket index), then the
+  benchmarks that are not rows (`BENCH`: TLT, HYG, GLD, UUP, BTC-USD).
+- `corr["63"|"252"]` — Pearson correlation of daily returns, lower triangle (row *i* holds *i* values);
+  `vol[...]` — annualised volatility per ticker. Annualised covariance is `corr × vol_i × vol_j`.
+- `rows[T]` — the six most and least correlated non-twin sleeves, correlation / beta / R² against each
+  benchmark, and `roll`: the 63-session correlation with SPY, QQQ, IWM, TLT and with the rest of the
+  field, one point a week over three years.
+- `roll` — the field's mean pairwise correlation and the share of variance on the first principal
+  component, same grid. A point from before 90% of today's field had history is null.
+
+A pair with under 80% of the window in common is null, never a number. Display only.
+Tests: `python test_rotation_corr.py` (no network).
+
 ## Sector-ladder phase, thesis checks and evidence (`rotation_phase.py`, `rotation_evidence.py`)
 
 jr-dash SPEC-86 parts B-D. **`rotation_theses.py`** is the per-row table as data: for each of the
