@@ -606,6 +606,16 @@ check_true("the ladder payload mirrors the ladder rows (each key carries its own
            "byte-identical to the pre-9/15 emitter)",
            json.dumps(_pay) == json.dumps(_frozen),
            f"{len(_pay['rows'])} rows compared, {len(json.dumps(_pay))} bytes")
+# 11/12/26: the one-year return rides beside the ladder, never on its rows.
+_long = RG.ladder_long_returns(_series, _etfs, _rnd, lag=5)
+check_true("ladder_long_returns has one entry per present row and equals ret() on its series",
+           set(_long) == {r["t"] for r in _lad["rows"]}
+           and all(_long[e["t"]] == _rnd(RG.ret(
+               RG.basket_series(_series, e["basket"]) if e.get("basket") else _series[e["t"]], 5))
+               for e in _etfs if e["t"] in _long),
+           f"{len(_long)} rows")
+check_true("a row with less history than the window is None, not a number",
+           all(v is None for v in RG.ladder_long_returns(_series, _etfs, _rnd, lag=10 ** 6).values()))
 check_true("and its key order is the frozen one",
            all(list(r.keys()) == _OLD_LADDER_KEYS for r in _pay["rows"]))
 check_true("with_field appends `field` last, and only when asked",

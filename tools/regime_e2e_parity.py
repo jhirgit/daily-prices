@@ -94,9 +94,10 @@ def main():
     # client oracle) has no REG_STYLE/REG_BONDS/BOND_DURATION, so it cannot
     # produce them and their absence is not a config divergence. Dropped before
     # the diff; everything the oracle DOES compute, `ladder` included, is still
-    # compared key for key.
+    # compared key for key. `ladder_r252` (11/12/26) is the sector ladder's
+    # one-year return, a display-only map kept OFF the rows for this reason.
     mine = {k: v for k, v in mine.items()
-            if k not in ("style_ladder", "bond_ladder", "bond_curve")}
+            if k not in ("style_ladder", "bond_ladder", "bond_curve", "ladder_r252")}
 
     mism = diff(oracle, mine, "regime")
     print("=" * 60)

@@ -826,6 +826,28 @@ def sector_ladder(series, etfs):
     return {"rows": rows, "divergence": top_off and top_def}
 
 
+LADDER_LONG_LAG = 252   # trading sessions, about one year
+
+
+def ladder_long_returns(series, etfs, rnd, lag=LADDER_LONG_LAG):
+    """The one-year return of every sector-ladder row, as {ticker: return}.
+
+    2026-11-12 (Jake: "adding a longer period as well, like 1 year"). DISPLAY ONLY:
+    it is in no ranking, third, streak, blend or tell. It is published as its own
+    top-level map (`regime.ladder_r252`) and NOT as a key on the ladder rows, so
+    the rows keep the frozen key set the JS oracle and parity/expected.json are
+    compared against; the board joins it to the rows by ticker. A basket row uses
+    the same basket_series() the ladder ranks; a row with under `lag` sessions of
+    history, or whose series has gone stale, is None."""
+    out = {}
+    for e in etfs:
+        c = basket_series(series, e["basket"]) if e.get("basket") else series.get(e["t"])
+        if not c:
+            continue
+        out[e["t"]] = rnd(ret(c, lag))
+    return out
+
+
 def ladder_payload(lad, rnd, with_field=False):
     """Round + key-filter a sector_ladder() result into its technicals.json
     shape. The key set AND ITS ORDER are the sector ladder's frozen emitted
@@ -1698,6 +1720,7 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
             "pool": "COVERAGE",
         },
         "ladder": ladder_out,
+        "ladder_r252": ladder_long_returns(series, REG_ETFS, _r),
         "style_ladder": style_out,
         "bond_ladder": bond_out,
         "bond_curve": bond_curve_out,
