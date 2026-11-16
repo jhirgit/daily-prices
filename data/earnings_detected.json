@@ -1,154 +1,26 @@
 {
-  "generated_at": "2026-11-12T22:16:45Z",
+  "generated_at": "2026-11-16T22:22:15Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
   "grace_sessions": 2,
   "counts": {
-    "in_window": 48,
-    "checked": 37,
-    "detected": 37,
-    "awaiting": 0,
+    "in_window": 17,
+    "checked": 15,
+    "detected": 14,
+    "awaiting": 1,
     "overdue": 0,
     "errors": 0,
     "carried": 0,
     "aged_out": 0
   },
   "aged_out": [],
-  "not_sec_filers": [
-    "SIEGY"
-  ],
+  "not_sec_filers": [],
   "not_8k_filers": [
-    "AG",
-    "AU",
     "EXK",
-    "FNV",
-    "GFS",
-    "HIMX",
-    "NBIS",
-    "PAAS",
-    "TFPM",
-    "WPM"
+    "FNV"
   ],
   "names": {
-    "AAOI": {
-      "expected": "2026-11-05",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-05",
-      "period": "2026-11-05",
-      "accession": "0001683168-26-008351",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1158114/000168316826008351/aaoi_8k.htm"
-    },
-    "AEHR": {
-      "expected": "2026-11-02",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-02",
-      "period": "2026-11-02",
-      "accession": "0001654954-26-009385",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1040470/000165495426009385/aehr_8k.htm"
-    },
-    "AEIS": {
-      "expected": "2026-11-02",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-02",
-      "period": "2026-11-02",
-      "accession": "0000927003-26-000037",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/927003/000092700326000037/aeis-20261102x8k.htm"
-    },
-    "ALAB": {
-      "expected": "2026-11-03",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-03",
-      "period": "2026-11-03",
-      "accession": "0001736297-26-000044",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/alab-20261103.htm"
-    },
-    "AMAT": {
-      "expected": "2026-11-12",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-12",
-      "period": "2026-11-12",
-      "accession": "0001628280-26-073360",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026073360/amat-20261112.htm"
-    },
-    "ANET": {
-      "expected": "2026-11-03",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-03",
-      "period": "2026-11-03",
-      "accession": "0001596532-26-000252",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/anet-20261103.htm"
-    },
-    "AOSL": {
-      "expected": "2026-11-05",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-05",
-      "period": "2026-11-05",
-      "accession": "0001628280-26-071016",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026071016/aosl-20261105.htm"
-    },
-    "APP": {
-      "expected": "2026-11-04",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-04",
-      "period": "2026-10-29",
-      "accession": "0001751008-26-000068",
-      "items": [
-        "2.02",
-        "5.07",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1751008/000175100826000068/app-20261029.htm"
-    },
-    "CDE": {
-      "expected": "2026-11-04",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-04",
-      "period": "2026-11-04",
-      "accession": "0000215466-26-000054",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/215466/000021546626000054/cde-20261104.htm"
-    },
     "CEG": {
       "expected": "2026-11-09",
       "status": "detected",
@@ -163,20 +35,6 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109.htm"
     },
-    "CORZ": {
-      "expected": "2026-11-05",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-05",
-      "period": "2026-11-05",
-      "accession": "0001839341-26-000028",
-      "items": [
-        "2.02",
-        "7.01",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1839341/000183934126000028/core-20261105.htm"
-    },
     "CRWV": {
       "expected": "2026-11-10",
       "status": "detected",
@@ -189,32 +47,6 @@
         "9.01"
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/crwv-20261110.htm"
-    },
-    "CSCO": {
-      "expected": "2026-11-12",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-12",
-      "period": "2026-11-12",
-      "accession": "0000858877-26-000170",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000170/csco-20261112.htm"
-    },
-    "DDOG": {
-      "expected": "2026-11-04",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-04",
-      "period": "2026-11-04",
-      "accession": "0001628280-26-069792",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026069792/ddog-20261104.htm"
     },
     "DPC": {
       "expected": "2026-11-12",
@@ -268,50 +100,6 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1773751/000177375126000242/hims-20261109.htm"
     },
-    "HL": {
-      "expected": "2026-11-03",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-04",
-      "period": "2026-11-03",
-      "accession": "0001193125-26-445747",
-      "items": [
-        "2.02",
-        "5.02",
-        "8.01",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/719413/000119312526445747/hl-20261103.htm"
-    },
-    "HUBS": {
-      "expected": "2026-11-04",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-04",
-      "period": "2026-11-04",
-      "accession": "0001193125-26-447249",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1404655/000119312526447249/hubs-20261104.htm"
-    },
-    "IONQ": {
-      "expected": "2026-11-05",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-05",
-      "period": "2026-11-03",
-      "accession": "0001193125-26-449779",
-      "items": [
-        "2.01",
-        "2.02",
-        "3.02",
-        "7.01",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526449779/ionq-20261103.htm"
-    },
     "MRNA": {
       "expected": "2026-11-06",
       "status": "detected",
@@ -324,20 +112,6 @@
         "9.01"
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000194/mrna-20261106.htm"
-    },
-    "NET": {
-      "expected": "2026-11-05",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-05",
-      "period": "2026-11-05",
-      "accession": "0001477333-26-000060",
-      "items": [
-        "2.02",
-        "7.01",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000060/cloud-20261105.htm"
     },
     "NLST": {
       "expected": "2026-11-10",
@@ -364,32 +138,9 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000022/nrg-20261109.htm"
     },
-    "NVTS": {
-      "expected": "2026-11-03",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-03",
-      "period": "2026-11-03",
-      "accession": "0001628280-26-069489",
-      "items": [
-        "2.02",
-        "7.01",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1821769/000162828026069489/i-20261103.htm"
-    },
-    "ON": {
-      "expected": "2026-11-02",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-02",
-      "period": "2026-11-02",
-      "accession": "0001140361-26-041580",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1097864/000114036126041580/ef20084671_8k.htm"
+    "NVDA": {
+      "expected": "2026-11-17",
+      "status": "awaiting"
     },
     "QBTS": {
       "expected": "2026-11-10",
@@ -417,19 +168,6 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1758009/000162828026072163/qubt-20261109.htm"
     },
-    "RGLD": {
-      "expected": "2026-11-04",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-04",
-      "period": "2026-11-04",
-      "accession": "0000085535-26-000049",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/85535/000008553526000049/rgld-20261104.htm"
-    },
     "RGTI": {
       "expected": "2026-11-10",
       "status": "detected",
@@ -442,58 +180,6 @@
         "9.01"
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926125152/rgti-20261110x8k.htm"
-    },
-    "SHOP": {
-      "expected": "2026-11-03",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-03",
-      "period": "2026-11-03",
-      "accession": "0001594805-26-000067",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1594805/000159480526000067/shop-20261103.htm"
-    },
-    "SSRM": {
-      "expected": "2026-11-03",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-03",
-      "period": "2026-11-03",
-      "accession": "0000921638-26-000089",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/921638/000092163826000089/ssrm-20261103.htm"
-    },
-    "TLN": {
-      "expected": "2026-11-03",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-03",
-      "period": "2026-11-03",
-      "accession": "0001622536-26-000084",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1622536/000162253626000084/tln-20261103.htm"
-    },
-    "VPG": {
-      "expected": "2026-11-04",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-04",
-      "period": "2026-11-04",
-      "accession": "0001437749-26-034760",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1487952/000143774926034760/vpg20260805_8k.htm"
     },
     "VST": {
       "expected": "2026-11-06",
