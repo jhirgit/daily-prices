@@ -385,7 +385,9 @@ writes **`data/exhaustion.json`**. Settled closes only.
   `capitulation_on`, `turn_signals` (last 10 sessions), `history` (last 252 sessions).
 - `backtest.universes[k]` — `unconditional`, `naive_dd10` (proxy 10% under its 252-day high),
   `capitulation` (one entry per K = 2..11), `turn`; every cell has `n` and a `verdict`
-  ("too few to conclude" under 10 episodes). `backtest.read` is the plain conclusion.
+  ("too few to conclude" under 10 episodes). `backtest.read` is the plain-English conclusion printed on the
+  card (no statistics jargon or advice words; `--check` enforces it), and `backtest.read_detail`
+  keeps the full statistical wording.
 - `vix` — market-wide context from `^VIX`, `^VIX9D`, `^VIX3M` (added to `tickers.txt` 2026-11-17),
   never counted in a universe's `capitulation_count`. `vix.today`: `vix`, `vix9d`, `vix3m`,
   `ratio_1m_3m` (VIX/VIX3M), `ratio_9d_1m` (VIX9D/VIX), each `{value, pctile, pctile_obs,

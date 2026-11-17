@@ -327,6 +327,73 @@ ok("build without a VIX series: no vix block, no backtest.vix, universes unchang
    "vix" not in body2 and "vix" not in body2["backtest"]
    and json.dumps(EX._round_tree(body2["universes"]), sort_keys=True) == json.dumps(P["universes"], sort_keys=True))
 
+print("backtest.read: plain English, both branches")
+NO_EDGE = "There is no measurable edge here"
+CLOSER = "today's readings describe how washed-out conditions are and are not a timing signal."
+
+
+def _rows(p):
+    """Every result row of the stock/sector groups and the volatility curve."""
+    for u in p["backtest"]["universes"].values():
+        for c in list(u["capitulation"]) + list(u["turn"].values()):
+            for nm in ("proxy", "ew"):
+                for h in EX.HORIZONS:
+                    yield c[nm]["h%d" % h]
+
+
+def _plain_ok(r, label):
+    ok(label + ": no jargon or advice words", EX.PLAIN_READ_BANNED.search(r) is None, EX.PLAIN_READ_BANNED.search(r))
+    ok(label + ": no guard word", EX.GUARD.search(r) is None, EX.GUARD.search(r))
+    ok(label + ": three or four sentences ending in the timing caveat",
+       3 <= r.count(". ") + 1 <= 5 and r.endswith(CLOSER), r)
+    ok(label + ": under ~130 words", len(r.split()) <= 130, len(r.split()))
+
+
+R = P["backtest"]["read"]
+_plain_ok(R, "synthetic payload")
+ok("read_detail keeps the statistical wording", P["backtest"]["read_detail"] == EX.auto_read_detail(P)
+   and "standard errors" in P["backtest"]["read_detail"])
+ok("read names the periods tested", R.startswith("Tested from") and "through" in R)
+REAL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "exhaustion.json")
+if os.path.exists(REAL):
+    with open(REAL, encoding="utf-8") as fh:
+        J = json.load(fh)
+    RR = EX.auto_read(J)
+    _plain_ok(RR, "real payload")
+    ok("real payload today: no-edge branch, phrase the card keys on, at most ~110 words",
+       NO_EDGE in RR and "none did measurably better or worse than an ordinary day" in RR
+       and "did measurably better" in RR and len(RR.split()) <= 112, RR)
+    ok("real payload: read on disk is the generator's output", J["backtest"]["read"] == RR)
+    E = json.loads(json.dumps(J))
+    flipped = {"above": 0, "below": 0, "naive": 0}
+    for row in _rows(E):
+        if row["verdict"] == "no measurable difference" and not flipped["above"]:
+            row["verdict"] = "above"; flipped["above"] = 1
+        elif row["verdict"] == "no measurable difference" and not flipped["below"]:
+            row["verdict"] = "below"; flipped["below"] = 1
+        if row.get("vs_naive") == "no measurable difference" and not flipped["naive"]:
+            row["vs_naive"] = "above"; flipped["naive"] = 1
+    ok("synthetic edge case flips one of each", all(flipped.values()), flipped)
+    RE = EX.auto_read(E)
+    _plain_ok(RE, "edge branch")
+    ok("edge branch states the differences truthfully and drops the no-edge phrase",
+       NO_EDGE not in RE and "1 did measurably better than an ordinary day and 1 measurably worse" in RE
+       and "1 did measurably better and none measurably worse" in RE and "leads to examine, not proof" in RE
+       and "none of the volatility curve's" in RE, RE)
+    V = json.loads(json.dumps(J))
+    V["backtest"]["vix"]["inverted"]["events"]["SPY"]["h%d" % EX.HORIZONS[0]]["verdict"] = "below"
+    RV = EX.auto_read(V)
+    ok("a volatility-curve difference gets its own sentence", "On the volatility curve's" in RV
+       and "and 1 measurably worse" in RV and NO_EDGE in RV, RV)
+    J2 = json.loads(json.dumps(J))
+    J2["backtest"]["read"] = J2["backtest"]["read_detail"]
+    with open(fp, "w", encoding="utf-8") as fh:
+        fh.write(json.dumps(J2))
+    ok("--check rejects the jargon text in backtest.read", any("plain English" in x for x in EX.check(fp)), EX.check(fp))
+    del V["backtest"]["vix"]
+    RN = EX.auto_read(V)
+    ok("no vix block: the volatility curve is not mentioned", "volatility" not in RN and NO_EDGE in RN, RN)
+
 print("the real configuration")
 specs_real = EX.universes_from()
 cov, sem, mkt = (set(specs_real[k]["members"]) for k in ("coverage", "semis", "market"))

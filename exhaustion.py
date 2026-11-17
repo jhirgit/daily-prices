@@ -986,8 +986,11 @@ def build(axis, bars, specs):
     return out
 
 
-def finish(payload, read_text):
+def finish(payload, read_text, read_detail=None):
+    """`read` is the plain-English card text; `read_detail` keeps the full
+    statistical wording (computed here when not given)."""
     payload["backtest"]["read"] = read_text
+    payload["backtest"]["read_detail"] = read_detail if read_detail is not None else auto_read_detail(payload)
     return _round_tree(payload)
 
 
@@ -1018,9 +1021,116 @@ def _uni_blocks(bt, keys):
     return out
 
 
+PLAIN_GROUP = {"coverage": "the coverage names", "semis": "the semiconductor group",
+               "market": "the sector funds", "vix": "the volatility curve"}
+SHORT_GROUP = {"coverage": "coverage names", "semis": "semiconductors",
+               "market": "sector funds", "vix": "volatility curve"}
+_MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+# words the plain read must never contain (statistics jargon, internal labels, advice words)
+PLAIN_READ_BANNED = re.compile(
+    r"\b(cells?|standard errors?|proxy|unconditional|universes?|K>=\d|buy|buying|sell|selling|should|will|"
+    r"likely|target|recommend\w*|tape|naive|z)\b|K>=", re.I)
+
+
+def _month(d):
+    return "%s %s" % (_MONTHS[int(d[5:7]) - 1], d[:4])
+
+
+def _vix_blocks(vb):
+    blocks = []
+    for key in ("inverted", "uninverted"):
+        b = vb.get(key) or {}
+        if b.get("start"):
+            blocks.append((b["events"], b["unconditional"], tuple(vb["proxies"])))
+    for b in (vb.get("cap%d_inverted" % COMBO_K) or {}).values():
+        if b.get("start"):
+            blocks.append((b["events"], b["unconditional"], tuple(vb["proxies"])))
+    return blocks
+
+
+def _vix_span(vb):
+    spans = [b for b in [vb.get("inverted"), vb.get("uninverted")] + list((vb.get("cap%d_inverted" % COMBO_K) or {}).values())
+             if b and b.get("start")]
+    if not spans:
+        return None
+    return min(b["start"] for b in spans), max(b["end"] for b in spans)
+
+
+def _better_worse(b, w, against):
+    """'none did measurably better or worse than X' / '2 did measurably better than X and none worse'."""
+    if b == 0 and w == 0:
+        return "none did measurably better or worse than %s" % against
+    return "%s did measurably better than %s and %s measurably worse" % (b or "none", against, w or "none")
+
+
 def auto_read(payload):
-    """The plain conclusion, generated from the cells so a rerun cannot leave
-    stale prose behind."""
+    """The plain-English conclusion printed on the card, generated from the
+    results so a rerun cannot leave stale prose behind. The full statistical
+    wording is auto_read_detail()."""
+    bt = payload["backtest"]["universes"]
+    stock = [k for k in ("coverage", "semis") if bt.get(k, {}).get("start")]
+    m = bt.get("market") or {}
+    vb = payload["backtest"].get("vix") or {}
+    vspan = _vix_span(vb) if vb else None
+    groups = [(k, bt[k]["start"], bt[k]["end"]) for k in stock] + ([("market", m["start"], m["end"])] if m.get("start") else [])
+    if vspan:
+        groups.append(("vix",) + vspan)
+    out = []
+    if groups:
+        ends = {_month(e) for _, _, e in groups}
+        if len(ends) == 1:
+            parts = ["%s (%s)" % (_month(s), SHORT_GROUP[k]) for k, s, _ in groups]
+            lead = ", ".join(parts[:-1]) + (" and " if len(parts) > 1 else "") + parts[-1]
+            out.append("Tested from %s through %s." % (lead, ends.pop()))
+        else:
+            out.append("Tested over " + "; ".join("%s to %s for %s" % (_month(s), _month(e), SHORT_GROUP[k])
+                                                for k, s, e in groups) + ".")
+    v, vn, _, t = _tally(_uni_blocks(bt, stock))
+    b, w, few = v["above"], v["below"], v["too few to conclude"]
+    nb, nw = vn["above"], vn["below"]
+    nt = nb + nw + vn["no measurable difference"]
+    named = " and ".join(SHORT_GROUP[k] for k in stock) or "stock groups"
+    split = "%d in the %s" % (t, named)
+    total = t
+    if m.get("start"):
+        mv, mvn, _, mt = _tally(_uni_blocks(bt, ["market"]))
+        b, w, few, total = b + mv["above"], w + mv["below"], few + mv["too few to conclude"], total + mt
+        nb, nw = nb + mvn["above"], nw + mvn["below"]
+        nt += mvn["above"] + mvn["below"] + mvn["no measurable difference"]
+        split += ", %d in %s" % (mt, PLAIN_GROUP["market"])
+    out.append("Of %d comparisons with enough past episodes (%s), %s; %d had too few to judge."
+               % (total, split, _better_worse(b, w, "an ordinary day"), few))
+    rule = "the simple rule of acting whenever the index is 10% off its high"
+    if nb == 0 and nw == 0:
+        s3 = "None of the %d also checked against %s did measurably better" % (nt, rule)
+    else:
+        s3 = "Of the %d also checked against %s, %s" % (nt, rule, _better_worse(nb, nw, "it").replace(" than it", ""))
+    above = b + nb
+    if vb:
+        xv, xvn, _, xt = _tally(_vix_blocks(vb))
+        above += xv["above"] + xvn["above"]
+        xfew = " (%d more too thin to judge)" % xv["too few to conclude"] if xv["too few to conclude"] else ""
+        if not (xv["above"] or xv["below"] or xvn["above"] or xvn["below"]):
+            s3 += ", and none of the volatility curve's %d comparisons%s differed measurably on either count." % (xt, xfew)
+        else:
+            s3 += (". On the volatility curve's %d comparisons%s, %s; against the 10%% rule, %s."
+                   % (xt, xfew, _better_worse(xv["above"], xv["below"], "an ordinary day"),
+                      _better_worse(xvn["above"], xvn["below"], "it").replace(" than it", "")))
+    else:
+        s3 += "."
+    out.append(s3)
+    if above == 0:
+        out.append("There is no measurable edge here: today's readings describe how washed-out conditions are "
+                   "and are not a timing signal.")
+    else:
+        out.append("Across this many comparisons some differences arise by chance, so those are leads to "
+                   "examine, not proof; today's readings describe how washed-out conditions are and "
+                   "are not a timing signal.")
+    return " ".join(out)
+
+
+def auto_read_detail(payload):
+    """The full statistical wording (kept as backtest.read_detail)."""
     bt = payload["backtest"]["universes"]
     stock = [k for k in ("coverage", "semis") if bt.get(k, {}).get("start")]
     v, vn, lean, tested = _tally(_uni_blocks(bt, stock))
@@ -1112,8 +1222,17 @@ def check(path=OUT_PATH, max_bytes=400 * 1024):
                 probs.append("%s.today missing %s" % (key, k))
         if len(u.get("history") or []) > HIST_SESSIONS:
             probs.append("%s history too long" % key)
-    if not (j.get("backtest") or {}).get("read"):
+    rd = (j.get("backtest") or {}).get("read")
+    if not rd:
         probs.append("backtest.read empty")
+    else:
+        bw = PLAIN_READ_BANNED.search(rd)
+        if bw:
+            probs.append("backtest.read uses %r (the card text must be plain English)" % bw.group(0))
+        if len(rd.split()) > 140:
+            probs.append("backtest.read %d words (keep it near 110)" % len(rd.split()))
+    if not (j.get("backtest") or {}).get("read_detail"):
+        probs.append("backtest.read_detail empty")
     # vix (and any later outside-data block) is optional: absent = a failed fetch, degraded not broken
     vx = j.get("vix")
     if vx is not None:
@@ -1160,7 +1279,7 @@ def main(argv=None):
         print("exhaustion: empty axis", file=sys.stderr)
         return 1
     body = build(axis, bars, specs)
-    payload = finish(body, auto_read(body))
+    payload = finish(body, auto_read(body), auto_read_detail(body))
     payload["generated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     tmp = a.out + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
