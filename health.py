@@ -55,6 +55,7 @@ EOD = [
     ("rotation_members.json", lambda j: j.get("asof")),
     ("rotation_phase.json", lambda j: j.get("asof")),
     ("rotation_corr.json", lambda j: j.get("asof")),
+    ("exhaustion.json", lambda j: j.get("asof")),
     ("thesis_gauge.json", lambda j: j.get("asof")),
     ("options_flow.json", lambda j: j.get("as_of")),
     ("earnings_dates.json", lambda j: (j.get("generated_at") or "")[:10] or None),

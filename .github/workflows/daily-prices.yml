@@ -169,6 +169,17 @@ jobs:
         timeout-minutes: 5
         run: python rotation_corr.py
 
+      # 2026-11-17: seller-exhaustion readings (breadth washouts, down-volume
+      # share, thrust / follow-through) for three universes, with the backtest
+      # of what followed past clusters. prices.db only, no network, seconds.
+      # Display-only like its siblings.
+      - name: Seller exhaustion readings + backtest (display-only)
+        id: exhaustion
+        if: steps.fallback-guard.outputs.run == 'true'
+        continue-on-error: true
+        timeout-minutes: 5
+        run: python exhaustion.py
+
       # Review M1: one public-safe line per payload (data/health.json) -- the
       # session each EOD payload speaks for, row counts, error fields, and the
       # outcomes of the continue-on-error steps above, which otherwise fail
@@ -183,6 +194,7 @@ jobs:
             rotation_members=${{ steps.rotation-members.outcome }}
             rotation_phase=${{ steps.rotation-phase.outcome }}
             rotation_corr=${{ steps.rotation-corr.outcome }}
+            exhaustion=${{ steps.exhaustion.outcome }}
             thesis_gauge=${{ steps.thesis-gauge.outcome }}
         run: python health.py
 

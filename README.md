@@ -369,6 +369,26 @@ reads `prices.db` only (no network) and writes **`data/rotation_corr.json`**:
 A pair with under 80% of the window in common is null, never a number. Display only.
 Tests: `python test_rotation_corr.py` (no network).
 
+## Seller exhaustion (`exhaustion.py`)
+
+Breadth-washout readings for three universes, and an honest backtest of what followed past
+clusters. Daily, after `rotation_corr.py`; reads `prices.db` only (no network, a few seconds) and
+writes **`data/exhaustion.json`**. Settled closes only.
+
+- Universes: `coverage` (every US-listed single stock in `tickers.txt`, proxy SPY), `semis` (the
+  single stocks `technicals.GROUP_PROXY` maps to SMH, proxy SMH), `market` (the ladder's GICS
+  sector/industry ETF rows, one per twin group, proxy SPY; history only from 2024-09).
+- `universes[k].today[...]` — per capitulation reading: `value`, an expanding-window `pctile`
+  (high = more exhausted), `pctile_obs`/`pctile_since`, and `extreme` under the fixed rule in
+  `thresholds`. Plus `divergence`, `thrust`, `ftd` (fired, last_fired). `capitulation_count` /
+  `capitulation_on`, `turn_signals` (last 10 sessions), `history` (last 252 sessions).
+- `backtest.universes[k]` — `unconditional`, `naive_dd10` (proxy 10% under its 252-day high),
+  `capitulation` (one entry per K = 2..11), `turn`; every cell has `n` and a `verdict`
+  ("too few to conclude" under 10 episodes). `backtest.read` is the plain conclusion.
+
+The thresholds were fixed before the backtest was run; do not tune them against it.
+`python exhaustion.py --check` validates an existing file. Tests: `python test_exhaustion.py`.
+
 ## Sector-ladder phase, thesis checks and evidence (`rotation_phase.py`, `rotation_evidence.py`)
 
 jr-dash SPEC-86 parts B-D. **`rotation_theses.py`** is the per-row table as data: for each of the
