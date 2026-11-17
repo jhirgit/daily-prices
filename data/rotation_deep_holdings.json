@@ -1,11 +1,11 @@
 {
-"generated_at":"2026-11-10T22:07:49Z",
+"generated_at":"2026-11-17T22:11:45Z",
 "source":"SEC EDGAR NPORT-P primary_doc.xml: the latest public filing per fund series (the last three for a Select Industry fund)",
 "line_fields":["name","isin","ticker","ccy","w","px"],
 "funds":{
 "AMLP":{
 "acc":"0001049169-26-002778",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1414040",
 "excluded":{"n":1,"w":0.00051332488424},
 "filed":"2026-10-29",
@@ -34,7 +34,7 @@
 },
 "ARTY":{
 "acc":"0001004726-26-007038",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":15,"w":0.062103394122150005},
 "filed":"2026-08-24",
@@ -98,7 +98,7 @@
 },
 "BOTZ":{
 "acc":"0002048251-26-009598",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1432353",
 "excluded":{"n":8,"w":0.031141435294709998},
 "filed":"2026-10-29",
@@ -173,7 +173,7 @@
 },
 "CIBR":{
 "acc":"0000940400-26-032759",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1364608",
 "excluded":{"n":2,"w":0.019769845058179997},
 "filed":"2026-08-21",
@@ -230,7 +230,7 @@
 },
 "COPX":{
 "acc":"0002048251-26-008644",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1432353",
 "excluded":{"n":23,"w":0.025940026201990003},
 "filed":"2026-09-29",
@@ -312,7 +312,7 @@
 },
 "DRIV":{
 "acc":"0002048251-26-009603",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1432353",
 "excluded":{"n":6,"w":0.06195437607485999},
 "filed":"2026-10-29",
@@ -401,7 +401,7 @@
 },
 "DTCR":{
 "acc":"0002048251-26-009612",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1432353",
 "excluded":{"n":7,"w":0.04251255501275},
 "filed":"2026-10-29",
@@ -440,48 +440,48 @@
 ]
 },
 "ESPO":{
-"acc":"0001410368-26-086929",
-"checked":"2026-11-06",
+"acc":"0001410368-26-116419",
+"checked":"2026-11-17",
 "cik":"1137360",
-"excluded":{"n":1,"w":0.00506593546867},
-"filed":"2026-08-26",
+"excluded":{"n":1,"w":0.0093214618092},
+"filed":"2026-11-17",
 "fund":"VanEck Video Gaming and eSports ETF",
 "n_sec":25,
-"period":"2026-06-30",
+"period":"2026-09-30",
 "series":"S000062930",
 "tail":{"n":0,"w":0},
-"w_sec":0.99891060662787,
+"w_sec":0.99847915902576,
 "lines":[
-["NetEase Inc","US64110W1027",null,"USD",0.07947401,128.14],
-["Tencent Holdings Ltd","KYG875721634",null,"HKD",0.07091762,55.188171],
-["ROBLOX Corp","US7710491033",null,"USD",0.07013215,54.38],
-["Take-Two Interactive Software Inc","US8740541094",null,"USD",0.06935091,249.98],
-["Electronic Arts Inc","US2855121099",null,"USD",0.06382506,205.04],
-["Nintendo Co Ltd","JP3756600007",null,"JPY",0.06378682,42.0581],
-["Aristocrat Leisure Ltd","AU000000ALL7",null,"AUD",0.05460085,42.405026],
-["Unity Software Inc","US91332U1016",null,"USD",0.04694369,28.58],
-["Capcom Co Ltd","JP3218900003",null,"JPY",0.04402875,18.403288],
-["Bandai Namco Holdings Inc","JP3778630008",null,"JPY",0.04374939,23.191071],
-["International Games System Co Ltd","TW0003293007",null,"TWD",0.04339796,24.907103],
-["GameStop Corp","US36467W1099",null,"USD",0.04312595,22.08],
-["Konami Group Corp","JP3300200007",null,"JPY",0.03970599,109.594084],
-["CD Projekt SA","PLOPTTC00011",null,"PLN",0.03958297,59.752899],
-["Krafton Inc","KR7259960003",null,"KRW",0.03913217,153.340592],
-["Micro-Star International Co Ltd","TW0002377009",null,"TWD",0.03558662,4.622622],
-["Kingsoft Corp Ltd","KYG5264Y1089",null,"HKD",0.02522667,2.848525],
-["Nexon Co Ltd","JP3758190007",null,"JPY",0.02150699,13.295803],
-["China Ruyi Holdings Ltd","BMG4404N1149",null,"HKD",0.01955921,0.190356],
-["NC Corp","KR7036570000",null,"KRW",0.01885886,167.563309],
-["XD Inc","KYG9830N1097",null,"HKD",0.01650699,5.706745],
-["Vivendi SE","FR0000127771",null,"EUR",0.01612866,2.471459],
-["Square Enix Holdings Co Ltd","JP3164630000",null,"JPY",0.01392915,14.859761],
-["Modern Times Group MTG AB","SE0018012494",null,"SEK",0.01093457,12.648082],
-["Pearl Abyss Corp","KR7263750002",null,"KRW",0.0089186,23.365391]
+["Tencent Holdings Ltd","KYG875721634",null,"HKD",0.07449708,54.465646],
+["Nintendo Co Ltd","JP3756600007",null,"JPY",0.07390073,50.43463],
+["NetEase Inc","US64110W1027",null,"USD",0.07349534,121.16],
+["Take-Two Interactive Software Inc","US8740541094",null,"USD",0.06414663,207.5],
+["ROBLOX Corp","US7710491033",null,"USD",0.05734096,42.37],
+["GameStop Corp","US36467W1099",null,"USD",0.05600224,24.65],
+["International Games System Co Ltd","TW0003293007",null,"TWD",0.05007235,24.804243],
+["Aristocrat Leisure Ltd","AU000000ALL7",null,"AUD",0.04945753,41.228979],
+["Bandai Namco Holdings Inc","JP3778630008",null,"JPY",0.04904364,36.405501],
+["CD Projekt Red SA","PLOPTTC00011",null,"PLN",0.04759929,66.07479],
+["Konami Group Corp","JP3300200007",null,"JPY",0.0455484,136.143277],
+["Capcom Co Ltd","JP3218900003",null,"JPY",0.04444337,27.492237],
+["Unity Software Inc","US91332U1016",null,"USD",0.0434777,40.93],
+["Krafton Inc","KR7259960003",null,"KRW",0.04160668,143.412705],
+["Micro-Star International Co Ltd","TW0002377009",null,"TWD",0.03949955,4.739729],
+["Nexon Co Ltd","JP3758190007",null,"JPY",0.03535941,16.721724],
+["Kingsoft Corp Ltd","KYG5264Y1089",null,"HKD",0.026446,3.14407],
+["Square Enix Holdings Co Ltd","JP3164630000",null,"JPY",0.02451559,18.45865],
+["China Ruyi Holdings Ltd","BMG4404N1149",null,"HKD",0.02041882,0.19934],
+["NC Corp","KR7036570000",null,"KRW",0.0161115,153.388551],
+["XD Inc","KYG9830N1097",null,"HKD",0.01562628,5.017718],
+["Embracer Group AB","SE0023615885",null,"SEK",0.01322712,8.593657],
+["Koei Tecmo Holdings Co Ltd","JP3283460008",null,"JPY",0.01305625,10.424279],
+["Modern Times Group MTG AB","SE0018012494",null,"SEK",0.01218361,13.128094],
+["Vivendi SE","FR0000127771",null,"EUR",0.01140308,1.606525]
 ]
 },
 "EWY":{
 "acc":"0001004726-26-010083",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"930667",
 "excluded":{"n":4,"w":0.059179896343340005},
 "filed":"2026-10-23",
@@ -574,7 +574,7 @@
 },
 "FDN":{
 "acc":"0000940400-26-033095",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1329377",
 "excluded":{"n":2,"w":0.0012700895159300002},
 "filed":"2026-08-21",
@@ -630,7 +630,7 @@
 },
 "FINX":{
 "acc":"0002048251-26-009582",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1432353",
 "excluded":{"n":6,"w":0.014155498231249999},
 "filed":"2026-10-29",
@@ -719,7 +719,7 @@
 },
 "GDX":{
 "acc":"0001410368-26-086986",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.00422903039678},
 "filed":"2026-08-26",
@@ -795,7 +795,7 @@
 },
 "GDXJ":{
 "acc":"0001410368-26-086989",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.010496750966779999},
 "filed":"2026-08-26",
@@ -890,7 +890,7 @@
 },
 "GRID":{
 "acc":"0000940400-26-032766",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1364608",
 "excluded":{"n":2,"w":0.005777459112520001},
 "filed":"2026-08-21",
@@ -985,7 +985,7 @@
 },
 "HACK":{
 "acc":"0001193125-26-372674",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1633061",
 "excluded":{"n":2,"w":0.011770157925},
 "filed":"2026-08-28",
@@ -1023,7 +1023,7 @@
 },
 "IAI":{
 "acc":"0001004726-26-007034",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":4,"w":0.009428391427069999},
 "filed":"2026-08-24",
@@ -1072,7 +1072,7 @@
 },
 "IBB":{
 "acc":"0002071691-26-019768",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":4,"w":0.12042443047683},
 "filed":"2026-08-25",
@@ -1167,7 +1167,7 @@
 },
 "ICLN":{
 "acc":"0001004726-26-008852",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":26,"w":0.09017787527179001},
 "filed":"2026-09-23",
@@ -1262,7 +1262,7 @@
 },
 "ICOP":{
 "acc":"0001004726-26-007021",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":14,"w":0.019022966186339998},
 "filed":"2026-08-24",
@@ -1322,7 +1322,7 @@
 },
 "IGM":{
 "acc":"0002071691-26-019738",
-"checked":"2026-11-09",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":5,"w":0.01419110419265},
 "filed":"2026-08-25",
@@ -1417,7 +1417,7 @@
 },
 "IGV":{
 "acc":"0002071691-26-019778",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":4,"w":0.05928066012416},
 "filed":"2026-08-25",
@@ -1512,7 +1512,7 @@
 },
 "IHF":{
 "acc":"0001004726-26-007033",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.03405688842956},
 "filed":"2026-08-24",
@@ -1588,7 +1588,7 @@
 },
 "IHI":{
 "acc":"0001004726-26-007024",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":4,"w":0.02288792201885},
 "filed":"2026-08-24",
@@ -1649,7 +1649,7 @@
 },
 "ITA":{
 "acc":"0001004726-26-007012",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.01610137681022},
 "filed":"2026-08-24",
@@ -1713,7 +1713,7 @@
 },
 "ITB":{
 "acc":"0001004726-26-007002",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.05064173951192},
 "filed":"2026-08-24",
@@ -1773,7 +1773,7 @@
 },
 "IWM":{
 "acc":"0002071691-26-019749",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.17026002429763},
 "filed":"2026-08-25",
@@ -1868,7 +1868,7 @@
 },
 "IYT":{
 "acc":"0001004726-26-008794",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.019762440508369998},
 "filed":"2026-09-23",
@@ -1926,7 +1926,7 @@
 },
 "JETS":{
 "acc":"0001193125-26-370745",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1540305",
 "excluded":{"n":2,"w":0.048082514935},
 "filed":"2026-08-27",
@@ -1988,7 +1988,7 @@
 ]
 },
 "KBE":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Bank ETF",
 "series":"S000006977",
 "quarters":{
@@ -2338,7 +2338,7 @@
 }
 },
 "KCE":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Capital Markets ETF",
 "series":"S000006978",
 "quarters":{
@@ -2575,7 +2575,7 @@
 }
 },
 "KIE":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Insurance ETF",
 "series":"S000006979",
 "quarters":{
@@ -2780,7 +2780,7 @@
 }
 },
 "KRE":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Regional Banking ETF",
 "series":"S000012325",
 "quarters":{
@@ -3282,7 +3282,7 @@
 },
 "LIT":{
 "acc":"0002048251-26-008611",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1432353",
 "excluded":{"n":7,"w":0.00963725007072},
 "filed":"2026-09-29",
@@ -3338,7 +3338,7 @@
 },
 "NLR":{
 "acc":"0001410368-26-086985",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.02130049218289},
 "filed":"2026-08-26",
@@ -3378,7 +3378,7 @@
 },
 "OIH":{
 "acc":"0001410368-26-086988",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1137360",
 "excluded":{"n":1,"w":9.485551654e-05},
 "filed":"2026-08-26",
@@ -3418,7 +3418,7 @@
 },
 "PAVE":{
 "acc":"0002048251-26-009604",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1432353",
 "excluded":{"n":0,"w":0.0},
 "filed":"2026-10-29",
@@ -3513,7 +3513,7 @@
 },
 "PBJ":{
 "acc":"0001209466-26-001311",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1209466",
 "excluded":{"n":3,"w":0.11748918003308},
 "filed":"2026-09-28",
@@ -3558,7 +3558,7 @@
 },
 "PEJ":{
 "acc":"0001209466-26-001313",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1209466",
 "excluded":{"n":3,"w":0.19262267525729002},
 "filed":"2026-09-28",
@@ -3603,7 +3603,7 @@
 },
 "PJP":{
 "acc":"0001209466-26-001330",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1209466",
 "excluded":{"n":5,"w":0.11762618559606002},
 "filed":"2026-09-28",
@@ -3646,7 +3646,7 @@
 },
 "PPA":{
 "acc":"0001209466-26-001448",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1209466",
 "excluded":{"n":3,"w":0.05165345267831},
 "filed":"2026-09-29",
@@ -3722,7 +3722,7 @@
 },
 "QQQ":{
 "acc":"0001067839-26-000030",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1067839",
 "excluded":{"n":3,"w":0.00355229848015},
 "filed":"2026-08-28",
@@ -3817,7 +3817,7 @@
 },
 "REMX":{
 "acc":"0001410368-26-086516",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.02998047305512},
 "filed":"2026-08-26",
@@ -3862,7 +3862,7 @@
 },
 "RING":{
 "acc":"0001004726-26-010099",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"930667",
 "excluded":{"n":11,"w":0.030092123111889996},
 "filed":"2026-10-23",
@@ -3995,7 +3995,7 @@
 },
 "SLX":{
 "acc":"0001410368-26-086918",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1137360",
 "excluded":{"n":1,"w":0.0310464260593},
 "filed":"2026-08-26",
@@ -4048,48 +4048,48 @@
 ]
 },
 "SMH":{
-"acc":"0001410368-26-086937",
-"checked":"2026-11-06",
+"acc":"0001410368-26-116439",
+"checked":"2026-11-17",
 "cik":"1137360",
-"excluded":{"n":1,"w":3.490686976e-05},
-"filed":"2026-08-26",
+"excluded":{"n":1,"w":0.0019105399433000001},
+"filed":"2026-11-17",
 "fund":"VanEck Semiconductor ETF",
 "n_sec":25,
-"period":"2026-06-30",
+"period":"2026-09-30",
 "series":"S000034411",
 "tail":{"n":0,"w":0},
-"w_sec":0.99947665072244,
+"w_sec":0.99941364941959,
 "lines":[
-["NVIDIA Corp","US67066G1040",null,"USD",0.17548597,200.09],
-["Taiwan Semiconductor Manufacturing Co Ltd","US8740391003",null,"USD",0.09289064,477.57],
-["Applied Materials Inc","US0382221051",null,"USD",0.05739554,723.0],
-["Micron Technology Inc","US5951121038",null,"USD",0.05673781,1154.29],
-["Advanced Micro Devices Inc","US0079031078",null,"USD",0.05629228,580.91],
-["KLA Corp","US4824801009",null,"USD",0.05574026,301.71],
-["Lam Research Corp","US5128073062",null,"USD",0.05312987,433.33],
-["Broadcom Inc","US11135F1012",null,"USD",0.05280335,377.75],
-["Intel Corp","US4581401001",null,"USD",0.05146819,139.63],
-["ASML Holding NV","USN070592100",null,"USD",0.05041145,1989.44],
-["Marvell Technology Inc","US5738741041",null,"USD",0.04664243,297.89],
-["Texas Instruments Inc","US8825081040",null,"USD",0.04170243,298.07],
-["Analog Devices Inc","US0326541051",null,"USD",0.04000269,397.17],
-["QUALCOMM Inc","US7475251036",null,"USD",0.03737651,184.79],
-["Cadence Design Systems Inc","US1273871087",null,"USD",0.02150588,375.32],
-["Synopsys Inc","US8716071076",null,"USD",0.01792084,446.07],
-["Teradyne Inc","US8807701029",null,"USD",0.01495813,483.84],
-["Astera Labs Inc","US04626A1034",null,"USD",0.01274081,483.02],
-["STMicroelectronics NV","US8610121027",null,"USD",0.01260261,74.89],
-["Monolithic Power Systems Inc","US6098391054",null,"USD",0.01219299,1382.36],
-["ARM Holdings PLC","US0420682058",null,"USD",0.01165573,354.57],
-["NXP Semiconductors NV","NL0009538784",null,"USD",0.01146458,281.03],
-["Microchip Technology Inc","US5950171042",null,"USD",0.00898122,91.2],
-["ON Semiconductor Corp","US6821891057",null,"USD",0.00578283,94.54],
-["Skyworks Solutions Inc","US83088M1027",null,"USD",0.00159162,67.8]
+["NVIDIA Corp","US67066G1040",null,"USD",0.19365171,228.38],
+["Taiwan Semiconductor Manufacturing Co Ltd","US8740391003",null,"USD",0.09242977,456.19],
+["Advanced Micro Devices Inc","US0079031078",null,"USD",0.0556641,611.76],
+["Broadcom Inc","US11135F1012",null,"USD",0.05195766,351.19],
+["Micron Technology Inc","US5951121038",null,"USD",0.04913724,1065.11],
+["Intel Corp","US4581401001",null,"USD",0.04818062,120.23],
+["Applied Materials Inc","US0382221051",null,"USD",0.04643633,511.38],
+["Texas Instruments Inc","US8825081040",null,"USD",0.04558519,280.09],
+["KLA Corp","US4824801009",null,"USD",0.04537215,194.93],
+["ASML Holding NV","USN070592100",null,"USD",0.04469979,1811.67],
+["Marvell Technology Inc","US5738741041",null,"USD",0.04469648,264.21],
+["Lam Research Corp","US5128073062",null,"USD",0.04428226,328.51],
+["SK hynix Inc","US78392B2060",null,"USD",0.04395796,184.15],
+["Analog Devices Inc","US0326541051",null,"USD",0.04049934,396.71],
+["QUALCOMM Inc","US7475251036",null,"USD",0.03719374,184.04],
+["Cadence Design Systems Inc","US1273871087",null,"USD",0.01915738,330.185],
+["Synopsys Inc","US8716071076",null,"USD",0.01777696,434.94],
+["Teradyne Inc","US8807701029",null,"USD",0.01255295,400.91],
+["Monolithic Power Systems Inc","US6098391054",null,"USD",0.01188204,1347.22],
+["ARM Holdings PLC","US0420682058",null,"USD",0.01126482,289.66],
+["Astera Labs Inc","US04626A1034",null,"USD",0.01124359,355.97],
+["NXP Semiconductors NV","NL0009538784",null,"USD",0.01013868,237.53],
+["STMicroelectronics NV","US8610121027",null,"USD",0.00910621,53.36],
+["Microchip Technology Inc","US5950171042",null,"USD",0.00779857,77.77],
+["ON Semiconductor Corp","US6821891057",null,"USD",0.0047481,76.87]
 ]
 },
 "SOXX":{
 "acc":"0002071691-26-019781",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1100663",
 "excluded":{"n":3,"w":0.012663487910419999},
 "filed":"2026-08-25",
@@ -4134,7 +4134,7 @@
 },
 "TAN":{
 "acc":"0001378872-26-001878",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1378872",
 "excluded":{"n":2,"w":0.34330172438150003},
 "filed":"2026-10-30",
@@ -4184,7 +4184,7 @@
 },
 "UFO":{
 "acc":"0000894189-26-029075",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1727398",
 "excluded":{"n":2,"w":0.13225362635000001},
 "filed":"2026-09-29",
@@ -4263,7 +4263,7 @@
 },
 "URA":{
 "acc":"0002048251-26-008623",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1432353",
 "excluded":{"n":30,"w":0.034049535411539995},
 "filed":"2026-09-29",
@@ -4335,7 +4335,7 @@
 },
 "VNQ":{
 "acc":"0000734383-26-000299",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"734383",
 "excluded":{"n":12,"w":0.00563961484691},
 "filed":"2026-09-28",
@@ -4430,7 +4430,7 @@
 },
 "WCLD":{
 "acc":"0000940400-26-036220",
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "cik":"1350487",
 "excluded":{"n":2,"w":0.015471538512350001},
 "filed":"2026-08-31",
@@ -4508,7 +4508,7 @@
 ]
 },
 "XAR":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Aerospace & Defense ETF",
 "series":"S000012318",
 "quarters":{
@@ -4680,7 +4680,7 @@
 }
 },
 "XBI":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Biotech ETF",
 "series":"S000010018",
 "quarters":{
@@ -5166,7 +5166,7 @@
 }
 },
 "XES":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Oil & Gas Equipment & Services ETF",
 "series":"S000012334",
 "quarters":{
@@ -5306,7 +5306,7 @@
 }
 },
 "XHB":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Homebuilders ETF",
 "series":"S000010019",
 "quarters":{
@@ -5454,7 +5454,7 @@
 }
 },
 "XME":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Metals & Mining ETF",
 "series":"S000012333",
 "quarters":{
@@ -5608,7 +5608,7 @@
 }
 },
 "XOP":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Oil & Gas Exploration & Production ETF",
 "series":"S000012319",
 "quarters":{
@@ -5803,7 +5803,7 @@
 }
 },
 "XPH":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Pharmaceuticals ETF",
 "series":"S000012321",
 "quarters":{
@@ -6029,7 +6029,7 @@
 }
 },
 "XRT":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Retail ETF",
 "series":"S000012322",
 "quarters":{
@@ -6294,7 +6294,7 @@
 }
 },
 "XSD":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Semiconductor ETF",
 "series":"S000010020",
 "quarters":{
@@ -6470,7 +6470,7 @@
 }
 },
 "XTN":{
-"checked":"2026-11-06",
+"checked":"2026-11-17",
 "fund":"State Street(R) SPDR(R) S&P(R) Transportation ETF",
 "series":"S000012324",
 "quarters":{
@@ -7139,6 +7139,7 @@
 "JP3236200006":["6861.T","2026-09-26"],
 "JP3236330001":["285A.T","2026-09-29"],
 "JP3244860007":["464A.T","2026-09-26"],
+"JP3283460008":["3635.T","2026-11-17"],
 "JP3300200007":["9766.T","2026-09-26"],
 "JP3376720003":["290A.T","2026-09-26"],
 "JP3381000003":["5401.T","2026-09-26"],
@@ -7373,6 +7374,7 @@
 "SE0010948711":["OVZON.ST","2026-09-26"],
 "SE0018012494":["MTG-B.ST","2026-09-26"],
 "SE0020050417":["BOL.ST","2026-09-26"],
+"SE0023615885":["EMBRAC-B.ST","2026-11-17"],
 "SG1AF6000009":["AJBU.SI","2026-09-26"],
 "SG1V61937297":["C6L.SI","2026-09-26"],
 "SG9999000020":["FLEX","2026-10-22"],
@@ -8641,6 +8643,7 @@
 "US7837541041":["RYZ","2026-09-26"],
 "US78377T1079":["RHP","2026-09-26"],
 "US7838591011":["STBA","2026-09-26"],
+"US78392B2060":["SKHY","2026-11-17"],
 "US78409V1044":["SPGI","2026-09-26"],
 "US78410G1040":["SBAC","2026-09-26"],
 "US7841171033":["SEIC","2026-09-26"],
