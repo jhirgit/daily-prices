@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-11-16T22:22:15Z",
+  "generated_at": "2026-11-17T22:19:24Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
   "grace_sessions": 2,
   "counts": {
-    "in_window": 17,
-    "checked": 15,
-    "detected": 14,
+    "in_window": 15,
+    "checked": 13,
+    "detected": 12,
     "awaiting": 1,
     "overdue": 0,
     "errors": 0,
@@ -100,19 +100,6 @@
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1773751/000177375126000242/hims-20261109.htm"
     },
-    "MRNA": {
-      "expected": "2026-11-06",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-06",
-      "period": "2026-11-06",
-      "accession": "0001682852-26-000194",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000194/mrna-20261106.htm"
-    },
     "NLST": {
       "expected": "2026-11-10",
       "status": "detected",
@@ -140,6 +127,19 @@
     },
     "NVDA": {
       "expected": "2026-11-17",
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-11-17",
+      "period": "2026-11-17",
+      "accession": "0001045810-26-000088",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm"
+    },
+    "PANW": {
+      "expected": "2026-11-18",
       "status": "awaiting"
     },
     "QBTS": {
@@ -180,33 +180,6 @@
         "9.01"
       ],
       "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926125152/rgti-20261110x8k.htm"
-    },
-    "VST": {
-      "expected": "2026-11-06",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-06",
-      "period": "2026-11-06",
-      "accession": "0001692819-26-000023",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000023/vistra-20261106.htm"
-    },
-    "WULF": {
-      "expected": "2026-11-06",
-      "status": "detected",
-      "form": "8-K",
-      "filed": "2026-11-06",
-      "period": "2026-11-06",
-      "accession": "0001628280-26-071306",
-      "items": [
-        "2.02",
-        "7.01",
-        "9.01"
-      ],
-      "url": "https://www.sec.gov/Archives/edgar/data/1083301/000162828026071306/wulf-20261106.htm"
     }
   }
 }
