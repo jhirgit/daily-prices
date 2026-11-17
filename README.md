@@ -377,7 +377,8 @@ writes **`data/exhaustion.json`**. Settled closes only.
 
 - Universes: `coverage` (every US-listed single stock in `tickers.txt`, proxy SPY), `semis` (the
   single stocks `technicals.GROUP_PROXY` maps to SMH, proxy SMH), `market` (the ladder's GICS
-  sector/industry ETF rows, one per twin group, proxy SPY; history only from 2024-09).
+  sector/industry ETF rows, one per twin group, proxy SPY; history backfilled to 2016-08 on
+  2026-11-17, so it has a test period from 2019 like the stock universes).
 - `universes[k].today[...]` — per capitulation reading: `value`, an expanding-window `pctile`
   (high = more exhausted), `pctile_obs`/`pctile_since`, and `extreme` under the fixed rule in
   `thresholds`. Plus `divergence`, `thrust`, `ftd` (fired, last_fired). `capitulation_count` /
@@ -385,8 +386,19 @@ writes **`data/exhaustion.json`**. Settled closes only.
 - `backtest.universes[k]` — `unconditional`, `naive_dd10` (proxy 10% under its 252-day high),
   `capitulation` (one entry per K = 2..11), `turn`; every cell has `n` and a `verdict`
   ("too few to conclude" under 10 episodes). `backtest.read` is the plain conclusion.
+- `vix` — market-wide context from `^VIX`, `^VIX9D`, `^VIX3M` (added to `tickers.txt` 2026-11-17),
+  never counted in a universe's `capitulation_count`. `vix.today`: `vix`, `vix9d`, `vix3m`,
+  `ratio_1m_3m` (VIX/VIX3M), `ratio_9d_1m` (VIX9D/VIX), each `{value, pctile, pctile_obs,
+  pctile_since}` with high = more fear; `inverted` (VIX/VIX3M > 1.0), `days_inverted` (current run),
+  `uninverted_within_10`, `last_inverted`, `last_uninversion`. `vix.history`: last 252 sessions of
+  `d`, `vix`, `ratio_1m_3m`. `backtest.vix`: `inverted`, `uninverted` and `cap3_inverted[universe]`
+  (capitulation K>=3 on an inverted session), each `{start, end, unconditional, naive_dd10, events}`
+  on SPY and SMH. The whole block is absent when any of the three series is missing, and `--check`
+  accepts that.
 
 The thresholds were fixed before the backtest was run; do not tune them against it.
+Put/call ratios and fund flows are not included: Cboe's current daily statistics endpoint refused
+plain requests (403) and its free CSV archive ends in 2019; daily fund-flow data is paid.
 `python exhaustion.py --check` validates an existing file. Tests: `python test_exhaustion.py`.
 
 ## Sector-ladder phase, thesis checks and evidence (`rotation_phase.py`, `rotation_evidence.py`)

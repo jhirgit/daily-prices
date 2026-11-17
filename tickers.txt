@@ -315,6 +315,8 @@ ETHA       # Ethereum ETF
 ^N225      # Nikkei 225 (Tokyo) - overnight read
 ^HSI       # Hang Seng (Hong Kong) - overnight read
 ^VIX       # volatility
+^VIX3M     # 3-month VIX - VIX curve (exhaustion.py vix block; rotation_theses vixts check)
+^VIX9D     # 9-day VIX - VIX curve front end (exhaustion.py vix block)
 GLD        # gold
 GC=F       # gold futures
 SI=F       # silver futures

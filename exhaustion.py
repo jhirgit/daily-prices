@@ -108,6 +108,18 @@ RULES = [
 CAP_KEYS = [r[0] for r in RULES]
 RULE = {r[0]: r for r in RULES}
 
+# VIX term structure (added 2026-11-17, fixed before its backtest was run).
+# Market-wide CONTEXT, never folded into a universe's capitulation_count (that
+# keeps the published counts comparable with the first release).
+VIX_T, VIX9D_T, VIX3M_T = "^VIX", "^VIX9D", "^VIX3M"
+VIX_INVERT = 1.0         # fear flag: VIX / VIX3M above 1.0 -- the curve in backwardation,
+                         # 30-day fear priced above 3-month; the conventional line, not a fitted one
+VIX_UNINV_WIN = 10       # turn flag: inverted on one of the previous 10 sessions and not today
+VIX_BT_PROXIES = ("SPY", "SMH")
+# continuous readings, all oriented HIGH = more fear
+VIX_KEYS = (("vix", "VIX (30-day)"), ("vix9d", "VIX9D (9-day)"), ("vix3m", "VIX3M (3-month)"),
+            ("ratio_1m_3m", "VIX / VIX3M"), ("ratio_9d_1m", "VIX9D / VIX"))
+
 # The ETF-set universe: ladder sector/industry rows only (GICS nodes), one per
 # twin group, no baskets, no regions/broad/themes, and not SLV (a metal, not equities).
 MARKET_EXCLUDE = {"SLV"}
@@ -502,6 +514,37 @@ def compute_universe(axis, bars, members, proxy, min_n, min_share=MIN_SHARE):
     return S
 
 
+def vix_series(axis, bars):
+    """VIX curve per session, or None when any of the three series is absent
+    (a failed fetch degrades the payload, it does not break it). Index levels
+    as printed (no adjustment applies). Every value, flag and percentile on a
+    session uses only that session and earlier ones."""
+    if any(t not in bars for t in (VIX_T, VIX9D_T, VIX3M_T)):
+        return None
+    n = len(axis)
+    v, v9, v3 = (bars[t]["rc"] for t in (VIX_T, VIX9D_T, VIX3M_T))
+
+    def ratio(a, b):
+        return [a[i] / b[i] if a[i] is not None and b[i] and b[i] > 0 and a[i] > 0 else None
+                for i in range(n)]
+    V = {"vix": list(v), "vix9d": list(v9), "vix3m": list(v3),
+         "ratio_1m_3m": ratio(v, v3), "ratio_9d_1m": ratio(v9, v)}
+    inv = [None if r is None else r > VIX_INVERT for r in V["ratio_1m_3m"]]
+    run, prev = [None] * n, 0
+    for i in range(n):
+        if inv[i] is None:
+            prev = 0
+            continue
+        prev = prev + 1 if inv[i] else 0
+        run[i] = prev
+    uninv = [None if inv[i] is None else
+             (not inv[i] and any(inv[j] for j in range(max(0, i - VIX_UNINV_WIN), i)))
+             for i in range(n)]
+    V["inverted"], V["days_inverted"], V["uninverted"] = inv, run, uninv
+    V["pct"] = {k: expanding_pct(V[k], "high") for k, _ in VIX_KEYS}
+    return V
+
+
 # ==========================================================================
 # backtest
 # ==========================================================================
@@ -572,10 +615,14 @@ def verdict(ev, base, min_n=MIN_EPISODES):
     return "no measurable difference", z
 
 
-def event_cells(S, axis, starts, uncond, naive=None):
-    """Outcome table for a list of episode starts."""
+UNI_SERIES = (("proxy_c", "proxy"), ("ew", "ew"))
+
+
+def event_cells(S, axis, starts, uncond, naive=None, series=UNI_SERIES):
+    """Outcome table for a list of episode starts. `series` names the price
+    series of S to measure and the key each is reported under."""
     out = {"episodes": len(starts), "dates": [axis[i] for i in starts]}
-    for series_key, name in (("proxy_c", "proxy"), ("ew", "ew")):
+    for series_key, name in series:
         c = S[series_key]
         cell = {}
         for h in HORIZONS:
@@ -601,25 +648,19 @@ def event_cells(S, axis, starts, uncond, naive=None):
     return out
 
 
-def _raw_cells(S, starts):
+def _raw_cells(S, starts, series=UNI_SERIES):
     """Un-verdicted stats (for the naive baseline the others are compared with)."""
     out = {}
-    for series_key, name in (("proxy_c", "proxy"), ("ew", "ew")):
+    for series_key, name in series:
         out[name] = {"h%d" % h: stats([fwd(S[series_key], i, h) for i in starts]) for h in HORIZONS}
     return out
 
 
-def backtest_universe(S, axis):
-    n = len(axis)
-    # the period: from the first session every capitulation rule can be evaluated
-    start = next((i for i in range(n) if S["cap_eval"][i] == len(CAP_KEYS)), None)
-    if start is None:
-        return {"start": None, "end": None, "note": "no session where every rule can be evaluated yet"}
-    end = n - 1
+def _unconditional(S, series, start, end):
+    """(raw stats, published cells) of every session start..end."""
     rng = range(start, end + 1)
-    uncond = {}
-    ucell = {}
-    for series_key, name in (("proxy_c", "proxy"), ("ew", "ew")):
+    uncond, ucell = {}, {}
+    for series_key, name in series:
         c = S[series_key]
         uncond[name], ucell[name] = {}, {}
         for h in HORIZONS:
@@ -629,14 +670,29 @@ def backtest_universe(S, axis):
                                       "mean": st["mean"], "median": st["median"], "hit": st["hit"], "p10": st["p10"]}
         dd = stats([max_dd(c, i, DD_HORIZON) for i in rng])
         ucell[name]["maxdd%d" % DD_HORIZON] = {"n": dd["n"], "mean": dd["mean"], "median": dd["median"], "p10": dd["p10"]}
+    return uncond, ucell
 
-    pc = S["proxy_c"]
+
+def _dd10_starts(pc, start, end):
+    """Episodes of the naive rule: pc at least 10% under its 252-session high."""
+    n = len(pc)
     dd252 = [None] * n
     for i in range(251, n):
         w = pc[i - 251:i + 1]
         if pc[i] is not None and all(x is not None for x in w):
             dd252[i] = pc[i] / max(w) - 1.0
-    naive_starts = decluster([x is not None and x <= NAIVE_DD for x in dd252], lo=start, hi=end)
+    return decluster([x is not None and x <= NAIVE_DD for x in dd252], lo=start, hi=end)
+
+
+def backtest_universe(S, axis):
+    n = len(axis)
+    # the period: from the first session every capitulation rule can be evaluated
+    start = next((i for i in range(n) if S["cap_eval"][i] == len(CAP_KEYS)), None)
+    if start is None:
+        return {"start": None, "end": None, "note": "no session where every rule can be evaluated yet"}
+    end = n - 1
+    uncond, ucell = _unconditional(S, UNI_SERIES, start, end)
+    naive_starts = _dd10_starts(S["proxy_c"], start, end)
     naive_raw = _raw_cells(S, naive_starts)
     naive = event_cells(S, axis, naive_starts, uncond)
 
@@ -666,6 +722,45 @@ def backtest_universe(S, axis):
     }
     return {"start": axis[start], "end": axis[end], "sessions": end - start + 1,
             "unconditional": ucell, "naive_dd10": naive, "capitulation": caps, "turn": turn}
+
+
+def vix_backtest(axis, bars, V, uni_S):
+    """The VIX-curve flags as their own events against SPY and SMH, with the
+    universes' de-clustering, horizons, baselines and verdicts. `uni_S` maps a
+    universe key to its computed series (for 'capitulation K>=3 while the curve
+    is inverted'). Each block carries its own period and its own baselines."""
+    n = len(axis)
+    P = {t: bars[t]["c"] for t in VIX_BT_PROXIES if t in bars}
+    if V is None or not P:
+        return None
+    SER = tuple((t, t) for t in sorted(P))
+    end = n - 1
+
+    def block(cond, start):
+        if start is None:
+            return {"start": None, "end": None, "note": "no session where the condition can be evaluated yet"}
+        uncond, ucell = _unconditional(P, SER, start, end)
+        naive_raw, naive = {}, {}
+        for t in sorted(P):
+            st = _dd10_starts(P[t], start, end)
+            naive_raw[t] = _raw_cells(P, st, ((t, t),))[t]
+            naive[t] = event_cells(P, axis, st, uncond, series=((t, t),))
+        ev = event_cells(P, axis, decluster(cond, lo=start, hi=end), uncond, naive_raw, SER)
+        return {"start": axis[start], "end": axis[end], "sessions": end - start + 1,
+                "unconditional": ucell, "naive_dd10": naive, "events": ev}
+
+    vstart = next((i for i in range(n) if V["inverted"][i] is not None), None)
+    out = {"proxies": [t for t, _ in SER],
+           "inverted": block([bool(x) for x in V["inverted"]], vstart),
+           "uninverted": block([bool(x) for x in V["uninverted"]], vstart)}
+    combo = {}
+    for key in sorted(uni_S):
+        S = uni_S[key]
+        ustart = next((i for i in range(n) if S["cap_eval"][i] == len(CAP_KEYS)), None)
+        start = None if ustart is None or vstart is None else max(ustart, vstart)
+        combo[key] = block([S["cap"][i] >= COMBO_K and bool(V["inverted"][i]) for i in range(n)], start)
+    out["cap%d_inverted" % COMBO_K] = combo
+    return out
 
 
 def backtest_read(bt):
@@ -768,6 +863,32 @@ def universe_payload(key, spec, S, axis):
     }
 
 
+def vix_payload(V, axis):
+    """The top-level `vix` block: today's curve with expanding percentiles
+    (high = more fear), the two fixed flags, and the last 252 sessions."""
+    n = len(axis)
+    i = n - 1
+    today = {}
+    for k, _ in VIX_KEYS:
+        p = V["pct"][k][i]
+        first = next((j for j in range(n) if V["pct"][k][j] is not None), None)
+        today[k] = {"value": V[k][i], "pctile": None if p is None else p[0],
+                    "pctile_obs": None if p is None else p[1],
+                    "pctile_since": None if first is None else axis[first]}
+    inv_days = [j for j in range(n) if V["inverted"][j]]
+    unv_days = [j for j in range(1, n) if V["inverted"][j] is False and V["inverted"][j - 1]]
+    today["inverted"] = V["inverted"][i]
+    today["days_inverted"] = V["days_inverted"][i]
+    today["uninverted_within_10"] = V["uninverted"][i]
+    today["last_inverted"] = axis[inv_days[-1]] if inv_days else None
+    today["last_uninversion"] = axis[unv_days[-1]] if unv_days else None
+    hist = [{"d": axis[j], "vix": V["vix"][j], "ratio_1m_3m": V["ratio_1m_3m"][j]}
+            for j in range(max(0, n - HIST_SESSIONS), n)]
+    first = next((j for j in range(n) if V["inverted"][j] is not None), None)
+    return {"asof": axis[i] if n else None, "first_session": None if first is None else axis[first],
+            "today": today, "history": hist}
+
+
 METHOD = [
     "Settled daily closes only (adjusted close for returns and averages; the day's high, low and close as "
     "printed for the proxy's close location; dollar volume = close x volume). Intraday is out of scope.",
@@ -783,8 +904,14 @@ METHOD = [
     "capitulation_count is how many of the capitulation rules are on; capitulation_of is how many could be "
     "evaluated. turn_signals lists which of divergence, breadth thrust and follow-through day fired in the "
     "last 10 sessions. There is no blended score.",
-    "The ETF set is small: each member moves a share reading by about two points, and its history only "
-    "starts when the sector ETFs' price history does.",
+    "The ETF set is small: each member moves a share reading by about two points, and members overlap "
+    "heavily. Its price history was backfilled to 2016-08 on 2026-11-17 (a few members launched later "
+    "and join when they start trading).",
+    "The vix block is market-wide context and is NOT counted in any universe's capitulation_count. "
+    "VIX, VIX9D and VIX3M are Cboe index closes; ratio_1m_3m = VIX / VIX3M, ratio_9d_1m = VIX9D / VIX. "
+    "inverted = VIX / VIX3M above 1.0 (backwardation: near-term fear priced above three-month); "
+    "uninverted_within_10 = inverted on one of the previous 10 sessions and not today. The block is "
+    "absent when any of the three series is missing.",
     "The latest session's volume is the figure the nightly fetch sees shortly after the close; the provider "
     "often revises it the next day, so today's relative-volume and follow-through readings can move on rerun.",
     "Display only. Nothing here is a forecast or an instruction.",
@@ -806,25 +933,43 @@ BT_NOTES = [
     "are missing and names were added partly because they did well. Past breadth therefore reads healthier "
     "than the real universe was, and the equal-weight index's forward returns are biased upward for "
     "episodes and baseline alike; the comparison with the baseline is less biased than either level.",
-    "History depth: prices.db starts 2016-08 for most long-lived names; the test period begins once every "
-    "rule has a year of its own observations (the relative-volume rule only counts down days, so about "
-    "2019-04), which leaves roughly seven and a half years and a handful of real drawdowns (2020, 2022, "
-    "2025). The sector ETFs start 2024-09, so the ETF set has no testable period yet.",
+    "History depth: prices.db starts 2016-08 for most long-lived names, the sector ETFs included (backfilled "
+    "2026-11-17); the test period begins once every rule has a year of its own observations (the "
+    "relative-volume rule only counts down days, so about 2019), which leaves roughly seven years and a "
+    "handful of real drawdowns (2020, 2022, 2025).",
+    "backtest.vix: the curve's two flags (the first session of each inversion episode; the un-inversion "
+    "session) and 'universe capitulation K>=3 on a session the curve is inverted', each measured on SPY "
+    "and SMH with the same de-clustering, horizons and verdicts. Each block has its own period and its own "
+    "baselines (every session of that period; SPY's and SMH's own 10% drawdown rule). The flags need no "
+    "warm-up, so their period starts with the VIX3M history (2016-08); the combination starts with the "
+    "universe's test period.",
 ]
 
 
 def build(axis, bars, specs):
-    unis, bts = {}, {}
+    unis, bts, uni_S = {}, {}, {}
     for key, spec in specs.items():
         S = compute_universe(axis, bars, spec["members"], spec["proxy"], MIN_N.get(key, 15))
         unis[key] = universe_payload(key, spec, S, axis)
         bts[key] = backtest_universe(S, axis)
+        uni_S[key] = S
     bt = {"horizons": list(HORIZONS), "decluster": DECLUSTER, "min_episodes": MIN_EPISODES,
           "z_bar": Z_BAR, "combo_k": COMBO_K, "combo_window": COMBO_WIN,
           "notes": BT_NOTES, "universes": bts}
     bt["summary"] = backtest_read(bt)
+    V = vix_series(axis, bars)
+    vbt = vix_backtest(axis, bars, V, uni_S)
+    if vbt is not None:
+        bt["vix"] = vbt
     thresholds = {k: {"label": lab, "orient": o, "rule": list(rule), "why": why}
                   for k, lab, o, rule, why in RULES}
+    thresholds["_vix"] = {
+        "inverted": "VIX / VIX3M above %.1f: the curve in backwardation, 30-day fear priced above "
+                    "3-month. The conventional line, fixed in advance." % VIX_INVERT,
+        "uninverted_within_10": "Inverted on one of the previous %d sessions and not today: the curve "
+                                "returning to contango, fixed in advance." % VIX_UNINV_WIN,
+        "pctile": "Every continuous VIX reading carries an expanding percentile, high = more fear.",
+    }
     thresholds["_turn"] = {
         "divergence": "Equal-weight index at a 60-session closing low, an earlier 60-session low within 60 "
                       "sessions separated by at least 5 sessions off the low, and the share at 20-day lows "
@@ -834,8 +979,11 @@ def build(axis, bars, specs):
         "ftd": "4 to 12 sessions after the proxy's most recent 60-session closing low, the proxy up 1.5% or "
                "more on volume above the prior session's.",
     }
-    return {"schema": SCHEMA, "asof": axis[-1] if axis else None,
-            "method": METHOD, "thresholds": thresholds, "universes": unis, "backtest": bt}
+    out = {"schema": SCHEMA, "asof": axis[-1] if axis else None,
+           "method": METHOD, "thresholds": thresholds, "universes": unis, "backtest": bt}
+    if V is not None:
+        out["vix"] = vix_payload(V, axis)
+    return out
 
 
 def finish(payload, read_text):
@@ -843,27 +991,39 @@ def finish(payload, read_text):
     return _round_tree(payload)
 
 
+def _tally(blocks):
+    """Verdict counts over (cell, unconditional, series names) triples."""
+    v = {"above": 0, "below": 0, "no measurable difference": 0, "too few to conclude": 0}
+    vn = dict(v)
+    lean = tested = 0
+    for c, unc, names in blocks:
+        for nm in names:
+            base = unc[nm]
+            for h in HORIZONS:
+                r = c[nm]["h%d" % h]
+                v[r["verdict"]] += 1
+                vn[r.get("vs_naive") or "too few to conclude"] += 1
+                if r["verdict"] != "too few to conclude":
+                    tested += 1
+                    lean += (r["mean"] or 0) > (base["h%d" % h]["mean"] or 0)
+    return v, vn, lean, tested
+
+
+def _uni_blocks(bt, keys):
+    out = []
+    for k in keys:
+        u = bt[k]
+        for c in list(u["capitulation"]) + list(u["turn"].values()):
+            out.append((c, u["unconditional"], ("proxy", "ew")))
+    return out
+
+
 def auto_read(payload):
     """The plain conclusion, generated from the cells so a rerun cannot leave
-    stale prose behind. Three sentences."""
+    stale prose behind."""
     bt = payload["backtest"]["universes"]
     stock = [k for k in ("coverage", "semis") if bt.get(k, {}).get("start")]
-    v = {"above": 0, "below": 0, "no measurable difference": 0, "too few to conclude": 0}
-    vn = {"above": 0, "below": 0, "no measurable difference": 0, "too few to conclude": 0}
-    lean = tested = 0
-    for k in stock:
-        u = bt[k]
-        cells = list(u["capitulation"]) + list(u["turn"].values())
-        for c in cells:
-            for nm in ("proxy", "ew"):
-                base = u["unconditional"][nm]
-                for h in HORIZONS:
-                    r = c[nm]["h%d" % h]
-                    v[r["verdict"]] += 1
-                    vn[r.get("vs_naive") or "too few to conclude"] += 1
-                    if r["verdict"] != "too few to conclude":
-                        tested += 1
-                        lean += (r["mean"] or 0) > (base["h%d" % h]["mean"] or 0)
+    v, vn, lean, tested = _tally(_uni_blocks(bt, stock))
     s1 = ("In the two stock universes, %d capitulation and turn-signal cells (rule x horizon x proxy or "
           "equal-weight index) had 10 or more independent episodes: %d beat the any-day forward return by two "
           "standard errors, %d trailed it and %d showed no measurable difference (the average was higher in %d "
@@ -876,9 +1036,43 @@ def auto_read(payload):
     else:
         s2 = ("Against simply buying any 10%% drawdown of the proxy, %d of %d testable cells were better, %d worse "
               "and %d no different." % (vn["above"], testable_n, vn["below"], vn["no measurable difference"]))
-    s3 = ("The ETF set has history only from 2024-09 and cannot be tested yet; read today's counts as a "
-          "description of how washed-out the tape is, not as a timing signal.")
-    return " ".join([s1, s2, s3])
+    out = [s1, s2]
+    above = v["above"] + vn["above"]
+    m = bt.get("market") or {}
+    if m.get("start"):
+        mv, mvn, mlean, mt = _tally(_uni_blocks(bt, ["market"]))
+        above += mv["above"] + mvn["above"]
+        out.append("The sector-ETF set (%s to %s): %d cells testable, %d above the any-day return, %d below, "
+                   "%d no measurable difference (%d too few); against buying a 10%% drawdown, %d better, %d worse."
+                   % (m["start"], m["end"], mt, mv["above"], mv["below"], mv["no measurable difference"],
+                      mv["too few to conclude"], mvn["above"], mvn["below"]))
+    else:
+        out.append("The sector-ETF set has no testable period yet.")
+    vb = payload["backtest"].get("vix")
+    if vb:
+        blocks = []
+        for key in ("inverted", "uninverted"):
+            b = vb.get(key) or {}
+            if b.get("start"):
+                blocks.append((b["events"], b["unconditional"], tuple(vb["proxies"])))
+        for b in (vb.get("cap%d_inverted" % COMBO_K) or {}).values():
+            if b.get("start"):
+                blocks.append((b["events"], b["unconditional"], tuple(vb["proxies"])))
+        xv, xvn, xlean, xt = _tally(blocks)
+        above += xv["above"] + xvn["above"]
+        out.append("The VIX curve (inversion, un-inversion, and capitulation K>=%d while inverted, on SPY and "
+                   "SMH): %d cells testable, %d above the any-day return, %d below, %d no measurable difference "
+                   "(%d too few); against buying a 10%% drawdown, %d better, %d worse."
+                   % (COMBO_K, xt, xv["above"], xv["below"], xv["no measurable difference"],
+                      xv["too few to conclude"], xvn["above"], xvn["below"]))
+    if above == 0:
+        out.append("No rule here shows a measurable edge; read today's counts as a description of how "
+                   "washed-out the tape is, not as a timing signal.")
+    else:
+        out.append("With this many cells tested a few will clear two standard errors by chance, and episodes "
+                   "overlap; treat any 'above' as a lead to watch, and today's counts as a description of the "
+                   "tape, not a timing signal.")
+    return " ".join(out)
 
 
 # ==========================================================================
@@ -920,6 +1114,20 @@ def check(path=OUT_PATH, max_bytes=400 * 1024):
             probs.append("%s history too long" % key)
     if not (j.get("backtest") or {}).get("read"):
         probs.append("backtest.read empty")
+    # vix (and any later outside-data block) is optional: absent = a failed fetch, degraded not broken
+    vx = j.get("vix")
+    if vx is not None:
+        t = vx.get("today") if isinstance(vx, dict) else None
+        if not isinstance(t, dict):
+            probs.append("vix.today missing")
+        else:
+            for k in [k for k, _ in VIX_KEYS] + ["inverted", "days_inverted", "uninverted_within_10"]:
+                if k not in t:
+                    probs.append("vix.today missing %s" % k)
+        if len((vx or {}).get("history") or []) > HIST_SESSIONS:
+            probs.append("vix history too long")
+        if not isinstance((j.get("backtest") or {}).get("vix"), dict):
+            probs.append("vix block without backtest.vix")
     if "NaN" in txt or "Infinity" in txt:
         probs.append("non-finite number")
     m = GUARD.search(txt)
@@ -944,7 +1152,8 @@ def main(argv=None):
     specs = universes_from(a.tickers)
     conn = sqlite3.connect(a.db)
     axis = RG.reference_dates(conn)
-    need = sorted({t for s in specs.values() for t in s["members"]} | {s["proxy"] for s in specs.values()})
+    need = sorted({t for s in specs.values() for t in s["members"]} | {s["proxy"] for s in specs.values()}
+                  | {VIX_T, VIX9D_T, VIX3M_T} | set(VIX_BT_PROXIES))
     bars = load_bars(conn, need, axis)
     conn.close()
     if not axis:
@@ -958,9 +1167,12 @@ def main(argv=None):
         json.dump(payload, f, separators=(",", ":"), sort_keys=True, allow_nan=False)
     os.replace(tmp, a.out)
     u = payload["universes"]
-    print("exhaustion: asof %s, %s, %d bytes" % (
+    vt = (payload.get("vix") or {}).get("today") or {}
+    print("exhaustion: asof %s, %s, vix %s, %d bytes" % (
         payload["asof"], ", ".join("%s n=%d cap=%s/%s" % (k, u[k]["n"], u[k]["capitulation_count"],
                                                           u[k]["capitulation_of"]) for k in u),
+        "absent" if not vt else "1m/3m=%s inverted=%s" % ((vt.get("ratio_1m_3m") or {}).get("value"),
+                                                           vt.get("inverted")),
         os.path.getsize(a.out)))
     return 0
 

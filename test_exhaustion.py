@@ -169,6 +169,27 @@ many = EX.stats([0.05 + 0.001 * k for k in range(20)])
 ok("a clear difference over 20 episodes -> above", EX.verdict(many, EX.stats([0.0, 0.01, -0.01] * 50))[0] == "above")
 
 
+print("VIX curve (hand-worked)")
+vax = ["v%02d" % k for k in range(16)]
+v1 = [20, 20, 22, 25, 24, 21, 19, 18, 18, 18, 18, 18, 18, 18, 18, None]
+v3 = [21, 21, 21, 22, 22, 22, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
+v9 = [19, 19, 24, 30, 26, 20, 18, 17, 17, 17, 17, 17, 17, 17, 17, 17]
+vb = {"^VIX": bars_from(v1, [0] * 16), "^VIX3M": bars_from(v3, [0] * 16), "^VIX9D": bars_from(v9, [0] * 16)}
+VV = EX.vix_series(vax, vb)
+ok("ratio VIX/VIX3M = 22/21 on session 2", close(VV["ratio_1m_3m"][2], 22 / 21.0), VV["ratio_1m_3m"][2])
+ok("ratio VIX9D/VIX = 30/25 on session 3", close(VV["ratio_9d_1m"][3], 1.2))
+ok("inverted only above 1.0: sessions 2-4 (22/21, 25/22, 24/22); 21/22 is not",
+   VV["inverted"][:7] == [False, False, True, True, True, False, False], VV["inverted"][:7])
+ok("days_inverted counts the current run", VV["days_inverted"][:6] == [0, 0, 1, 2, 3, 0], VV["days_inverted"][:6])
+ok("un-inverted within 10: session 5 (first calm session) through 14 (session 4 is 10 back)",
+   VV["uninverted"][:15] == [False] * 5 + [True] * 10, VV["uninverted"][:15])
+ok("a missing VIX bar -> every flag on that session is None",
+   VV["inverted"][15] is None and VV["uninverted"][15] is None and VV["days_inverted"][15] is None)
+ok("percentiles None under a year of observations", VV["pct"]["ratio_1m_3m"][14][0] is None)
+ok("any of the three series absent -> no vix block (degrades, never breaks)",
+   EX.vix_series(vax, {k: vb[k] for k in ("^VIX", "^VIX3M")}) is None)
+
+
 def synth(n_days, n_mem=24, seed=11):
     rnd = random.Random(seed)
     ax = ["2000-%04d" % k for k in range(n_days)]
@@ -192,6 +213,17 @@ def synth(n_days, n_mem=24, seed=11):
         l.append(lvl * (1 - rnd.random() * 0.01))
         v.append(int(1e6 * (1 + abs(mkt[d]) * 50)))
     bb["PX"] = bars_from(c, v, highs=h, lows=l)
+    bb["SPY"] = bars_from(c, v, highs=h, lows=l)
+    bb["SMH"] = bars_from([x * (1 + 0.3 * math.sin(d / 40.0)) for d, x in enumerate(c)], v)
+    # a mean-reverting VIX that jumps on down days; VIX3M is half as far from 20,
+    # so the curve inverts whenever VIX is above 20
+    vx, x = [], 18.0
+    for d in range(n_days):
+        x = max(9.0, x + 0.15 * (17.0 - x) - 120 * mkt[d] + rnd.gauss(0, 0.6))
+        vx.append(x)
+    bb["^VIX"] = bars_from(vx, [0] * n_days)
+    bb["^VIX3M"] = bars_from([20 + 0.5 * (y - 20) for y in vx], [0] * n_days)
+    bb["^VIX9D"] = bars_from([20 + 1.3 * (y - 20) if y > 11 else y for y in vx], [0] * n_days)
     return ax, bb, mm
 
 
@@ -210,6 +242,13 @@ ok("capitulation_count identical", A["cap"][:D] == B["cap"][:D])
 ok("turn signals identical", A["thrust"][:D] == B["thrust"][:D] and A["ftd"][:D] == B["ftd"][:D] and A["div"][:D] == B["div"][:D])
 ok("the test is not vacuous: some flags evaluated, some on",
    sum(1 for x in A["cap_eval"] if x == len(EX.CAP_KEYS)) > 100 and any(A["cap"]), (max(A["cap_eval"]), max(A["cap"])))
+VA, VB = EX.vix_series(ax_cut, bb_cut), EX.vix_series(ax_full, bb_full)
+ok("VIX curve: inverted, days_inverted and un-inverted identical on every session <= D",
+   all(VA[k][:D] == VB[k][:D] for k in ("inverted", "days_inverted", "uninverted")))
+ok("VIX curve: every percentile identical on every session <= D",
+   all(VA["pct"][k][:D] == VB["pct"][k][:D] for k, _ in EX.VIX_KEYS))
+ok("VIX test is not vacuous: inversions and un-inversions both occur, percentiles evaluated",
+   any(VA["inverted"]) and any(VA["uninverted"]) and VA["pct"]["ratio_1m_3m"][D - 1][0] is not None)
 
 print("payload: shape, determinism, public-safe words")
 specs = {"coverage": {"label": "c", "members": mm, "proxy": "PX", "rule": "r"},
@@ -252,6 +291,41 @@ ok("--check passes a good payload", EX.check(fp) == [], EX.check(fp))
 with open(fp, "w", encoding="utf-8") as fh:
     fh.write(s1.replace('"read":', '"brokerage":"x","read":'))
 ok("--check catches a guard word", any("guard word" in x for x in EX.check(fp)))
+
+print("VIX block in the payload")
+vx = P["vix"]
+ok("vix.today carries value + expanding pctile for every continuous reading",
+   all(set(("value", "pctile", "pctile_obs", "pctile_since")) <= set(vx["today"][k]) for k, _ in EX.VIX_KEYS))
+ok("vix.today carries the two fixed flags and the run length",
+   {"inverted", "days_inverted", "uninverted_within_10"} <= set(vx["today"]))
+ok("vix.history is at most 252 sessions of d, vix, ratio_1m_3m",
+   len(vx["history"]) == EX.HIST_SESSIONS and set(vx["history"][0]) == {"d", "vix", "ratio_1m_3m"})
+ok("the VIX flags are NOT in any universe's capitulation count",
+   all(set(P["universes"][k]["capitulation_on"]) <= set(EX.CAP_KEYS) for k in P["universes"]))
+vbt = P["backtest"]["vix"]
+ok("backtest.vix: inversion, un-inversion and K>=3-while-inverted per universe",
+   {"inverted", "uninverted", "cap%d_inverted" % EX.COMBO_K} <= set(vbt)
+   and set(vbt["cap%d_inverted" % EX.COMBO_K]) == set(specs))
+ok("every VIX event cell carries n, verdict and vs_naive on SPY and SMH",
+   all(set(("n", "verdict", "vs_naive", "mean")) <= set(vbt[b]["events"][t]["h%d" % h])
+       for b in ("inverted", "uninverted") for t in ("SPY", "SMH") for h in EX.HORIZONS))
+ok("the VIX backtest is not vacuous", vbt["inverted"]["events"]["episodes"] > 0, vbt["inverted"]["events"]["episodes"])
+nov = json.loads(s1)
+del nov["vix"]
+del nov["backtest"]["vix"]
+with open(fp, "w", encoding="utf-8") as fh:
+    fh.write(json.dumps(nov))
+ok("--check still passes a payload with no vix block (a failed fetch degrades)", EX.check(fp) == [], EX.check(fp))
+bad = json.loads(s1)
+del bad["vix"]["today"]["inverted"]
+with open(fp, "w", encoding="utf-8") as fh:
+    fh.write(json.dumps(bad))
+ok("--check catches a vix block missing a key", any("vix.today missing inverted" in x for x in EX.check(fp)))
+nobars = {t: b for t, b in bb_full.items() if t != "^VIX9D"}
+body2 = EX.build(ax_full, nobars, specs)
+ok("build without a VIX series: no vix block, no backtest.vix, universes unchanged",
+   "vix" not in body2 and "vix" not in body2["backtest"]
+   and json.dumps(EX._round_tree(body2["universes"]), sort_keys=True) == json.dumps(P["universes"], sort_keys=True))
 
 print("the real configuration")
 specs_real = EX.universes_from()

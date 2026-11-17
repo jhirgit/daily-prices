@@ -767,6 +767,12 @@ def _load_evidence():
         return None
 
 
+# Series kept in prices.db only as inputs to other modules (the VIX curve in
+# exhaustion.py and rotation_phase). They get no technicals row, so they never
+# join the 12-1 rank pool that regime.py and the board build from emitted tickers.
+INPUT_ONLY = frozenset(["^VIX3M", "^VIX9D"])
+
+
 def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
     conn = sqlite3.connect(db)
     groups = load_groups(tickers_file)
@@ -785,6 +791,8 @@ def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
 
     series, out, skipped = {}, {}, []
     for sym in syms:
+        if sym in INPUT_ONLY:
+            continue
         rows = load_bars(conn, sym)
         if len(rows) < MIN_BARS:
             skipped.append({"ticker": sym, "bars": len(rows), "reason": "insufficient_history"})
