@@ -20,7 +20,9 @@ WHAT IS MEASURED, per universe and per session (settled daily closes only):
                 its 14-day Wilder RSI.
   drying up     a new 60-day closing low in the equal-weight universe index made
                 with FEWER members at 20-day lows than at the previous 60-day low.
-  turn          a Zweig-style breadth thrust; an O'Neil-style follow-through day.
+  turn          a Zweig-style breadth thrust; an O'Neil-style follow-through day; (2026-11-19)
+                a 90% up-volume day soon after capitulation, and for every turn signal
+                whether its last fire is still intact (see the STAND constants).
 
 Every continuous reading carries an EXPANDING-window percentile (only data up
 to that day), oriented so a HIGH percentile always means MORE exhausted. Each
@@ -76,6 +78,27 @@ COMBO_K = 3              # "capitulation then a turn": K chosen in advance, not 
 COMBO_WIN = 20
 MIN_EPISODES = 10        # fewer independent episodes than this: "too few to conclude"
 Z_BAR = 2.0              # |mean - unconditional mean| / standard error needed to call a difference
+
+# Re-entry panel (owner, 2026-11-19: "if i wait too long i miss the turn, so how do we manage
+# that" -> "build the re-entry panel"). Fixed 2026-11-19 BEFORE any of it was back-tested; do not
+# tune against the stand table below.
+#   upvol90   a 90% UP-volume day (the mirror of down_vol: nine-tenths or more of the members' dollar
+#             volume in members that closed up) within UPVOL_WIN sessions AFTER a session whose
+#             capitulation count was UPVOL_CAP or more.
+#   standing  a fired signal is INTACT while the universe's equal-weight index has not CLOSED below
+#             its lowest close of the STAND_LOOKBACK sessions up to and including the signal date (the
+#             reference low); it FAILS on the first such close; with no failure after STAND_LIMIT
+#             sessions it LASTED and leaves the active list. The VIX un-inversion stands while the
+#             curve has not inverted again (the same 60-session limit). One definition, here, so it is
+#             tested and back-testable; the page only draws it.
+UPVOL_SHARE = 0.90
+UPVOL_WIN = 10
+UPVOL_CAP = 3
+STAND_LOOKBACK = 20
+STAND_LIMIT = 60
+STAND_HORIZONS = (20, 60)
+TURN_KEYS = ("thrust", "ftd", "divergence", "upvol90")
+STAND_STATUSES = ("not_fired", "intact", "failed", "lasted", "unknown")
 
 # One rule per capitulation indicator. orient "low" = a LOW value is exhausted.
 # rule ("abs", level): value <= level (low) / >= level (high); ("pct", p): the
@@ -443,7 +466,7 @@ def compute_universe(axis, bars, members, proxy, min_n, min_share=MIN_SHARE):
                     ("low_20d", "l20"), ("low_252d", "l252")):
         S[key] = frac(fk)
 
-    ew_ret, adr, dvs = [None] * n, [None] * n, [None] * n
+    ew_ret, adr, dvs, uvs = [None] * n, [None] * n, [None] * n, [None] * n
     for i in range(n):
         if not ok[i]:
             continue
@@ -452,7 +475,7 @@ def compute_universe(axis, bars, members, proxy, min_n, min_share=MIN_SHARE):
         up = sum(1 for x in rs if x > 0)
         dn = sum(1 for x in rs if x < 0)
         adr[i] = up / (up + dn) if up + dn else None
-        tot = down = 0.0
+        tot = down = upd = 0.0
         for f in feats:
             r, d = f["ret"][i], f["dv"][i]
             if r is None or d is None:
@@ -460,8 +483,11 @@ def compute_universe(axis, bars, members, proxy, min_n, min_share=MIN_SHARE):
             tot += d
             if r < 0:
                 down += d
+            elif r > 0:
+                upd += d
         dvs[i] = down / tot if tot > 0 else None
-    S["ew_ret"], S["adr"], S["down_vol"] = ew_ret, adr, dvs
+        uvs[i] = upd / tot if tot > 0 else None
+    S["ew_ret"], S["adr"], S["down_vol"], S["up_vol"] = ew_ret, adr, dvs, uvs
     S["down90_10d"] = [None if dvs[i] is None else
                        sum(1 for x in dvs[max(0, i - 9):i + 1] if x is not None and x >= 0.90)
                        for i in range(n)]
@@ -511,7 +537,153 @@ def compute_universe(axis, bars, members, proxy, min_n, min_share=MIN_SHARE):
                                   pret[i] if key == "close_loc" else None) for i in range(n)]
     S["cap"] = [sum(1 for k in CAP_KEYS if S["flag"][k][i]) for i in range(n)]
     S["cap_eval"] = [sum(1 for k in CAP_KEYS if S["flag"][k][i] is not None) for i in range(n)]
+    S["upvol90"] = upvol_series(uvs, S["cap"])
     return S
+
+
+def upvol_series(uvs, cap, share=UPVOL_SHARE, win=UPVOL_WIN, k=UPVOL_CAP):
+    """Fires on a session whose up-volume share is >= `share` when one of the previous `win`
+    sessions (not today) had a capitulation count of `k` or more."""
+    out = [False] * len(uvs)
+    for i, u in enumerate(uvs):
+        if u is None or u < share:
+            continue
+        out[i] = any(cap[j] is not None and cap[j] >= k for j in range(max(0, i - win), i))
+    return out
+
+
+# ==========================================================================
+# standing: is a fired turn signal still intact? (re-entry panel, 2026-11-19)
+# ==========================================================================
+
+def ref_low(series, i, lookback=STAND_LOOKBACK):
+    """The lowest close of `series` over the `lookback` sessions up to and including i."""
+    win = [x for x in series[max(0, i - lookback + 1):i + 1] if x is not None]
+    return min(win) if win else None
+
+
+def below(series, ref):
+    """fails_at(t) for an index signal: a CLOSE strictly below the reference low."""
+    return lambda t: ref is not None and series[t] is not None and series[t] < ref
+
+
+def stand_status(i, n, fails_at, limit=STAND_LIMIT):
+    """(status, fail index) of a signal fired on session i of n sessions: 'failed' on the first
+    t in i+1..i+limit with fails_at(t); otherwise 'lasted' once limit sessions have passed, else
+    'intact'. Uses sessions up to n-1 only."""
+    for t in range(i + 1, min(n, i + limit + 1)):
+        if fails_at(t):
+            return "failed", t
+    return ("lasted" if n - 1 - i >= limit else "intact"), None
+
+
+def stood(i, n, h, fails_at):
+    """True when the signal on i did not fail within h sessions, False when it did, None when
+    fewer than h sessions follow it (and it has not failed yet)."""
+    for t in range(i + 1, min(n, i + h + 1)):
+        if fails_at(t):
+            return False
+    return True if i + h <= n - 1 else None
+
+
+def uni_fires(S):
+    """Per-session fire arrays of the universe's four turn signals."""
+    return {"thrust": [bool(x) for x in S["thrust"]],
+            "ftd": [bool(x[0]) for x in S["ftd"]],
+            "divergence": [bool(x and x[0]) for x in S["div"]],
+            "upvol90": [bool(x) for x in S["upvol90"]]}
+
+
+def vix_fires(V):
+    """The un-inversion session: not inverted today, inverted the session before."""
+    inv = V["inverted"]
+    return [i > 0 and inv[i] is False and inv[i - 1] is True for i in range(len(inv))]
+
+
+def turn_entry(axis, arr, fails_for, refs=None):
+    """The `turn` record of one signal: its LAST fire, judged with the sessions after it."""
+    n = len(axis)
+    js = [j for j in range(n) if arr[j]]
+    if not js:
+        return {"last_fired": None, "status": "not_fired", "failed_on": None, "sessions_since": None, "ref_low": None}
+    i = js[-1]
+    ref = refs(i) if refs else None
+    if refs and ref is None:
+        return {"last_fired": axis[i], "status": "unknown", "failed_on": None, "sessions_since": n - 1 - i, "ref_low": None}
+    st, f = stand_status(i, n, fails_for(i, ref))
+    return {"last_fired": axis[i], "status": st, "failed_on": None if f is None else axis[f],
+            "sessions_since": n - 1 - i, "ref_low": ref}
+
+
+def uni_turn(S, axis):
+    """universes[k].turn: each signal's last fire and whether it is still intact."""
+    ew = S["ew"]
+    sig = {name: turn_entry(axis, arr, lambda i, ref: below(ew, ref), lambda i: ref_low(ew, i))
+           for name, arr in uni_fires(S).items()}
+    return {"index_now": ew[-1] if ew else None, "signals": sig}
+
+
+def vix_turn(V, axis):
+    inv = V["inverted"]
+    return {"signals": {"uninversion": turn_entry(axis, vix_fires(V), lambda i, ref: (lambda t: inv[t] is True))}}
+
+
+def stand_table(axis, fires, price, fails_for, refs, start, end):
+    """The stand back-test over sessions start..end: per signal, de-clustered episodes, how many
+    stood 20 and 60 sessions, and the median forward return of `price` at 20 and 60 sessions
+    against the median of every session of the same period."""
+    n = len(axis)
+    base = {}
+    for h in STAND_HORIZONS:
+        xs = [fwd(price, i, h) for i in range(start, end + 1)]
+        xs = [x for x in xs if x is not None]
+        base["med%d" % h] = _median(xs)
+        base["n%d" % h] = len(xs)
+    rows = {}
+    for name, arr in fires.items():
+        eps = decluster(arr, lo=start, hi=end)
+        row = {"fires": len(eps), "dates": [axis[i] for i in eps]}
+        for h in STAND_HORIZONS:
+            outs = []
+            for i in eps:
+                ref = refs(i) if refs else None
+                if refs and ref is None:
+                    continue
+                outs.append(stood(i, n, h, fails_for(i, ref)))
+            ev = [x for x in outs if x is not None]
+            rets = [x for x in (fwd(price, i, h) for i in eps) if x is not None]
+            row["n%d" % h] = len(ev)
+            row["stood%d" % h] = sum(1 for x in ev if x)
+            row["share%d" % h] = (row["stood%d" % h] / len(ev)) if ev else None
+            row["med%d" % h] = _median(rets)
+            row["n_ret%d" % h] = len(rets)
+        row["verdict"] = "too few cases to say" if len(eps) < MIN_EPISODES else None
+        rows[name] = row
+    return {"start": axis[start], "end": axis[end], "baseline": base, "signals": rows}
+
+
+def uni_stand(S, axis):
+    n = len(axis)
+    start = next((i for i in range(n) if S["ew"][i] is not None), None)
+    if start is None:
+        return None
+    ew = S["ew"]
+    return stand_table(axis, uni_fires(S), S["proxy_c"], lambda i, ref: below(ew, ref),
+                       lambda i: ref_low(ew, i), start, n - 1)
+
+
+def vix_stand(V, axis, bars, proxy="SPY"):
+    n = len(axis)
+    if V is None or proxy not in bars:
+        return None
+    start = next((i for i in range(n) if V["inverted"][i] is not None), None)
+    if start is None:
+        return None
+    inv = V["inverted"]
+    out = stand_table(axis, {"uninversion": vix_fires(V)}, bars[proxy]["c"],
+                      lambda i, ref: (lambda t: inv[t] is True), None, start, n - 1)
+    out["proxy"] = proxy
+    return out
 
 
 def vix_series(axis, bars):
@@ -859,6 +1031,7 @@ def universe_payload(key, spec, S, axis):
         "capitulation_of": S["cap_eval"][i],
         "capitulation_on": [k for k in CAP_KEYS if S["flag"][k][i]],
         "turn_signals": turn,
+        "turn": uni_turn(S, axis),
         "history": hist,
     }
 
@@ -886,7 +1059,7 @@ def vix_payload(V, axis):
             for j in range(max(0, n - HIST_SESSIONS), n)]
     first = next((j for j in range(n) if V["inverted"][j] is not None), None)
     return {"asof": axis[i] if n else None, "first_session": None if first is None else axis[first],
-            "today": today, "history": hist}
+            "today": today, "turn": vix_turn(V, axis), "history": hist}
 
 
 METHOD = [
@@ -914,6 +1087,13 @@ METHOD = [
     "absent when any of the three series is missing.",
     "The latest session's volume is the figure the nightly fetch sees shortly after the close; the provider "
     "often revises it the next day, so today's relative-volume and follow-through readings can move on rerun.",
+    "turn (per universe, and vix.turn): each turn signal's LAST fire, judged with the sessions after it. "
+    "A fired signal is intact while the universe's equal-weight index has not closed below its lowest close "
+    "of the 20 sessions up to and including the signal date (ref_low); it failed on the first such close "
+    "(failed_on); with no failure after 60 sessions it lasted and leaves the active list. The volatility "
+    "curve's un-inversion is intact until the curve inverts again. upvol90 is a 90% up-volume day (nine-tenths "
+    "or more of the members' dollar volume in members that closed up) within 10 sessions after a session "
+    "with a capitulation count of 3 or more; it is not in turn_signals, whose list is unchanged.",
     "Display only. Nothing here is a forecast or an instruction.",
 ]
 
@@ -943,6 +1123,13 @@ BT_NOTES = [
     "baselines (every session of that period; SPY's and SMH's own 10% drawdown rule). The flags need no "
     "warm-up, so their period starts with the VIX3M history (2016-08); the combination starts with the "
     "universe's test period.",
+    "stand (per universe, and backtest.vix.stand): over each group's FULL history (from its first live "
+    "session; the volatility curve from its first session), each turn signal's de-clustered episodes, how many "
+    "were still intact 20 and 60 sessions later (by the turn block's rule), and the median forward return of "
+    "the proxy (SPY for the volatility curve) at 20 and 60 sessions against the median of every session of the "
+    "same period. Counts and medians only, no test of chance; under 10 episodes reads 'too few cases to say'. "
+    "upvol90 needs a capitulation count of 3, and before the percentile rules have a year of history fewer "
+    "rules can count, so it fires less in the early years.",
 ]
 
 
@@ -952,15 +1139,21 @@ def build(axis, bars, specs):
         S = compute_universe(axis, bars, spec["members"], spec["proxy"], MIN_N.get(key, 15))
         unis[key] = universe_payload(key, spec, S, axis)
         bts[key] = backtest_universe(S, axis)
+        bts[key]["stand"] = uni_stand(S, axis)
         uni_S[key] = S
     bt = {"horizons": list(HORIZONS), "decluster": DECLUSTER, "min_episodes": MIN_EPISODES,
           "z_bar": Z_BAR, "combo_k": COMBO_K, "combo_window": COMBO_WIN,
+          "stand_lookback": STAND_LOOKBACK, "stand_limit": STAND_LIMIT, "stand_horizons": list(STAND_HORIZONS),
           "notes": BT_NOTES, "universes": bts}
     bt["summary"] = backtest_read(bt)
     V = vix_series(axis, bars)
     vbt = vix_backtest(axis, bars, V, uni_S)
     if vbt is not None:
+        vst = vix_stand(V, axis, bars)
+        if vst is not None:
+            vbt["stand"] = vst
         bt["vix"] = vbt
+    bt["stand_read"] = stand_read(bt)
     thresholds = {k: {"label": lab, "orient": o, "rule": list(rule), "why": why}
                   for k, lab, o, rule, why in RULES}
     thresholds["_vix"] = {
@@ -978,6 +1171,16 @@ def build(axis, bars, specs):
                   "0.40 within the previous 10 sessions (Zweig's levels).",
         "ftd": "4 to 12 sessions after the proxy's most recent 60-session closing low, the proxy up 1.5% or "
                "more on volume above the prior session's.",
+        "upvol90": "A 90%% up-volume day (%d%% or more of the members' dollar volume in members that closed up) "
+                   "within %d sessions after a session with a capitulation count of %d or more."
+                   % (int(UPVOL_SHARE * 100), UPVOL_WIN, UPVOL_CAP),
+    }
+    thresholds["_stand"] = {
+        "intact": "Fired, and the equal-weight index has not closed below its lowest close of the %d sessions up "
+                  "to and including the signal date (for the volatility curve: not inverted again)." % STAND_LOOKBACK,
+        "failed": "The first close below that reference low (for the volatility curve: the first inversion) "
+                  "within %d sessions of the signal." % STAND_LIMIT,
+        "lasted": "No failure in the %d sessions after the signal; it leaves the active list." % STAND_LIMIT,
     }
     out = {"schema": SCHEMA, "asof": axis[-1] if axis else None,
            "method": METHOD, "thresholds": thresholds, "universes": unis, "backtest": bt}
@@ -1185,6 +1388,43 @@ def auto_read_detail(payload):
     return " ".join(out)
 
 
+def _stand_rows(bt):
+    """(group, signal, row, baseline) for every stand row present."""
+    out = []
+    for k in ("coverage", "semis", "market"):
+        st = (bt.get("universes", {}).get(k) or {}).get("stand")
+        if st:
+            for s in TURN_KEYS:
+                if s in st["signals"]:
+                    out.append((k, s, st["signals"][s], st["baseline"]))
+    vs = (bt.get("vix") or {}).get("stand")
+    if vs and "uninversion" in vs["signals"]:
+        out.append(("vix", "uninversion", vs["signals"]["uninversion"], vs["baseline"]))
+    return out
+
+
+def stand_read(bt):
+    """The plain sentence printed under the stand table, written from the numbers."""
+    rows = _stand_rows(bt)
+    if not rows:
+        return ""
+    enough = [r for r in rows if r[2]["fires"] >= MIN_EPISODES]
+    out = ["Turn signals over each group's full history: %d of %d signal and group pairs fired %d or more "
+           "times; the other %d are too few cases to say." % (len(enough), len(rows), MIN_EPISODES,
+                                                             len(rows) - len(enough))]
+    if enough:
+        sh = sorted(round(100 * r[2]["share60"]) for r in enough if r[2]["share60"] is not None)
+        if sh:
+            out.append("Of those, the share still intact 60 sessions later ran from %d%% to %d%%." % (sh[0], sh[-1]))
+        up = sum(1 for r in enough if r[2]["med60"] is not None and r[3]["med60"] is not None and r[2]["med60"] > r[3]["med60"])
+        dn = sum(1 for r in enough if r[2]["med60"] is not None and r[3]["med60"] is not None and r[2]["med60"] < r[3]["med60"])
+        out.append("The median 60-session return after them was above the any-day median for %d and below it for %d."
+                   % (up, dn))
+    out.append("These are counts and medians with no test of chance: a description of what followed past "
+               "signals, not a timing signal.")
+    return " ".join(out)
+
+
 # ==========================================================================
 # CLI
 # ==========================================================================
@@ -1222,6 +1462,20 @@ def check(path=OUT_PATH, max_bytes=400 * 1024):
                 probs.append("%s.today missing %s" % (key, k))
         if len(u.get("history") or []) > HIST_SESSIONS:
             probs.append("%s history too long" % key)
+        # turn (2026-11-19) is optional so a payload written by the older code still passes
+        if "turn" in u:
+            sig = (u.get("turn") or {}).get("signals")
+            if not isinstance(sig, dict):
+                probs.append("%s.turn missing signals" % key)
+            else:
+                for s in TURN_KEYS:
+                    if (sig.get(s) or {}).get("status") not in STAND_STATUSES:
+                        probs.append("%s.turn.%s status %r" % (key, s, (sig.get(s) or {}).get("status")))
+    sr = (j.get("backtest") or {}).get("stand_read")
+    if sr:
+        bw = PLAIN_READ_BANNED.search(sr)
+        if bw:
+            probs.append("backtest.stand_read uses %r (plain English only)" % bw.group(0))
     rd = (j.get("backtest") or {}).get("read")
     if not rd:
         probs.append("backtest.read empty")
@@ -1245,6 +1499,10 @@ def check(path=OUT_PATH, max_bytes=400 * 1024):
                     probs.append("vix.today missing %s" % k)
         if len((vx or {}).get("history") or []) > HIST_SESSIONS:
             probs.append("vix history too long")
+        if isinstance(vx, dict) and "turn" in vx:
+            un = ((vx.get("turn") or {}).get("signals") or {}).get("uninversion") or {}
+            if un.get("status") not in STAND_STATUSES:
+                probs.append("vix.turn.uninversion status %r" % un.get("status"))
         if not isinstance((j.get("backtest") or {}).get("vix"), dict):
             probs.append("vix block without backtest.vix")
     if "NaN" in txt or "Infinity" in txt:
@@ -1293,6 +1551,14 @@ def main(argv=None):
         "absent" if not vt else "1m/3m=%s inverted=%s" % ((vt.get("ratio_1m_3m") or {}).get("value"),
                                                            vt.get("inverted")),
         os.path.getsize(a.out)))
+    for k in u:
+        sig = (u[k].get("turn") or {}).get("signals") or {}
+        print("  turn %s: %s" % (k, ", ".join("%s %s%s" % (s, (sig.get(s) or {}).get("status"),
+                                                          " " + str((sig.get(s) or {}).get("last_fired")) if (sig.get(s) or {}).get("last_fired") else "")
+                                             for s in TURN_KEYS)))
+    vtn = (((payload.get("vix") or {}).get("turn") or {}).get("signals") or {}).get("uninversion")
+    if vtn:
+        print("  turn vix: uninversion %s %s" % (vtn.get("status"), vtn.get("last_fired")))
     return 0
 
 

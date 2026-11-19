@@ -397,6 +397,18 @@ writes **`data/exhaustion.json`**. Settled closes only.
   (capitulation K>=3 on an inverted session), each `{start, end, unconditional, naive_dd10, events}`
   on SPY and SMH. The whole block is absent when any of the three series is missing, and `--check`
   accepts that.
+- `universes[k].turn` and `vix.turn` (2026-11-19) — each turn signal's LAST fire and whether it is
+  still standing: `{last_fired, status, failed_on, sessions_since, ref_low}` per signal, `status` one of
+  `not_fired`, `intact`, `failed`, `lasted` (`unknown` only when no reference low exists), plus the
+  universe's `index_now`. Intact: the equal-weight index has not closed below its lowest close of the 20
+  sessions up to and including the signal date (`ref_low`); failed on the first such close; `lasted`
+  after 60 sessions with no failure. The VIX un-inversion (`uninversion`) fails on the curve's next
+  inversion. Signals: `thrust`, `ftd`, `divergence` and `upvol90` (a 90% up-volume day within 10
+  sessions after a capitulation count of 3 or more; not added to `turn_signals`).
+  `backtest.universes[k].stand` and `backtest.vix.stand` count, over each group's full history, how
+  many de-clustered episodes were still intact 20 and 60 sessions later and the median forward return
+  of the proxy against any day; `backtest.stand_read` says it in plain English. Both blocks are
+  optional for `--check`, so a file from the older code still passes.
 
 The thresholds were fixed before the backtest was run; do not tune them against it.
 Put/call ratios and fund flows are not included: Cboe's current daily statistics endpoint refused

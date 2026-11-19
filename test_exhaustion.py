@@ -406,5 +406,134 @@ ok("semis proxy is SMH", specs_real["semis"]["proxy"] == "SMH")
 ok("market is the ladder's sector ETFs, one per twin group", "XLK" in mkt and "SMH" in mkt and "SOXX" not in mkt and "SLV" not in mkt and "SPY" not in mkt)
 ok("thresholds are one rule per indicator", len(EX.RULES) == len(set(EX.CAP_KEYS)))
 
+print("re-entry: the 90% up-volume day (2026-11-19)")
+ok("hand-worked day: up-volume share = 5*11*300 / (15*9*200 + 5*11*300)", close(S["up_vol"][i], 16500 / 43500), S["up_vol"][i])
+ok("...and with no flat member the up and down shares sum to 1", close(S["up_vol"][i] + S["down_vol"][i], 1.0))
+uv = [0.5] * 30
+cp = [0] * 30
+cp[5] = 3
+uv[8] = 0.95                 # 3 sessions after a count of 3 -> fires
+uv[15] = 0.95                # 10 sessions after -> still inside the window -> fires
+uv[16] = 0.95                # 11 sessions after -> outside
+cp[20] = 4
+uv[20] = 0.99                # a count of 4 on the SAME session only -> does not fire (must come before)
+uv[22] = 0.89                # under 90% -> no
+ok("fires 1..10 sessions after a count >= 3, not 11 after, not the same session, not under 90%",
+   [k for k, x in enumerate(EX.upvol_series(uv, cp)) if x] == [8, 15], [k for k, x in enumerate(EX.upvol_series(uv, cp)) if x])
+ok("exactly 0.90 counts (the rule is >= nine-tenths)", EX.upvol_series([0.9, 0.9], [3, 0])[1] is True)
+ok("a count of 2 is not enough", not any(EX.upvol_series([0.5, 0.95], [2, 0])))
+
+print("re-entry: intact / failed / lasted (hand-worked)")
+# reference low = the lowest close of the 20 sessions up to and including the signal date
+ser = [10.0] * 30 + [9.0, 9.5, 9.8, 9.6, 9.7]
+ok("reference low: lowest close of the 20 sessions incl. the signal day", EX.ref_low(ser, 32) == 9.0 and EX.ref_low(ser, 29) == 10.0)
+ok("a None in the window is skipped, an all-None window has no reference",
+   EX.ref_low([None, 5.0, None], 2, 3) == 5.0 and EX.ref_low([None, None], 1, 2) is None)
+# 1. fails the next day
+h1 = [10.0] * 25 + [9.0, 8.9]
+r1 = EX.stand_status(25, len(h1), EX.below(h1, EX.ref_low(h1, 25)))
+ok("a signal whose index closes below the reference low the next session -> failed, that session", r1 == ("failed", 26), r1)
+# 2. a close EQUAL to the reference low does not fail it (a close BELOW does)
+h2 = [10.0] * 25 + [9.0, 9.0, 9.5]
+ok("a close level with the reference low leaves it intact", EX.stand_status(25, len(h2), EX.below(h2, 9.0)) == ("intact", None))
+# 3. survives 60 sessions -> lasted; 59 sessions -> still intact
+h3 = [10.0] * 25 + [9.0] + [9.5] * 60
+ok("60 sessions with no close below -> lasted", EX.stand_status(25, len(h3), EX.below(h3, 9.0)) == ("lasted", None))
+ok("59 sessions with no close below -> intact", EX.stand_status(25, len(h3) - 1, EX.below(h3[:-1], 9.0)) == ("intact", None))
+# 4. the failing control: a dip on session 60 after the signal fails it; a dip on session 61 does not
+h4 = list(h3)
+h4[25 + 60] = 8.0
+ok("CONTROL: a close below on the 60th session after -> failed (not lasted)", EX.stand_status(25, len(h4), EX.below(h4, 9.0)) == ("failed", 85))
+h5 = list(h3) + [8.0]
+ok("CONTROL: a close below on the 61st session, after the signal lasted, is not counted", EX.stand_status(25, len(h5), EX.below(h5, 9.0)) == ("lasted", None))
+# 5. a mutation the rule must NOT match: a reference low that excluded the signal day would call h1 intact
+mut = EX.stand_status(25, len(h1), EX.below(h1, min(h1[6:25])))
+ok("CONTROL: a reference low that left out the signal day gives a different answer on the same series", mut[0] == "failed" and EX.ref_low(h1, 25) == 9.0 and min(h1[6:25]) == 10.0)
+ok("stood: 20 sessions after with no failure -> True; failure inside -> False; not enough sessions -> None",
+   EX.stood(25, len(h3), 20, EX.below(h3, 9.0)) is True and EX.stood(25, len(h1), 20, EX.below(h1, 9.0)) is False
+   and EX.stood(25, 30, 20, EX.below(h3, 9.0)) is None)
+# the turn record of the LAST fire
+tax = ["t%03d" % k for k in range(len(h1))]
+arr = [False] * len(h1)
+arr[10] = arr[25] = True
+te = EX.turn_entry(tax, arr, lambda i, ref: EX.below(h1, ref), lambda i: EX.ref_low(h1, i))
+ok("turn record: the last fire, its status, fail date, sessions since and reference low",
+   te == {"last_fired": "t025", "status": "failed", "failed_on": "t026", "sessions_since": 1, "ref_low": 9.0}, te)
+ok("turn record: never fired -> not_fired with nulls",
+   EX.turn_entry(tax, [False] * len(h1), lambda i, ref: EX.below(h1, ref), lambda i: EX.ref_low(h1, i))
+   == {"last_fired": None, "status": "not_fired", "failed_on": None, "sessions_since": None, "ref_low": None})
+# the volatility curve: un-inversion is the first calm session after an inversion; it fails on re-inversion
+inv = [False, True, True, False, False, True, False, False]
+Vh = {"inverted": inv}
+ok("un-inversion fires on the first non-inverted session after an inverted one", [k for k, x in enumerate(EX.vix_fires(Vh)) if x] == [3, 6])
+vt = EX.vix_turn(Vh, ["v%d" % k for k in range(len(inv))])["signals"]["uninversion"]
+ok("the last un-inversion (v6) with no re-inversion since -> intact, 1 session", vt["status"] == "intact" and vt["last_fired"] == "v6" and vt["sessions_since"] == 1, vt)
+vt2 = EX.vix_turn({"inverted": inv[:6]}, ["v%d" % k for k in range(6)])["signals"]["uninversion"]
+ok("cut at v5: the v3 un-inversion re-inverted on v5 -> failed v5", vt2["status"] == "failed" and vt2["failed_on"] == "v5" and vt2["last_fired"] == "v3", vt2)
+
+print("re-entry: the stand table (hand-worked)")
+# 100 sessions, index flat at 10 then a signal on 30 that stands, one on 60 that fails on 61
+sx = ["s%03d" % k for k in range(100)]
+idx_ = [10.0] * 100
+idx_[61] = 9.0
+px_ = [100.0 + k for k in range(100)]
+fire = [False] * 100
+fire[30] = fire[60] = True
+tb = EX.stand_table(sx, {"x": fire}, px_, lambda i, ref: EX.below(idx_, ref), lambda i: EX.ref_low(idx_, i), 0, 99)
+r = tb["signals"]["x"]
+# the dip on session 61 is the day after the second signal (fails it at once) and 31 sessions after
+# the first (inside its 60, so the first stood 20 sessions but not 60). A failure is judged even
+# when the full window has not passed, so both episodes count at 60.
+ok("two episodes; 1 of 2 stood 20 sessions, 0 of 2 stood 60",
+   r["fires"] == 2 and r["n20"] == 2 and r["stood20"] == 1 and r["n60"] == 2 and r["stood60"] == 0
+   and close(r["share20"], 0.5) and r["share60"] == 0.0, r)
+ok("the first signal: stood 20, failed on session 61", EX.stand_status(30, 100, EX.below(idx_, 10.0)) == ("failed", 61)
+   and EX.stood(30, 100, 20, EX.below(idx_, 10.0)) is True)
+ok("median 20-session return = mean of 150/130-1 and 180/160-1 (two cases)",
+   close(r["med20"], ((150.0 / 130 - 1) + (180.0 / 160 - 1)) / 2) and r["n_ret20"] == 2, r["med20"])
+ok("median 60-session return: only the first has 60 sessions after it (190/130-1)",
+   close(r["med60"], 190.0 / 130 - 1) and r["n_ret60"] == 1, r["med60"])
+ok("under 10 episodes -> 'too few cases to say'", r["verdict"] == "too few cases to say")
+many_f = [k % 9 == 0 and k > 0 for k in range(100)]   # every 9th session: decluster(20) keeps 1 of every 3
+tb2 = EX.stand_table(sx, {"y": many_f}, px_, lambda i, ref: EX.below(idx_, ref), lambda i: EX.ref_low(idx_, i), 0, 99)
+ok("episodes are de-clustered exactly as the existing history test is (a new one needs 20 quiet sessions)",
+   tb2["signals"]["y"]["fires"] == len(EX.decluster(many_f, lo=0, hi=99)), tb2["signals"]["y"]["fires"])
+ok("baseline: the median of every session's forward return in the period", close(tb["baseline"]["med20"], EX._median([px_[k + 20] / px_[k] - 1 for k in range(80)])))
+
+print("re-entry: no look-ahead, payload, old-file compatibility")
+ok("up-volume and the 90% up day identical on every session <= D when later data is appended",
+   A["up_vol"][:D] == B["up_vol"][:D] and A["upvol90"][:D] == B["upvol90"][:D])
+ok("the synthetic run is not vacuous: some 90% up days after capitulation fire", any(B["upvol90"]), sum(B["upvol90"]))
+for k in ("coverage", "semis", "market"):
+    t = P["universes"][k].get("turn") or {}
+    ok(k + ": a turn block with every signal and a known status",
+       set(EX.TURN_KEYS) <= set(t.get("signals") or {}) and all(t["signals"][s]["status"] in EX.STAND_STATUSES for s in EX.TURN_KEYS), t)
+    st_ = P["backtest"]["universes"][k].get("stand") or {}
+    ok(k + ": a stand table with every signal, both horizons and the any-day medians",
+       set(EX.TURN_KEYS) <= set(st_.get("signals") or {}) and {"med20", "med60"} <= set(st_.get("baseline") or {})
+       and all({"fires", "share20", "share60", "med20", "med60", "verdict"} <= set(st_["signals"][s]) for s in EX.TURN_KEYS))
+ok("the volatility curve: vix.turn and backtest.vix.stand", "uninversion" in P["vix"]["turn"]["signals"] and "uninversion" in P["backtest"]["vix"]["stand"]["signals"])
+ok("turn_signals keeps its three-signal list (the 90% up day is not added to it)",
+   all(set(x["signal"] for x in P["universes"][k]["turn_signals"]) <= {"divergence", "thrust", "ftd"} for k in P["universes"]))
+SR = P["backtest"]["stand_read"]
+ok("stand_read is written, plain, and carries no guard word", len(SR) > 80 and EX.PLAIN_READ_BANNED.search(SR) is None and EX.GUARD.search(SR) is None, SR)
+ok("no status word the public guard refuses anywhere in the payload (the statuses are intact / failed / lasted)",
+   EX.GUARD.search(s1) is None)
+old = json.loads(s1)
+for k in old["universes"]:
+    del old["universes"][k]["turn"]
+    del old["backtest"]["universes"][k]["stand"]
+del old["vix"]["turn"]
+del old["backtest"]["vix"]["stand"]
+del old["backtest"]["stand_read"]
+with open(fp, "w", encoding="utf-8") as fh:
+    fh.write(json.dumps(old))
+ok("--check passes a payload written by the older code (no turn, no stand)", EX.check(fp) == [], EX.check(fp))
+badt = json.loads(s1)
+badt["universes"]["semis"]["turn"]["signals"]["ftd"]["status"] = "standing"
+with open(fp, "w", encoding="utf-8") as fh:
+    fh.write(json.dumps(badt))
+ok("--check catches an unknown status", any("semis.turn.ftd status" in x for x in EX.check(fp)), EX.check(fp))
+
 print("\n%d passed, %d failed" % (count - fails, fails))
 sys.exit(1 if fails else 0)
