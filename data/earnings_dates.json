@@ -1,12 +1,13 @@
 {
-  "generated_at": "2026-11-19T22:16:27Z",
+  "generated_at": "2026-11-20T22:14:50Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 140,
-  "asked": 283,
+  "asked": 292,
   "missing": [
     "AGG",
     "AMLP",
+    "ANT",
     "ARKX",
     "ARTY",
     "BIL",
@@ -33,6 +34,7 @@
     "EWY",
     "FDN",
     "FINX",
+    "FV",
     "GC=F",
     "GDX",
     "GDXJ",
@@ -75,11 +77,13 @@
     "LQD",
     "MARS",
     "MBB",
+    "MTUM",
     "MUB",
     "NLR",
     "OIH",
     "PAVE",
     "PBJ",
+    "PDP",
     "PEJ",
     "PJP",
     "PPA",
@@ -89,6 +93,7 @@
     "REMX",
     "RING",
     "ROBT",
+    "SECT",
     "SGDM",
     "SHY",
     "SI=F",
@@ -98,7 +103,9 @@
     "SLX",
     "SMH",
     "SOXX",
+    "SPLV",
     "SPY",
+    "SSUS",
     "TAN",
     "TECB",
     "THNQ",
@@ -109,6 +116,7 @@
     "TWDUSD=X",
     "UFO",
     "URA",
+    "USMV",
     "UUP",
     "VNQ",
     "WCLD",
@@ -125,6 +133,7 @@
     "XLK",
     "XLP",
     "XLRE",
+    "XLSR",
     "XLU",
     "XLV",
     "XLY",
@@ -500,8 +509,8 @@
       "estimated": true
     },
     "MU": {
-      "date": "2026-12-23",
-      "estimated": true
+      "date": "2026-12-17",
+      "estimated": false
     },
     "NBIS": {
       "date": "2027-02-11",
@@ -620,8 +629,8 @@
       "estimated": false
     },
     "SIVEF": {
-      "date": "2026-11-26",
-      "estimated": true
+      "date": "2026-11-30",
+      "estimated": false
     },
     "SKHY": {
       "date": "2027-01-27",
