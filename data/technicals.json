@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T22:08:05Z",
+  "generated_at": "2026-11-20T16:40:18Z",
   "method": {
     "regime_gate": "Over the last 90 sessions: trending if log-price R^2 >= 0.85; mean_reverting if R^2 < 0.35 and SMA20 crossings <= 7.0 per 100 sessions; else neither.",
     "regime_calibration": "Thresholds are Monte-Carlo calibrated against a random-walk null (2,000 draws, 90-session windows). R^2 >= 0.85 is the p90 of that null -- note that R^2 >= 0.50 would be met by 44.7% of pure random walks, which is why the common 'it looks trendy' threshold is useless. The Lo-MacKinlay variance ratio is reported as a diagnostic but does NOT classify: a sinusoid is locally smooth, so cyclical data returns VR of 3.9-11.3, far above 1, not below it.",
@@ -120,7 +120,7 @@
       "Survivorship-biased by construction: these are names that earned their way onto the watchlist. A description of their past, not an expectation."
     ]
   },
-  "count": 263,
+  "count": 271,
   "skipped": [
     {
       "ticker": "6981.T",
@@ -269,7 +269,7 @@
         "vs_200dma": -0.225334,
         "vs_50dma": -0.21363,
         "tsmom_12m": 1,
-        "rank_universe": 0.928,
+        "rank_universe": 0.93,
         "rank_group": 0.143,
         "rs_126_vs_proxy": -0.174339
       },
@@ -371,7 +371,7 @@
         "vs_200dma": -0.184572,
         "vs_50dma": -0.16601,
         "tsmom_12m": 1,
-        "rank_universe": 0.939,
+        "rank_universe": 0.941,
         "rank_group": 0.286,
         "rs_126_vs_proxy": -0.075216
       },
@@ -473,7 +473,7 @@
         "vs_200dma": -0.656754,
         "vs_50dma": -0.522113,
         "tsmom_12m": 1,
-        "rank_universe": 0.981,
+        "rank_universe": 0.982,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.716774
       },
@@ -575,7 +575,7 @@
         "vs_200dma": 0.152861,
         "vs_50dma": 0.022273,
         "tsmom_12m": 1,
-        "rank_universe": 0.643,
+        "rank_universe": 0.653,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.183864
       },
@@ -677,7 +677,7 @@
         "vs_200dma": -0.101135,
         "vs_50dma": -0.093069,
         "tsmom_12m": -1,
-        "rank_universe": 0.049,
+        "rank_universe": 0.048,
         "rank_group": 0.083,
         "rs_126_vs_proxy": -0.126221
       },
@@ -779,7 +779,7 @@
         "vs_200dma": -0.001474,
         "vs_50dma": -0.04756,
         "tsmom_12m": 1,
-        "rank_universe": 0.878,
+        "rank_universe": 0.882,
         "rank_group": 0.581,
         "rs_126_vs_proxy": 0.253924
       },
@@ -881,7 +881,7 @@
         "vs_200dma": -0.37373,
         "vs_50dma": -0.269181,
         "tsmom_12m": -1,
-        "rank_universe": 0.24,
+        "rank_universe": 0.232,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.425308
       },
@@ -983,7 +983,7 @@
         "vs_200dma": -0.37243,
         "vs_50dma": -0.357359,
         "tsmom_12m": 1,
-        "rank_universe": 0.973,
+        "rank_universe": 0.974,
         "rank_group": 0.968,
         "rs_126_vs_proxy": -0.333638
       },
@@ -1085,7 +1085,7 @@
         "vs_200dma": -0.155568,
         "vs_50dma": -0.143366,
         "tsmom_12m": -1,
-        "rank_universe": 0.403,
+        "rank_universe": 0.402,
         "rank_group": 0.438,
         "rs_126_vs_proxy": 0.068203
       },
@@ -1187,7 +1187,7 @@
         "vs_200dma": -0.415523,
         "vs_50dma": -0.30667,
         "tsmom_12m": -1,
-        "rank_universe": 0.711,
+        "rank_universe": 0.72,
         "rank_group": 0.875,
         "rs_126_vs_proxy": -0.319385
       },
@@ -1289,7 +1289,7 @@
         "vs_200dma": -0.024406,
         "vs_50dma": 0.000989,
         "tsmom_12m": -1,
-        "rank_universe": 0.202,
+        "rank_universe": 0.196,
         "rank_group": 0.3,
         "rs_126_vs_proxy": 0.020477
       },
@@ -1391,7 +1391,7 @@
         "vs_200dma": -0.304124,
         "vs_50dma": -0.179572,
         "tsmom_12m": -1,
-        "rank_universe": 0.141,
+        "rank_universe": 0.137,
         "rank_group": 0.062,
         "rs_126_vs_proxy": -0.207964
       },
@@ -1493,7 +1493,7 @@
         "vs_200dma": -0.181887,
         "vs_50dma": -0.263808,
         "tsmom_12m": 1,
-        "rank_universe": 0.909,
+        "rank_universe": 0.911,
         "rank_group": 0.71,
         "rs_126_vs_proxy": -0.098396
       },
@@ -1595,7 +1595,7 @@
         "vs_200dma": -0.242035,
         "vs_50dma": -0.20943,
         "tsmom_12m": 1,
-        "rank_universe": 0.882,
+        "rank_universe": 0.886,
         "rank_group": 0.613,
         "rs_126_vs_proxy": 0.007542
       },
@@ -1697,7 +1697,7 @@
         "vs_200dma": 0.141296,
         "vs_50dma": -0.118469,
         "tsmom_12m": 1,
-        "rank_universe": 0.943,
+        "rank_universe": 0.945,
         "rank_group": 0.806,
         "rs_126_vs_proxy": 0.380842
       },
@@ -1799,7 +1799,7 @@
         "vs_200dma": -0.07043,
         "vs_50dma": -0.063452,
         "tsmom_12m": 1,
-        "rank_universe": 0.532,
+        "rank_universe": 0.539,
         "rank_group": 0.685,
         "rs_126_vs_proxy": -0.024487
       },
@@ -1901,7 +1901,7 @@
         "vs_200dma": -0.366688,
         "vs_50dma": -0.194219,
         "tsmom_12m": -1,
-        "rank_universe": 0.084,
+        "rank_universe": 0.081,
         "rank_group": 0.032,
         "rs_126_vs_proxy": -0.432748
       },
@@ -2105,7 +2105,7 @@
         "vs_200dma": 0.125949,
         "vs_50dma": -0.015896,
         "tsmom_12m": 1,
-        "rank_universe": 0.779,
+        "rank_universe": 0.786,
         "rank_group": 0.444,
         "rs_126_vs_proxy": 0.619231
       },
@@ -2207,7 +2207,7 @@
         "vs_200dma": -0.181265,
         "vs_50dma": -0.019562,
         "tsmom_12m": 1,
-        "rank_universe": 0.677,
+        "rank_universe": 0.686,
         "rank_group": 0.226,
         "rs_126_vs_proxy": -0.184568
       },
@@ -2309,7 +2309,7 @@
         "vs_200dma": -0.532424,
         "vs_50dma": -0.336774,
         "tsmom_12m": -1,
-        "rank_universe": 0.122,
+        "rank_universe": 0.118,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.63054
       },
@@ -2411,7 +2411,7 @@
         "vs_200dma": -0.173028,
         "vs_50dma": -0.135533,
         "tsmom_12m": -1,
-        "rank_universe": 0.414,
+        "rank_universe": 0.413,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.203175
       },
@@ -2513,7 +2513,7 @@
         "vs_200dma": -0.28199,
         "vs_50dma": -0.299281,
         "tsmom_12m": -1,
-        "rank_universe": 0.027,
+        "rank_universe": 0.026,
         "rank_group": 0.8,
         "rs_126_vs_proxy": -0.208692
       },
@@ -2615,7 +2615,7 @@
         "vs_200dma": -0.094691,
         "vs_50dma": -0.176072,
         "tsmom_12m": 1,
-        "rank_universe": 0.806,
+        "rank_universe": 0.812,
         "rank_group": 0.826,
         "rs_126_vs_proxy": -0.047703
       },
@@ -2717,7 +2717,7 @@
         "vs_200dma": -0.153393,
         "vs_50dma": -0.169701,
         "tsmom_12m": 1,
-        "rank_universe": 0.844,
+        "rank_universe": 0.849,
         "rank_group": 0.484,
         "rs_126_vs_proxy": 0.083929
       },
@@ -2819,7 +2819,7 @@
         "vs_200dma": -0.195335,
         "vs_50dma": -0.161309,
         "tsmom_12m": 1,
-        "rank_universe": 0.536,
+        "rank_universe": 0.542,
         "rank_group": 0.562,
         "rs_126_vs_proxy": 0.019665
       },
@@ -2921,7 +2921,7 @@
         "vs_200dma": -0.057628,
         "vs_50dma": 0.008104,
         "tsmom_12m": 1,
-        "rank_universe": 0.232,
+        "rank_universe": 0.225,
         "rank_group": 0.065,
         "rs_126_vs_proxy": 0.064764
       },
@@ -3023,7 +3023,7 @@
         "vs_200dma": -0.475482,
         "vs_50dma": -0.420587,
         "tsmom_12m": 1,
-        "rank_universe": 0.992,
+        "rank_universe": 0.993,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.634654
       },
@@ -3125,7 +3125,7 @@
         "vs_200dma": -0.112975,
         "vs_50dma": -0.083668,
         "tsmom_12m": -1,
-        "rank_universe": 0.243,
+        "rank_universe": 0.236,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.01621
       },
@@ -3227,7 +3227,7 @@
         "vs_200dma": -0.249044,
         "vs_50dma": -0.289743,
         "tsmom_12m": 1,
-        "rank_universe": 0.935,
+        "rank_universe": 0.937,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.436351
       },
@@ -3329,7 +3329,7 @@
         "vs_200dma": 0.000482,
         "vs_50dma": 0.000339,
         "tsmom_12m": 1,
-        "rank_universe": 0.281,
+        "rank_universe": 0.273,
         "rank_group": 0.9,
         "rs_126_vs_proxy": 0.047651
       },
@@ -3431,7 +3431,7 @@
         "vs_200dma": 0.000388,
         "vs_50dma": 0.001016,
         "tsmom_12m": 1,
-        "rank_universe": 0.285,
+        "rank_universe": 0.277,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.061109
       },
@@ -3533,7 +3533,7 @@
         "vs_200dma": -0.257776,
         "vs_50dma": -0.335737,
         "tsmom_12m": -1,
-        "rank_universe": 0.038,
+        "rank_universe": 0.037,
         "rank_group": 0.043,
         "rs_126_vs_proxy": -0.20671
       },
@@ -3635,7 +3635,7 @@
         "vs_200dma": -0.014262,
         "vs_50dma": 0.000764,
         "tsmom_12m": -1,
-        "rank_universe": 0.213,
+        "rank_universe": 0.207,
         "rank_group": 0.6,
         "rs_126_vs_proxy": 0.027239
       },
@@ -3737,7 +3737,7 @@
         "vs_200dma": 0.13447,
         "vs_50dma": -0.068144,
         "tsmom_12m": 1,
-        "rank_universe": 0.932,
+        "rank_universe": 0.934,
         "rank_group": 1.0,
         "rs_126_vs_proxy": null
       },
@@ -3839,7 +3839,7 @@
         "vs_200dma": -0.197631,
         "vs_50dma": -0.137918,
         "tsmom_12m": -1,
-        "rank_universe": 0.19,
+        "rank_universe": 0.185,
         "rank_group": 0.174,
         "rs_126_vs_proxy": -0.236917
       },
@@ -3941,7 +3941,7 @@
         "vs_200dma": -0.151088,
         "vs_50dma": -0.210891,
         "tsmom_12m": -1,
-        "rank_universe": 0.373,
+        "rank_universe": 0.369,
         "rank_group": 0.48,
         "rs_126_vs_proxy": null
       },
@@ -4043,7 +4043,7 @@
         "vs_200dma": 0.306584,
         "vs_50dma": 0.018452,
         "tsmom_12m": 1,
-        "rank_universe": 0.768,
+        "rank_universe": 0.775,
         "rank_group": 0.926,
         "rs_126_vs_proxy": 0.46283
       },
@@ -4145,7 +4145,7 @@
         "vs_200dma": -0.048789,
         "vs_50dma": -0.130204,
         "tsmom_12m": 1,
-        "rank_universe": 0.867,
+        "rank_universe": 0.871,
         "rank_group": 0.92,
         "rs_126_vs_proxy": null
       },
@@ -4247,7 +4247,7 @@
         "vs_200dma": -0.092093,
         "vs_50dma": -0.087351,
         "tsmom_12m": 1,
-        "rank_universe": 0.62,
+        "rank_universe": 0.631,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.039587
       },
@@ -4349,7 +4349,7 @@
         "vs_200dma": -0.029303,
         "vs_50dma": -0.015884,
         "tsmom_12m": -1,
-        "rank_universe": 0.217,
+        "rank_universe": 0.21,
         "rank_group": 1.0,
         "rs_126_vs_proxy": null
       },
@@ -4451,7 +4451,7 @@
         "vs_200dma": -0.33238,
         "vs_50dma": -0.254043,
         "tsmom_12m": -1,
-        "rank_universe": 0.696,
+        "rank_universe": 0.705,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.3567
       },
@@ -4553,7 +4553,7 @@
         "vs_200dma": -0.368246,
         "vs_50dma": -0.285511,
         "tsmom_12m": -1,
-        "rank_universe": 0.304,
+        "rank_universe": 0.295,
         "rank_group": 0.25,
         "rs_126_vs_proxy": -0.226149
       },
@@ -4655,7 +4655,7 @@
         "vs_200dma": -0.094572,
         "vs_50dma": -0.056641,
         "tsmom_12m": -1,
-        "rank_universe": 0.061,
+        "rank_universe": 0.059,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.087001
       },
@@ -4757,7 +4757,7 @@
         "vs_200dma": 0.134707,
         "vs_50dma": -0.047224,
         "tsmom_12m": 1,
-        "rank_universe": 0.745,
+        "rank_universe": 0.753,
         "rank_group": 0.583,
         "rs_126_vs_proxy": 0.129583
       },
@@ -4859,7 +4859,7 @@
         "vs_200dma": -0.354155,
         "vs_50dma": -0.222034,
         "tsmom_12m": 1,
-        "rank_universe": 0.905,
+        "rank_universe": 0.908,
         "rank_group": 0.778,
         "rs_126_vs_proxy": -0.43243
       },
@@ -4961,7 +4961,7 @@
         "vs_200dma": -0.275442,
         "vs_50dma": -0.168507,
         "tsmom_12m": 1,
-        "rank_universe": 0.859,
+        "rank_universe": 0.863,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.27838
       },
@@ -5063,7 +5063,7 @@
         "vs_200dma": -0.279423,
         "vs_50dma": -0.248957,
         "tsmom_12m": 1,
-        "rank_universe": 0.7,
+        "rank_universe": 0.708,
         "rank_group": 0.852,
         "rs_126_vs_proxy": -0.260403
       },
@@ -5165,7 +5165,7 @@
         "vs_200dma": -0.307732,
         "vs_50dma": -0.111873,
         "tsmom_12m": -1,
-        "rank_universe": 0.125,
+        "rank_universe": 0.122,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.316895
       },
@@ -5267,7 +5267,7 @@
         "vs_200dma": -0.110204,
         "vs_50dma": -0.13439,
         "tsmom_12m": 1,
-        "rank_universe": 0.631,
+        "rank_universe": 0.642,
         "rank_group": 0.8,
         "rs_126_vs_proxy": null
       },
@@ -5369,7 +5369,7 @@
         "vs_200dma": -0.349466,
         "vs_50dma": -0.301781,
         "tsmom_12m": -1,
-        "rank_universe": 0.658,
+        "rank_universe": 0.668,
         "rank_group": 0.194,
         "rs_126_vs_proxy": -0.227236
       },
@@ -5471,7 +5471,7 @@
         "vs_200dma": -0.073287,
         "vs_50dma": -0.206546,
         "tsmom_12m": -1,
-        "rank_universe": 0.297,
+        "rank_universe": 0.288,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.004697
       },
@@ -5573,7 +5573,7 @@
         "vs_200dma": 0.387111,
         "vs_50dma": -0.012696,
         "tsmom_12m": 1,
-        "rank_universe": 0.897,
+        "rank_universe": 0.9,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.445445
       },
@@ -5675,7 +5675,7 @@
         "vs_200dma": -0.490681,
         "vs_50dma": -0.34895,
         "tsmom_12m": -1,
-        "rank_universe": 0.072,
+        "rank_universe": 0.07,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.470221
       },
@@ -5777,7 +5777,7 @@
         "vs_200dma": -0.077375,
         "vs_50dma": -0.112313,
         "tsmom_12m": 1,
-        "rank_universe": 0.738,
+        "rank_universe": 0.745,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.024513
       },
@@ -5879,7 +5879,7 @@
         "vs_200dma": -0.176971,
         "vs_50dma": -0.305139,
         "tsmom_12m": -1,
-        "rank_universe": 0.802,
+        "rank_universe": 0.808,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.265458
       },
@@ -5981,7 +5981,7 @@
         "vs_200dma": -0.046965,
         "vs_50dma": -0.025322,
         "tsmom_12m": -1,
-        "rank_universe": 0.171,
+        "rank_universe": 0.166,
         "rank_group": 0.5,
         "rs_126_vs_proxy": null
       },
@@ -6083,7 +6083,7 @@
         "vs_200dma": -0.056519,
         "vs_50dma": -0.026782,
         "tsmom_12m": 1,
-        "rank_universe": 0.411,
+        "rank_universe": 0.41,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.062775
       },
@@ -6185,7 +6185,7 @@
         "vs_200dma": -0.232053,
         "vs_50dma": -0.156967,
         "tsmom_12m": -1,
-        "rank_universe": 0.338,
+        "rank_universe": 0.328,
         "rank_group": 0.389,
         "rs_126_vs_proxy": -0.31201
       },
@@ -6287,7 +6287,7 @@
         "vs_200dma": -0.146161,
         "vs_50dma": -0.109941,
         "tsmom_12m": 1,
-        "rank_universe": 0.612,
+        "rank_universe": 0.624,
         "rank_group": 0.565,
         "rs_126_vs_proxy": -0.201674
       },
@@ -6389,7 +6389,7 @@
         "vs_200dma": -0.045384,
         "vs_50dma": -0.015509,
         "tsmom_12m": -1,
-        "rank_universe": 0.228,
+        "rank_universe": 0.221,
         "rank_group": 0.7,
         "rs_126_vs_proxy": 0.003407
       },
@@ -6491,7 +6491,7 @@
         "vs_200dma": -0.452034,
         "vs_50dma": -0.285719,
         "tsmom_12m": -1,
-        "rank_universe": 0.464,
+        "rank_universe": 0.465,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.636037
       },
@@ -6593,7 +6593,7 @@
         "vs_200dma": -0.008667,
         "vs_50dma": -0.000823,
         "tsmom_12m": 1,
-        "rank_universe": 0.65,
+        "rank_universe": 0.661,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.015947
       },
@@ -6695,7 +6695,7 @@
         "vs_200dma": 0.067315,
         "vs_50dma": 0.010682,
         "tsmom_12m": -1,
-        "rank_universe": 0.148,
+        "rank_universe": 0.144,
         "rank_group": 0.148,
         "rs_126_vs_proxy": 0.162948
       },
@@ -6797,7 +6797,7 @@
         "vs_200dma": -0.183209,
         "vs_50dma": -0.244883,
         "tsmom_12m": -1,
-        "rank_universe": 0.342,
+        "rank_universe": 0.332,
         "rank_group": 0.44,
         "rs_126_vs_proxy": null
       },
@@ -6899,7 +6899,7 @@
         "vs_200dma": -0.177848,
         "vs_50dma": -0.265831,
         "tsmom_12m": -1,
-        "rank_universe": 0.057,
+        "rank_universe": 0.055,
         "rank_group": 0.087,
         "rs_126_vs_proxy": -0.153298
       },
@@ -7103,7 +7103,7 @@
         "vs_200dma": -0.046901,
         "vs_50dma": -0.025404,
         "tsmom_12m": -1,
-        "rank_universe": 0.179,
+        "rank_universe": 0.173,
         "rank_group": 0.75,
         "rs_126_vs_proxy": null
       },
@@ -7205,7 +7205,7 @@
         "vs_200dma": -0.180809,
         "vs_50dma": -0.180726,
         "tsmom_12m": 1,
-        "rank_universe": 0.871,
+        "rank_universe": 0.875,
         "rank_group": 0.957,
         "rs_126_vs_proxy": -0.254725
       },
@@ -7307,7 +7307,7 @@
         "vs_200dma": -0.353305,
         "vs_50dma": -0.272536,
         "tsmom_12m": -1,
-        "rank_universe": 0.361,
+        "rank_universe": 0.354,
         "rank_group": 0.375,
         "rs_126_vs_proxy": -0.221717
       },
@@ -7409,7 +7409,7 @@
         "vs_200dma": -0.05947,
         "vs_50dma": -0.106512,
         "tsmom_12m": -1,
-        "rank_universe": 0.35,
+        "rank_universe": 0.339,
         "rank_group": 0.407,
         "rs_126_vs_proxy": -0.041554
       },
@@ -7511,7 +7511,7 @@
         "vs_200dma": -0.125107,
         "vs_50dma": -0.110519,
         "tsmom_12m": -1,
-        "rank_universe": 0.091,
+        "rank_universe": 0.089,
         "rank_group": 0.074,
         "rs_126_vs_proxy": -0.090317
       },
@@ -7613,7 +7613,7 @@
         "vs_200dma": -0.285984,
         "vs_50dma": -0.229359,
         "tsmom_12m": 1,
-        "rank_universe": 0.783,
+        "rank_universe": 0.79,
         "rank_group": 0.6,
         "rs_126_vs_proxy": -0.41546
       },
@@ -7715,7 +7715,7 @@
         "vs_200dma": -0.393725,
         "vs_50dma": -0.181918,
         "tsmom_12m": -1,
-        "rank_universe": 0.099,
+        "rank_universe": 0.096,
         "rank_group": 0.111,
         "rs_126_vs_proxy": -0.437514
       },
@@ -7817,7 +7817,7 @@
         "vs_200dma": -0.03645,
         "vs_50dma": -0.060464,
         "tsmom_12m": 1,
-        "rank_universe": 0.601,
+        "rank_universe": 0.613,
         "rank_group": 0.625,
         "rs_126_vs_proxy": 0.225413
       },
@@ -7919,7 +7919,7 @@
         "vs_200dma": -0.001456,
         "vs_50dma": -0.189044,
         "tsmom_12m": 1,
-        "rank_universe": 0.924,
+        "rank_universe": 0.926,
         "rank_group": 0.917,
         "rs_126_vs_proxy": -0.022985
       },
@@ -7980,6 +7980,108 @@
         }
       }
     },
+    "FV": {
+      "ticker": "FV",
+      "group": "Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-11-20",
+      "last_date": "2026-11-20",
+      "close": 67.7,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.0507,
+        "r2_vs_null_pct": 10,
+        "vr": 0.9309,
+        "cross_rate": 12.68,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -1.3293,
+        "macd_signal": -0.8455,
+        "macd_hist": -0.4838,
+        "macd_hist_prev": -0.4264,
+        "rsi": 30.16,
+        "mfi": 15.55,
+        "vpvma": 0.800631,
+        "vpvma_signal": 4.059177
+      },
+      "momentum": {
+        "mom_12_1": 0.250306,
+        "mom_6_1": 0.041551,
+        "ret_12m": 0.138936,
+        "ret_3m": -0.075907,
+        "ret_1m": -0.089074,
+        "dist_52w_high": -0.110182,
+        "dist_52w_low": 0.156672,
+        "vs_200dma": -0.029641,
+        "vs_50dma": -0.074611,
+        "tsmom_12m": 1,
+        "rank_universe": 0.609,
+        "rank_group": 1.0,
+        "rs_126_vs_proxy": -0.0206
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0375,
+        "swing": "LH/LL",
+        "close_pos_20": 0.454,
+        "atr_pct": 1.82,
+        "atr_pct_rank_1y": 0.758,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.8,
+        "vol_10v50": 1.06,
+        "rvol": 2.1,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0537,
+          "buy_hold_return": 0.1369,
+          "excess_vs_hold": -0.0832,
+          "beat_hold": false,
+          "n_trades": 19,
+          "win_rate": 0.316
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.2898,
+          "buy_hold_return": 0.1369,
+          "excess_vs_hold": -0.4267,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.0
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1369,
+          "excess_vs_hold": -0.1369,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1369,
+          "excess_vs_hold": -0.1369,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.0908,
+          "buy_hold_return": 0.1369,
+          "excess_vs_hold": -0.2276,
+          "beat_hold": false,
+          "n_trades": 31,
+          "win_rate": 0.645
+        }
+      }
+    },
     "GC=F": {
       "ticker": "GC=F",
       "group": "Macro / benchmarks",
@@ -8021,7 +8123,7 @@
         "vs_200dma": -0.18,
         "vs_50dma": -0.120964,
         "tsmom_12m": -1,
-        "rank_universe": 0.274,
+        "rank_universe": 0.266,
         "rank_group": 0.32,
         "rs_126_vs_proxy": null
       },
@@ -8123,7 +8225,7 @@
         "vs_200dma": -0.192654,
         "vs_50dma": -0.167692,
         "tsmom_12m": -1,
-        "rank_universe": 0.445,
+        "rank_universe": 0.446,
         "rank_group": 0.429,
         "rs_126_vs_proxy": 0.0
       },
@@ -8225,7 +8327,7 @@
         "vs_200dma": -0.259662,
         "vs_50dma": -0.212824,
         "tsmom_12m": -1,
-        "rank_universe": 0.422,
+        "rank_universe": 0.421,
         "rank_group": 0.286,
         "rs_126_vs_proxy": -0.08647
       },
@@ -8327,7 +8429,7 @@
         "vs_200dma": -0.205679,
         "vs_50dma": -0.158621,
         "tsmom_12m": 1,
-        "rank_universe": 0.837,
+        "rank_universe": 0.841,
         "rank_group": 0.8,
         "rs_126_vs_proxy": -0.251263
       },
@@ -8429,7 +8531,7 @@
         "vs_200dma": -0.291513,
         "vs_50dma": -0.136064,
         "tsmom_12m": 1,
-        "rank_universe": 0.757,
+        "rank_universe": 0.764,
         "rank_group": 0.29,
         "rs_126_vs_proxy": -0.390133
       },
@@ -8531,7 +8633,7 @@
         "vs_200dma": -0.175295,
         "vs_50dma": -0.109553,
         "tsmom_12m": -1,
-        "rank_universe": 0.251,
+        "rank_universe": 0.244,
         "rank_group": 0.24,
         "rs_126_vs_proxy": null
       },
@@ -8633,7 +8735,7 @@
         "vs_200dma": -0.323089,
         "vs_50dma": -0.22652,
         "tsmom_12m": 1,
-        "rank_universe": 0.856,
+        "rank_universe": 0.86,
         "rank_group": 0.556,
         "rs_126_vs_proxy": -0.295121
       },
@@ -8735,7 +8837,7 @@
         "vs_200dma": 0.17916,
         "vs_50dma": 0.087106,
         "tsmom_12m": 1,
-        "rank_universe": 0.627,
+        "rank_universe": 0.638,
         "rank_group": 0.857,
         "rs_126_vs_proxy": 0.236071
       },
@@ -8837,7 +8939,7 @@
         "vs_200dma": -0.155224,
         "vs_50dma": -0.083931,
         "tsmom_12m": 1,
-        "rank_universe": 0.825,
+        "rank_universe": 0.83,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.09106
       },
@@ -9041,7 +9143,7 @@
         "vs_200dma": -0.145988,
         "vs_50dma": -0.105788,
         "tsmom_12m": 1,
-        "rank_universe": 0.449,
+        "rank_universe": 0.45,
         "rank_group": 0.261,
         "rs_126_vs_proxy": -0.171193
       },
@@ -9143,7 +9245,7 @@
         "vs_200dma": 0.213878,
         "vs_50dma": -6.9e-05,
         "tsmom_12m": 1,
-        "rank_universe": 0.776,
+        "rank_universe": 0.782,
         "rank_group": 0.944,
         "rs_126_vs_proxy": 0.35009
       },
@@ -9245,7 +9347,7 @@
         "vs_200dma": -0.395598,
         "vs_50dma": -0.401542,
         "tsmom_12m": -1,
-        "rank_universe": 0.065,
+        "rank_universe": 0.063,
         "rank_group": 0.143,
         "rs_126_vs_proxy": -0.311242
       },
@@ -9347,7 +9449,7 @@
         "vs_200dma": -0.407465,
         "vs_50dma": -0.364776,
         "tsmom_12m": 1,
-        "rank_universe": 0.848,
+        "rank_universe": 0.852,
         "rank_group": 0.516,
         "rs_126_vs_proxy": -0.507853
       },
@@ -9449,7 +9551,7 @@
         "vs_200dma": -0.370894,
         "vs_50dma": -0.291407,
         "tsmom_12m": -1,
-        "rank_universe": 0.335,
+        "rank_universe": 0.325,
         "rank_group": 0.312,
         "rs_126_vs_proxy": -0.229934
       },
@@ -9551,7 +9653,7 @@
         "vs_200dma": -0.148865,
         "vs_50dma": -0.148009,
         "tsmom_12m": -1,
-        "rank_universe": 0.034,
+        "rank_universe": 0.033,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.068794
       },
@@ -9653,7 +9755,7 @@
         "vs_200dma": -0.034306,
         "vs_50dma": -0.011207,
         "tsmom_12m": 1,
-        "rank_universe": 0.259,
+        "rank_universe": 0.251,
         "rank_group": 0.28,
         "rs_126_vs_proxy": null
       },
@@ -9755,7 +9857,7 @@
         "vs_200dma": -0.044274,
         "vs_50dma": -0.044181,
         "tsmom_12m": 1,
-        "rank_universe": 0.323,
+        "rank_universe": 0.314,
         "rank_group": 0.37,
         "rs_126_vs_proxy": -0.008486
       },
@@ -9857,7 +9959,7 @@
         "vs_200dma": 0.086677,
         "vs_50dma": -0.0247,
         "tsmom_12m": 1,
-        "rank_universe": 0.616,
+        "rank_universe": 0.627,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.244153
       },
@@ -9959,7 +10061,7 @@
         "vs_200dma": -0.142086,
         "vs_50dma": -0.216698,
         "tsmom_12m": -1,
-        "rank_universe": 0.118,
+        "rank_universe": 0.114,
         "rank_group": 0.13,
         "rs_126_vs_proxy": -0.176993
       },
@@ -10061,7 +10163,7 @@
         "vs_200dma": -0.221821,
         "vs_50dma": -0.125581,
         "tsmom_12m": -1,
-        "rank_universe": 0.247,
+        "rank_universe": 0.24,
         "rank_group": 0.241,
         "rs_126_vs_proxy": -0.323812
       },
@@ -10163,7 +10265,7 @@
         "vs_200dma": -0.234842,
         "vs_50dma": -0.219581,
         "tsmom_12m": 1,
-        "rank_universe": 0.719,
+        "rank_universe": 0.727,
         "rank_group": 0.739,
         "rs_126_vs_proxy": -0.215107
       },
@@ -10265,7 +10367,7 @@
         "vs_200dma": -0.028919,
         "vs_50dma": 0.003977,
         "tsmom_12m": -1,
-        "rank_universe": 0.175,
+        "rank_universe": 0.17,
         "rank_group": 0.16,
         "rs_126_vs_proxy": null
       },
@@ -10367,7 +10469,7 @@
         "vs_200dma": -0.196464,
         "vs_50dma": -0.13475,
         "tsmom_12m": 1,
-        "rank_universe": 0.821,
+        "rank_universe": 0.827,
         "rank_group": 0.452,
         "rs_126_vs_proxy": -0.166572
       },
@@ -10469,7 +10571,7 @@
         "vs_200dma": -0.065211,
         "vs_50dma": -0.126053,
         "tsmom_12m": 1,
-        "rank_universe": 0.654,
+        "rank_universe": 0.664,
         "rank_group": 0.796,
         "rs_126_vs_proxy": -0.073175
       },
@@ -10571,7 +10673,7 @@
         "vs_200dma": -0.134444,
         "vs_50dma": -0.204579,
         "tsmom_12m": 1,
-        "rank_universe": 0.829,
+        "rank_universe": 0.834,
         "rank_group": 0.87,
         "rs_126_vs_proxy": -0.134948
       },
@@ -10673,7 +10775,7 @@
         "vs_200dma": 0.018354,
         "vs_50dma": -0.090548,
         "tsmom_12m": -1,
-        "rank_universe": 0.293,
+        "rank_universe": 0.284,
         "rank_group": 0.217,
         "rs_126_vs_proxy": 0.072886
       },
@@ -10775,7 +10877,7 @@
         "vs_200dma": 0.228458,
         "vs_50dma": 0.021209,
         "tsmom_12m": 1,
-        "rank_universe": 0.753,
+        "rank_universe": 0.76,
         "rank_group": 0.907,
         "rs_126_vs_proxy": 0.339195
       },
@@ -10877,7 +10979,7 @@
         "vs_200dma": 0.030945,
         "vs_50dma": -0.06544,
         "tsmom_12m": 1,
-        "rank_universe": 0.624,
+        "rank_universe": 0.635,
         "rank_group": 0.778,
         "rs_126_vs_proxy": 0.115639
       },
@@ -10979,7 +11081,7 @@
         "vs_200dma": 0.050175,
         "vs_50dma": 0.03747,
         "tsmom_12m": -1,
-        "rank_universe": 0.095,
+        "rank_universe": 0.092,
         "rank_group": 0.093,
         "rs_126_vs_proxy": 0.147934
       },
@@ -11081,7 +11183,7 @@
         "vs_200dma": -0.363482,
         "vs_50dma": -0.389419,
         "tsmom_12m": 1,
-        "rank_universe": 0.958,
+        "rank_universe": 0.959,
         "rank_group": 0.871,
         "rs_126_vs_proxy": -0.403273
       },
@@ -11183,7 +11285,7 @@
         "vs_200dma": -0.06202,
         "vs_50dma": -0.028255,
         "tsmom_12m": -1,
-        "rank_universe": 0.266,
+        "rank_universe": 0.258,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.052222
       },
@@ -11489,7 +11591,7 @@
         "vs_200dma": -0.099793,
         "vs_50dma": -0.026127,
         "tsmom_12m": 1,
-        "rank_universe": 0.262,
+        "rank_universe": 0.255,
         "rank_group": 0.259,
         "rs_126_vs_proxy": -0.051771
       },
@@ -11591,7 +11693,7 @@
         "vs_200dma": -0.047981,
         "vs_50dma": 0.009151,
         "tsmom_12m": -1,
-        "rank_universe": 0.129,
+        "rank_universe": 0.125,
         "rank_group": 0.13,
         "rs_126_vs_proxy": 0.042245
       },
@@ -11795,7 +11897,7 @@
         "vs_200dma": -0.102953,
         "vs_50dma": -0.096504,
         "tsmom_12m": 1,
-        "rank_universe": 0.574,
+        "rank_universe": 0.583,
         "rank_group": 0.667,
         "rs_126_vs_proxy": -0.086983
       },
@@ -11897,7 +11999,7 @@
         "vs_200dma": 0.04339,
         "vs_50dma": -0.016012,
         "tsmom_12m": 1,
-        "rank_universe": 0.646,
+        "rank_universe": 0.657,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.113801
       },
@@ -11999,7 +12101,7 @@
         "vs_200dma": -0.09236,
         "vs_50dma": -0.106869,
         "tsmom_12m": -1,
-        "rank_universe": 0.327,
+        "rank_universe": 0.317,
         "rank_group": 0.222,
         "rs_126_vs_proxy": -0.10224
       },
@@ -12101,7 +12203,7 @@
         "vs_200dma": -0.054896,
         "vs_50dma": -0.052667,
         "tsmom_12m": 1,
-        "rank_universe": 0.54,
+        "rank_universe": 0.55,
         "rank_group": 0.435,
         "rs_126_vs_proxy": -0.029661
       },
@@ -12203,7 +12305,7 @@
         "vs_200dma": -0.035938,
         "vs_50dma": -0.04578,
         "tsmom_12m": 1,
-        "rank_universe": 0.597,
+        "rank_universe": 0.605,
         "rank_group": 0.778,
         "rs_126_vs_proxy": 0.006878
       },
@@ -12305,7 +12407,7 @@
         "vs_200dma": -0.07444,
         "vs_50dma": -0.060264,
         "tsmom_12m": 1,
-        "rank_universe": 0.43,
+        "rank_universe": 0.428,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.065917
       },
@@ -12407,7 +12509,7 @@
         "vs_200dma": -0.108845,
         "vs_50dma": -0.094855,
         "tsmom_12m": -1,
-        "rank_universe": 0.278,
+        "rank_universe": 0.269,
         "rank_group": 0.111,
         "rs_126_vs_proxy": -0.083525
       },
@@ -12509,7 +12611,7 @@
         "vs_200dma": -0.012122,
         "vs_50dma": -0.034046,
         "tsmom_12m": 1,
-        "rank_universe": 0.544,
+        "rank_universe": 0.554,
         "rank_group": 0.556,
         "rs_126_vs_proxy": 0.041884
       },
@@ -12611,7 +12713,7 @@
         "vs_200dma": 0.02034,
         "vs_50dma": -0.014259,
         "tsmom_12m": 1,
-        "rank_universe": 0.605,
+        "rank_universe": 0.616,
         "rank_group": 0.889,
         "rs_126_vs_proxy": 0.084289
       },
@@ -12713,7 +12815,7 @@
         "vs_200dma": -0.014955,
         "vs_50dma": -0.002404,
         "tsmom_12m": 1,
-        "rank_universe": 0.433,
+        "rank_universe": 0.432,
         "rank_group": 0.574,
         "rs_126_vs_proxy": 0.029828
       },
@@ -12815,7 +12917,7 @@
         "vs_200dma": -0.00861,
         "vs_50dma": 0.008501,
         "tsmom_12m": 1,
-        "rank_universe": 0.369,
+        "rank_universe": 0.365,
         "rank_group": 0.463,
         "rs_126_vs_proxy": 0.075862
       },
@@ -12917,7 +13019,7 @@
         "vs_200dma": -0.015292,
         "vs_50dma": -0.053344,
         "tsmom_12m": 1,
-        "rank_universe": 0.418,
+        "rank_universe": 0.417,
         "rank_group": 0.714,
         "rs_126_vs_proxy": 0.101325
       },
@@ -13019,7 +13121,7 @@
         "vs_200dma": -0.029984,
         "vs_50dma": -0.030583,
         "tsmom_12m": 1,
-        "rank_universe": 0.51,
+        "rank_universe": 0.509,
         "rank_group": 0.648,
         "rs_126_vs_proxy": 0.040242
       },
@@ -13121,7 +13223,7 @@
         "vs_200dma": -0.025726,
         "vs_50dma": -0.041515,
         "tsmom_12m": 1,
-        "rank_universe": 0.384,
+        "rank_universe": 0.38,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.021135
       },
@@ -13223,7 +13325,7 @@
         "vs_200dma": -0.343433,
         "vs_50dma": -0.223602,
         "tsmom_12m": -1,
-        "rank_universe": 0.144,
+        "rank_universe": 0.14,
         "rank_group": 0.125,
         "rs_126_vs_proxy": -0.239007
       },
@@ -13325,7 +13427,7 @@
         "vs_200dma": 0.067935,
         "vs_50dma": 0.027468,
         "tsmom_12m": 1,
-        "rank_universe": 0.357,
+        "rank_universe": 0.351,
         "rank_group": 0.444,
         "rs_126_vs_proxy": 0.151943
       },
@@ -13427,7 +13529,7 @@
         "vs_200dma": -0.222191,
         "vs_50dma": -0.166778,
         "tsmom_12m": 1,
-        "rank_universe": 0.76,
+        "rank_universe": 0.768,
         "rank_group": 0.323,
         "rs_126_vs_proxy": -0.022779
       },
@@ -13529,7 +13631,7 @@
         "vs_200dma": -0.027535,
         "vs_50dma": -0.030526,
         "tsmom_12m": 1,
-        "rank_universe": 0.563,
+        "rank_universe": 0.572,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.044983
       },
@@ -13631,7 +13733,7 @@
         "vs_200dma": 0.038638,
         "vs_50dma": 0.02886,
         "tsmom_12m": 1,
-        "rank_universe": 0.392,
+        "rank_universe": 0.391,
         "rank_group": 0.537,
         "rs_126_vs_proxy": 0.083458
       },
@@ -13733,7 +13835,7 @@
         "vs_200dma": -0.263321,
         "vs_50dma": -0.162654,
         "tsmom_12m": -1,
-        "rank_universe": 0.27,
+        "rank_universe": 0.262,
         "rank_group": 0.278,
         "rs_126_vs_proxy": -0.332487
       },
@@ -13835,7 +13937,7 @@
         "vs_200dma": -0.344386,
         "vs_50dma": -0.359398,
         "tsmom_12m": 1,
-        "rank_universe": 0.977,
+        "rank_universe": 0.978,
         "rank_group": 0.889,
         "rs_126_vs_proxy": -0.295864
       },
@@ -13937,7 +14039,7 @@
         "vs_200dma": -0.038457,
         "vs_50dma": -0.003823,
         "tsmom_12m": -1,
-        "rank_universe": 0.186,
+        "rank_universe": 0.181,
         "rank_group": 0.2,
         "rs_126_vs_proxy": null
       },
@@ -14039,7 +14141,7 @@
         "vs_200dma": -0.281557,
         "vs_50dma": -0.244401,
         "tsmom_12m": 1,
-        "rank_universe": 0.886,
+        "rank_universe": 0.889,
         "rank_group": 0.645,
         "rs_126_vs_proxy": -0.143265
       },
@@ -14141,7 +14243,7 @@
         "vs_200dma": -0.027534,
         "vs_50dma": 0.001708,
         "tsmom_12m": -1,
-        "rank_universe": 0.209,
+        "rank_universe": 0.203,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.017964
       },
@@ -14243,7 +14345,7 @@
         "vs_200dma": -0.052324,
         "vs_50dma": -0.121135,
         "tsmom_12m": 1,
-        "rank_universe": 0.475,
+        "rank_universe": 0.476,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.01505
       },
@@ -14345,7 +14447,7 @@
         "vs_200dma": -0.026778,
         "vs_50dma": 0.002137,
         "tsmom_12m": 1,
-        "rank_universe": 0.787,
+        "rank_universe": 0.793,
         "rank_group": 0.355,
         "rs_126_vs_proxy": 0.056505
       },
@@ -14447,7 +14549,7 @@
         "vs_200dma": -0.262842,
         "vs_50dma": -0.302153,
         "tsmom_12m": 1,
-        "rank_universe": 0.913,
+        "rank_universe": 0.915,
         "rank_group": 0.742,
         "rs_126_vs_proxy": -0.018046
       },
@@ -14651,7 +14753,7 @@
         "vs_200dma": -0.264845,
         "vs_50dma": -0.377801,
         "tsmom_12m": 1,
-        "rank_universe": 0.966,
+        "rank_universe": 0.967,
         "rank_group": 0.903,
         "rs_126_vs_proxy": -0.078039
       },
@@ -14753,7 +14855,7 @@
         "vs_200dma": 0.124378,
         "vs_50dma": -0.041839,
         "tsmom_12m": 1,
-        "rank_universe": 0.346,
+        "rank_universe": 0.336,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.229693
       },
@@ -14811,6 +14913,108 @@
           "beat_hold": false,
           "n_trades": 175,
           "win_rate": 0.543
+        }
+      }
+    },
+    "MTUM": {
+      "ticker": "MTUM",
+      "group": "Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-11-20",
+      "last_date": "2026-11-20",
+      "close": 61.5401,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.3345,
+        "r2_vs_null_pct": 40,
+        "vr": 1.0357,
+        "cross_rate": 9.86,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -2.8826,
+        "macd_signal": -2.5842,
+        "macd_hist": -0.2984,
+        "macd_hist_prev": -0.1406,
+        "rsi": 29.46,
+        "mfi": 48.86,
+        "vpvma": 2.680642,
+        "vpvma_signal": 3.582966
+      },
+      "momentum": {
+        "mom_12_1": 0.195784,
+        "mom_6_1": -0.046537,
+        "ret_12m": 0.020046,
+        "ret_3m": -0.179425,
+        "ret_1m": -0.146965,
+        "dist_52w_high": -0.286946,
+        "dist_52w_low": 0.066691,
+        "vs_200dma": -0.153455,
+        "vs_50dma": -0.166063,
+        "tsmom_12m": 1,
+        "rank_universe": 0.546,
+        "rank_group": 0.875,
+        "rs_126_vs_proxy": -0.16041
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": 0.0179,
+        "swing": "LH/LL",
+        "close_pos_20": 0.426,
+        "atr_pct": 3.66,
+        "atr_pct_rank_1y": 0.964,
+        "vol_state": "expanded",
+        "ud_vol_50d": 1.52,
+        "vol_10v50": 0.63,
+        "rvol": 0.28,
+        "obv_63d": "bullish_divergence",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0441,
+          "buy_hold_return": 0.1633,
+          "excess_vs_hold": -0.1192,
+          "beat_hold": false,
+          "n_trades": 18,
+          "win_rate": 0.389
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.0214,
+          "buy_hold_return": 0.1633,
+          "excess_vs_hold": -0.1847,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.333
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1633,
+          "excess_vs_hold": -0.1633,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1633,
+          "excess_vs_hold": -0.1633,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0247,
+          "buy_hold_return": 0.1633,
+          "excess_vs_hold": -0.1385,
+          "beat_hold": false,
+          "n_trades": 31,
+          "win_rate": 0.645
         }
       }
     },
@@ -14957,7 +15161,7 @@
         "vs_200dma": -0.024532,
         "vs_50dma": 0.003613,
         "tsmom_12m": -1,
-        "rank_universe": 0.194,
+        "rank_universe": 0.188,
         "rank_group": 0.2,
         "rs_126_vs_proxy": 0.016958
       },
@@ -15059,7 +15263,7 @@
         "vs_200dma": -0.460687,
         "vs_50dma": -0.473732,
         "tsmom_12m": 1,
-        "rank_universe": 0.901,
+        "rank_universe": 0.904,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.440742
       },
@@ -15161,7 +15365,7 @@
         "vs_200dma": -0.106545,
         "vs_50dma": -0.140155,
         "tsmom_12m": 1,
-        "rank_universe": 0.703,
+        "rank_universe": 0.712,
         "rank_group": 0.812,
         "rs_126_vs_proxy": 0.107898
       },
@@ -15263,7 +15467,7 @@
         "vs_200dma": 0.187645,
         "vs_50dma": -0.050777,
         "tsmom_12m": 1,
-        "rank_universe": 0.81,
+        "rank_universe": 0.815,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.374023
       },
@@ -15365,7 +15569,7 @@
         "vs_200dma": -0.333259,
         "vs_50dma": -0.173421,
         "tsmom_12m": -1,
-        "rank_universe": 0.046,
+        "rank_universe": 0.044,
         "rank_group": 0.037,
         "rs_126_vs_proxy": -0.358232
       },
@@ -15569,7 +15773,7 @@
         "vs_200dma": -0.278936,
         "vs_50dma": -0.196555,
         "tsmom_12m": 1,
-        "rank_universe": 0.722,
+        "rank_universe": 0.731,
         "rank_group": 0.222,
         "rs_126_vs_proxy": -0.328775
       },
@@ -15671,7 +15875,7 @@
         "vs_200dma": -0.215771,
         "vs_50dma": -0.309893,
         "tsmom_12m": -1,
-        "rank_universe": 0.133,
+        "rank_universe": 0.129,
         "rank_group": 0.333,
         "rs_126_vs_proxy": -0.142278
       },
@@ -15773,7 +15977,7 @@
         "vs_200dma": -0.284766,
         "vs_50dma": -0.050678,
         "tsmom_12m": -1,
-        "rank_universe": 0.023,
+        "rank_universe": 0.022,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.286399
       },
@@ -15875,7 +16079,7 @@
         "vs_200dma": -0.282925,
         "vs_50dma": -0.301048,
         "tsmom_12m": -1,
-        "rank_universe": 0.578,
+        "rank_universe": 0.587,
         "rank_group": 0.161,
         "rs_126_vs_proxy": -0.154111
       },
@@ -15977,7 +16181,7 @@
         "vs_200dma": -0.094076,
         "vs_50dma": -0.020714,
         "tsmom_12m": -1,
-        "rank_universe": 0.087,
+        "rank_universe": 0.085,
         "rank_group": 0.429,
         "rs_126_vs_proxy": -0.084538
       },
@@ -16079,7 +16283,7 @@
         "vs_200dma": -0.458522,
         "vs_50dma": -0.281743,
         "tsmom_12m": -1,
-        "rank_universe": 0.49,
+        "rank_universe": 0.491,
         "rank_group": 0.129,
         "rs_126_vs_proxy": -0.626777
       },
@@ -16181,7 +16385,7 @@
         "vs_200dma": -0.133741,
         "vs_50dma": -0.102206,
         "tsmom_12m": 1,
-        "rank_universe": 0.741,
+        "rank_universe": 0.749,
         "rank_group": 0.889,
         "rs_126_vs_proxy": -0.198329
       },
@@ -16283,7 +16487,7 @@
         "vs_200dma": 0.577391,
         "vs_50dma": 0.036529,
         "tsmom_12m": 1,
-        "rank_universe": 0.954,
+        "rank_universe": 0.956,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 1.225188
       },
@@ -16385,7 +16589,7 @@
         "vs_200dma": -0.207306,
         "vs_50dma": -0.108262,
         "tsmom_12m": 1,
-        "rank_universe": 0.852,
+        "rank_universe": 0.856,
         "rank_group": 0.548,
         "rs_126_vs_proxy": -0.239095
       },
@@ -16487,7 +16691,7 @@
         "vs_200dma": -0.278623,
         "vs_50dma": -0.169399,
         "tsmom_12m": -1,
-        "rank_universe": 0.019,
+        "rank_universe": 0.018,
         "rank_group": 0.167,
         "rs_126_vs_proxy": -0.394216
       },
@@ -16589,7 +16793,7 @@
         "vs_200dma": -0.35597,
         "vs_50dma": -0.251707,
         "tsmom_12m": -1,
-        "rank_universe": 0.452,
+        "rank_universe": 0.454,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.288128
       },
@@ -16691,7 +16895,7 @@
         "vs_200dma": 0.289859,
         "vs_50dma": -0.014811,
         "tsmom_12m": 1,
-        "rank_universe": 0.863,
+        "rank_universe": 0.867,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.376082
       },
@@ -16793,7 +16997,7 @@
         "vs_200dma": -0.07105,
         "vs_50dma": -0.039422,
         "tsmom_12m": 1,
-        "rank_universe": 0.471,
+        "rank_universe": 0.472,
         "rank_group": 0.63,
         "rs_126_vs_proxy": -0.03379
       },
@@ -16895,7 +17099,7 @@
         "vs_200dma": -0.035256,
         "vs_50dma": -0.008915,
         "tsmom_12m": 1,
-        "rank_universe": 0.354,
+        "rank_universe": 0.347,
         "rank_group": 0.426,
         "rs_126_vs_proxy": -0.002147
       },
@@ -16956,6 +17160,108 @@
         }
       }
     },
+    "PDP": {
+      "ticker": "PDP",
+      "group": "Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-11-20",
+      "last_date": "2026-11-20",
+      "close": 120.335,
+      "regime": {
+        "regime": "mean_reverting",
+        "r2": 0.235,
+        "r2_vs_null_pct": 30,
+        "vr": 0.9026,
+        "cross_rate": 4.23,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": true,
+        "false_positive_rate": 0.08,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -3.1985,
+        "macd_signal": -2.4672,
+        "macd_hist": -0.7313,
+        "macd_hist_prev": -0.539,
+        "rsi": 29.62,
+        "mfi": 14.37,
+        "vpvma": 6.820233,
+        "vpvma_signal": 7.358768
+      },
+      "momentum": {
+        "mom_12_1": 0.187767,
+        "mom_6_1": -0.045919,
+        "ret_12m": 0.069835,
+        "ret_3m": -0.10365,
+        "ret_1m": -0.099289,
+        "dist_52w_high": -0.214421,
+        "dist_52w_low": 0.10959,
+        "vs_200dma": -0.107601,
+        "vs_50dma": -0.101655,
+        "tsmom_12m": 1,
+        "rank_universe": 0.52,
+        "rank_group": 0.625,
+        "rs_126_vs_proxy": -0.112911
+      },
+      "setup": {
+        "stack": "aligned_down",
+        "ema200_slope_63d": 0.0074,
+        "swing": "LH/LL",
+        "close_pos_20": 0.453,
+        "atr_pct": 2.18,
+        "atr_pct_rank_1y": 0.675,
+        "vol_state": "normal",
+        "ud_vol_50d": 0.55,
+        "vol_10v50": 1.49,
+        "rvol": 2.79,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": 0.0281,
+          "buy_hold_return": 0.0683,
+          "excess_vs_hold": -0.0402,
+          "beat_hold": false,
+          "n_trades": 16,
+          "win_rate": 0.375
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.2452,
+          "buy_hold_return": 0.0683,
+          "excess_vs_hold": 0.1769,
+          "beat_hold": true,
+          "n_trades": 1,
+          "win_rate": 1.0
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.0683,
+          "excess_vs_hold": -0.0683,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.0683,
+          "excess_vs_hold": -0.0683,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.1773,
+          "buy_hold_return": 0.0683,
+          "excess_vs_hold": 0.109,
+          "beat_hold": true,
+          "n_trades": 25,
+          "win_rate": 0.6
+        }
+      }
+    },
     "PEJ": {
       "ticker": "PEJ",
       "group": "Sector and industry ETF proxies for the regime ladder (GICS map; added 9/2/26, Stream E)",
@@ -16997,7 +17303,7 @@
         "vs_200dma": 0.036262,
         "vs_50dma": 0.014853,
         "tsmom_12m": 1,
-        "rank_universe": 0.441,
+        "rank_universe": 0.439,
         "rank_group": 0.593,
         "rs_126_vs_proxy": 0.126042
       },
@@ -17201,7 +17507,7 @@
         "vs_200dma": 0.082084,
         "vs_50dma": -0.002833,
         "tsmom_12m": 1,
-        "rank_universe": 0.551,
+        "rank_universe": 0.561,
         "rank_group": 0.722,
         "rs_126_vs_proxy": 0.202606
       },
@@ -17303,7 +17609,7 @@
         "vs_200dma": -0.279562,
         "vs_50dma": -0.112556,
         "tsmom_12m": 1,
-        "rank_universe": 0.798,
+        "rank_universe": 0.804,
         "rank_group": 0.387,
         "rs_126_vs_proxy": -0.232717
       },
@@ -17405,7 +17711,7 @@
         "vs_200dma": -0.106471,
         "vs_50dma": -0.036713,
         "tsmom_12m": 1,
-        "rank_universe": 0.3,
+        "rank_universe": 0.292,
         "rank_group": 0.315,
         "rs_126_vs_proxy": -0.066489
       },
@@ -17507,7 +17813,7 @@
         "vs_200dma": 0.119394,
         "vs_50dma": 0.007321,
         "tsmom_12m": -1,
-        "rank_universe": 0.152,
+        "rank_universe": 0.148,
         "rank_group": 0.571,
         "rs_126_vs_proxy": 0.321117
       },
@@ -17609,7 +17915,7 @@
         "vs_200dma": -0.59926,
         "vs_50dma": -0.446811,
         "tsmom_12m": -1,
-        "rank_universe": 0.008,
+        "rank_universe": 0.007,
         "rank_group": 0.4,
         "rs_126_vs_proxy": -0.70684
       },
@@ -17711,7 +18017,7 @@
         "vs_200dma": -0.049703,
         "vs_50dma": -0.08958,
         "tsmom_12m": 1,
-        "rank_universe": 0.365,
+        "rank_universe": 0.362,
         "rank_group": 0.097,
         "rs_126_vs_proxy": -0.027772
       },
@@ -17813,7 +18119,7 @@
         "vs_200dma": 0.387865,
         "vs_50dma": -4.6e-05,
         "tsmom_12m": 1,
-        "rank_universe": 0.749,
+        "rank_universe": 0.756,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.835814
       },
@@ -17915,7 +18221,7 @@
         "vs_200dma": -0.055584,
         "vs_50dma": -0.095424,
         "tsmom_12m": 1,
-        "rank_universe": 0.555,
+        "rank_universe": 0.565,
         "rank_group": 0.478,
         "rs_126_vs_proxy": -0.066092
       },
@@ -18017,7 +18323,7 @@
         "vs_200dma": -0.05541,
         "vs_50dma": -0.095317,
         "tsmom_12m": 1,
-        "rank_universe": 0.567,
+        "rank_universe": 0.576,
         "rank_group": 0.522,
         "rs_126_vs_proxy": -0.065901
       },
@@ -18119,7 +18425,7 @@
         "vs_200dma": -0.13568,
         "vs_50dma": -0.152553,
         "tsmom_12m": 1,
-        "rank_universe": 0.707,
+        "rank_universe": 0.716,
         "rank_group": 0.696,
         "rs_126_vs_proxy": -0.168604
       },
@@ -18323,7 +18629,7 @@
         "vs_200dma": -0.409249,
         "vs_50dma": -0.332038,
         "tsmom_12m": -1,
-        "rank_universe": 0.076,
+        "rank_universe": 0.074,
         "rank_group": 0.286,
         "rs_126_vs_proxy": -0.381624
       },
@@ -18425,7 +18731,7 @@
         "vs_200dma": -0.450536,
         "vs_50dma": -0.233645,
         "tsmom_12m": -1,
-        "rank_universe": 0.042,
+        "rank_universe": 0.041,
         "rank_group": 0.019,
         "rs_126_vs_proxy": -0.521938
       },
@@ -18527,7 +18833,7 @@
         "vs_200dma": -0.033528,
         "vs_50dma": -0.050177,
         "tsmom_12m": 1,
-        "rank_universe": 0.662,
+        "rank_universe": 0.672,
         "rank_group": 0.75,
         "rs_126_vs_proxy": 0.249205
       },
@@ -18833,7 +19139,7 @@
         "vs_200dma": -0.084169,
         "vs_50dma": -0.127617,
         "tsmom_12m": -1,
-        "rank_universe": 0.456,
+        "rank_universe": 0.458,
         "rank_group": 0.304,
         "rs_126_vs_proxy": -0.06205
       },
@@ -18935,7 +19241,7 @@
         "vs_200dma": 0.31697,
         "vs_50dma": 0.019784,
         "tsmom_12m": 1,
-        "rank_universe": 0.734,
+        "rank_universe": 0.742,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.275607
       },
@@ -18993,6 +19299,108 @@
           "beat_hold": false,
           "n_trades": 81,
           "win_rate": 0.469
+        }
+      }
+    },
+    "SECT": {
+      "ticker": "SECT",
+      "group": "Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-11-20",
+      "last_date": "2026-11-20",
+      "close": 65.09,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.1149,
+        "r2_vs_null_pct": 20,
+        "vr": 0.8375,
+        "cross_rate": 12.68,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -1.2407,
+        "macd_signal": -0.8137,
+        "macd_hist": -0.427,
+        "macd_hist_prev": -0.3148,
+        "rsi": 28.92,
+        "mfi": 23.34,
+        "vpvma": 5.691604,
+        "vpvma_signal": 4.970861
+      },
+      "momentum": {
+        "mom_12_1": 0.154761,
+        "mom_6_1": 0.020045,
+        "ret_12m": 0.059534,
+        "ret_3m": -0.085339,
+        "ret_1m": -0.082464,
+        "dist_52w_high": -0.114783,
+        "dist_52w_low": 0.110182,
+        "vs_200dma": -0.052433,
+        "vs_50dma": -0.08188,
+        "tsmom_12m": 1,
+        "rank_universe": 0.443,
+        "rank_group": 0.5,
+        "rs_126_vs_proxy": -0.033863
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0277,
+        "swing": "LH/LL",
+        "close_pos_20": 0.453,
+        "atr_pct": 1.86,
+        "atr_pct_rank_1y": 1.0,
+        "vol_state": "expanded",
+        "ud_vol_50d": 0.86,
+        "vol_10v50": 0.98,
+        "rvol": 0.54,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.0016,
+          "buy_hold_return": 0.1747,
+          "excess_vs_hold": -0.1763,
+          "beat_hold": false,
+          "n_trades": 20,
+          "win_rate": 0.3
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.1302,
+          "buy_hold_return": 0.1747,
+          "excess_vs_hold": -0.0445,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1747,
+          "excess_vs_hold": -0.1747,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1747,
+          "excess_vs_hold": -0.1747,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": -0.0934,
+          "buy_hold_return": 0.1747,
+          "excess_vs_hold": -0.2681,
+          "beat_hold": false,
+          "n_trades": 36,
+          "win_rate": 0.611
         }
       }
     },
@@ -19139,7 +19547,7 @@
         "vs_200dma": 0.011307,
         "vs_50dma": -0.139503,
         "tsmom_12m": -1,
-        "rank_universe": 0.586,
+        "rank_universe": 0.594,
         "rank_group": 0.5,
         "rs_126_vs_proxy": 0.2109
       },
@@ -19241,7 +19649,7 @@
         "vs_200dma": -0.007684,
         "vs_50dma": 0.000856,
         "tsmom_12m": 1,
-        "rank_universe": 0.255,
+        "rank_universe": 0.247,
         "rank_group": 0.8,
         "rs_126_vs_proxy": 0.03806
       },
@@ -19343,7 +19751,7 @@
         "vs_200dma": -0.364978,
         "vs_50dma": -0.245906,
         "tsmom_12m": -1,
-        "rank_universe": 0.437,
+        "rank_universe": 0.435,
         "rank_group": 0.6,
         "rs_126_vs_proxy": null
       },
@@ -19547,7 +19955,7 @@
         "vs_200dma": -0.278806,
         "vs_50dma": -0.223745,
         "tsmom_12m": -1,
-        "rank_universe": 0.57,
+        "rank_universe": 0.579,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.145519
       },
@@ -19649,7 +20057,7 @@
         "vs_200dma": -0.319528,
         "vs_50dma": -0.238967,
         "tsmom_12m": -1,
-        "rank_universe": 0.46,
+        "rank_universe": 0.461,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.195071
       },
@@ -19853,7 +20261,7 @@
         "vs_200dma": -0.110655,
         "vs_50dma": -0.108219,
         "tsmom_12m": 1,
-        "rank_universe": 0.692,
+        "rank_universe": 0.701,
         "rank_group": 0.833,
         "rs_126_vs_proxy": -0.116833
       },
@@ -19955,7 +20363,7 @@
         "vs_200dma": -0.14778,
         "vs_50dma": -0.187697,
         "tsmom_12m": 1,
-        "rank_universe": 0.84,
+        "rank_universe": 0.845,
         "rank_group": 0.913,
         "rs_126_vs_proxy": -0.186583
       },
@@ -20159,7 +20567,7 @@
         "vs_200dma": -0.142679,
         "vs_50dma": -0.184509,
         "tsmom_12m": 1,
-        "rank_universe": 0.894,
+        "rank_universe": 0.897,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.184902
       },
@@ -20217,6 +20625,108 @@
           "beat_hold": false,
           "n_trades": 178,
           "win_rate": 0.579
+        }
+      }
+    },
+    "SPLV": {
+      "ticker": "SPLV",
+      "group": "Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-11-20",
+      "last_date": "2026-11-20",
+      "close": 77.04,
+      "regime": {
+        "regime": "mean_reverting",
+        "r2": 0.0006,
+        "r2_vs_null_pct": 0,
+        "vr": 0.9074,
+        "cross_rate": 2.82,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": true,
+        "false_positive_rate": 0.08,
+        "window": 90
+      },
+      "indicators": {
+        "macd": 0.7577,
+        "macd_signal": 1.0054,
+        "macd_hist": -0.2477,
+        "macd_hist_prev": -0.2281,
+        "rsi": 54.05,
+        "mfi": 62.52,
+        "vpvma": 0.994651,
+        "vpvma_signal": 2.493175
+      },
+      "momentum": {
+        "mom_12_1": 0.090151,
+        "mom_6_1": 0.03793,
+        "ret_12m": 0.102603,
+        "ret_3m": 0.017532,
+        "ret_1m": 0.011422,
+        "dist_52w_high": -0.018724,
+        "dist_52w_low": 0.09494,
+        "vs_200dma": 0.03207,
+        "vs_50dma": 0.035311,
+        "tsmom_12m": 1,
+        "rank_universe": 0.343,
+        "rank_group": 0.125,
+        "rs_126_vs_proxy": 0.083669
+      },
+      "setup": {
+        "stack": "aligned_up",
+        "ema200_slope_63d": 0.003,
+        "swing": "HH/HL",
+        "close_pos_20": 0.519,
+        "atr_pct": 1.27,
+        "atr_pct_rank_1y": 0.952,
+        "vol_state": "expanded",
+        "ud_vol_50d": 1.19,
+        "vol_10v50": 1.05,
+        "rvol": 1.0,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.0178,
+          "buy_hold_return": 0.0568,
+          "excess_vs_hold": -0.0746,
+          "beat_hold": false,
+          "n_trades": 23,
+          "win_rate": 0.348
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.0376,
+          "buy_hold_return": 0.0568,
+          "excess_vs_hold": -0.0944,
+          "beat_hold": false,
+          "n_trades": 4,
+          "win_rate": 0.25
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.0568,
+          "excess_vs_hold": -0.0568,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.0568,
+          "excess_vs_hold": -0.0568,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0527,
+          "buy_hold_return": 0.0568,
+          "excess_vs_hold": -0.0041,
+          "beat_hold": false,
+          "n_trades": 31,
+          "win_rate": 0.548
         }
       }
     },
@@ -20363,7 +20873,7 @@
         "vs_200dma": -0.235519,
         "vs_50dma": -0.257557,
         "tsmom_12m": 1,
-        "rank_universe": 0.772,
+        "rank_universe": 0.779,
         "rank_group": 0.938,
         "rs_126_vs_proxy": -0.078591
       },
@@ -20424,6 +20934,108 @@
         }
       }
     },
+    "SSUS": {
+      "ticker": "SSUS",
+      "group": "Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-11-20",
+      "last_date": "2026-11-20",
+      "close": 51.85,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.0002,
+        "r2_vs_null_pct": 0,
+        "vr": 0.8185,
+        "cross_rate": 18.31,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.8705,
+        "macd_signal": -0.5346,
+        "macd_hist": -0.3358,
+        "macd_hist_prev": -0.2601,
+        "rsi": 28.21,
+        "mfi": 11.43,
+        "vpvma": 3.758964,
+        "vpvma_signal": 2.729539
+      },
+      "momentum": {
+        "mom_12_1": 0.191096,
+        "mom_6_1": 0.029312,
+        "ret_12m": 0.098512,
+        "ret_3m": -0.073611,
+        "ret_1m": -0.07773,
+        "dist_52w_high": -0.093532,
+        "dist_52w_low": 0.143582,
+        "vs_200dma": -0.031012,
+        "vs_50dma": -0.072341,
+        "tsmom_12m": 1,
+        "rank_universe": 0.531,
+        "rank_group": 0.75,
+        "rs_126_vs_proxy": -0.020056
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.037,
+        "swing": "LH/LL",
+        "close_pos_20": 0.392,
+        "atr_pct": 1.55,
+        "atr_pct_rank_1y": 1.0,
+        "vol_state": "expanded",
+        "ud_vol_50d": 1.88,
+        "vol_10v50": 0.47,
+        "rvol": 0.4,
+        "obv_63d": "bullish_divergence",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.0531,
+          "buy_hold_return": 0.2109,
+          "excess_vs_hold": -0.264,
+          "beat_hold": false,
+          "n_trades": 23,
+          "win_rate": 0.304
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.0234,
+          "buy_hold_return": 0.2109,
+          "excess_vs_hold": -0.1875,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2109,
+          "excess_vs_hold": -0.2109,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.2109,
+          "excess_vs_hold": -0.2109,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0113,
+          "buy_hold_return": 0.2109,
+          "excess_vs_hold": -0.1996,
+          "beat_hold": false,
+          "n_trades": 28,
+          "win_rate": 0.536
+        }
+      }
+    },
     "STM": {
       "ticker": "STM",
       "group": "Semiconductors: compute, design, analog/power",
@@ -20465,7 +21077,7 @@
         "vs_200dma": -0.145859,
         "vs_50dma": -0.101624,
         "tsmom_12m": 1,
-        "rank_universe": 0.92,
+        "rank_universe": 0.923,
         "rank_group": 0.774,
         "rs_126_vs_proxy": -0.151396
       },
@@ -20567,7 +21179,7 @@
         "vs_200dma": -0.258044,
         "vs_50dma": -0.267074,
         "tsmom_12m": 1,
-        "rank_universe": 0.962,
+        "rank_universe": 0.963,
         "rank_group": 0.571,
         "rs_126_vs_proxy": -0.182342
       },
@@ -20669,7 +21281,7 @@
         "vs_200dma": -0.311779,
         "vs_50dma": -0.15036,
         "tsmom_12m": -1,
-        "rank_universe": 0.103,
+        "rank_universe": 0.1,
         "rank_group": 0.111,
         "rs_126_vs_proxy": -0.417016
       },
@@ -20771,7 +21383,7 @@
         "vs_200dma": 0.012224,
         "vs_50dma": -0.092587,
         "tsmom_12m": 1,
-        "rank_universe": 0.665,
+        "rank_universe": 0.675,
         "rank_group": 0.609,
         "rs_126_vs_proxy": 0.035743
       },
@@ -20873,7 +21485,7 @@
         "vs_200dma": 0.457347,
         "vs_50dma": 0.090236,
         "tsmom_12m": 1,
-        "rank_universe": 0.817,
+        "rank_universe": 0.823,
         "rank_group": 0.833,
         "rs_126_vs_proxy": 0.685388
       },
@@ -20975,7 +21587,7 @@
         "vs_200dma": -0.141062,
         "vs_50dma": -0.098683,
         "tsmom_12m": -1,
-        "rank_universe": 0.236,
+        "rank_universe": 0.229,
         "rank_group": 0.188,
         "rs_126_vs_proxy": 0.04263
       },
@@ -21077,7 +21689,7 @@
         "vs_200dma": -0.055432,
         "vs_50dma": -0.155152,
         "tsmom_12m": 1,
-        "rank_universe": 0.764,
+        "rank_universe": 0.771,
         "rank_group": 0.783,
         "rs_126_vs_proxy": -0.047209
       },
@@ -21179,7 +21791,7 @@
         "vs_200dma": -0.031829,
         "vs_50dma": -0.073475,
         "tsmom_12m": 1,
-        "rank_universe": 0.521,
+        "rank_universe": 0.524,
         "rank_group": 0.391,
         "rs_126_vs_proxy": -0.018779
       },
@@ -21281,7 +21893,7 @@
         "vs_200dma": -0.032198,
         "vs_50dma": -0.002111,
         "tsmom_12m": -1,
-        "rank_universe": 0.205,
+        "rank_universe": 0.199,
         "rank_group": 0.4,
         "rs_126_vs_proxy": 0.010818
       },
@@ -21383,7 +21995,7 @@
         "vs_200dma": -0.038565,
         "vs_50dma": 0.003312,
         "tsmom_12m": -1,
-        "rank_universe": 0.156,
+        "rank_universe": 0.151,
         "rank_group": 0.1,
         "rs_126_vs_proxy": 0.011522
       },
@@ -21485,7 +22097,7 @@
         "vs_200dma": 0.019268,
         "vs_50dma": 0.053644,
         "tsmom_12m": -1,
-        "rank_universe": 0.16,
+        "rank_universe": 0.155,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.019191
       },
@@ -21587,7 +22199,7 @@
         "vs_200dma": -0.045218,
         "vs_50dma": 0.003607,
         "tsmom_12m": -1,
-        "rank_universe": 0.137,
+        "rank_universe": 0.133,
         "rank_group": 0.12,
         "rs_126_vs_proxy": null
       },
@@ -21689,7 +22301,7 @@
         "vs_200dma": -0.127679,
         "vs_50dma": -0.170461,
         "tsmom_12m": 1,
-        "rank_universe": 0.814,
+        "rank_universe": 0.819,
         "rank_group": 0.419,
         "rs_126_vs_proxy": 0.102965
       },
@@ -21791,7 +22403,7 @@
         "vs_200dma": -0.032912,
         "vs_50dma": -0.021872,
         "tsmom_12m": -1,
-        "rank_universe": 0.163,
+        "rank_universe": 0.159,
         "rank_group": 0.25,
         "rs_126_vs_proxy": null
       },
@@ -21893,7 +22505,7 @@
         "vs_200dma": 0.073558,
         "vs_50dma": -0.00255,
         "tsmom_12m": 1,
-        "rank_universe": 0.89,
+        "rank_universe": 0.893,
         "rank_group": 0.677,
         "rs_126_vs_proxy": 0.227488
       },
@@ -21995,7 +22607,7 @@
         "vs_200dma": -0.191618,
         "vs_50dma": -0.082582,
         "tsmom_12m": 1,
-        "rank_universe": 0.593,
+        "rank_universe": 0.601,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.33432
       },
@@ -22097,7 +22709,7 @@
         "vs_200dma": -0.368881,
         "vs_50dma": -0.22133,
         "tsmom_12m": -1,
-        "rank_universe": 0.08,
+        "rank_universe": 0.077,
         "rank_group": 0.056,
         "rs_126_vs_proxy": -0.394282
       },
@@ -22158,6 +22770,108 @@
         }
       }
     },
+    "USMV": {
+      "ticker": "USMV",
+      "group": "Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-11-20",
+      "last_date": "2026-11-20",
+      "close": 99.8,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.3841,
+        "r2_vs_null_pct": 45,
+        "vr": 0.9037,
+        "cross_rate": 9.86,
+        "slope": "up",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -0.0858,
+        "macd_signal": 0.4249,
+        "macd_hist": -0.5107,
+        "macd_hist_prev": -0.4315,
+        "rsi": 38.21,
+        "mfi": 36.42,
+        "vpvma": 7.037871,
+        "vpvma_signal": 7.775736
+      },
+      "momentum": {
+        "mom_12_1": 0.127253,
+        "mom_6_1": 0.075303,
+        "ret_12m": 0.08685,
+        "ret_3m": -0.014199,
+        "ret_1m": -0.035842,
+        "dist_52w_high": -0.044976,
+        "dist_52w_low": 0.095259,
+        "vs_200dma": 0.022885,
+        "vs_50dma": -0.011276,
+        "tsmom_12m": 1,
+        "rank_universe": 0.387,
+        "rank_group": 0.375,
+        "rs_126_vs_proxy": 0.070226
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0254,
+        "swing": "HH/HL",
+        "close_pos_20": 0.478,
+        "atr_pct": 1.1,
+        "atr_pct_rank_1y": 0.996,
+        "vol_state": "expanded",
+        "ud_vol_50d": 0.79,
+        "vol_10v50": 1.07,
+        "rvol": 0.38,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.0606,
+          "buy_hold_return": 0.0851,
+          "excess_vs_hold": -0.1457,
+          "beat_hold": false,
+          "n_trades": 23,
+          "win_rate": 0.435
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": -0.0342,
+          "buy_hold_return": 0.0851,
+          "excess_vs_hold": -0.1193,
+          "beat_hold": false,
+          "n_trades": 3,
+          "win_rate": 0.667
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.0851,
+          "excess_vs_hold": -0.0851,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.0851,
+          "excess_vs_hold": -0.0851,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0222,
+          "buy_hold_return": 0.0851,
+          "excess_vs_hold": -0.0629,
+          "beat_hold": false,
+          "n_trades": 37,
+          "win_rate": 0.568
+        }
+      }
+    },
     "UUP": {
       "ticker": "UUP",
       "group": "Macro / benchmarks",
@@ -22199,7 +22913,7 @@
         "vs_200dma": 0.054995,
         "vs_50dma": 0.024331,
         "tsmom_12m": 1,
-        "rank_universe": 0.308,
+        "rank_universe": 0.299,
         "rank_group": 0.36,
         "rs_126_vs_proxy": null
       },
@@ -22301,7 +23015,7 @@
         "vs_200dma": -0.376928,
         "vs_50dma": -0.343648,
         "tsmom_12m": 1,
-        "rank_universe": 0.951,
+        "rank_universe": 0.952,
         "rank_group": 0.839,
         "rs_126_vs_proxy": -0.330584
       },
@@ -22403,7 +23117,7 @@
         "vs_200dma": -0.015883,
         "vs_50dma": 0.005739,
         "tsmom_12m": 1,
-        "rank_universe": 0.316,
+        "rank_universe": 0.306,
         "rank_group": 0.333,
         "rs_126_vs_proxy": 0.015637
       },
@@ -22505,7 +23219,7 @@
         "vs_200dma": -0.339142,
         "vs_50dma": -0.200449,
         "tsmom_12m": 1,
-        "rank_universe": 0.916,
+        "rank_universe": 0.919,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.514718
       },
@@ -22607,7 +23321,7 @@
         "vs_200dma": -0.318953,
         "vs_50dma": -0.177208,
         "tsmom_12m": 1,
-        "rank_universe": 0.639,
+        "rank_universe": 0.649,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.409253
       },
@@ -22709,7 +23423,7 @@
         "vs_200dma": -0.18006,
         "vs_50dma": -0.121853,
         "tsmom_12m": -1,
-        "rank_universe": 0.114,
+        "rank_universe": 0.111,
         "rank_group": 0.5,
         "rs_126_vs_proxy": -0.137732
       },
@@ -22811,7 +23525,7 @@
         "vs_200dma": 0.159795,
         "vs_50dma": -0.057878,
         "tsmom_12m": 1,
-        "rank_universe": 0.669,
+        "rank_universe": 0.679,
         "rank_group": 0.417,
         "rs_126_vs_proxy": 0.292189
       },
@@ -22913,7 +23627,7 @@
         "vs_200dma": 0.109451,
         "vs_50dma": -0.100825,
         "tsmom_12m": -1,
-        "rank_universe": 0.11,
+        "rank_universe": 0.107,
         "rank_group": 0.25,
         "rs_126_vs_proxy": 0.368883
       },
@@ -23015,7 +23729,7 @@
         "vs_200dma": -0.29728,
         "vs_50dma": -0.212667,
         "tsmom_12m": 1,
-        "rank_universe": 0.947,
+        "rank_universe": 0.948,
         "rank_group": 0.429,
         "rs_126_vs_proxy": -0.225319
       },
@@ -23117,7 +23831,7 @@
         "vs_200dma": -0.03192,
         "vs_50dma": -0.03633,
         "tsmom_12m": -1,
-        "rank_universe": 0.224,
+        "rank_universe": 0.218,
         "rank_group": 0.2,
         "rs_126_vs_proxy": 0.108878
       },
@@ -23219,7 +23933,7 @@
         "vs_200dma": -0.267775,
         "vs_50dma": -0.132187,
         "tsmom_12m": 1,
-        "rank_universe": 0.726,
+        "rank_universe": 0.734,
         "rank_group": 0.258,
         "rs_126_vs_proxy": -0.589518
       },
@@ -23321,7 +24035,7 @@
         "vs_200dma": -0.126537,
         "vs_50dma": -0.136617,
         "tsmom_12m": 1,
-        "rank_universe": 0.635,
+        "rank_universe": 0.646,
         "rank_group": 0.688,
         "rs_126_vs_proxy": 0.093104
       },
@@ -23423,7 +24137,7 @@
         "vs_200dma": -0.180404,
         "vs_50dma": -0.209378,
         "tsmom_12m": 1,
-        "rank_universe": 0.681,
+        "rank_universe": 0.69,
         "rank_group": 0.652,
         "rs_126_vs_proxy": -0.195021
       },
@@ -23525,7 +24239,7 @@
         "vs_200dma": -0.354772,
         "vs_50dma": -0.145841,
         "tsmom_12m": -1,
-        "rank_universe": 0.312,
+        "rank_universe": 0.303,
         "rank_group": 0.833,
         "rs_126_vs_proxy": -0.358825
       },
@@ -23627,7 +24341,7 @@
         "vs_200dma": -0.175003,
         "vs_50dma": -0.065052,
         "tsmom_12m": -1,
-        "rank_universe": 0.221,
+        "rank_universe": 0.214,
         "rank_group": 0.222,
         "rs_126_vs_proxy": -0.165432
       },
@@ -23729,7 +24443,7 @@
         "vs_200dma": 0.005385,
         "vs_50dma": -0.058233,
         "tsmom_12m": 1,
-        "rank_universe": 0.673,
+        "rank_universe": 0.683,
         "rank_group": 1.0,
         "rs_126_vs_proxy": 0.121538
       },
@@ -23831,7 +24545,7 @@
         "vs_200dma": -0.17765,
         "vs_50dma": -0.124889,
         "tsmom_12m": 1,
-        "rank_universe": 0.73,
+        "rank_universe": 0.738,
         "rank_group": 0.87,
         "rs_126_vs_proxy": -0.245625
       },
@@ -23933,7 +24647,7 @@
         "vs_200dma": -0.062954,
         "vs_50dma": -0.005937,
         "tsmom_12m": -1,
-        "rank_universe": 0.167,
+        "rank_universe": 0.162,
         "rank_group": 0.167,
         "rs_126_vs_proxy": 0.022111
       },
@@ -24035,7 +24749,7 @@
         "vs_200dma": -0.035625,
         "vs_50dma": -0.0279,
         "tsmom_12m": 1,
-        "rank_universe": 0.559,
+        "rank_universe": 0.568,
         "rank_group": 0.741,
         "rs_126_vs_proxy": 0.02842
       },
@@ -24137,7 +24851,7 @@
         "vs_200dma": -0.083291,
         "vs_50dma": -0.056183,
         "tsmom_12m": -1,
-        "rank_universe": 0.198,
+        "rank_universe": 0.192,
         "rank_group": 0.204,
         "rs_126_vs_proxy": -0.080936
       },
@@ -24239,7 +24953,7 @@
         "vs_200dma": 0.020063,
         "vs_50dma": -0.06018,
         "tsmom_12m": 1,
-        "rank_universe": 0.795,
+        "rank_universe": 0.801,
         "rank_group": 0.981,
         "rs_126_vs_proxy": 0.077033
       },
@@ -24341,7 +25055,7 @@
         "vs_200dma": 0.029081,
         "vs_50dma": -0.006169,
         "tsmom_12m": 1,
-        "rank_universe": 0.376,
+        "rank_universe": 0.373,
         "rank_group": 0.6,
         "rs_126_vs_proxy": 0.116929
       },
@@ -24443,7 +25157,7 @@
         "vs_200dma": -0.069344,
         "vs_50dma": -0.040928,
         "tsmom_12m": 1,
-        "rank_universe": 0.407,
+        "rank_universe": 0.406,
         "rank_group": 0.556,
         "rs_126_vs_proxy": -0.018197
       },
@@ -24545,7 +25259,7 @@
         "vs_200dma": -0.061563,
         "vs_50dma": -0.132284,
         "tsmom_12m": 1,
-        "rank_universe": 0.688,
+        "rank_universe": 0.697,
         "rank_group": 0.815,
         "rs_126_vs_proxy": -0.069047
       },
@@ -24647,7 +25361,7 @@
         "vs_200dma": 0.057075,
         "vs_50dma": 0.0418,
         "tsmom_12m": 1,
-        "rank_universe": 0.468,
+        "rank_universe": 0.469,
         "rank_group": 0.611,
         "rs_126_vs_proxy": 0.110541
       },
@@ -24749,7 +25463,7 @@
         "vs_200dma": -0.015054,
         "vs_50dma": 0.006705,
         "tsmom_12m": 1,
-        "rank_universe": 0.319,
+        "rank_universe": 0.31,
         "rank_group": 0.352,
         "rs_126_vs_proxy": 0.01186
       },
@@ -24810,6 +25524,108 @@
         }
       }
     },
+    "XLSR": {
+      "ticker": "XLSR",
+      "group": "Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26)",
+      "proxy": "SPY",
+      "bars": 502,
+      "first_date": "2024-11-20",
+      "last_date": "2026-11-20",
+      "close": 60.7782,
+      "regime": {
+        "regime": "neither",
+        "r2": 0.0003,
+        "r2_vs_null_pct": 0,
+        "vr": 0.803,
+        "cross_rate": 18.31,
+        "slope": "down",
+        "trend_ok": false,
+        "oscillator_ok": false,
+        "false_positive_rate": null,
+        "window": 90
+      },
+      "indicators": {
+        "macd": -1.0805,
+        "macd_signal": -0.6878,
+        "macd_hist": -0.3926,
+        "macd_hist_prev": -0.2936,
+        "rsi": 28.5,
+        "mfi": 16.09,
+        "vpvma": 4.261292,
+        "vpvma_signal": 3.887704
+      },
+      "momentum": {
+        "mom_12_1": 0.098869,
+        "mom_6_1": 0.014183,
+        "ret_12m": 0.008719,
+        "ret_3m": -0.075195,
+        "ret_1m": -0.082039,
+        "dist_52w_high": -0.10264,
+        "dist_52w_low": 0.086567,
+        "vs_200dma": -0.050054,
+        "vs_50dma": -0.077847,
+        "tsmom_12m": 1,
+        "rank_universe": 0.358,
+        "rank_group": 0.25,
+        "rs_126_vs_proxy": -0.03897
+      },
+      "setup": {
+        "stack": "mixed",
+        "ema200_slope_63d": 0.0241,
+        "swing": "mixed",
+        "close_pos_20": 0.451,
+        "atr_pct": 1.71,
+        "atr_pct_rank_1y": 1.0,
+        "vol_state": "expanded",
+        "ud_vol_50d": 0.82,
+        "vol_10v50": 0.92,
+        "rvol": 0.68,
+        "obv_63d": "confirms",
+        "in_setup": false
+      },
+      "backtest": {
+        "macd_crossover_sig": {
+          "strategy_return": -0.0013,
+          "buy_hold_return": 0.1303,
+          "excess_vs_hold": -0.1316,
+          "beat_hold": false,
+          "n_trades": 21,
+          "win_rate": 0.476
+        },
+        "macd_sig_above_zero": {
+          "strategy_return": 0.0356,
+          "buy_hold_return": 0.1303,
+          "excess_vs_hold": -0.0948,
+          "beat_hold": false,
+          "n_trades": 2,
+          "win_rate": 0.5
+        },
+        "macd_rsi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1303,
+          "excess_vs_hold": -0.1303,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "macd_mfi": {
+          "strategy_return": 0.0,
+          "buy_hold_return": 0.1303,
+          "excess_vs_hold": -0.1303,
+          "beat_hold": false,
+          "n_trades": 0,
+          "win_rate": null
+        },
+        "vpvma": {
+          "strategy_return": 0.0797,
+          "buy_hold_return": 0.1303,
+          "excess_vs_hold": -0.0506,
+          "beat_hold": false,
+          "n_trades": 28,
+          "win_rate": 0.607
+        }
+      }
+    },
     "XLU": {
       "ticker": "XLU",
       "group": "Sector and industry ETF proxies for the regime ladder (GICS map; added 9/2/26, Stream E)",
@@ -24851,7 +25667,7 @@
         "vs_200dma": -0.029973,
         "vs_50dma": 0.025635,
         "tsmom_12m": -1,
-        "rank_universe": 0.183,
+        "rank_universe": 0.177,
         "rank_group": 0.185,
         "rs_126_vs_proxy": 0.000229
       },
@@ -24953,7 +25769,7 @@
         "vs_200dma": 0.103877,
         "vs_50dma": 0.006784,
         "tsmom_12m": 1,
-        "rank_universe": 0.529,
+        "rank_universe": 0.535,
         "rank_group": 0.667,
         "rs_126_vs_proxy": 0.24671
       },
@@ -25055,7 +25871,7 @@
         "vs_200dma": 0.004417,
         "vs_50dma": 0.015003,
         "tsmom_12m": 1,
-        "rank_universe": 0.289,
+        "rank_universe": 0.28,
         "rank_group": 0.296,
         "rs_126_vs_proxy": 0.011985
       },
@@ -25157,7 +25973,7 @@
         "vs_200dma": -0.230425,
         "vs_50dma": -0.158692,
         "tsmom_12m": -1,
-        "rank_universe": 0.388,
+        "rank_universe": 0.384,
         "rank_group": 0.519,
         "rs_126_vs_proxy": -0.235089
       },
@@ -25259,7 +26075,7 @@
         "vs_200dma": -0.021802,
         "vs_50dma": -0.099592,
         "tsmom_12m": 1,
-        "rank_universe": 0.791,
+        "rank_universe": 0.797,
         "rank_group": 0.963,
         "rs_126_vs_proxy": 0.03714
       },
@@ -25361,7 +26177,7 @@
         "vs_200dma": 0.016777,
         "vs_50dma": -0.024137,
         "tsmom_12m": 1,
-        "rank_universe": 0.582,
+        "rank_universe": 0.59,
         "rank_group": 0.759,
         "rs_126_vs_proxy": 0.133083
       },
@@ -25463,7 +26279,7 @@
         "vs_200dma": 0.023603,
         "vs_50dma": 0.016175,
         "tsmom_12m": 1,
-        "rank_universe": 0.38,
+        "rank_universe": 0.376,
         "rank_group": 0.481,
         "rs_126_vs_proxy": 0.112108
       },
@@ -25565,7 +26381,7 @@
         "vs_200dma": -0.14606,
         "vs_50dma": -0.158314,
         "tsmom_12m": 1,
-        "rank_universe": 0.833,
+        "rank_universe": 0.838,
         "rank_group": 1.0,
         "rs_126_vs_proxy": -0.270365
       },
@@ -25667,7 +26483,7 @@
         "vs_200dma": -0.048674,
         "vs_50dma": -0.006627,
         "tsmom_12m": 1,
-        "rank_universe": 0.548,
+        "rank_universe": 0.557,
         "rank_group": 0.704,
         "rs_126_vs_proxy": -0.023498
       },
@@ -25769,7 +26585,7 @@
         "vs_200dma": 0.234756,
         "vs_50dma": -0.028836,
         "tsmom_12m": -1,
-        "rank_universe": 0.053,
+        "rank_universe": 0.052,
         "rank_group": 0.167,
         "rs_126_vs_proxy": 0.157383
       },
@@ -25973,7 +26789,7 @@
         "vs_200dma": 0.130174,
         "vs_50dma": -0.004916,
         "tsmom_12m": 1,
-        "rank_universe": 0.684,
+        "rank_universe": 0.694,
         "rank_group": 0.84,
         "rs_126_vs_proxy": null
       },
@@ -26075,7 +26891,7 @@
         "vs_200dma": -0.023434,
         "vs_50dma": -0.060778,
         "tsmom_12m": 1,
-        "rank_universe": 0.479,
+        "rank_universe": 0.48,
         "rank_group": 0.64,
         "rs_126_vs_proxy": null
       },
@@ -26177,7 +26993,7 @@
         "vs_200dma": -0.074611,
         "vs_50dma": -0.036143,
         "tsmom_12m": -1,
-        "rank_universe": 0.106,
+        "rank_universe": 0.103,
         "rank_group": 0.08,
         "rs_126_vs_proxy": null
       },
@@ -26279,7 +27095,7 @@
         "vs_200dma": 0.107703,
         "vs_50dma": 0.026816,
         "tsmom_12m": 1,
-        "rank_universe": 0.331,
+        "rank_universe": 0.321,
         "rank_group": 0.4,
         "rs_126_vs_proxy": null
       },
@@ -26381,7 +27197,7 @@
         "vs_200dma": -0.050796,
         "vs_50dma": -0.088154,
         "tsmom_12m": 1,
-        "rank_universe": 0.525,
+        "rank_universe": 0.528,
         "rank_group": 0.68,
         "rs_126_vs_proxy": null
       },
@@ -26483,7 +27299,7 @@
         "vs_200dma": -0.223329,
         "vs_50dma": -0.174526,
         "tsmom_12m": 1,
-        "rank_universe": 0.715,
+        "rank_universe": 0.723,
         "rank_group": 0.88,
         "rs_126_vs_proxy": null
       },
@@ -26585,7 +27401,7 @@
         "vs_200dma": -0.05135,
         "vs_50dma": -0.082621,
         "tsmom_12m": 1,
-        "rank_universe": 0.608,
+        "rank_universe": 0.62,
         "rank_group": 0.76,
         "rs_126_vs_proxy": null
       },
@@ -26687,7 +27503,7 @@
         "vs_200dma": -0.137171,
         "vs_50dma": -0.173933,
         "tsmom_12m": 1,
-        "rank_universe": 0.875,
+        "rank_universe": 0.878,
         "rank_group": 0.96,
         "rs_126_vs_proxy": null
       },
@@ -26789,7 +27605,7 @@
         "vs_200dma": 0.098398,
         "vs_50dma": -0.005136,
         "tsmom_12m": 1,
-        "rank_universe": 0.589,
+        "rank_universe": 0.598,
         "rank_group": 0.72,
         "rs_126_vs_proxy": null
       },
@@ -26891,7 +27707,7 @@
         "vs_200dma": 0.058711,
         "vs_50dma": -0.004538,
         "tsmom_12m": 1,
-        "rank_universe": 0.426,
+        "rank_universe": 0.424,
         "rank_group": 0.56,
         "rs_126_vs_proxy": null
       },
@@ -26993,7 +27809,7 @@
         "vs_200dma": 0.532856,
         "vs_50dma": 0.577004,
         "tsmom_12m": 1,
-        "rank_universe": 0.068,
+        "rank_universe": 0.066,
         "rank_group": 0.04,
         "rs_126_vs_proxy": null
       },
@@ -91313,6 +92129,193 @@
         "shape": "flat",
         "gap_bp": -1
       }
+    },
+    "factor_ladder": {
+      "rows": [
+        {
+          "t": "SPLV",
+          "name": "Low volatility (S&P 500)",
+          "side": "defense",
+          "r5": -0.022686,
+          "r21": 0.022941,
+          "r63": 0.018379,
+          "r126": 0.04466,
+          "blend": 0.03152,
+          "third": "top",
+          "third21": "top",
+          "streak": 14,
+          "twin_of": null,
+          "sector": "Low volatility",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        },
+        {
+          "t": "USMV",
+          "name": "Minimum volatility (MSCI)",
+          "side": "defense",
+          "r5": -0.041242,
+          "r21": -0.026169,
+          "r63": -0.011582,
+          "r126": 0.045096,
+          "blend": 0.016757,
+          "third": "top",
+          "third21": "top",
+          "streak": 17,
+          "twin_of": null,
+          "sector": "Low volatility",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        },
+        {
+          "t": "SSUS",
+          "name": "Smart Sector (Ned Davis)",
+          "side": null,
+          "r5": -0.053399,
+          "r21": -0.07475,
+          "r63": -0.063172,
+          "r126": -0.031094,
+          "blend": -0.047133,
+          "third": "top",
+          "third21": "top",
+          "streak": 2,
+          "twin_of": null,
+          "sector": "Sector rotation",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        },
+        {
+          "t": "FV",
+          "name": "Focus 5 (Dorsey Wright)",
+          "side": null,
+          "r5": -0.060597,
+          "r21": -0.092277,
+          "r63": -0.07815,
+          "r126": -0.033264,
+          "blend": -0.055707,
+          "third": "bottom",
+          "third21": "bottom",
+          "streak": 2,
+          "twin_of": null,
+          "sector": "Sector rotation",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        },
+        {
+          "t": "SECT",
+          "name": "Sector rotation (Main)",
+          "side": null,
+          "r5": -0.056338,
+          "r21": -0.076827,
+          "r63": -0.073377,
+          "r126": -0.040738,
+          "blend": -0.057058,
+          "third": "mid",
+          "third21": "mid",
+          "streak": 0,
+          "twin_of": null,
+          "sector": "Sector rotation",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        },
+        {
+          "t": "XLSR",
+          "name": "Sector rotation (SPDR)",
+          "side": null,
+          "r5": -0.056881,
+          "r21": -0.081596,
+          "r63": -0.065268,
+          "r126": -0.052903,
+          "blend": -0.059085,
+          "third": "mid",
+          "third21": "mid",
+          "streak": 0,
+          "twin_of": null,
+          "sector": "Sector rotation",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        },
+        {
+          "t": "THRO",
+          "name": "Thematic rotation",
+          "side": null,
+          "r5": -0.056582,
+          "r21": -0.088136,
+          "r63": -0.073607,
+          "r126": -0.04946,
+          "blend": -0.061534,
+          "third": "mid",
+          "third21": "mid",
+          "streak": 0,
+          "twin_of": null,
+          "sector": "Thematic rotation",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        },
+        {
+          "t": "PDP",
+          "name": "Momentum (Dorsey Wright)",
+          "side": "offense",
+          "r5": -0.058909,
+          "r21": -0.101001,
+          "r63": -0.10133,
+          "r126": -0.116752,
+          "blend": -0.109041,
+          "third": "bottom",
+          "third21": "bottom",
+          "streak": 17,
+          "twin_of": null,
+          "sector": "Momentum",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        },
+        {
+          "t": "MTUM",
+          "name": "Momentum (MSCI)",
+          "side": "offense",
+          "r5": -0.07872,
+          "r21": -0.146749,
+          "r63": -0.160745,
+          "r126": -0.151449,
+          "blend": -0.156097,
+          "third": "bottom",
+          "third21": "bottom",
+          "streak": 17,
+          "twin_of": null,
+          "sector": "Momentum",
+          "gics": null,
+          "basket": false,
+          "members": null,
+          "field": "factor"
+        }
+      ],
+      "divergence": false
+    },
+    "factor_ladder_r252": {
+      "SPLV": 0.08492,
+      "USMV": 0.080522,
+      "MTUM": 0.063144,
+      "PDP": 0.106106,
+      "FV": 0.147857,
+      "SECT": 0.082167,
+      "XLSR": 0.026979,
+      "SSUS": 0.116235,
+      "THRO": 0.085133
     },
     "receipts": {
       "000660.KS": {

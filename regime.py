@@ -701,7 +701,7 @@ def sector_ladder(series, etfs):
     it).
 
     9/15/26: an entry may also carry `field` -- the name of the ladder it
-    belongs to ("style", "bonds"; REG_ETFS entries carry none). It is copied
+    belongs to ("style", "bonds", "factor"; REG_ETFS entries carry none). It is copied
     onto the row ONLY when set, exactly like `stale`, so the sector ladder's
     emitted row shape (and with it the JS-oracle parity fixtures) is
     byte-identical to what it was before the two extra ladders existed."""
@@ -1020,6 +1020,33 @@ REG_STYLE = [
     {"t": "IWO", "name": "Small cap growth", "side": "offense", "sector": "Small cap", "field": "style"},
     {"t": "IWN", "name": "Small cap value", "side": "defense", "sector": "Small cap", "field": "style"},
     {"t": "IWC", "name": "Micro cap", "side": None, "sector": "Micro cap", "field": "style"},
+]
+
+# The FACTOR / ROTATION-FUND ladder (11/20/26, Jake: "add SPLV, USMV and the
+# rotation funds to our price history so they appear on the Technicals ladders
+# alongside the sectors"). Funds that choose stocks or sectors by a rule -- low
+# price swings (SPLV, USMV), recent winners (MTUM, PDP), or a manager's or
+# model's sector calls (FV, SECT, XLSR, SSUS, THRO) -- ranked only against EACH
+# OTHER, the REG_STYLE pattern: a separate `field`, because inside the sector
+# field nine diversified funds would sit in the middle third and re-third every
+# sector row on the way in. It shows which APPROACH is working, not what the
+# funds own. `side` on the polar pairs only -- low volatility = defense,
+# momentum = offense -- so the divergence tell reads "both approaches leading";
+# the rotation funds stay None. THRO is also listed under the thematic ETFs in
+# tickers.txt; that line did not move. No twins (`grp`): the two low-vol funds
+# and the two momentum funds are built differently enough to rank separately.
+# These rows are kept OUT of the 12-1 receipts pool (_REC_EXCLUDE below) so the
+# rank receipts of every existing name are unchanged by their arrival.
+REG_FACTOR = [
+    {"t": "SPLV", "name": "Low volatility (S&P 500)", "side": "defense", "sector": "Low volatility", "field": "factor"},
+    {"t": "USMV", "name": "Minimum volatility (MSCI)", "side": "defense", "sector": "Low volatility", "field": "factor"},
+    {"t": "MTUM", "name": "Momentum (MSCI)", "side": "offense", "sector": "Momentum", "field": "factor"},
+    {"t": "PDP", "name": "Momentum (Dorsey Wright)", "side": "offense", "sector": "Momentum", "field": "factor"},
+    {"t": "FV", "name": "Focus 5 (Dorsey Wright)", "side": None, "sector": "Sector rotation", "field": "factor"},
+    {"t": "SECT", "name": "Sector rotation (Main)", "side": None, "sector": "Sector rotation", "field": "factor"},
+    {"t": "XLSR", "name": "Sector rotation (SPDR)", "side": None, "sector": "Sector rotation", "field": "factor"},
+    {"t": "SSUS", "name": "Smart Sector (Ned Davis)", "side": None, "sector": "Sector rotation", "field": "factor"},
+    {"t": "THRO", "name": "Thematic rotation", "side": None, "sector": "Thematic rotation", "field": "factor"},
 ]
 
 # The BOND-CATEGORY ladder (9/15/26, Jake: "also major bond categories/proxies/
@@ -1386,6 +1413,13 @@ COVERAGE_POOL = [
 ]
 
 _ETF_SET = {e["t"] for e in REG_ETFS}
+# Held out of the 12-1 receipts pool (11/20/26). The pool is a cross-sectional
+# percentile, so every ticker that joins it moves every other name's rank; the
+# factor/rotation funds arrived for their ladder alone and must not re-rank the
+# names already there. THRO is NOT held out: it was in the pool before this
+# ladder existed, and dropping it would re-rank everyone just the same.
+# tools/regime_emit_oracle.js receives the same list.
+_REC_EXCLUDE = {e["t"] for e in REG_FACTOR} - {"THRO"}
 import re as _re
 _NONEQUITY = _re.compile(r"(-USD|=F)$")
 
@@ -1650,7 +1684,8 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
 
     # receipts pool = the emitted (>=MIN_BARS) technicals tickers minus sector
     # ETFs -- mirrors the client's `TECH.tickers` filter (NOT the book set).
-    rec_pool = [t for t in emitted_tickers if series.get(t) and t not in _ETF_SET]
+    rec_pool = [t for t in emitted_tickers if series.get(t) and t not in _ETF_SET
+                and t not in _REC_EXCLUDE]
     rec_pool.sort()
     receipts_full = rank_receipts(series, rec_pool)
     receipts = {}
@@ -1675,6 +1710,9 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
     # EXCESS return over a duration-matched Treasury. Same payload shape, plus
     # tr*/dur/match per row and a `read`; bond_field() above says why.
     bond_out, bond_curve_out = bond_field(series, _r)
+    # 11/20/26: the factor / rotation-fund ladder, the style ladder's shape, plus
+    # its own one-year map beside it (the ladder_r252 pattern: off the rows).
+    factor_out = ladder_payload(sector_ladder(series, REG_FACTOR), _r, with_field=True)
 
     brm = base_rates_multi(series, book, comp["state"], (5, 21, 63))
     base_rates_out = {}
@@ -1724,6 +1762,8 @@ def build_regime(conn, emitted_tickers, ref_ticker="SPY", panel=None, round_floa
         "style_ladder": style_out,
         "bond_ladder": bond_out,
         "bond_curve": bond_curve_out,
+        "factor_ladder": factor_out,
+        "factor_ladder_r252": ladder_long_returns(series, REG_FACTOR, _r),
         "receipts": receipts,
         "base_rates": base_rates_out,
         "flips": flips(dates, comp["state"]),

@@ -72,7 +72,8 @@ def main():
     oracle_path = os.path.join(PAR, "oracle_regime.json")
     with open(panel_path, "w", encoding="utf-8") as fh:
         json.dump({"dates": dates, "series": series, "emitted": emitted,
-                   "coverage_pool": RG.COVERAGE_POOL, "reg_etfs": RG.REG_ETFS}, fh)
+                   "coverage_pool": RG.COVERAGE_POOL, "reg_etfs": RG.REG_ETFS,
+                   "rec_exclude": sorted(RG._REC_EXCLUDE)}, fh)
 
     subprocess.run(["node", os.path.join(HERE, "tools", "regime_emit_oracle.js"),
                     panel_path, oracle_path], check=True)
@@ -96,8 +97,12 @@ def main():
     # the diff; everything the oracle DOES compute, `ladder` included, is still
     # compared key for key. `ladder_r252` (11/12/26) is the sector ladder's
     # one-year return, a display-only map kept OFF the rows for this reason.
+    # `factor_ladder` / `factor_ladder_r252` (11/20/26) are the REG_FACTOR
+    # ladder and its one-year map: server-only for the same reason as the style
+    # ladder. The receipts pool they are held out of IS compared (rec_exclude).
     mine = {k: v for k, v in mine.items()
-            if k not in ("style_ladder", "bond_ladder", "bond_curve", "ladder_r252")}
+            if k not in ("style_ladder", "bond_ladder", "bond_curve", "ladder_r252",
+                         "factor_ladder", "factor_ladder_r252")}
 
     mism = diff(oracle, mine, "regime")
     print("=" * 60)

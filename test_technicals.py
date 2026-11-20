@@ -571,6 +571,30 @@ check_true("the style boxes span large -> micro",
            {e["sector"] for e in RG.REG_STYLE}
            == {"Large cap", "Mid cap", "Small cap", "Micro cap"})
 
+# 11/20/26: the factor / rotation-fund ladder. Same entry shape as the style
+# boxes, its own field, and its new funds held out of the 12-1 receipts pool so
+# their arrival re-ranks no existing name. THRO predates the ladder (it was in
+# the pool already) and stays in it.
+check_true("REG_FACTOR: every row has exactly t/name/side/sector/field",
+           all(set(e) == {"t", "name", "side", "sector", "field"} for e in RG.REG_FACTOR))
+check_true("REG_FACTOR: side is only offense / defense / None",
+           all(e["side"] in _SIDES for e in RG.REG_FACTOR))
+check_true("REG_FACTOR: every row carries field='factor'",
+           all(e["field"] == "factor" for e in RG.REG_FACTOR))
+check_true("REG_FACTOR: nine unique tickers and names",
+           len({e["t"] for e in RG.REG_FACTOR}) == 9 and len({e["name"] for e in RG.REG_FACTOR}) == 9)
+check_true("REG_FACTOR: low volatility = defense, momentum = offense, rotation = None",
+           all(e["side"] == {"Low volatility": "defense", "Momentum": "offense"}.get(e["sector"])
+               for e in RG.REG_FACTOR))
+check_true("REG_FACTOR shares no ticker with the sector, style or bond fields",
+           not ({e["t"] for e in RG.REG_FACTOR}
+                & ({e["t"] for e in RG.REG_ETFS} | {e["t"] for e in RG.REG_STYLE}
+                   | {e["t"] for e in RG.REG_BONDS})))
+check("the receipts pool holds out the eight new funds and not THRO",
+      sorted(RG._REC_EXCLUDE), ["FV", "MTUM", "PDP", "SECT", "SPLV", "SSUS", "USMV", "XLSR"])
+check("a factor ladder whose members have no series yet is empty",
+      RG.sector_ladder(_series, RG.REG_FACTOR)["rows"], [])
+
 # A member with no series yet is ABSENT from `rows` (sector_ladder's `present`
 # filter), never a row of Nones -- so a row appearing is itself the signal that
 # the price backfill landed. `_series` here holds SPY/LIVE/DEAD only.

@@ -382,3 +382,23 @@ MUB        # National munis (iShares)
 BNDX       # International IG, USD-hedged (Vanguard)
 EMB        # EM sovereign USD (iShares)
 # TLT, IEF, HYG and LQD are already listed under Macro / benchmarks above.
+
+# --- Low-volatility, momentum and sector-rotation ETFs (regime factor ladder, added 11/20/26) ---
+# WHY: Jake 11/20/26 — "add SPLV, USMV and the rotation funds to our price history so
+# they appear on the Technicals ladders alongside the sectors". Funds that pick stocks or
+# sectors by a rule (low price swings, recent winners, a manager's sector calls), ranked
+# against EACH OTHER as their own ladder (regime.REG_FACTOR), never inside the sector or
+# style field. Header carries none of technicals.GROUP_PROXY's trigger words (no
+# power/energy/macro/benchmark/broad/thematic/crypto/software/...), so these fall to SPY;
+# "ETFs" keeps them out of exhaustion.py's coverage universe and marks them as funds
+# for fundamentals.py.
+SPLV       # S&P 500 Low Volatility (Invesco)
+USMV       # MSCI USA Min Vol Factor (iShares)
+MTUM       # MSCI USA Momentum Factor (iShares)
+PDP        # Dorsey Wright Momentum (Invesco)
+FV         # Dorsey Wright Focus 5 — sector rotation (First Trust)
+SECT       # Main Sector Rotation (active)
+XLSR       # SSGA US Sector Rotation (SPDR, active)
+SSUS       # Day Hagan / Ned Davis Smart Sector (active)
+# THRO (iShares US thematic rotation) is also a row of this ladder; it is already
+# listed under Broad / thematic / crypto ETFs above.

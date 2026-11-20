@@ -92,8 +92,11 @@ const kLast = last >= 0 ? comp.k[last] : 0;
 const netLast = kLast ? comp.sum[last] / kLast : null;
 const dur = RC.durations(comp.state);
 
-// receipts pool = emitted (>=MIN_BARS) tickers minus sector ETFs (client's TECH.tickers filter)
-const recPool = P.emitted.filter((t) => series[t] && !etfSet[t]);
+// receipts pool = emitted (>=MIN_BARS) tickers minus sector ETFs (client's TECH.tickers filter),
+// minus regime.py's _REC_EXCLUDE (11/20/26: the factor / rotation funds, held out so their
+// arrival re-ranks nobody). Absent from an older panel.json = nothing excluded.
+const recEx = {}; (P.rec_exclude || []).forEach((t) => { recEx[t] = 1; });
+const recPool = P.emitted.filter((t) => series[t] && !etfSet[t] && !recEx[t]);
 const rr = RC.rankReceipts(series, recPool);
 const receipts = {};
 Object.keys(rr).forEach((t) => {
