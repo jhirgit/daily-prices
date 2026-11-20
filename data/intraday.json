@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-11-20T18:16:19.040192Z",
+  "as_of": "2026-11-20T18:45:31.407815Z",
   "source": "finnhub",
   "count": 266,
   "requested": [
@@ -274,69 +274,69 @@
   "quotes": [
     {
       "ticker": "NVDA",
-      "price": 135.13,
-      "change": -10.85,
-      "change_pct": -7.4325,
+      "price": 136.02,
+      "change": -9.96,
+      "change_pct": -6.8229,
       "open": 143.685,
       "high": 143.725,
       "low": 134.82,
       "prev_close": 145.98,
-      "quote_time": "2026-11-20T18:11:01Z"
+      "quote_time": "2026-11-20T18:40:24Z"
     },
     {
       "ticker": "AMD",
-      "price": 433.97,
-      "change": -55.22,
-      "change_pct": -11.288,
+      "price": 437.04,
+      "change": -52.15,
+      "change_pct": -10.6605,
       "open": 472.2875,
       "high": 474.79,
       "low": 428.9,
       "prev_close": 489.19,
-      "quote_time": "2026-11-20T18:11:01Z"
+      "quote_time": "2026-11-20T18:40:24Z"
     },
     {
       "ticker": "AVGO",
-      "price": 305.42,
-      "change": -41.23,
-      "change_pct": -11.8938,
+      "price": 307.62,
+      "change": -39.03,
+      "change_pct": -11.2592,
       "open": 341.505,
       "high": 343.01,
-      "low": 304.81,
+      "low": 304.65,
       "prev_close": 346.65,
-      "quote_time": "2026-11-20T18:11:00Z"
+      "quote_time": "2026-11-20T18:40:23Z"
     },
     {
       "ticker": "MRVL",
-      "price": 124.53,
-      "change": -13.94,
-      "change_pct": -10.0672,
+      "price": 125.54,
+      "change": -12.93,
+      "change_pct": -9.3378,
       "open": 133.9375,
       "high": 134.1754,
       "low": 123.26,
       "prev_close": 138.47,
-      "quote_time": "2026-11-20T18:11:00Z"
+      "quote_time": "2026-11-20T18:40:24Z"
     },
     {
       "ticker": "AEIS",
-      "price": 192.55,
-      "change": -19.69,
-      "change_pct": -9.2772,
+      "price": 192.92,
+      "change": -19.32,
+      "change_pct": -9.1029,
       "open": 207.05,
       "high": 207.05,
       "low": 191.08,
       "prev_close": 212.24,
-      "quote_time": "2026-11-20T18:10:27Z"
+      "quote_time": "2026-11-20T18:40:46Z"
     },
     {
       "ticker": "NVEC",
-      "price": 72.25,
-      "change": -6.59,
-      "change_pct": -8.3587,
+      "price": 72.81,
+      "change": -6.03,
+      "change_pct": -7.6484,
       "open": 76.39,
       "high": 78.01,
       "low": 72.2,
       "prev_close": 78.84,
-      "quote_time": "2026-11-20T17:56:34Z"
+      "quote_time": "2026-11-20T18:40:22Z"
     },
     {
       "ticker": "LPKFF",
@@ -351,168 +351,168 @@
     },
     {
       "ticker": "INTC",
-      "price": 52.61,
-      "change": -3.11,
-      "change_pct": -5.5815,
+      "price": 53.16,
+      "change": -2.56,
+      "change_pct": -4.5944,
       "open": 54.1525,
       "high": 56.489999999999995,
-      "low": 52.42,
+      "low": 52.38,
       "prev_close": 55.72,
-      "quote_time": "2026-11-20T18:11:01Z"
+      "quote_time": "2026-11-20T18:40:46Z"
     },
     {
       "ticker": "TSM",
-      "price": 321.59,
-      "change": -30.5,
-      "change_pct": -8.6626,
+      "price": 325.06,
+      "change": -27.03,
+      "change_pct": -7.677,
       "open": 340.92,
       "high": 343.75,
       "low": 319.85,
       "prev_close": 352.09,
-      "quote_time": "2026-11-20T18:11:01Z"
+      "quote_time": "2026-11-20T18:40:45Z"
     },
     {
       "ticker": "ASML",
-      "price": 1279.19,
-      "change": -77.01,
-      "change_pct": -5.6784,
+      "price": 1286.56,
+      "change": -69.64,
+      "change_pct": -5.1349,
       "open": 1332.29,
       "high": 1336.7585,
       "low": 1267.1401,
       "prev_close": 1356.2,
-      "quote_time": "2026-11-20T18:10:55Z"
+      "quote_time": "2026-11-20T18:40:42Z"
     },
     {
       "ticker": "LRCX",
-      "price": 185.02,
-      "change": -18.66,
-      "change_pct": -9.1614,
+      "price": 187.02,
+      "change": -16.66,
+      "change_pct": -8.1795,
       "open": 198.02,
       "high": 199.775,
       "low": 182.7,
       "prev_close": 203.68,
-      "quote_time": "2026-11-20T18:11:01Z"
+      "quote_time": "2026-11-20T18:40:46Z"
     },
     {
       "ticker": "ALAB",
-      "price": 185.81,
-      "change": -25.79,
-      "change_pct": -12.1881,
+      "price": 187.34,
+      "change": -24.26,
+      "change_pct": -11.465,
       "open": 203.325,
       "high": 205.9299,
       "low": 182.4,
       "prev_close": 211.6,
-      "quote_time": "2026-11-20T18:11:19Z"
+      "quote_time": "2026-11-20T18:40:45Z"
     },
     {
       "ticker": "MPWR",
-      "price": 1159.06,
-      "change": -136.8,
-      "change_pct": -10.5567,
+      "price": 1166.26,
+      "change": -129.6,
+      "change_pct": -10.0011,
       "open": 1265.205,
       "high": 1271.13,
-      "low": 1156.12,
+      "low": 1155.63,
       "prev_close": 1295.86,
-      "quote_time": "2026-11-20T18:11:20Z"
+      "quote_time": "2026-11-20T18:40:46Z"
     },
     {
       "ticker": "AXTI",
-      "price": 30.42,
-      "change": -4.42,
-      "change_pct": -12.6866,
+      "price": 30.93,
+      "change": -3.91,
+      "change_pct": -11.2227,
       "open": 33.0725,
       "high": 33.485299999999995,
       "low": 29.97,
       "prev_close": 34.84,
-      "quote_time": "2026-11-20T18:11:18Z"
+      "quote_time": "2026-11-20T18:40:42Z"
     },
     {
       "ticker": "NVTS",
-      "price": 6.22,
-      "change": -0.95,
-      "change_pct": -13.2497,
+      "price": 6.31,
+      "change": -0.86,
+      "change_pct": -11.9944,
       "open": 6.905,
       "high": 6.96,
       "low": 6.115,
       "prev_close": 7.17,
-      "quote_time": "2026-11-20T18:11:17Z"
+      "quote_time": "2026-11-20T18:40:46Z"
     },
     {
       "ticker": "AEHR",
-      "price": 40.04,
-      "change": -7.9,
-      "change_pct": -16.4789,
+      "price": 40.71,
+      "change": -7.23,
+      "change_pct": -15.0814,
       "open": 45.715,
       "high": 45.955,
       "low": 39.65,
       "prev_close": 47.94,
-      "quote_time": "2026-11-20T18:11:15Z"
+      "quote_time": "2026-11-20T18:40:43Z"
     },
     {
       "ticker": "HIMX",
-      "price": 6.93,
-      "change": -0.65,
-      "change_pct": -8.5752,
+      "price": 6.97,
+      "change": -0.61,
+      "change_pct": -8.0475,
       "open": 7.355,
       "high": 7.41,
       "low": 6.86,
       "prev_close": 7.58,
-      "quote_time": "2026-11-20T18:11:18Z"
+      "quote_time": "2026-11-20T18:40:14Z"
     },
     {
       "ticker": "POWI",
-      "price": 39.72,
-      "change": -2.61,
-      "change_pct": -6.1658,
+      "price": 40.13,
+      "change": -2.2,
+      "change_pct": -5.1973,
       "open": 41.105,
       "high": 41.699999999999996,
       "low": 39.06,
       "prev_close": 42.33,
-      "quote_time": "2026-11-20T18:11:24Z"
+      "quote_time": "2026-11-20T18:40:46Z"
     },
     {
       "ticker": "AOSL",
-      "price": 21.47,
-      "change": -3.66,
-      "change_pct": -14.5643,
+      "price": 21.72,
+      "change": -3.41,
+      "change_pct": -13.5694,
       "open": 23.84,
       "high": 24.1,
       "low": 21.32,
       "prev_close": 25.13,
-      "quote_time": "2026-11-20T18:11:09Z"
+      "quote_time": "2026-11-20T18:40:01Z"
     },
     {
       "ticker": "ON",
-      "price": 60.84,
-      "change": -4.88,
-      "change_pct": -7.4254,
+      "price": 61.4,
+      "change": -4.32,
+      "change_pct": -6.5733,
       "open": 64.415,
       "high": 65.5,
       "low": 60.57,
       "prev_close": 65.72,
-      "quote_time": "2026-11-20T18:11:21Z"
+      "quote_time": "2026-11-20T18:40:42Z"
     },
     {
       "ticker": "VICR",
-      "price": 124.12,
-      "change": -17.4,
-      "change_pct": -12.2951,
+      "price": 125.17,
+      "change": -16.35,
+      "change_pct": -11.5531,
       "open": 134.95,
       "high": 136.5,
       "low": 122.85,
       "prev_close": 141.52,
-      "quote_time": "2026-11-20T18:11:04Z"
+      "quote_time": "2026-11-20T18:40:22Z"
     },
     {
       "ticker": "STM",
-      "price": 39.5,
-      "change": -4.28,
-      "change_pct": -9.7762,
+      "price": 39.83,
+      "change": -3.95,
+      "change_pct": -9.0224,
       "open": 42.46,
       "high": 42.5,
       "low": 39.21,
       "prev_close": 43.78,
-      "quote_time": "2026-11-20T18:11:22Z"
+      "quote_time": "2026-11-20T18:40:46Z"
     },
     {
       "ticker": "IFNNY",
@@ -538,25 +538,25 @@
     },
     {
       "ticker": "TXN",
-      "price": 268.36,
-      "change": -17.39,
-      "change_pct": -6.0857,
+      "price": 269.73,
+      "change": -16.02,
+      "change_pct": -5.6063,
       "open": 280.955,
       "high": 282.545,
-      "low": 267.89,
+      "low": 267.79,
       "prev_close": 285.75,
-      "quote_time": "2026-11-20T18:11:22Z"
+      "quote_time": "2026-11-20T18:40:46Z"
     },
     {
       "ticker": "PENG",
-      "price": 36.92,
-      "change": -5.59,
-      "change_pct": -13.1498,
+      "price": 37.49,
+      "change": -5.02,
+      "change_pct": -11.809,
       "open": 40.965,
       "high": 41.18,
       "low": 36.62,
       "prev_close": 42.51,
-      "quote_time": "2026-11-20T18:11:18Z"
+      "quote_time": "2026-11-20T18:41:06Z"
     },
     {
       "ticker": "SIVEF",
@@ -571,113 +571,113 @@
     },
     {
       "ticker": "WOLF",
-      "price": 19.63,
-      "change": -2.85,
-      "change_pct": -12.6779,
+      "price": 19.84,
+      "change": -2.64,
+      "change_pct": -11.7438,
       "open": 21.585,
       "high": 21.585,
       "low": 18.985,
       "prev_close": 22.48,
-      "quote_time": "2026-11-20T18:11:18Z"
+      "quote_time": "2026-11-20T18:41:05Z"
     },
     {
       "ticker": "AMSC",
-      "price": 19.64,
-      "change": -2.45,
-      "change_pct": -11.091,
+      "price": 19.74,
+      "change": -2.35,
+      "change_pct": -10.6383,
       "open": 21.385,
       "high": 21.695,
-      "low": 19.58,
+      "low": 19.565,
       "prev_close": 22.09,
-      "quote_time": "2026-11-20T18:11:09Z"
+      "quote_time": "2026-11-20T18:40:43Z"
     },
     {
       "ticker": "QCOM",
-      "price": 154.97,
-      "change": -7.04,
-      "change_pct": -4.3454,
+      "price": 155.58,
+      "change": -6.43,
+      "change_pct": -3.9689,
       "open": 160.61,
       "high": 162.54,
       "low": 154.11,
       "prev_close": 162.01,
-      "quote_time": "2026-11-20T18:11:44Z"
+      "quote_time": "2026-11-20T18:41:04Z"
     },
     {
       "ticker": "CRDO",
-      "price": 102.08,
-      "change": -15.68,
-      "change_pct": -13.3152,
+      "price": 103.25,
+      "change": -14.51,
+      "change_pct": -12.3217,
       "open": 113.26,
       "high": 114.18,
       "low": 101.3698,
       "prev_close": 117.76,
-      "quote_time": "2026-11-20T18:11:43Z"
+      "quote_time": "2026-11-20T18:41:08Z"
     },
     {
       "ticker": "GFS",
-      "price": 36.22,
-      "change": -2.72,
-      "change_pct": -6.9851,
+      "price": 36.51,
+      "change": -2.43,
+      "change_pct": -6.2404,
       "open": 37.8325,
       "high": 38.449999999999996,
       "low": 36.03,
       "prev_close": 38.94,
-      "quote_time": "2026-11-20T18:11:41Z"
+      "quote_time": "2026-11-20T18:41:02Z"
     },
     {
       "ticker": "AMAT",
-      "price": 306.33,
-      "change": -32.6,
-      "change_pct": -9.6185,
+      "price": 309.73,
+      "change": -29.2,
+      "change_pct": -8.6153,
       "open": 329.59,
       "high": 330.5,
       "low": 304.0076,
       "prev_close": 338.93,
-      "quote_time": "2026-11-20T18:11:45Z"
+      "quote_time": "2026-11-20T18:41:06Z"
     },
     {
       "ticker": "KLAC",
-      "price": 127.56,
-      "change": -13.92,
-      "change_pct": -9.8388,
+      "price": 129.24,
+      "change": -12.24,
+      "change_pct": -8.6514,
       "open": 139.105,
       "high": 139.14,
-      "low": 127.2501,
+      "low": 127.13,
       "prev_close": 141.48,
-      "quote_time": "2026-11-20T18:11:40Z"
+      "quote_time": "2026-11-20T18:41:07Z"
     },
     {
       "ticker": "ADI",
-      "price": 352.04,
-      "change": -25.4,
-      "change_pct": -6.7295,
+      "price": 354.59,
+      "change": -22.85,
+      "change_pct": -6.0539,
       "open": 371.1775,
       "high": 374.24,
       "low": 350.97,
       "prev_close": 377.44,
-      "quote_time": "2026-11-20T18:11:41Z"
+      "quote_time": "2026-11-20T18:41:07Z"
     },
     {
       "ticker": "MU",
-      "price": 600.45,
-      "change": -89.99,
-      "change_pct": -13.0337,
+      "price": 604.04,
+      "change": -86.4,
+      "change_pct": -12.5138,
       "open": 670.18,
       "high": 670.18,
-      "low": 598.5,
+      "low": 598.02,
       "prev_close": 690.44,
-      "quote_time": "2026-11-20T18:11:46Z"
+      "quote_time": "2026-11-20T18:41:09Z"
     },
     {
       "ticker": "SNDK",
-      "price": 80.38,
-      "change": -14.015,
-      "change_pct": -14.8472,
+      "price": 80.23,
+      "change": -14.165,
+      "change_pct": -15.0061,
       "open": 90.1,
       "high": 90.68,
       "low": 79.01,
       "prev_close": 94.395,
-      "quote_time": "2026-11-20T18:11:46Z"
+      "quote_time": "2026-11-20T18:41:09Z"
     },
     {
       "ticker": "NLST",
@@ -692,245 +692,245 @@
     },
     {
       "ticker": "DRAM",
-      "price": 34.24,
-      "change": -4.19,
-      "change_pct": -10.9029,
+      "price": 34.33,
+      "change": -4.1,
+      "change_pct": -10.6687,
       "open": 37.269999999999996,
       "high": 37.31,
-      "low": 34.21,
+      "low": 34.115,
       "prev_close": 38.43,
-      "quote_time": "2026-11-20T18:11:46Z"
+      "quote_time": "2026-11-20T18:41:09Z"
     },
     {
       "ticker": "WDC",
-      "price": 258.55,
-      "change": -38.23,
-      "change_pct": -12.8816,
+      "price": 259.96,
+      "change": -36.82,
+      "change_pct": -12.4065,
       "open": 286.1375,
       "high": 288.56,
       "low": 256.88,
       "prev_close": 296.78,
-      "quote_time": "2026-11-20T18:11:44Z"
+      "quote_time": "2026-11-20T18:41:09Z"
     },
     {
       "ticker": "STX",
-      "price": 455.7,
-      "change": -65.69,
-      "change_pct": -12.599,
+      "price": 457.31,
+      "change": -64.08,
+      "change_pct": -12.2902,
       "open": 503.565,
       "high": 506.09,
       "low": 453.635,
       "prev_close": 521.39,
-      "quote_time": "2026-11-20T18:11:46Z"
+      "quote_time": "2026-11-20T18:41:03Z"
     },
     {
       "ticker": "SKHY",
-      "price": 106.07,
-      "change": -13.13,
-      "change_pct": -11.0151,
+      "price": 106.71,
+      "change": -12.49,
+      "change_pct": -10.4782,
       "open": 118.0825,
       "high": 118.0825,
-      "low": 105.775,
+      "low": 105.68,
       "prev_close": 119.2,
-      "quote_time": "2026-11-20T18:11:43Z"
+      "quote_time": "2026-11-20T18:41:09Z"
     },
     {
       "ticker": "COHR",
-      "price": 183.95,
-      "change": -30.99,
-      "change_pct": -14.418,
+      "price": 186.22,
+      "change": -28.72,
+      "change_pct": -13.3619,
       "open": 206.9975,
       "high": 209.61,
       "low": 180.43,
       "prev_close": 214.94,
-      "quote_time": "2026-11-20T18:11:44Z"
+      "quote_time": "2026-11-20T18:41:09Z"
     },
     {
       "ticker": "LITE",
-      "price": 470.74,
-      "change": -64.41,
-      "change_pct": -12.0359,
+      "price": 472.88,
+      "change": -62.27,
+      "change_pct": -11.636,
       "open": 514.99,
       "high": 515.91,
       "low": 466.45,
       "prev_close": 535.15,
-      "quote_time": "2026-11-20T18:11:41Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "CLS",
-      "price": 203.73,
-      "change": -36.5,
-      "change_pct": -15.1938,
+      "price": 203.9,
+      "change": -36.33,
+      "change_pct": -15.123,
       "open": 229.185,
       "high": 231.99,
       "low": 201.81,
       "prev_close": 240.23,
-      "quote_time": "2026-11-20T18:11:43Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "AAOI",
-      "price": 33.18,
-      "change": -6.28,
-      "change_pct": -15.9149,
+      "price": 33.38,
+      "change": -6.08,
+      "change_pct": -15.408,
       "open": 37.555,
       "high": 37.703399999999995,
       "low": 32.8015,
       "prev_close": 39.46,
-      "quote_time": "2026-11-20T18:11:45Z"
+      "quote_time": "2026-11-20T18:41:25Z"
     },
     {
       "ticker": "CIEN",
-      "price": 233,
-      "change": -29.63,
-      "change_pct": -11.282,
+      "price": 234.3,
+      "change": -28.33,
+      "change_pct": -10.787,
       "open": 254.415,
       "high": 257.49,
       "low": 231.48,
       "prev_close": 262.63,
-      "quote_time": "2026-11-20T18:11:37Z"
+      "quote_time": "2026-11-20T18:41:30Z"
     },
     {
       "ticker": "FN",
-      "price": 285.5,
-      "change": -26.21,
-      "change_pct": -8.4085,
+      "price": 286.92,
+      "change": -24.79,
+      "change_pct": -7.9529,
       "open": 302.45,
       "high": 308,
       "low": 281.67,
       "prev_close": 311.71,
-      "quote_time": "2026-11-20T18:11:31Z"
+      "quote_time": "2026-11-20T18:41:30Z"
     },
     {
       "ticker": "GLW",
-      "price": 94.73,
-      "change": -11.24,
-      "change_pct": -10.6068,
+      "price": 95.84,
+      "change": -10.13,
+      "change_pct": -9.5593,
       "open": 102.555,
       "high": 103.88,
       "low": 94.47,
       "prev_close": 105.97,
-      "quote_time": "2026-11-20T18:12:08Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "NOK",
-      "price": 6.87,
-      "change": -0.63,
-      "change_pct": -8.4,
+      "price": 6.91,
+      "change": -0.59,
+      "change_pct": -7.8667,
       "open": 7.3075,
       "high": 7.3165,
       "low": 6.85,
       "prev_close": 7.5,
-      "quote_time": "2026-11-20T18:12:08Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "CSCO",
-      "price": 91.74,
-      "change": -2.96,
-      "change_pct": -3.1257,
+      "price": 91.79,
+      "change": -2.91,
+      "change_pct": -3.0729,
       "open": 93.87,
       "high": 95.18,
       "low": 91.63,
       "prev_close": 94.7,
-      "quote_time": "2026-11-20T18:12:06Z"
+      "quote_time": "2026-11-20T18:41:30Z"
     },
     {
       "ticker": "ANET",
-      "price": 167.79,
-      "change": -21.8,
-      "change_pct": -11.4985,
+      "price": 168.4,
+      "change": -21.19,
+      "change_pct": -11.1767,
       "open": 185.375,
       "high": 185.82,
       "low": 166.54,
       "prev_close": 189.59,
-      "quote_time": "2026-11-20T18:12:03Z"
+      "quote_time": "2026-11-20T18:41:26Z"
     },
     {
       "ticker": "IREN",
-      "price": 12.38,
-      "change": -2.03,
-      "change_pct": -14.0874,
+      "price": 12.45,
+      "change": -1.96,
+      "change_pct": -13.6017,
       "open": 14.065,
       "high": 14.08,
       "low": 12.33,
       "prev_close": 14.41,
-      "quote_time": "2026-11-20T18:12:09Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "NBIS",
-      "price": 83.56,
-      "change": -13.36,
-      "change_pct": -13.7846,
+      "price": 84.28,
+      "change": -12.64,
+      "change_pct": -13.0417,
       "open": 93.5345,
       "high": 94.05000000000001,
       "low": 82.65,
       "prev_close": 96.92,
-      "quote_time": "2026-11-20T18:12:07Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "CRWV",
-      "price": 39.92,
-      "change": -4.99,
-      "change_pct": -11.1111,
+      "price": 40.4,
+      "change": -4.51,
+      "change_pct": -10.0423,
       "open": 43.55,
       "high": 43.559999999999995,
       "low": 39.402,
       "prev_close": 44.91,
-      "quote_time": "2026-11-20T18:12:09Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "APLD",
-      "price": 11.61,
-      "change": -2.37,
-      "change_pct": -16.9528,
+      "price": 11.71,
+      "change": -2.27,
+      "change_pct": -16.2375,
       "open": 13.5,
       "high": 13.51,
       "low": 11.47,
       "prev_close": 13.98,
-      "quote_time": "2026-11-20T18:12:07Z"
+      "quote_time": "2026-11-20T18:41:30Z"
     },
     {
       "ticker": "CORZ",
-      "price": 11.56,
-      "change": -1.8,
-      "change_pct": -13.4731,
+      "price": 11.55,
+      "change": -1.81,
+      "change_pct": -13.5479,
       "open": 12.925,
       "high": 12.995,
       "low": 11.32,
       "prev_close": 13.36,
-      "quote_time": "2026-11-20T18:12:09Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "WULF",
-      "price": 10.03,
-      "change": -1.55,
-      "change_pct": -13.3851,
+      "price": 10.05,
+      "change": -1.53,
+      "change_pct": -13.2124,
       "open": 11.1013,
       "high": 11.28,
       "low": 9.8,
       "prev_close": 11.58,
-      "quote_time": "2026-11-20T18:12:09Z"
+      "quote_time": "2026-11-20T18:41:30Z"
     },
     {
       "ticker": "GEV",
-      "price": 700.42,
-      "change": -55.86,
-      "change_pct": -7.3862,
+      "price": 705.25,
+      "change": -51.03,
+      "change_pct": -6.7475,
       "open": 739.625,
       "high": 745.39,
       "low": 699,
       "prev_close": 756.28,
-      "quote_time": "2026-11-20T18:12:08Z"
+      "quote_time": "2026-11-20T18:41:28Z"
     },
     {
       "ticker": "CAT",
-      "price": 513.33,
-      "change": -24.04,
-      "change_pct": -4.4736,
+      "price": 517.13,
+      "change": -20.24,
+      "change_pct": -3.7665,
       "open": 529.705,
       "high": 539.47,
       "low": 512.6101,
       "prev_close": 537.37,
-      "quote_time": "2026-11-20T18:12:05Z"
+      "quote_time": "2026-11-20T18:41:23Z"
     },
     {
       "ticker": "SIEGY",
@@ -945,58 +945,58 @@
     },
     {
       "ticker": "BE",
-      "price": 145.35,
-      "change": -22.76,
-      "change_pct": -13.5388,
+      "price": 147.06,
+      "change": -21.05,
+      "change_pct": -12.5216,
       "open": 162.03,
       "high": 163.51,
       "low": 144.53,
       "prev_close": 168.11,
-      "quote_time": "2026-11-20T18:12:07Z"
+      "quote_time": "2026-11-20T18:41:31Z"
     },
     {
       "ticker": "FRVO",
-      "price": 10.05,
-      "change": -1.09,
-      "change_pct": -9.7846,
+      "price": 10.3,
+      "change": -0.84,
+      "change_pct": -7.5404,
       "open": 10.74,
       "high": 11.04,
       "low": 9.975,
       "prev_close": 11.14,
-      "quote_time": "2026-11-20T18:11:29Z"
+      "quote_time": "2026-11-20T18:41:52Z"
     },
     {
       "ticker": "FLEX",
-      "price": 67.02,
-      "change": -7.2,
-      "change_pct": -9.7009,
+      "price": 67.48,
+      "change": -6.74,
+      "change_pct": -9.0811,
       "open": 72.525,
       "high": 74.03,
       "low": 66.62,
       "prev_close": 74.22,
-      "quote_time": "2026-11-20T18:11:41Z"
+      "quote_time": "2026-11-20T18:41:40Z"
     },
     {
       "ticker": "ENPH",
-      "price": 20.13,
-      "change": -1.85,
-      "change_pct": -8.4167,
+      "price": 20.25,
+      "change": -1.73,
+      "change_pct": -7.8708,
       "open": 21.67,
       "high": 22.240000000000002,
-      "low": 20.09,
+      "low": 20.02,
       "prev_close": 21.98,
-      "quote_time": "2026-11-20T18:12:07Z"
+      "quote_time": "2026-11-20T18:41:09Z"
     },
     {
       "ticker": "VPG",
-      "price": 43.05,
-      "change": -5.86,
-      "change_pct": -11.9812,
+      "price": 42.34,
+      "change": -6.57,
+      "change_pct": -13.4328,
       "open": 46.37,
       "high": 47.39,
-      "low": 42.58,
+      "low": 42.33,
       "prev_close": 48.91,
-      "quote_time": "2026-11-20T18:11:19Z"
+      "quote_time": "2026-11-20T18:41:45Z"
     },
     {
       "ticker": "DPC",
@@ -1007,7 +1007,7 @@
       "high": 34.75,
       "low": 31.01,
       "prev_close": 34.18,
-      "quote_time": "2026-11-20T18:12:22Z"
+      "quote_time": "2026-11-20T18:41:41Z"
     },
     {
       "ticker": "ADUR",
@@ -1018,348 +1018,348 @@
       "high": 7.9599,
       "low": 7.35,
       "prev_close": 7.95,
-      "quote_time": "2026-11-20T18:12:28Z"
+      "quote_time": "2026-11-20T18:41:13Z"
     },
     {
       "ticker": "NEM",
-      "price": 96.16,
-      "change": -3.89,
-      "change_pct": -3.8881,
+      "price": 96.34,
+      "change": -3.71,
+      "change_pct": -3.7081,
       "open": 98.375,
       "high": 99.64,
       "low": 95.95,
       "prev_close": 100.05,
-      "quote_time": "2026-11-20T18:12:31Z"
+      "quote_time": "2026-11-20T18:41:42Z"
     },
     {
       "ticker": "GOLD",
-      "price": 36.39,
-      "change": -0.82,
-      "change_pct": -2.2037,
+      "price": 36.51,
+      "change": -0.7,
+      "change_pct": -1.8812,
       "open": 36.955,
       "high": 37.76,
       "low": 36.155,
       "prev_close": 37.21,
-      "quote_time": "2026-11-20T18:12:22Z"
+      "quote_time": "2026-11-20T18:41:00Z"
     },
     {
       "ticker": "AU",
-      "price": 73.44,
-      "change": -3.55,
-      "change_pct": -4.611,
+      "price": 73.54,
+      "change": -3.45,
+      "change_pct": -4.4811,
       "open": 76.335,
       "high": 76.885,
       "low": 73.028,
       "prev_close": 76.99,
-      "quote_time": "2026-11-20T18:12:26Z"
+      "quote_time": "2026-11-20T18:41:51Z"
     },
     {
       "ticker": "AEM",
-      "price": 152.66,
-      "change": -5.58,
-      "change_pct": -3.5263,
+      "price": 153.08,
+      "change": -5.16,
+      "change_pct": -3.2609,
       "open": 155.865,
       "high": 157.2599,
       "low": 152.1,
       "prev_close": 158.24,
-      "quote_time": "2026-11-20T18:12:15Z"
+      "quote_time": "2026-11-20T18:41:54Z"
     },
     {
       "ticker": "KGC",
-      "price": 17.52,
-      "change": -0.73,
-      "change_pct": -4,
+      "price": 17.59,
+      "change": -0.66,
+      "change_pct": -3.6164,
       "open": 17.885,
       "high": 18.235,
       "low": 17.39,
       "prev_close": 18.25,
-      "quote_time": "2026-11-20T18:12:29Z"
+      "quote_time": "2026-11-20T18:41:49Z"
     },
     {
       "ticker": "AGI",
-      "price": 25.03,
-      "change": -0.94,
-      "change_pct": -3.6196,
+      "price": 25.13,
+      "change": -0.84,
+      "change_pct": -3.2345,
       "open": 25.515,
       "high": 26,
       "low": 24.8701,
       "prev_close": 25.97,
-      "quote_time": "2026-11-20T18:12:27Z"
+      "quote_time": "2026-11-20T18:41:49Z"
     },
     {
       "ticker": "HL",
-      "price": 10.57,
-      "change": -0.58,
-      "change_pct": -5.2018,
+      "price": 10.61,
+      "change": -0.54,
+      "change_pct": -4.843,
       "open": 10.94,
       "high": 11.24,
       "low": 10.52,
       "prev_close": 11.15,
-      "quote_time": "2026-11-20T18:12:29Z"
+      "quote_time": "2026-11-20T18:41:51Z"
     },
     {
       "ticker": "PAAS",
-      "price": 30.91,
-      "change": -1.48,
-      "change_pct": -4.5693,
+      "price": 31.02,
+      "change": -1.37,
+      "change_pct": -4.2297,
       "open": 31.59,
       "high": 32.4,
       "low": 30.79,
       "prev_close": 32.39,
-      "quote_time": "2026-11-20T18:12:19Z"
+      "quote_time": "2026-11-20T18:41:54Z"
     },
     {
       "ticker": "AG",
-      "price": 10.81,
-      "change": -0.51,
-      "change_pct": -4.5053,
+      "price": 10.83,
+      "change": -0.49,
+      "change_pct": -4.3286,
       "open": 11.1375,
       "high": 11.34,
       "low": 10.74,
       "prev_close": 11.32,
-      "quote_time": "2026-11-20T18:12:31Z"
+      "quote_time": "2026-11-20T18:41:49Z"
     },
     {
       "ticker": "CDE",
-      "price": 10.82,
-      "change": -0.72,
-      "change_pct": -6.2392,
+      "price": 10.84,
+      "change": -0.7,
+      "change_pct": -6.0659,
       "open": 11.305,
       "high": 11.57,
       "low": 10.745,
       "prev_close": 11.54,
-      "quote_time": "2026-11-20T18:12:30Z"
+      "quote_time": "2026-11-20T18:41:54Z"
     },
     {
       "ticker": "EXK",
-      "price": 5.69,
-      "change": -0.39,
-      "change_pct": -6.4145,
+      "price": 5.71,
+      "change": -0.37,
+      "change_pct": -6.0855,
       "open": 5.92,
       "high": 6.08,
       "low": 5.65,
       "prev_close": 6.08,
-      "quote_time": "2026-11-20T18:12:23Z"
+      "quote_time": "2026-11-20T18:41:06Z"
     },
     {
       "ticker": "SSRM",
-      "price": 21.8,
-      "change": -1.49,
-      "change_pct": -6.3976,
+      "price": 21.78,
+      "change": -1.51,
+      "change_pct": -6.4835,
       "open": 22.805,
       "high": 22.880000000000003,
       "low": 21.72,
       "prev_close": 23.29,
-      "quote_time": "2026-11-20T18:12:22Z"
+      "quote_time": "2026-11-20T18:41:51Z"
     },
     {
       "ticker": "FNV",
-      "price": 224.98,
-      "change": -5.87,
-      "change_pct": -2.5428,
+      "price": 225.33,
+      "change": -5.52,
+      "change_pct": -2.3912,
       "open": 228.485,
       "high": 230.1963,
       "low": 223.73,
       "prev_close": 230.85,
-      "quote_time": "2026-11-20T18:12:31Z"
+      "quote_time": "2026-11-20T18:41:47Z"
     },
     {
       "ticker": "WPM",
-      "price": 111.8,
-      "change": -4.33,
-      "change_pct": -3.7286,
+      "price": 111.93,
+      "change": -4.2,
+      "change_pct": -3.6166,
       "open": 114.985,
       "high": 115.61,
       "low": 111.29,
       "prev_close": 116.13,
-      "quote_time": "2026-11-20T18:12:22Z"
+      "quote_time": "2026-11-20T18:41:54Z"
     },
     {
       "ticker": "RGLD",
-      "price": 225.57,
-      "change": -5.95,
-      "change_pct": -2.57,
+      "price": 225.76,
+      "change": -5.76,
+      "change_pct": -2.4879,
       "open": 227.97,
       "high": 230.54,
       "low": 224.43,
       "prev_close": 231.52,
-      "quote_time": "2026-11-20T18:12:20Z"
+      "quote_time": "2026-11-20T18:41:49Z"
     },
     {
       "ticker": "TFPM",
-      "price": 26.87,
-      "change": -0.87,
-      "change_pct": -3.1363,
+      "price": 26.94,
+      "change": -0.8,
+      "change_pct": -2.8839,
       "open": 27.225,
       "high": 27.75,
       "low": 26.7,
       "prev_close": 27.74,
-      "quote_time": "2026-11-20T18:12:15Z"
+      "quote_time": "2026-11-20T18:41:45Z"
     },
     {
       "ticker": "GDX",
-      "price": 69.26,
-      "change": -2.74,
-      "change_pct": -3.8056,
+      "price": 69.36,
+      "change": -2.64,
+      "change_pct": -3.6667,
       "open": 70.7675,
       "high": 71.77,
       "low": 69.05,
       "prev_close": 72,
-      "quote_time": "2026-11-20T18:12:30Z"
+      "quote_time": "2026-11-20T18:41:54Z"
     },
     {
       "ticker": "GDXJ",
-      "price": 82.29,
-      "change": -3.54,
-      "change_pct": -4.1244,
+      "price": 82.42,
+      "change": -3.41,
+      "change_pct": -3.973,
       "open": 84.24,
       "high": 85.83,
       "low": 82,
       "prev_close": 85.83,
-      "quote_time": "2026-11-20T18:12:48Z"
+      "quote_time": "2026-11-20T18:41:54Z"
     },
     {
       "ticker": "SGDM",
-      "price": 58.78,
-      "change": -2.27,
-      "change_pct": -3.7183,
+      "price": 58.83,
+      "change": -2.22,
+      "change_pct": -3.6364,
       "open": 59.89,
       "high": 60.375,
       "low": 58.4801,
       "prev_close": 61.05,
-      "quote_time": "2026-11-20T18:06:01Z"
+      "quote_time": "2026-11-20T18:39:45Z"
     },
     {
       "ticker": "SIL",
-      "price": 60.86,
-      "change": -3,
-      "change_pct": -4.6978,
+      "price": 61,
+      "change": -2.86,
+      "change_pct": -4.4785,
       "open": 62.475,
       "high": 63.43,
       "low": 60.6281,
       "prev_close": 63.86,
-      "quote_time": "2026-11-20T18:12:40Z"
+      "quote_time": "2026-11-20T18:41:21Z"
     },
     {
       "ticker": "SILJ",
-      "price": 18.72,
-      "change": -0.96,
-      "change_pct": -4.878,
+      "price": 18.79,
+      "change": -0.89,
+      "change_pct": -4.5224,
       "open": 19.305,
       "high": 19.67,
       "low": 18.64,
       "prev_close": 19.68,
-      "quote_time": "2026-11-20T18:12:40Z"
+      "quote_time": "2026-11-20T18:41:51Z"
     },
     {
       "ticker": "RING",
-      "price": 60.24,
-      "change": -2.41,
-      "change_pct": -3.8468,
+      "price": 60.38,
+      "change": -2.27,
+      "change_pct": -3.6233,
       "open": 61.66,
       "high": 62.44,
       "low": 59.99,
       "prev_close": 62.65,
-      "quote_time": "2026-11-20T18:12:40Z"
+      "quote_time": "2026-11-20T18:41:50Z"
     },
     {
       "ticker": "SLV",
-      "price": 37.01,
-      "change": -2.63,
-      "change_pct": -6.6347,
+      "price": 37.04,
+      "change": -2.6,
+      "change_pct": -6.559,
       "open": 38.17,
       "high": 38.48,
       "low": 36.925,
       "prev_close": 39.64,
-      "quote_time": "2026-11-20T18:12:52Z"
+      "quote_time": "2026-11-20T18:41:53Z"
     },
     {
       "ticker": "NOW",
-      "price": 90.46,
-      "change": 1.59,
-      "change_pct": 1.7891,
+      "price": 90.51,
+      "change": 1.64,
+      "change_pct": 1.8454,
       "open": 87.5525,
       "high": 93.155,
       "low": 87.335,
       "prev_close": 88.87,
-      "quote_time": "2026-11-20T18:12:53Z"
+      "quote_time": "2026-11-20T18:41:54Z"
     },
     {
       "ticker": "HUBS",
-      "price": 201.71,
-      "change": 9.72,
-      "change_pct": 5.0628,
+      "price": 200.72,
+      "change": 8.73,
+      "change_pct": 4.5471,
       "open": 191.445,
       "high": 209.275,
       "low": 190.95,
       "prev_close": 191.99,
-      "quote_time": "2026-11-20T18:12:16Z"
+      "quote_time": "2026-11-20T18:42:13Z"
     },
     {
       "ticker": "SHOP",
-      "price": 126.47,
-      "change": -5.5,
-      "change_pct": -4.1676,
+      "price": 127.01,
+      "change": -4.96,
+      "change_pct": -3.7584,
       "open": 130.21,
       "high": 134.7699,
       "low": 126.3,
       "prev_close": 131.97,
-      "quote_time": "2026-11-20T18:12:45Z"
+      "quote_time": "2026-11-20T18:42:11Z"
     },
     {
       "ticker": "DDOG",
-      "price": 161.18,
-      "change": -5.28,
-      "change_pct": -3.1719,
+      "price": 161.71,
+      "change": -4.75,
+      "change_pct": -2.8535,
       "open": 163.2925,
       "high": 167.36,
       "low": 160.16,
       "prev_close": 166.46,
-      "quote_time": "2026-11-20T18:12:43Z"
+      "quote_time": "2026-11-20T18:42:05Z"
     },
     {
       "ticker": "CRWD",
-      "price": 231.55,
-      "change": -11.91,
-      "change_pct": -4.892,
+      "price": 231.48,
+      "change": -11.98,
+      "change_pct": -4.9207,
       "open": 238.0725,
       "high": 240.92,
       "low": 228.51,
       "prev_close": 243.46,
-      "quote_time": "2026-11-20T18:12:51Z"
+      "quote_time": "2026-11-20T18:42:14Z"
     },
     {
       "ticker": "PANW",
-      "price": 349,
-      "change": -12.73,
-      "change_pct": -3.5192,
+      "price": 347.78,
+      "change": -13.95,
+      "change_pct": -3.8565,
       "open": 357.52,
       "high": 366.79,
       "low": 345.18,
       "prev_close": 361.73,
-      "quote_time": "2026-11-20T18:12:53Z"
+      "quote_time": "2026-11-20T18:42:17Z"
     },
     {
       "ticker": "ANT",
-      "price": 84.59,
-      "change": -12.58,
-      "change_pct": -12.9464,
+      "price": 86.53,
+      "change": -10.64,
+      "change_pct": -10.9499,
       "open": 90.58,
       "high": 92.57000000000001,
       "low": 83.05,
       "prev_close": 97.17,
-      "quote_time": "2026-11-20T18:12:54Z"
+      "quote_time": "2026-11-20T18:42:17Z"
     },
     {
       "ticker": "CIBR",
-      "price": 92.22,
-      "change": -4.14,
-      "change_pct": -4.2964,
+      "price": 92.32,
+      "change": -4.04,
+      "change_pct": -4.1926,
       "open": 94.855,
       "high": 95.98,
       "low": 91.93,
       "prev_close": 96.36,
-      "quote_time": "2026-11-20T18:12:48Z"
+      "quote_time": "2026-11-20T18:42:14Z"
     },
     {
       "ticker": "WCLD",
@@ -1370,128 +1370,128 @@
       "high": 40.05,
       "low": 38.95,
       "prev_close": 39.74,
-      "quote_time": "2026-11-20T18:12:35Z"
+      "quote_time": "2026-11-20T18:41:33Z"
     },
     {
       "ticker": "ZS",
-      "price": 196.87,
-      "change": -8.84,
-      "change_pct": -4.2973,
+      "price": 196.66,
+      "change": -9.05,
+      "change_pct": -4.3994,
       "open": 202.44,
       "high": 206.2,
       "low": 194.55,
       "prev_close": 205.71,
-      "quote_time": "2026-11-20T18:12:38Z"
+      "quote_time": "2026-11-20T18:42:05Z"
     },
     {
       "ticker": "S",
-      "price": 23.13,
-      "change": -0.88,
-      "change_pct": -3.6651,
+      "price": 23.1,
+      "change": -0.91,
+      "change_pct": -3.7901,
       "open": 23.51,
       "high": 23.95,
       "low": 22.9754,
       "prev_close": 24.01,
-      "quote_time": "2026-11-20T18:12:51Z"
+      "quote_time": "2026-11-20T18:42:15Z"
     },
     {
       "ticker": "FTNT",
-      "price": 126.13,
-      "change": -5.33,
-      "change_pct": -4.0545,
+      "price": 125.9,
+      "change": -5.56,
+      "change_pct": -4.2294,
       "open": 130.0625,
       "high": 132.4,
-      "low": 125.86,
+      "low": 125.855,
       "prev_close": 131.46,
-      "quote_time": "2026-11-20T18:12:53Z"
+      "quote_time": "2026-11-20T18:42:01Z"
     },
     {
       "ticker": "OKTA",
-      "price": 192.92,
-      "change": -13.93,
-      "change_pct": -6.7343,
+      "price": 193.05,
+      "change": -13.8,
+      "change_pct": -6.6715,
       "open": 202.03,
       "high": 207.35,
       "low": 191.11,
       "prev_close": 206.85,
-      "quote_time": "2026-11-20T18:12:53Z"
+      "quote_time": "2026-11-20T18:42:13Z"
     },
     {
       "ticker": "NET",
-      "price": 275.24,
-      "change": -28.44,
-      "change_pct": -9.3651,
+      "price": 277.37,
+      "change": -26.31,
+      "change_pct": -8.6637,
       "open": 296.92,
       "high": 300.88,
       "low": 271.96,
       "prev_close": 303.68,
-      "quote_time": "2026-11-20T18:12:50Z"
+      "quote_time": "2026-11-20T18:42:15Z"
     },
     {
       "ticker": "TENB",
-      "price": 43.08,
-      "change": -1.01,
-      "change_pct": -2.2908,
+      "price": 42.71,
+      "change": -1.38,
+      "change_pct": -3.13,
       "open": 42.795,
       "high": 45.26,
       "low": 42.1101,
       "prev_close": 44.09,
-      "quote_time": "2026-11-20T18:12:45Z"
+      "quote_time": "2026-11-20T18:42:10Z"
     },
     {
       "ticker": "QLYS",
-      "price": 191.25,
-      "change": -1.175,
-      "change_pct": -0.6106,
+      "price": 189.33,
+      "change": -3.095,
+      "change_pct": -1.6084,
       "open": 187.48,
       "high": 196.97,
       "low": 183.81,
       "prev_close": 192.425,
-      "quote_time": "2026-11-20T18:12:42Z"
+      "quote_time": "2026-11-20T18:42:16Z"
     },
     {
       "ticker": "CRM",
-      "price": 184.7,
-      "change": 1.39,
-      "change_pct": 0.7583,
+      "price": 184.71,
+      "change": 1.4,
+      "change_pct": 0.7637,
       "open": 182.925,
       "high": 189.72,
       "low": 182.925,
       "prev_close": 183.31,
-      "quote_time": "2026-11-20T18:12:51Z"
+      "quote_time": "2026-11-20T18:42:16Z"
     },
     {
       "ticker": "WDAY",
-      "price": 179.03,
-      "change": 5.67,
-      "change_pct": 3.2707,
+      "price": 178.8,
+      "change": 5.44,
+      "change_pct": 3.138,
       "open": 172.6675,
       "high": 181.94,
       "low": 172.6675,
       "prev_close": 173.36,
-      "quote_time": "2026-11-20T18:12:45Z"
+      "quote_time": "2026-11-20T18:42:12Z"
     },
     {
       "ticker": "ADBE",
-      "price": 224.56,
-      "change": 2.88,
-      "change_pct": 1.2992,
+      "price": 224.25,
+      "change": 2.57,
+      "change_pct": 1.1593,
       "open": 221.585,
       "high": 229.61,
       "low": 221.27,
       "prev_close": 221.68,
-      "quote_time": "2026-11-20T18:12:38Z"
+      "quote_time": "2026-11-20T18:42:12Z"
     },
     {
       "ticker": "JPM",
-      "price": 313.69,
-      "change": -6.53,
-      "change_pct": -2.0392,
+      "price": 314.74,
+      "change": -5.48,
+      "change_pct": -1.7113,
       "open": 320.07,
       "high": 320.88,
-      "low": 313.4,
+      "low": 313.09,
       "prev_close": 320.22,
-      "quote_time": "2026-11-20T18:12:53Z"
+      "quote_time": "2026-11-20T18:42:17Z"
     },
     {
       "ticker": "NVO",
@@ -1500,97 +1500,97 @@
       "change_pct": -1.3635,
       "open": 38.44,
       "high": 39.115,
-      "low": 38.3,
+      "low": 38.22,
       "prev_close": 38.87,
-      "quote_time": "2026-11-20T18:12:48Z"
+      "quote_time": "2026-11-20T18:42:37Z"
     },
     {
       "ticker": "MRNA",
-      "price": 194.25,
-      "change": -5.08,
-      "change_pct": -2.5485,
+      "price": 194.73,
+      "change": -4.6,
+      "change_pct": -2.3077,
       "open": 198.185,
       "high": 210,
-      "low": 194.01,
+      "low": 193.75,
       "prev_close": 199.33,
-      "quote_time": "2026-11-20T18:13:14Z"
+      "quote_time": "2026-11-20T18:42:26Z"
     },
     {
       "ticker": "PYPL",
-      "price": 54.14,
-      "change": -2.23,
-      "change_pct": -3.956,
+      "price": 54.56,
+      "change": -1.81,
+      "change_pct": -3.2109,
       "open": 54.84,
       "high": 55.379999999999995,
       "low": 53.31,
       "prev_close": 56.37,
-      "quote_time": "2026-11-20T18:13:15Z"
+      "quote_time": "2026-11-20T18:42:34Z"
     },
     {
       "ticker": "HIMS",
-      "price": 14.83,
-      "change": -1.19,
-      "change_pct": -7.4282,
+      "price": 14.91,
+      "change": -1.11,
+      "change_pct": -6.9288,
       "open": 15.625,
       "high": 15.96,
-      "low": 14.7901,
+      "low": 14.78,
       "prev_close": 16.02,
-      "quote_time": "2026-11-20T18:13:13Z"
+      "quote_time": "2026-11-20T18:42:37Z"
     },
     {
       "ticker": "RDDT",
-      "price": 86.95,
-      "change": -2.93,
-      "change_pct": -3.2599,
+      "price": 86.99,
+      "change": -2.89,
+      "change_pct": -3.2154,
       "open": 89.0175,
       "high": 91.3894,
       "low": 86.6592,
       "prev_close": 89.88,
-      "quote_time": "2026-11-20T18:13:15Z"
+      "quote_time": "2026-11-20T18:42:35Z"
     },
     {
       "ticker": "SPCX",
-      "price": 129.34,
-      "change": -9.09,
-      "change_pct": -6.5665,
+      "price": 129.33,
+      "change": -9.1,
+      "change_pct": -6.5737,
       "open": 133.47,
       "high": 133.8408,
       "low": 127.93,
       "prev_close": 138.43,
-      "quote_time": "2026-11-20T18:13:16Z"
+      "quote_time": "2026-11-20T18:42:39Z"
     },
     {
       "ticker": "GME",
-      "price": 26.87,
-      "change": -0.06,
-      "change_pct": -0.2228,
+      "price": 26.84,
+      "change": -0.09,
+      "change_pct": -0.3342,
       "open": 26.95,
       "high": 27.53,
       "low": 26.6,
       "prev_close": 26.93,
-      "quote_time": "2026-11-20T18:13:14Z"
+      "quote_time": "2026-11-20T18:42:34Z"
     },
     {
       "ticker": "ELMT",
-      "price": 18.47,
-      "change": -1.03,
-      "change_pct": -5.2821,
+      "price": 18.61,
+      "change": -0.89,
+      "change_pct": -4.5641,
       "open": 19.1175,
       "high": 19.565,
       "low": 18.28,
       "prev_close": 19.5,
-      "quote_time": "2026-11-20T18:12:51Z"
+      "quote_time": "2026-11-20T18:41:05Z"
     },
     {
       "ticker": "HPQ",
-      "price": 28.31,
-      "change": 0.49,
-      "change_pct": 1.7613,
+      "price": 28.35,
+      "change": 0.53,
+      "change_pct": 1.9051,
       "open": 27.8,
       "high": 28.765,
       "low": 27.8,
       "prev_close": 27.82,
-      "quote_time": "2026-11-20T18:13:13Z"
+      "quote_time": "2026-11-20T18:42:35Z"
     },
     {
       "ticker": "BFLY",
@@ -1601,469 +1601,469 @@
       "high": 5.775,
       "low": 5.43,
       "prev_close": 5.85,
-      "quote_time": "2026-11-20T18:12:48Z"
+      "quote_time": "2026-11-20T18:42:34Z"
     },
     {
       "ticker": "LULU",
-      "price": 103.5,
-      "change": -2.03,
-      "change_pct": -1.9236,
+      "price": 103.74,
+      "change": -1.79,
+      "change_pct": -1.6962,
       "open": 105.385,
       "high": 107.58,
       "low": 102.55,
       "prev_close": 105.53,
-      "quote_time": "2026-11-20T18:13:03Z"
+      "quote_time": "2026-11-20T18:42:39Z"
     },
     {
       "ticker": "APP",
-      "price": 356.41,
-      "change": -22.61,
-      "change_pct": -5.9654,
+      "price": 354.2,
+      "change": -24.82,
+      "change_pct": -6.5485,
       "open": 372.605,
       "high": 378.54,
-      "low": 353.68,
+      "low": 353.37,
       "prev_close": 379.02,
-      "quote_time": "2026-11-20T18:13:12Z"
+      "quote_time": "2026-11-20T18:42:38Z"
     },
     {
       "ticker": "LLY",
-      "price": 1354.24,
-      "change": 3.12,
-      "change_pct": 0.2309,
+      "price": 1352.93,
+      "change": 1.81,
+      "change_pct": 0.134,
       "open": 1354.69,
       "high": 1372.05,
       "low": 1350.2567,
       "prev_close": 1351.12,
-      "quote_time": "2026-11-20T18:13:16Z"
+      "quote_time": "2026-11-20T18:42:38Z"
     },
     {
       "ticker": "GOOGL",
-      "price": 272.5,
-      "change": -0.16,
-      "change_pct": -0.0587,
+      "price": 272.21,
+      "change": -0.45,
+      "change_pct": -0.165,
       "open": 273.795,
       "high": 283.15,
       "low": 271.95,
       "prev_close": 272.66,
-      "quote_time": "2026-11-20T18:13:15Z"
+      "quote_time": "2026-11-20T18:42:39Z"
     },
     {
       "ticker": "AAPL",
-      "price": 345.67,
-      "change": -3.54,
-      "change_pct": -1.0137,
+      "price": 345.18,
+      "change": -4.03,
+      "change_pct": -1.154,
       "open": 351.6975,
       "high": 354.34,
-      "low": 344.89,
+      "low": 344.57,
       "prev_close": 349.21,
-      "quote_time": "2026-11-20T18:13:16Z"
+      "quote_time": "2026-11-20T18:42:40Z"
     },
     {
       "ticker": "AMZN",
-      "price": 249.52,
-      "change": -7.85,
-      "change_pct": -3.0501,
+      "price": 250.05,
+      "change": -7.32,
+      "change_pct": -2.8442,
       "open": 254.3825,
       "high": 259.97,
       "low": 249.16,
       "prev_close": 257.37,
-      "quote_time": "2026-11-20T18:13:16Z"
+      "quote_time": "2026-11-20T18:42:39Z"
     },
     {
       "ticker": "META",
-      "price": 568.08,
-      "change": -28.14,
-      "change_pct": -4.7197,
+      "price": 569.46,
+      "change": -26.76,
+      "change_pct": -4.4883,
       "open": 586.175,
       "high": 588.69,
-      "low": 566.98,
+      "low": 566.67,
       "prev_close": 596.22,
-      "quote_time": "2026-11-20T18:13:16Z"
+      "quote_time": "2026-11-20T18:42:40Z"
     },
     {
       "ticker": "MSFT",
-      "price": 488.14,
-      "change": -10.16,
-      "change_pct": -2.0389,
+      "price": 489.53,
+      "change": -8.77,
+      "change_pct": -1.76,
       "open": 493.37,
       "high": 503.8,
       "low": 486.95,
       "prev_close": 498.3,
-      "quote_time": "2026-11-20T18:13:16Z"
+      "quote_time": "2026-11-20T18:42:39Z"
     },
     {
       "ticker": "ORCL",
-      "price": 102.28,
-      "change": -8.29,
-      "change_pct": -7.4975,
+      "price": 102.92,
+      "change": -7.65,
+      "change_pct": -6.9187,
       "open": 108.3425,
       "high": 108.99,
       "low": 101.89,
       "prev_close": 110.57,
-      "quote_time": "2026-11-20T18:13:16Z"
+      "quote_time": "2026-11-20T18:42:39Z"
     },
     {
       "ticker": "XLE",
-      "price": 61.19,
-      "change": 0.3,
-      "change_pct": 0.4927,
+      "price": 61.22,
+      "change": 0.33,
+      "change_pct": 0.542,
       "open": 60.685,
       "high": 61.5,
       "low": 60.48,
       "prev_close": 60.89,
-      "quote_time": "2026-11-20T18:13:38Z"
+      "quote_time": "2026-11-20T18:42:39Z"
     },
     {
       "ticker": "XLB",
-      "price": 48.92,
-      "change": -0.5,
-      "change_pct": -1.0117,
+      "price": 49.01,
+      "change": -0.41,
+      "change_pct": -0.8296,
       "open": 49.37,
       "high": 49.955,
       "low": 48.825,
       "prev_close": 49.42,
-      "quote_time": "2026-11-20T18:13:37Z"
+      "quote_time": "2026-11-20T18:43:01Z"
     },
     {
       "ticker": "XLI",
-      "price": 158.11,
-      "change": -3.25,
-      "change_pct": -2.0141,
+      "price": 158.46,
+      "change": -2.9,
+      "change_pct": -1.7972,
       "open": 160.715,
       "high": 162.41,
       "low": 157.65,
       "prev_close": 161.36,
-      "quote_time": "2026-11-20T18:13:37Z"
+      "quote_time": "2026-11-20T18:43:01Z"
     },
     {
       "ticker": "XLY",
-      "price": 113.95,
-      "change": -1.93,
-      "change_pct": -1.6655,
+      "price": 114.04,
+      "change": -1.84,
+      "change_pct": -1.5878,
       "open": 115.3375,
       "high": 117.02,
       "low": 113.705,
       "prev_close": 115.88,
-      "quote_time": "2026-11-20T18:13:39Z"
+      "quote_time": "2026-11-20T18:43:00Z"
     },
     {
       "ticker": "XLP",
-      "price": 91.42,
-      "change": 1.56,
-      "change_pct": 1.736,
+      "price": 91.41,
+      "change": 1.55,
+      "change_pct": 1.7249,
       "open": 90.725,
       "high": 92.025,
       "low": 90.725,
       "prev_close": 89.86,
-      "quote_time": "2026-11-20T18:13:35Z"
+      "quote_time": "2026-11-20T18:43:02Z"
     },
     {
       "ticker": "KXI",
-      "price": 72.57,
-      "change": 0.92,
-      "change_pct": 1.284,
+      "price": 72.61,
+      "change": 0.96,
+      "change_pct": 1.3398,
       "open": 72.23,
       "high": 72.93,
       "low": 72.15,
       "prev_close": 71.65,
-      "quote_time": "2026-11-20T18:13:10Z"
+      "quote_time": "2026-11-20T18:35:34Z"
     },
     {
       "ticker": "XLV",
-      "price": 178.59,
-      "change": 1.13,
-      "change_pct": 0.6368,
+      "price": 178.73,
+      "change": 1.27,
+      "change_pct": 0.7157,
       "open": 178.5,
       "high": 180.64,
       "low": 178.275,
       "prev_close": 177.46,
-      "quote_time": "2026-11-20T18:13:35Z"
+      "quote_time": "2026-11-20T18:43:00Z"
     },
     {
       "ticker": "XLK",
-      "price": 151.97,
-      "change": -8.72,
-      "change_pct": -5.4266,
+      "price": 152.3,
+      "change": -8.39,
+      "change_pct": -5.2212,
       "open": 158.64,
       "high": 159.01,
       "low": 151.6,
       "prev_close": 160.69,
-      "quote_time": "2026-11-20T18:13:37Z"
+      "quote_time": "2026-11-20T18:43:01Z"
     },
     {
       "ticker": "IGM",
-      "price": 132.21,
-      "change": -7.58,
-      "change_pct": -5.4224,
+      "price": 132.52,
+      "change": -7.27,
+      "change_pct": -5.2007,
       "open": 137.5975,
       "high": 138.57,
       "low": 132.05,
       "prev_close": 139.79,
-      "quote_time": "2026-11-20T18:13:31Z"
+      "quote_time": "2026-11-20T18:42:36Z"
     },
     {
       "ticker": "XLC",
-      "price": 101.29,
-      "change": -1.47,
-      "change_pct": -1.4305,
+      "price": 101.23,
+      "change": -1.53,
+      "change_pct": -1.4889,
       "open": 102.515,
       "high": 103.94,
-      "low": 101.185,
+      "low": 101.04,
       "prev_close": 102.76,
-      "quote_time": "2026-11-20T18:13:37Z"
+      "quote_time": "2026-11-20T18:43:01Z"
     },
     {
       "ticker": "XLRE",
-      "price": 43.04,
-      "change": 0.16,
-      "change_pct": 0.3731,
+      "price": 43.03,
+      "change": 0.15,
+      "change_pct": 0.3498,
       "open": 43.0975,
       "high": 43.415,
-      "low": 42.95,
+      "low": 42.935,
       "prev_close": 42.88,
-      "quote_time": "2026-11-20T18:13:20Z"
+      "quote_time": "2026-11-20T18:42:47Z"
     },
     {
       "ticker": "OIH",
-      "price": 332.77,
-      "change": -12.92,
-      "change_pct": -3.7375,
+      "price": 334.5,
+      "change": -11.19,
+      "change_pct": -3.237,
       "open": 339.375,
       "high": 345.6399,
       "low": 330.99,
       "prev_close": 345.69,
-      "quote_time": "2026-11-20T18:13:24Z"
+      "quote_time": "2026-11-20T18:42:45Z"
     },
     {
       "ticker": "XES",
-      "price": 90.32,
-      "change": -4.22,
-      "change_pct": -4.4637,
+      "price": 90.81,
+      "change": -3.73,
+      "change_pct": -3.9454,
       "open": 92.265,
       "high": 94.23,
       "low": 89.77,
       "prev_close": 94.54,
-      "quote_time": "2026-11-20T18:11:15Z"
+      "quote_time": "2026-11-20T18:42:09Z"
     },
     {
       "ticker": "XOP",
-      "price": 170.16,
-      "change": 0.22,
-      "change_pct": 0.1295,
+      "price": 170.38,
+      "change": 0.44,
+      "change_pct": 0.2589,
       "open": 168.54,
       "high": 171.66,
       "low": 168.14,
       "prev_close": 169.94,
-      "quote_time": "2026-11-20T18:13:37Z"
+      "quote_time": "2026-11-20T18:42:54Z"
     },
     {
       "ticker": "AMLP",
-      "price": 48.95,
-      "change": -0.28,
-      "change_pct": -0.5688,
+      "price": 49.01,
+      "change": -0.22,
+      "change_pct": -0.4469,
       "open": 49.045,
       "high": 49.38,
       "low": 48.87,
       "prev_close": 49.23,
-      "quote_time": "2026-11-20T18:13:35Z"
+      "quote_time": "2026-11-20T18:42:59Z"
     },
     {
       "ticker": "URA",
-      "price": 27.26,
-      "change": -1.41,
-      "change_pct": -4.918,
+      "price": 27.34,
+      "change": -1.33,
+      "change_pct": -4.639,
       "open": 28.06,
       "high": 28.55,
       "low": 27.125,
       "prev_close": 28.67,
-      "quote_time": "2026-11-20T18:13:38Z"
+      "quote_time": "2026-11-20T18:43:00Z"
     },
     {
       "ticker": "XME",
-      "price": 81.24,
-      "change": -4.14,
-      "change_pct": -4.8489,
+      "price": 81.56,
+      "change": -3.82,
+      "change_pct": -4.4741,
       "open": 84.11,
       "high": 84.94,
       "low": 81.04,
       "prev_close": 85.38,
-      "quote_time": "2026-11-20T18:13:34Z"
+      "quote_time": "2026-11-20T18:41:42Z"
     },
     {
       "ticker": "SLX",
-      "price": 87.9,
-      "change": -2.8227,
-      "change_pct": -3.1113,
+      "price": 88.25,
+      "change": -2.4727,
+      "change_pct": -2.7256,
       "open": 89.595,
       "high": 90.63,
       "low": 87.84,
       "prev_close": 90.7227,
-      "quote_time": "2026-11-20T18:09:14Z"
+      "quote_time": "2026-11-20T18:35:21Z"
     },
     {
       "ticker": "COPX",
-      "price": 56.94,
-      "change": -2.34,
-      "change_pct": -3.9474,
+      "price": 57.04,
+      "change": -2.24,
+      "change_pct": -3.7787,
       "open": 58.38,
       "high": 59.37,
       "low": 56.78,
       "prev_close": 59.28,
-      "quote_time": "2026-11-20T18:13:33Z"
+      "quote_time": "2026-11-20T18:42:54Z"
     },
     {
       "ticker": "LIT",
-      "price": 52.46,
-      "change": -1.87,
-      "change_pct": -3.4419,
+      "price": 52.58,
+      "change": -1.75,
+      "change_pct": -3.2211,
       "open": 53.57,
       "high": 54.11,
       "low": 52.37,
       "prev_close": 54.33,
-      "quote_time": "2026-11-20T18:13:27Z"
+      "quote_time": "2026-11-20T18:41:55Z"
     },
     {
       "ticker": "REMX",
-      "price": 42.4,
-      "change": -1.92,
-      "change_pct": -4.3321,
+      "price": 42.41,
+      "change": -1.91,
+      "change_pct": -4.3096,
       "open": 43.515,
       "high": 44.45,
       "low": 42.36,
       "prev_close": 44.32,
-      "quote_time": "2026-11-20T18:13:50Z"
+      "quote_time": "2026-11-20T18:43:20Z"
     },
     {
       "ticker": "ITA",
-      "price": 67.07,
-      "change": -1.13,
-      "change_pct": -1.6569,
+      "price": 67.23,
+      "change": -0.97,
+      "change_pct": -1.4223,
       "open": 68.04,
       "high": 68.96,
       "low": 66.825,
       "prev_close": 68.2,
-      "quote_time": "2026-11-20T18:13:58Z"
+      "quote_time": "2026-11-20T18:42:47Z"
     },
     {
       "ticker": "XAR",
-      "price": 207.93,
-      "change": -7.26,
-      "change_pct": -3.3738,
+      "price": 209.07,
+      "change": -6.12,
+      "change_pct": -2.844,
       "open": 213.97,
       "high": 217.41,
       "low": 207.59,
       "prev_close": 215.19,
-      "quote_time": "2026-11-20T18:11:26Z"
+      "quote_time": "2026-11-20T18:42:34Z"
     },
     {
       "ticker": "PPA",
-      "price": 148.34,
-      "change": -2.95,
-      "change_pct": -1.9499,
+      "price": 148.65,
+      "change": -2.64,
+      "change_pct": -1.745,
       "open": 150.8,
       "high": 152.495,
       "low": 147.93,
       "prev_close": 151.29,
-      "quote_time": "2026-11-20T18:13:46Z"
+      "quote_time": "2026-11-20T18:42:35Z"
     },
     {
       "ticker": "PAVE",
-      "price": 49.55,
-      "change": -1.41,
-      "change_pct": -2.7669,
+      "price": 49.75,
+      "change": -1.21,
+      "change_pct": -2.3744,
       "open": 50.69,
       "high": 51.04,
       "low": 49.41,
       "prev_close": 50.96,
-      "quote_time": "2026-11-20T18:14:00Z"
+      "quote_time": "2026-11-20T18:43:20Z"
     },
     {
       "ticker": "IYT",
-      "price": 80.06,
-      "change": -0.79,
-      "change_pct": -0.9771,
+      "price": 80.09,
+      "change": -0.76,
+      "change_pct": -0.94,
       "open": 81.06,
       "high": 81.93,
       "low": 79.83,
       "prev_close": 80.85,
-      "quote_time": "2026-11-20T18:13:07Z"
+      "quote_time": "2026-11-20T18:43:24Z"
     },
     {
       "ticker": "XTN",
-      "price": 97.68,
-      "change": -1.76,
-      "change_pct": -1.7699,
+      "price": 97.83,
+      "change": -1.61,
+      "change_pct": -1.6191,
       "open": 99.47,
       "high": 100.34,
       "low": 97.49,
       "prev_close": 99.44,
-      "quote_time": "2026-11-20T18:08:57Z"
+      "quote_time": "2026-11-20T18:41:04Z"
     },
     {
       "ticker": "JETS",
-      "price": 27.38,
-      "change": -0.76,
-      "change_pct": -2.7008,
+      "price": 27.46,
+      "change": -0.68,
+      "change_pct": -2.4165,
       "open": 28.18,
       "high": 28.42,
       "low": 27.325,
       "prev_close": 28.14,
-      "quote_time": "2026-11-20T18:13:51Z"
+      "quote_time": "2026-11-20T18:42:54Z"
     },
     {
       "ticker": "DRIV",
-      "price": 25.07,
-      "change": -1.19,
-      "change_pct": -4.5316,
+      "price": 25.06,
+      "change": -1.2,
+      "change_pct": -4.5697,
       "open": 25.84,
       "high": 25.9586,
       "low": 25,
       "prev_close": 26.26,
-      "quote_time": "2026-11-20T17:52:03Z"
+      "quote_time": "2026-11-20T18:29:49Z"
     },
     {
       "ticker": "ITB",
-      "price": 92.3,
-      "change": 1.52,
-      "change_pct": 1.6744,
+      "price": 92.58,
+      "change": 1.8,
+      "change_pct": 1.9828,
       "open": 91.53,
       "high": 93.81,
       "low": 91.52,
       "prev_close": 90.78,
-      "quote_time": "2026-11-20T18:13:43Z"
+      "quote_time": "2026-11-20T18:42:19Z"
     },
     {
       "ticker": "XHB",
-      "price": 97.78,
-      "change": -0.11,
-      "change_pct": -0.1124,
+      "price": 98.08,
+      "change": 0.19,
+      "change_pct": 0.1941,
       "open": 98.08,
       "high": 100.18,
       "low": 97.27,
       "prev_close": 97.89,
-      "quote_time": "2026-11-20T18:13:56Z"
+      "quote_time": "2026-11-20T18:43:00Z"
     },
     {
       "ticker": "PEJ",
-      "price": 65.24,
-      "change": -0.41,
-      "change_pct": -0.6245,
+      "price": 65.26,
+      "change": -0.39,
+      "change_pct": -0.5941,
       "open": 65.56,
       "high": 66.16,
       "low": 65.09,
       "prev_close": 65.65,
-      "quote_time": "2026-11-20T17:58:52Z"
+      "quote_time": "2026-11-20T18:41:46Z"
     },
     {
       "ticker": "XRT",
-      "price": 87.47,
-      "change": -0.27,
-      "change_pct": -0.3077,
+      "price": 87.63,
+      "change": -0.11,
+      "change_pct": -0.1254,
       "open": 87.7,
       "high": 88.95,
       "low": 87.29,
       "prev_close": 87.74,
-      "quote_time": "2026-11-20T18:13:33Z"
+      "quote_time": "2026-11-20T18:43:08Z"
     },
     {
       "ticker": "PBJ",
@@ -2078,201 +2078,201 @@
     },
     {
       "ticker": "IHI",
-      "price": 56,
-      "change": -0.03,
-      "change_pct": -0.0535,
+      "price": 56.02,
+      "change": -0.01,
+      "change_pct": -0.0178,
       "open": 56.145,
       "high": 56.77,
       "low": 55.83,
       "prev_close": 56.03,
-      "quote_time": "2026-11-20T18:13:37Z"
+      "quote_time": "2026-11-20T18:42:55Z"
     },
     {
       "ticker": "IHF",
-      "price": 54.99,
-      "change": 0.91,
-      "change_pct": 1.6827,
+      "price": 55.18,
+      "change": 1.1,
+      "change_pct": 2.034,
       "open": 54.34,
       "high": 55.36,
       "low": 54.34,
       "prev_close": 54.08,
-      "quote_time": "2026-11-20T18:13:53Z"
+      "quote_time": "2026-11-20T18:42:36Z"
     },
     {
       "ticker": "XPH",
-      "price": 62.5,
-      "change": -0.92,
-      "change_pct": -1.4506,
+      "price": 62.55,
+      "change": -0.87,
+      "change_pct": -1.3718,
       "open": 63.019999999999996,
       "high": 63.87,
       "low": 62.425,
       "prev_close": 63.42,
-      "quote_time": "2026-11-20T18:12:36Z"
+      "quote_time": "2026-11-20T18:42:06Z"
     },
     {
       "ticker": "PJP",
-      "price": 125.6,
-      "change": -0.04,
-      "change_pct": -0.0318,
+      "price": 125.68,
+      "change": 0.04,
+      "change_pct": 0.0318,
       "open": 126.225,
       "high": 127.25,
       "low": 125.31,
       "prev_close": 125.64,
-      "quote_time": "2026-11-20T18:00:02Z"
+      "quote_time": "2026-11-20T18:25:51Z"
     },
     {
       "ticker": "KBE",
-      "price": 63.08,
-      "change": -0.17,
-      "change_pct": -0.2688,
+      "price": 63.21,
+      "change": -0.04,
+      "change_pct": -0.0632,
       "open": 63.395,
       "high": 64.055,
       "low": 62.89,
       "prev_close": 63.25,
-      "quote_time": "2026-11-20T18:14:21Z"
+      "quote_time": "2026-11-20T18:43:24Z"
     },
     {
       "ticker": "IAI",
-      "price": 168.37,
-      "change": -3.35,
-      "change_pct": -1.9509,
+      "price": 168.59,
+      "change": -3.13,
+      "change_pct": -1.8227,
       "open": 170.49,
       "high": 171.64,
-      "low": 168.3,
+      "low": 168.12,
       "prev_close": 171.72,
-      "quote_time": "2026-11-20T18:06:52Z"
+      "quote_time": "2026-11-20T18:41:40Z"
     },
     {
       "ticker": "KCE",
-      "price": 147.24,
-      "change": -2.1,
-      "change_pct": -1.4062,
+      "price": 147.34,
+      "change": -2,
+      "change_pct": -1.3392,
       "open": 148.57999999999998,
       "high": 149.56,
-      "low": 147.17,
+      "low": 146.835,
       "prev_close": 149.34,
-      "quote_time": "2026-11-20T17:15:03Z"
+      "quote_time": "2026-11-20T18:38:49Z"
     },
     {
       "ticker": "FINX",
-      "price": 21.27,
-      "change": -0.62,
-      "change_pct": -2.8323,
+      "price": 21.39,
+      "change": -0.5,
+      "change_pct": -2.2841,
       "open": 21.735,
       "high": 21.970000000000002,
-      "low": 21.25,
+      "low": 21.245,
       "prev_close": 21.89,
-      "quote_time": "2026-11-20T18:11:20Z"
+      "quote_time": "2026-11-20T18:39:24Z"
     },
     {
       "ticker": "KIE",
-      "price": 64.97,
-      "change": 0.81,
-      "change_pct": 1.2625,
+      "price": 64.96,
+      "change": 0.8,
+      "change_pct": 1.2469,
       "open": 64.655,
       "high": 65.54,
       "low": 64.49,
       "prev_close": 64.16,
-      "quote_time": "2026-11-20T18:14:23Z"
+      "quote_time": "2026-11-20T18:43:32Z"
     },
     {
       "ticker": "HACK",
-      "price": 116.1,
-      "change": -5.14,
-      "change_pct": -4.2395,
+      "price": 115.95,
+      "change": -5.29,
+      "change_pct": -4.3632,
       "open": 119.955,
       "high": 120.83,
       "low": 115.44,
       "prev_close": 121.24,
-      "quote_time": "2026-11-20T18:13:50Z"
+      "quote_time": "2026-11-20T18:43:42Z"
     },
     {
       "ticker": "BUG",
-      "price": 45.46,
-      "change": -1.97,
-      "change_pct": -4.1535,
+      "price": 45.43,
+      "change": -2,
+      "change_pct": -4.2167,
       "open": 46.6925,
       "high": 47.339999999999996,
       "low": 45.02,
       "prev_close": 47.43,
-      "quote_time": "2026-11-20T18:14:23Z"
+      "quote_time": "2026-11-20T18:43:36Z"
     },
     {
       "ticker": "IHAK",
-      "price": 68.75,
-      "change": -2.01,
-      "change_pct": -2.8406,
+      "price": 68.67,
+      "change": -2.09,
+      "change_pct": -2.9536,
       "open": 70.345,
       "high": 71.03,
       "low": 68.24,
       "prev_close": 70.76,
-      "quote_time": "2026-11-20T18:13:30Z"
+      "quote_time": "2026-11-20T18:42:55Z"
     },
     {
       "ticker": "FDN",
-      "price": 244.49,
-      "change": -7.74,
-      "change_pct": -3.0686,
+      "price": 244.93,
+      "change": -7.3,
+      "change_pct": -2.8942,
       "open": 249.56,
       "high": 253,
-      "low": 244.45,
+      "low": 244.43,
       "prev_close": 252.23,
-      "quote_time": "2026-11-20T18:13:35Z"
+      "quote_time": "2026-11-20T18:42:22Z"
     },
     {
       "ticker": "ESPO",
-      "price": 98.02,
-      "change": -2.37,
-      "change_pct": -2.3608,
+      "price": 98.06,
+      "change": -2.33,
+      "change_pct": -2.3209,
       "open": 98.47,
       "high": 99.48,
       "low": 97.86,
       "prev_close": 100.39,
-      "quote_time": "2026-11-20T18:03:14Z"
+      "quote_time": "2026-11-20T18:36:35Z"
     },
     {
       "ticker": "XSD",
-      "price": 375.7,
-      "change": -31.52,
-      "change_pct": -7.7403,
+      "price": 378.25,
+      "change": -28.97,
+      "change_pct": -7.1141,
       "open": 397.055,
       "high": 401.84,
       "low": 373.74,
       "prev_close": 407.22,
-      "quote_time": "2026-11-20T18:14:20Z"
+      "quote_time": "2026-11-20T18:42:53Z"
     },
     {
       "ticker": "ICLN",
-      "price": 14.02,
-      "change": -0.47,
-      "change_pct": -3.2436,
+      "price": 14.04,
+      "change": -0.45,
+      "change_pct": -3.1056,
       "open": 14.355,
       "high": 14.459999999999999,
       "low": 13.99,
       "prev_close": 14.49,
-      "quote_time": "2026-11-20T18:13:50Z"
+      "quote_time": "2026-11-20T18:43:42Z"
     },
     {
       "ticker": "TAN",
-      "price": 34.64,
-      "change": -1.99,
-      "change_pct": -5.4327,
+      "price": 34.74,
+      "change": -1.89,
+      "change_pct": -5.1597,
       "open": 36.145,
       "high": 36.445,
-      "low": 34.62,
+      "low": 34.6,
       "prev_close": 36.63,
-      "quote_time": "2026-11-20T18:14:20Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "NLR",
-      "price": 77.54,
-      "change": -3.25,
-      "change_pct": -4.0228,
+      "price": 77.85,
+      "change": -2.94,
+      "change_pct": -3.6391,
       "open": 79.23,
       "high": 80.66,
       "low": 77.3,
       "prev_close": 80.79,
-      "quote_time": "2026-11-20T18:12:49Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "VNQ",
@@ -2281,240 +2281,240 @@
       "change_pct": 0.321,
       "open": 94.0125,
       "high": 94.61,
-      "low": 93.6,
+      "low": 93.57,
       "prev_close": 93.47,
-      "quote_time": "2026-11-20T18:14:19Z"
+      "quote_time": "2026-11-20T18:43:45Z"
     },
     {
       "ticker": "XLU",
-      "price": 43.31,
-      "change": 0.3,
-      "change_pct": 0.6975,
+      "price": 43.38,
+      "change": 0.37,
+      "change_pct": 0.8603,
       "open": 43.23,
       "high": 43.45,
       "low": 43.12,
       "prev_close": 43.01,
-      "quote_time": "2026-11-20T18:14:15Z"
+      "quote_time": "2026-11-20T18:43:45Z"
     },
     {
       "ticker": "VST",
-      "price": 117.08,
-      "change": -7.07,
-      "change_pct": -5.6947,
+      "price": 117.82,
+      "change": -6.33,
+      "change_pct": -5.0987,
       "open": 121.6113,
       "high": 123.61,
       "low": 116.26,
       "prev_close": 124.15,
-      "quote_time": "2026-11-20T18:14:23Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "CEG",
-      "price": 242.8,
-      "change": -9.23,
-      "change_pct": -3.6623,
+      "price": 245.08,
+      "change": -6.95,
+      "change_pct": -2.7576,
       "open": 249.22,
       "high": 249.56,
       "low": 241.11,
       "prev_close": 252.03,
-      "quote_time": "2026-11-20T18:14:22Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "NRG",
-      "price": 90.18,
-      "change": -3.67,
-      "change_pct": -3.9105,
+      "price": 90.2,
+      "change": -3.65,
+      "change_pct": -3.8892,
       "open": 92.05,
       "high": 93.985,
       "low": 89.63,
       "prev_close": 93.85,
-      "quote_time": "2026-11-20T18:14:23Z"
+      "quote_time": "2026-11-20T18:43:41Z"
     },
     {
       "ticker": "TLN",
-      "price": 329.7,
-      "change": -26.21,
-      "change_pct": -7.3642,
+      "price": 334.47,
+      "change": -21.44,
+      "change_pct": -6.024,
       "open": 345.1475,
       "high": 348.98,
       "low": 324.19,
       "prev_close": 355.91,
-      "quote_time": "2026-11-20T18:14:24Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "ETN",
-      "price": 310.32,
-      "change": -20.25,
-      "change_pct": -6.1258,
+      "price": 312.08,
+      "change": -18.49,
+      "change_pct": -5.5934,
       "open": 325.28,
       "high": 327.99,
       "low": 309.61,
       "prev_close": 330.57,
-      "quote_time": "2026-11-20T18:14:23Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "VRT",
-      "price": 165.2,
-      "change": -19.79,
-      "change_pct": -10.6979,
+      "price": 167.02,
+      "change": -17.97,
+      "change_pct": -9.714,
       "open": 180.045,
       "high": 181.92,
       "low": 163.57,
       "prev_close": 184.99,
-      "quote_time": "2026-11-20T18:14:23Z"
+      "quote_time": "2026-11-20T18:43:46Z"
     },
     {
       "ticker": "XLF",
-      "price": 55.21,
-      "change": -0.37,
-      "change_pct": -0.6657,
+      "price": 55.34,
+      "change": -0.24,
+      "change_pct": -0.4318,
       "open": 55.8,
       "high": 56.025,
-      "low": 55.145,
+      "low": 55.1,
       "prev_close": 55.58,
-      "quote_time": "2026-11-20T18:14:24Z"
+      "quote_time": "2026-11-20T18:43:42Z"
     },
     {
       "ticker": "KRE",
-      "price": 69.12,
-      "change": -0.14,
-      "change_pct": -0.2021,
+      "price": 69.26,
+      "change": 0,
+      "change_pct": 0,
       "open": 69.43,
       "high": 70.165,
       "low": 68.895,
       "prev_close": 69.26,
-      "quote_time": "2026-11-20T18:14:24Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "BAC",
-      "price": 47.74,
-      "change": -0.83,
-      "change_pct": -1.7089,
+      "price": 47.85,
+      "change": -0.72,
+      "change_pct": -1.4824,
       "open": 48.615,
       "high": 48.765,
-      "low": 47.68,
+      "low": 47.635,
       "prev_close": 48.57,
-      "quote_time": "2026-11-20T18:14:23Z"
+      "quote_time": "2026-11-20T18:43:45Z"
     },
     {
       "ticker": "WFC",
-      "price": 79.69,
-      "change": -0.92,
-      "change_pct": -1.1413,
+      "price": 79.92,
+      "change": -0.69,
+      "change_pct": -0.856,
       "open": 80.85,
       "high": 81.87,
-      "low": 79.55,
+      "low": 79.53,
       "prev_close": 80.61,
-      "quote_time": "2026-11-20T18:14:23Z"
+      "quote_time": "2026-11-20T18:43:45Z"
     },
     {
       "ticker": "C",
-      "price": 111.39,
-      "change": -3.89,
-      "change_pct": -3.3744,
+      "price": 111.7,
+      "change": -3.58,
+      "change_pct": -3.1055,
       "open": 114.405,
       "high": 114.69,
-      "low": 111.32,
+      "low": 111.13,
       "prev_close": 115.28,
-      "quote_time": "2026-11-20T18:14:22Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "UFO",
-      "price": 36.19,
-      "change": -1.78,
-      "change_pct": -4.6879,
+      "price": 36.38,
+      "change": -1.59,
+      "change_pct": -4.1875,
       "open": 37.23,
       "high": 37.69,
       "low": 36.06,
       "prev_close": 37.97,
-      "quote_time": "2026-11-20T18:14:04Z"
+      "quote_time": "2026-11-20T18:39:57Z"
     },
     {
       "ticker": "ARKX",
-      "price": 25.28,
-      "change": -1.32,
-      "change_pct": -4.9624,
+      "price": 25.35,
+      "change": -1.25,
+      "change_pct": -4.6992,
       "open": 26.130000000000003,
       "high": 26.52,
       "low": 25.225469,
       "prev_close": 26.6,
-      "quote_time": "2026-11-20T18:14:39Z"
+      "quote_time": "2026-11-20T18:43:35Z"
     },
     {
       "ticker": "XBI",
-      "price": 141.66,
-      "change": -2.46,
-      "change_pct": -1.7069,
+      "price": 141.58,
+      "change": -2.54,
+      "change_pct": -1.7624,
       "open": 143.031,
       "high": 145.5,
-      "low": 141.57,
+      "low": 141.51,
       "prev_close": 144.12,
-      "quote_time": "2026-11-20T18:14:45Z"
+      "quote_time": "2026-11-20T18:43:47Z"
     },
     {
       "ticker": "IBB",
-      "price": 201.63,
-      "change": -2.09,
-      "change_pct": -1.0259,
+      "price": 201.51,
+      "change": -2.21,
+      "change_pct": -1.0848,
       "open": 203.8125,
       "high": 205.99,
       "low": 201.47,
       "prev_close": 203.72,
-      "quote_time": "2026-11-20T18:14:42Z"
+      "quote_time": "2026-11-20T18:43:27Z"
     },
     {
       "ticker": "IONQ",
-      "price": 21.08,
-      "change": -1.63,
-      "change_pct": -7.1775,
+      "price": 21.27,
+      "change": -1.44,
+      "change_pct": -6.3408,
       "open": 22.3,
       "high": 22.7482,
       "low": 20.92,
       "prev_close": 22.71,
-      "quote_time": "2026-11-20T18:14:47Z"
+      "quote_time": "2026-11-20T18:44:10Z"
     },
     {
       "ticker": "RGTI",
-      "price": 7.37,
-      "change": -0.69,
-      "change_pct": -8.5608,
+      "price": 7.45,
+      "change": -0.61,
+      "change_pct": -7.5682,
       "open": 7.8675,
       "high": 8.11,
       "low": 7.3201,
       "prev_close": 8.06,
-      "quote_time": "2026-11-20T18:14:40Z"
+      "quote_time": "2026-11-20T18:44:05Z"
     },
     {
       "ticker": "QBTS",
-      "price": 6.65,
-      "change": -0.66,
-      "change_pct": -9.0287,
+      "price": 6.69,
+      "change": -0.62,
+      "change_pct": -8.4815,
       "open": 7.125,
       "high": 7.2974,
       "low": 6.56,
       "prev_close": 7.31,
-      "quote_time": "2026-11-20T18:14:42Z"
+      "quote_time": "2026-11-20T18:44:08Z"
     },
     {
       "ticker": "QUBT",
-      "price": 4.47,
-      "change": -0.41,
-      "change_pct": -8.4016,
+      "price": 4.48,
+      "change": -0.4,
+      "change_pct": -8.1967,
       "open": 4.7525,
       "high": 4.91,
       "low": 4.42,
       "prev_close": 4.88,
-      "quote_time": "2026-11-20T18:14:46Z"
+      "quote_time": "2026-11-20T18:44:08Z"
     },
     {
       "ticker": "ARQQ",
-      "price": 11.21,
-      "change": -1.4,
-      "change_pct": -11.1023,
+      "price": 11.17,
+      "change": -1.44,
+      "change_pct": -11.4195,
       "open": 12.4,
       "high": 12.51,
       "low": 11.03,
       "prev_close": 12.61,
-      "quote_time": "2026-11-20T18:07:46Z"
+      "quote_time": "2026-11-20T18:42:32Z"
     },
     {
       "ticker": "INVH",
@@ -2525,546 +2525,546 @@
       "high": 26.855,
       "low": 26.21,
       "prev_close": 26.09,
-      "quote_time": "2026-11-20T18:14:41Z"
+      "quote_time": "2026-11-20T18:44:09Z"
     },
     {
       "ticker": "EQIX",
-      "price": 985.21,
-      "change": -32.84,
-      "change_pct": -3.2258,
+      "price": 986.83,
+      "change": -31.22,
+      "change_pct": -3.0666,
       "open": 1010.62,
       "high": 1013.47,
       "low": 979.905,
       "prev_close": 1018.05,
-      "quote_time": "2026-11-20T18:14:25Z"
+      "quote_time": "2026-11-20T18:44:09Z"
     },
     {
       "ticker": "DLR",
-      "price": 166.75,
-      "change": -7.27,
-      "change_pct": -4.1777,
+      "price": 166.78,
+      "change": -7.24,
+      "change_pct": -4.1604,
       "open": 172.825,
       "high": 174.0085,
       "low": 165.66,
       "prev_close": 174.02,
-      "quote_time": "2026-11-20T18:14:27Z"
+      "quote_time": "2026-11-20T18:44:08Z"
     },
     {
       "ticker": "SPY",
-      "price": 699.53,
-      "change": -16.34,
-      "change_pct": -2.2825,
+      "price": 700.19,
+      "change": -15.68,
+      "change_pct": -2.1903,
       "open": 713.525,
       "high": 718.29,
       "low": 699.01,
       "prev_close": 715.87,
-      "quote_time": "2026-11-20T18:14:47Z"
+      "quote_time": "2026-11-20T18:44:09Z"
     },
     {
       "ticker": "QQQ",
-      "price": 619.38,
-      "change": -25.66,
-      "change_pct": -3.978,
+      "price": 620.07,
+      "change": -24.97,
+      "change_pct": -3.8711,
       "open": 639.265,
       "high": 643.28,
       "low": 618.72,
       "prev_close": 645.04,
-      "quote_time": "2026-11-20T18:14:47Z"
+      "quote_time": "2026-11-20T18:44:10Z"
     },
     {
       "ticker": "QQQM",
-      "price": 255.04,
-      "change": -10.6,
-      "change_pct": -3.9904,
+      "price": 255.34,
+      "change": -10.3,
+      "change_pct": -3.8774,
       "open": 263.25,
       "high": 264.87,
       "low": 254.7832,
       "prev_close": 265.64,
-      "quote_time": "2026-11-20T18:14:37Z"
+      "quote_time": "2026-11-20T18:44:08Z"
     },
     {
       "ticker": "IWM",
-      "price": 259.42,
-      "change": -4.8,
-      "change_pct": -1.8167,
+      "price": 259.71,
+      "change": -4.51,
+      "change_pct": -1.7069,
       "open": 263.65,
       "high": 265.85,
       "low": 258.98,
       "prev_close": 264.22,
-      "quote_time": "2026-11-20T18:14:47Z"
+      "quote_time": "2026-11-20T18:44:07Z"
     },
     {
       "ticker": "SMH",
-      "price": 409.35,
-      "change": -38.13,
-      "change_pct": -8.5211,
+      "price": 411.6,
+      "change": -35.88,
+      "change_pct": -8.0182,
       "open": 438.6,
       "high": 438.6,
       "low": 408.49,
       "prev_close": 447.48,
-      "quote_time": "2026-11-20T18:14:47Z"
+      "quote_time": "2026-11-20T18:44:10Z"
     },
     {
       "ticker": "SOXX",
-      "price": 125.63,
-      "change": -12.32,
-      "change_pct": -8.9308,
+      "price": 126.39,
+      "change": -11.56,
+      "change_pct": -8.3798,
       "open": 135.04,
       "high": 135.41,
       "low": 125.1,
       "prev_close": 137.95,
-      "quote_time": "2026-11-20T18:14:47Z"
+      "quote_time": "2026-11-20T18:44:08Z"
     },
     {
       "ticker": "IGV",
-      "price": 93,
-      "change": -3.1,
-      "change_pct": -3.2258,
+      "price": 92.95,
+      "change": -3.15,
+      "change_pct": -3.2778,
       "open": 94.74000000000001,
       "high": 96,
       "low": 92.655,
       "prev_close": 96.1,
-      "quote_time": "2026-11-20T18:15:08Z"
+      "quote_time": "2026-11-20T18:44:09Z"
     },
     {
       "ticker": "EWY",
-      "price": 125.98,
-      "change": -8.61,
-      "change_pct": -6.3972,
+      "price": 125.91,
+      "change": -8.68,
+      "change_pct": -6.4492,
       "open": 132.625,
       "high": 132.895,
-      "low": 125.773,
+      "low": 125.56,
       "prev_close": 134.59,
-      "quote_time": "2026-11-20T18:15:09Z"
+      "quote_time": "2026-11-20T18:44:08Z"
     },
     {
       "ticker": "ICOP",
-      "price": 38.16,
-      "change": -1.4,
-      "change_pct": -3.5389,
+      "price": 38.31,
+      "change": -1.25,
+      "change_pct": -3.1598,
       "open": 39.08,
       "high": 39.475,
       "low": 38.01,
       "prev_close": 39.56,
-      "quote_time": "2026-11-20T18:11:46Z"
+      "quote_time": "2026-11-20T18:42:35Z"
     },
     {
       "ticker": "MARS",
-      "price": 19.19,
-      "change": -1.49,
-      "change_pct": -7.205,
+      "price": 19.29,
+      "change": -1.39,
+      "change_pct": -6.7215,
       "open": 19.84,
       "high": 20.255,
       "low": 19.12,
       "prev_close": 20.68,
-      "quote_time": "2026-11-20T18:14:31Z"
+      "quote_time": "2026-11-20T18:43:12Z"
     },
     {
       "ticker": "THNQ",
-      "price": 71.29,
-      "change": -4.79,
-      "change_pct": -6.296,
+      "price": 71.55,
+      "change": -4.53,
+      "change_pct": -5.9543,
       "open": 74.12,
       "high": 74.24,
       "low": 71.265,
       "prev_close": 76.08,
-      "quote_time": "2026-11-20T17:54:52Z"
+      "quote_time": "2026-11-20T18:42:28Z"
     },
     {
       "ticker": "ARTY",
-      "price": 54.66,
-      "change": -4.78,
-      "change_pct": -8.0417,
+      "price": 54.82,
+      "change": -4.62,
+      "change_pct": -7.7725,
       "open": 57.86,
       "high": 58,
       "low": 54.56,
       "prev_close": 59.44,
-      "quote_time": "2026-11-20T18:14:43Z"
+      "quote_time": "2026-11-20T18:43:52Z"
     },
     {
       "ticker": "WTAI",
-      "price": 28.28,
-      "change": -2.655,
-      "change_pct": -8.5825,
+      "price": 28.43,
+      "change": -2.505,
+      "change_pct": -8.0976,
       "open": 30.12,
       "high": 30.12,
       "low": 28.25,
       "prev_close": 30.935,
-      "quote_time": "2026-11-20T18:14:45Z"
+      "quote_time": "2026-11-20T18:44:23Z"
     },
     {
       "ticker": "IGPT",
-      "price": 67.54,
-      "change": -5.14,
-      "change_pct": -7.0721,
+      "price": 67.86,
+      "change": -4.82,
+      "change_pct": -6.6318,
       "open": 71.145,
       "high": 71.52,
       "low": 67.46,
       "prev_close": 72.68,
-      "quote_time": "2026-11-20T18:14:54Z"
+      "quote_time": "2026-11-20T18:44:29Z"
     },
     {
       "ticker": "THRO",
-      "price": 39.45,
-      "change": -0.9,
-      "change_pct": -2.2305,
+      "price": 39.51,
+      "change": -0.84,
+      "change_pct": -2.0818,
       "open": 40.185,
       "high": 40.49,
       "low": 39.385,
       "prev_close": 40.35,
-      "quote_time": "2026-11-20T18:15:01Z"
+      "quote_time": "2026-11-20T18:44:28Z"
     },
     {
       "ticker": "TECB",
-      "price": 67.48,
-      "change": -2.2164,
-      "change_pct": -3.1801,
+      "price": 67.59,
+      "change": -2.1064,
+      "change_pct": -3.0223,
       "open": 69.39,
       "high": 69.4,
       "low": 67.461,
       "prev_close": 69.6964,
-      "quote_time": "2026-11-20T18:14:37Z"
+      "quote_time": "2026-11-20T18:15:16Z"
     },
     {
       "ticker": "BOTZ",
-      "price": 27.69,
-      "change": -1.31,
-      "change_pct": -4.5172,
+      "price": 27.72,
+      "change": -1.28,
+      "change_pct": -4.4138,
       "open": 28.55,
       "high": 28.605,
       "low": 27.64,
       "prev_close": 29,
-      "quote_time": "2026-11-20T18:15:00Z"
+      "quote_time": "2026-11-20T18:44:08Z"
     },
     {
       "ticker": "QTUM",
-      "price": 112.79,
-      "change": -6.92,
-      "change_pct": -5.7806,
+      "price": 113.32,
+      "change": -6.39,
+      "change_pct": -5.3379,
       "open": 117.655,
       "high": 118.11,
       "low": 112.56,
       "prev_close": 119.71,
-      "quote_time": "2026-11-20T18:14:46Z"
+      "quote_time": "2026-11-20T18:42:16Z"
     },
     {
       "ticker": "ROBT",
-      "price": 47.77,
-      "change": -2.105,
-      "change_pct": -4.2206,
+      "price": 47.82,
+      "change": -2.055,
+      "change_pct": -4.1203,
       "open": 49.019999999999996,
       "high": 49.225,
       "low": 47.68,
       "prev_close": 49.875,
-      "quote_time": "2026-11-20T18:08:16Z"
+      "quote_time": "2026-11-20T18:27:36Z"
     },
     {
       "ticker": "DTCR",
-      "price": 22.75,
-      "change": -0.79,
-      "change_pct": -3.356,
+      "price": 22.78,
+      "change": -0.76,
+      "change_pct": -3.2285,
       "open": 23.38,
       "high": 23.39,
       "low": 22.68,
       "prev_close": 23.54,
-      "quote_time": "2026-11-20T18:15:00Z"
+      "quote_time": "2026-11-20T18:44:06Z"
     },
     {
       "ticker": "GRID",
-      "price": 146.34,
-      "change": -6.08,
-      "change_pct": -3.989,
+      "price": 146.7,
+      "change": -5.72,
+      "change_pct": -3.7528,
       "open": 150,
       "high": 151.37,
       "low": 146.1,
       "prev_close": 152.42,
-      "quote_time": "2026-11-20T18:15:03Z"
+      "quote_time": "2026-11-20T18:44:22Z"
     },
     {
       "ticker": "BMNR",
-      "price": 13.74,
-      "change": -1.33,
-      "change_pct": -8.8255,
+      "price": 13.7,
+      "change": -1.37,
+      "change_pct": -9.0909,
       "open": 14.9675,
       "high": 15.17,
-      "low": 13.69,
+      "low": 13.68,
       "prev_close": 15.07,
-      "quote_time": "2026-11-20T18:15:06Z"
+      "quote_time": "2026-11-20T18:44:29Z"
     },
     {
       "ticker": "IBIT",
-      "price": 33.28,
-      "change": -1.8,
-      "change_pct": -5.1311,
+      "price": 33.16,
+      "change": -1.92,
+      "change_pct": -5.4732,
       "open": 35,
       "high": 35.135,
-      "low": 33.185,
+      "low": 33.135,
       "prev_close": 35.08,
-      "quote_time": "2026-11-20T18:15:08Z"
+      "quote_time": "2026-11-20T18:44:32Z"
     },
     {
       "ticker": "ETHA",
-      "price": 36.8,
-      "change": -2.94,
-      "change_pct": -7.3981,
+      "price": 36.73,
+      "change": -3.01,
+      "change_pct": -7.5742,
       "open": 39.58,
       "high": 39.73,
       "low": 36.56,
       "prev_close": 39.74,
-      "quote_time": "2026-11-20T18:15:08Z"
+      "quote_time": "2026-11-20T18:44:31Z"
     },
     {
       "ticker": "GLD",
-      "price": 322.64,
-      "change": -12.54,
-      "change_pct": -3.7413,
+      "price": 321.36,
+      "change": -13.82,
+      "change_pct": -4.1232,
       "open": 327.5625,
       "high": 328.6,
-      "low": 322.44,
+      "low": 321.3,
       "prev_close": 335.18,
-      "quote_time": "2026-11-20T18:15:32Z"
+      "quote_time": "2026-11-20T18:44:32Z"
     },
     {
       "ticker": "BNO",
-      "price": 58.28,
-      "change": -0.56,
-      "change_pct": -0.9517,
+      "price": 58.47,
+      "change": -0.37,
+      "change_pct": -0.6288,
       "open": 58.08,
-      "high": 58.42,
+      "high": 58.565,
       "low": 57.55,
       "prev_close": 58.84,
-      "quote_time": "2026-11-20T18:15:26Z"
+      "quote_time": "2026-11-20T18:43:51Z"
     },
     {
       "ticker": "CPER",
-      "price": 33.04,
-      "change": -0.72,
-      "change_pct": -2.1327,
+      "price": 33,
+      "change": -0.76,
+      "change_pct": -2.2512,
       "open": 33.455,
       "high": 33.66,
       "low": 32.905,
       "prev_close": 33.76,
-      "quote_time": "2026-11-20T18:15:30Z"
+      "quote_time": "2026-11-20T18:43:13Z"
     },
     {
       "ticker": "HYG",
-      "price": 76.41,
-      "change": -0.12,
-      "change_pct": -0.1568,
+      "price": 76.44,
+      "change": -0.09,
+      "change_pct": -0.1176,
       "open": 76.46,
       "high": 76.57,
       "low": 76.38,
       "prev_close": 76.53,
-      "quote_time": "2026-11-20T18:15:22Z"
+      "quote_time": "2026-11-20T18:44:25Z"
     },
     {
       "ticker": "LQD",
-      "price": 103.65,
-      "change": 0.57,
-      "change_pct": 0.553,
+      "price": 103.7,
+      "change": 0.62,
+      "change_pct": 0.6015,
       "open": 103.315,
       "high": 103.7,
       "low": 103.29,
       "prev_close": 103.08,
-      "quote_time": "2026-11-20T18:15:25Z"
+      "quote_time": "2026-11-20T18:44:30Z"
     },
     {
       "ticker": "UUP",
-      "price": 29.62,
-      "change": -0.01,
-      "change_pct": -0.0337,
+      "price": 29.64,
+      "change": 0.01,
+      "change_pct": 0.0337,
       "open": 29.6,
-      "high": 29.63,
+      "high": 29.645,
       "low": 29.575,
       "prev_close": 29.63,
-      "quote_time": "2026-11-20T18:14:02Z"
+      "quote_time": "2026-11-20T18:44:16Z"
     },
     {
       "ticker": "TLT",
-      "price": 81.42,
-      "change": 1.07,
-      "change_pct": 1.3317,
+      "price": 81.35,
+      "change": 1,
+      "change_pct": 1.2446,
       "open": 80.705,
       "high": 81.42,
       "low": 80.685,
       "prev_close": 80.35,
-      "quote_time": "2026-11-20T18:15:31Z"
+      "quote_time": "2026-11-20T18:44:29Z"
     },
     {
       "ticker": "IEF",
-      "price": 91.6,
-      "change": 0.78,
-      "change_pct": 0.8588,
+      "price": 91.54,
+      "change": 0.72,
+      "change_pct": 0.7928,
       "open": 91.1075,
       "high": 91.625,
       "low": 91.1075,
       "prev_close": 90.82,
-      "quote_time": "2026-11-20T18:15:30Z"
+      "quote_time": "2026-11-20T18:44:54Z"
     },
     {
       "ticker": "IWB",
-      "price": 383.13,
-      "change": -8.69,
-      "change_pct": -2.2179,
+      "price": 383.43,
+      "change": -8.39,
+      "change_pct": -2.1413,
       "open": 390.44,
       "high": 393.09,
       "low": 382.69,
       "prev_close": 391.82,
-      "quote_time": "2026-11-20T18:15:26Z"
+      "quote_time": "2026-11-20T18:44:36Z"
     },
     {
       "ticker": "IWF",
-      "price": 103.74,
-      "change": -4.5,
-      "change_pct": -4.1574,
+      "price": 103.87,
+      "change": -4.37,
+      "change_pct": -4.0373,
       "open": 107.35,
       "high": 107.83,
       "low": 103.57,
       "prev_close": 108.24,
-      "quote_time": "2026-11-20T18:15:31Z"
+      "quote_time": "2026-11-20T18:44:42Z"
     },
     {
       "ticker": "IWD",
-      "price": 249.89,
-      "change": -1.63,
-      "change_pct": -0.6481,
+      "price": 249.99,
+      "change": -1.53,
+      "change_pct": -0.6083,
       "open": 251.735,
       "high": 253.77,
       "low": 249.472176,
       "prev_close": 251.52,
-      "quote_time": "2026-11-20T18:15:31Z"
+      "quote_time": "2026-11-20T18:44:54Z"
     },
     {
       "ticker": "IWR",
-      "price": 104.09,
-      "change": -1.29,
-      "change_pct": -1.2241,
+      "price": 104.18,
+      "change": -1.2,
+      "change_pct": -1.1387,
       "open": 105.165,
       "high": 106.105,
       "low": 103.87,
       "prev_close": 105.38,
-      "quote_time": "2026-11-20T18:15:31Z"
+      "quote_time": "2026-11-20T18:44:49Z"
     },
     {
       "ticker": "IWP",
-      "price": 118.36,
-      "change": -3.72,
-      "change_pct": -3.0472,
+      "price": 118.51,
+      "change": -3.57,
+      "change_pct": -2.9243,
       "open": 121.47,
       "high": 122.04,
       "low": 118.14,
       "prev_close": 122.08,
-      "quote_time": "2026-11-20T18:15:31Z"
+      "quote_time": "2026-11-20T18:44:53Z"
     },
     {
       "ticker": "IWS",
-      "price": 163.28,
-      "change": -1.1,
-      "change_pct": -0.6692,
+      "price": 163.44,
+      "change": -0.94,
+      "change_pct": -0.5718,
       "open": 164.92,
       "high": 165.95,
       "low": 162.92,
       "prev_close": 164.38,
-      "quote_time": "2026-11-20T18:15:16Z"
+      "quote_time": "2026-11-20T18:44:44Z"
     },
     {
       "ticker": "IWO",
-      "price": 324.2,
-      "change": -8.08,
-      "change_pct": -2.4317,
+      "price": 324.74,
+      "change": -7.54,
+      "change_pct": -2.2692,
       "open": 330.31,
       "high": 333.685,
       "low": 323.58,
       "prev_close": 332.28,
-      "quote_time": "2026-11-20T18:15:19Z"
+      "quote_time": "2026-11-20T18:44:11Z"
     },
     {
       "ticker": "IWN",
-      "price": 200.85,
-      "change": -2.22,
-      "change_pct": -1.0932,
+      "price": 201.03,
+      "change": -2.04,
+      "change_pct": -1.0046,
       "open": 202.59,
       "high": 204.45,
       "low": 200.31,
       "prev_close": 203.07,
-      "quote_time": "2026-11-20T18:15:27Z"
+      "quote_time": "2026-11-20T18:44:02Z"
     },
     {
       "ticker": "IWC",
-      "price": 159.09,
-      "change": -3.98,
-      "change_pct": -2.4407,
+      "price": 159.19,
+      "change": -3.88,
+      "change_pct": -2.3793,
       "open": 162.07,
       "high": 163.78,
       "low": 158.8,
       "prev_close": 163.07,
-      "quote_time": "2026-11-20T18:07:53Z"
+      "quote_time": "2026-11-20T18:44:41Z"
     },
     {
       "ticker": "BIL",
-      "price": 91.5924,
-      "change": 0.0224,
-      "change_pct": 0.0245,
+      "price": 91.5979,
+      "change": 0.0279,
+      "change_pct": 0.0305,
       "open": 91.5925,
       "high": 91.6,
       "low": 91.59,
       "prev_close": 91.57,
-      "quote_time": "2026-11-20T18:15:26Z"
+      "quote_time": "2026-11-20T18:44:53Z"
     },
     {
       "ticker": "SHY",
-      "price": 81.6,
-      "change": 0.22,
-      "change_pct": 0.2703,
+      "price": 81.58,
+      "change": 0.2,
+      "change_pct": 0.2458,
       "open": 81.485,
       "high": 81.61,
       "low": 81.485,
       "prev_close": 81.38,
-      "quote_time": "2026-11-20T18:15:44Z"
+      "quote_time": "2026-11-20T18:44:53Z"
     },
     {
       "ticker": "TLH",
-      "price": 95.56,
-      "change": 1.05,
-      "change_pct": 1.111,
+      "price": 95.49,
+      "change": 0.98,
+      "change_pct": 1.0369,
       "open": 95.145,
       "high": 95.585,
       "low": 94.97,
       "prev_close": 94.51,
-      "quote_time": "2026-11-20T18:15:50Z"
+      "quote_time": "2026-11-20T18:44:54Z"
     },
     {
       "ticker": "TIP",
-      "price": 105.56,
-      "change": 0.53,
-      "change_pct": 0.5046,
+      "price": 105.58,
+      "change": 0.55,
+      "change_pct": 0.5237,
       "open": 105.295,
-      "high": 105.605,
+      "high": 105.61,
       "low": 105.27,
       "prev_close": 105.03,
-      "quote_time": "2026-11-20T18:15:44Z"
+      "quote_time": "2026-11-20T18:44:53Z"
     },
     {
       "ticker": "AGG",
-      "price": 96.15,
-      "change": 0.59,
-      "change_pct": 0.6174,
+      "price": 96.1,
+      "change": 0.54,
+      "change_pct": 0.5651,
       "open": 95.815,
       "high": 96.155,
       "low": 95.81,
       "prev_close": 95.56,
-      "quote_time": "2026-11-20T18:15:54Z"
+      "quote_time": "2026-11-20T18:44:49Z"
     },
     {
       "ticker": "MBB",
-      "price": 91.59,
-      "change": 0.69,
-      "change_pct": 0.7591,
+      "price": 91.55,
+      "change": 0.65,
+      "change_pct": 0.7151,
       "open": 91.3,
       "high": 91.608,
       "low": 91.245,
       "prev_close": 90.9,
-      "quote_time": "2026-11-20T18:15:50Z"
+      "quote_time": "2026-11-20T18:44:54Z"
     },
     {
       "ticker": "BKLN",
@@ -3075,117 +3075,117 @@
       "high": 20.52,
       "low": 20.44,
       "prev_close": 20.5,
-      "quote_time": "2026-11-20T18:15:44Z"
+      "quote_time": "2026-11-20T18:44:32Z"
     },
     {
       "ticker": "MUB",
-      "price": 103.48,
-      "change": 0.38,
-      "change_pct": 0.3686,
+      "price": 103.52,
+      "change": 0.42,
+      "change_pct": 0.4074,
       "open": 103.425,
       "high": 103.57,
       "low": 103.265,
       "prev_close": 103.1,
-      "quote_time": "2026-11-20T18:15:48Z"
+      "quote_time": "2026-11-20T18:44:53Z"
     },
     {
       "ticker": "BNDX",
-      "price": 47.47,
-      "change": 0.3,
-      "change_pct": 0.636,
+      "price": 47.45,
+      "change": 0.28,
+      "change_pct": 0.5936,
       "open": 47.3125,
       "high": 47.48,
       "low": 47.3125,
       "prev_close": 47.17,
-      "quote_time": "2026-11-20T18:15:44Z"
+      "quote_time": "2026-11-20T18:44:54Z"
     },
     {
       "ticker": "EMB",
-      "price": 89.98,
-      "change": -0.34,
-      "change_pct": -0.3764,
+      "price": 90.04,
+      "change": -0.28,
+      "change_pct": -0.31,
       "open": 90.12,
       "high": 90.32000000000001,
       "low": 89.94,
       "prev_close": 90.32,
-      "quote_time": "2026-11-20T18:15:50Z"
+      "quote_time": "2026-11-20T18:44:54Z"
     },
     {
       "ticker": "SPLV",
-      "price": 76.87,
-      "change": 0.62,
-      "change_pct": 0.8131,
+      "price": 76.85,
+      "change": 0.6,
+      "change_pct": 0.7869,
       "open": 76.695,
       "high": 77.335,
       "low": 76.67,
       "prev_close": 76.25,
-      "quote_time": "2026-11-20T18:15:46Z"
+      "quote_time": "2026-11-20T18:44:54Z"
     },
     {
       "ticker": "USMV",
-      "price": 99.36,
-      "change": -0.37,
-      "change_pct": -0.371,
+      "price": 99.35,
+      "change": -0.38,
+      "change_pct": -0.381,
       "open": 100.055,
       "high": 100.595,
-      "low": 99.2601,
+      "low": 99.23,
       "prev_close": 99.73,
-      "quote_time": "2026-11-20T18:15:38Z"
+      "quote_time": "2026-11-20T18:44:53Z"
     },
     {
       "ticker": "MTUM",
-      "price": 61.05,
-      "change": -2.85,
-      "change_pct": -4.4601,
+      "price": 61.2,
+      "change": -2.7,
+      "change_pct": -4.2254,
       "open": 63.19,
       "high": 63.47,
       "low": 60.93,
       "prev_close": 63.9,
-      "quote_time": "2026-11-20T18:15:53Z"
+      "quote_time": "2026-11-20T18:44:54Z"
     },
     {
       "ticker": "PDP",
-      "price": 119.46,
-      "change": -3.5497,
-      "change_pct": -2.8857,
+      "price": 119.29,
+      "change": -3.7197,
+      "change_pct": -3.0239,
       "open": 121.88,
       "high": 122.38,
       "low": 119.25,
       "prev_close": 123.0097,
-      "quote_time": "2026-11-20T17:45:35Z"
+      "quote_time": "2026-11-20T18:30:04Z"
     },
     {
       "ticker": "FV",
-      "price": 67.44,
-      "change": -0.74,
-      "change_pct": -1.0854,
+      "price": 67.56,
+      "change": -0.62,
+      "change_pct": -0.9094,
       "open": 67.68,
       "high": 68.385715,
       "low": 67.36,
       "prev_close": 68.18,
-      "quote_time": "2026-11-20T18:12:15Z"
+      "quote_time": "2026-11-20T18:37:59Z"
     },
     {
       "ticker": "SECT",
-      "price": 64.42,
-      "change": -1.91,
-      "change_pct": -2.8795,
+      "price": 64.65,
+      "change": -1.68,
+      "change_pct": -2.5328,
       "open": 66.11,
       "high": 66.15,
       "low": 64.361607,
       "prev_close": 66.33,
-      "quote_time": "2026-11-20T18:15:16Z"
+      "quote_time": "2026-11-20T18:44:52Z"
     },
     {
       "ticker": "XLSR",
-      "price": 60.25,
-      "change": -1.43,
-      "change_pct": -2.3184,
+      "price": 60.45,
+      "change": -1.23,
+      "change_pct": -1.9942,
       "open": 61.47,
       "high": 61.69,
       "low": 60.225,
       "prev_close": 61.68,
-      "quote_time": "2026-11-20T18:15:31Z"
+      "quote_time": "2026-11-20T18:39:17Z"
     },
     {
       "ticker": "SSUS",
