@@ -144,6 +144,7 @@ UPSERT_DAILY = """
                 close=excluded.close, adj_close=excluded.adj_close,
                 volume=excluded.volume, source=excluded.source,
                 updated_at=excluded.updated_at
+            WHERE excluded.close IS NOT NULL OR {s}.daily_prices.close IS NULL
             """
 
 INSERT_SPOT = ("INSERT OR REPLACE INTO {s}.spot_quotes "

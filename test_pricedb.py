@@ -618,5 +618,26 @@ try:
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
+
+# -- a blank bar never overwrites a settled close (2026-11-21) -----------------
+# An off-hours fetch once returned the last session with no close and blanked 281
+# settled closes. The upsert now leaves an existing close alone when the incoming
+# bar has none; a blank bar still lands where nothing was there, and a real bar
+# still replaces a real bar.
+print("\nblank bar guard")
+_gd = tempfile.mkdtemp()
+_gc = P.connect(os.path.join(_gd, "g.db"))
+P.init_db(_gc)
+P.upsert_daily(_gc, [("GGG", "2026-05-01", 1.0, 2.0, 0.5, 1.5, 1.5, 10, "yfinance", "t1")])
+P.upsert_daily(_gc, [("GGG", "2026-05-01", None, None, None, None, None, None, "yfinance", "t2")])
+check("a blank bar leaves the settled close", _gc.execute("select close, updated_at from daily_prices where ticker='GGG'").fetchone(), (1.5, "t1"))
+P.upsert_daily(_gc, [("GGG", "2026-05-01", 1.0, 2.0, 0.5, 1.7, 1.7, 11, "yfinance", "t3")])
+check("a real bar still replaces a real bar", _gc.execute("select close, updated_at from daily_prices where ticker='GGG'").fetchone(), (1.7, "t3"))
+P.upsert_daily(_gc, [("GGG", "2026-05-04", None, None, None, None, None, None, "yfinance", "t4")])
+check("a blank bar lands where nothing was there", _gc.execute("select close from daily_prices where ticker='GGG' and date='2026-05-04'").fetchone(), (None,))
+P.upsert_daily(_gc, [("GGG", "2026-05-04", 1.0, 2.0, 0.5, 1.9, 1.9, 12, "yfinance", "t5")])
+check("and a real bar then fills it", _gc.execute("select close from daily_prices where ticker='GGG' and date='2026-05-04'").fetchone(), (1.9,))
+_gc.close()
+
 print("\nFAILED: " + ", ".join(FAILS) if FAILS else "\nall pricedb checks passed")
 sys.exit(1 if FAILS else 0)
