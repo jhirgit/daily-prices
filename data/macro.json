@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T01:19:57Z",
+ "generated_at": "2026-11-21T02:02:31Z",
  "asof": "2026-11-21",
  "status": "ok",
  "counts": {
@@ -31,7 +31,7 @@
  "meta": {
   "requests": 35,
   "bytes": 12076900,
-  "seconds": 54.2,
+  "seconds": 56.5,
   "by_host": {
    "api.fiscaldata.treasury.gov": {
     "requests": 5,
@@ -662,10 +662,10 @@
    "legs": [
     {
      "pair": "IWM / SPY",
-     "leg": 0,
-     "label": "flat",
-     "chg_63": -4.672,
-     "asof": "2026-11-20"
+     "leg": -1,
+     "label": "down",
+     "chg_63": -5.769,
+     "asof": "2026-11-19"
     },
     {
      "pair": "IJR / IJH",
@@ -2250,16 +2250,16 @@
    "source": "pricedb",
    "source_id": "IWM",
    "release": "market",
-   "asof": "2026-11-20",
-   "value": 256.61,
-   "prior": 264.22,
-   "prior_asof": "2026-11-19",
-   "change": -2.88,
+   "asof": "2026-11-19",
+   "value": 264.22,
+   "prior": 270.12,
+   "prior_asof": "2026-11-18",
+   "change": -2.184,
    "change_unit": "%",
-   "yoy": 13.141,
+   "yoy": 14.34,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": -13.656
+    "chg_63": -11.685
    },
    "released": null,
    "next_release": null,
@@ -2280,16 +2280,16 @@
    "source": "pricedb",
    "source_id": "SPY",
    "release": "market",
-   "asof": "2026-11-20",
-   "value": 689.81,
-   "prior": 715.87,
-   "prior_asof": "2026-11-19",
-   "change": -3.64,
+   "asof": "2026-11-19",
+   "value": 715.87,
+   "prior": 730.2,
+   "prior_asof": "2026-11-18",
+   "change": -1.962,
    "change_unit": "%",
-   "yoy": 6.854,
+   "yoy": 9.2,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": -9.424
+    "chg_63": -6.278
    },
    "released": null,
    "next_release": null,
@@ -3204,6 +3204,7 @@
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
+   "revised_from": 3.665,
    "priority": "core",
    "licence": "Federal Reserve Bank research data: free, with attribution"
   },
@@ -3235,6 +3236,7 @@
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
+   "revised_from": 4.5189,
    "priority": "useful",
    "licence": "Federal Reserve Bank research data: free, with attribution"
   },
@@ -3297,6 +3299,7 @@
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
+   "revised_from": 3.0595,
    "priority": "core",
    "licence": "Federal Reserve Bank research data: free, with attribution"
   },
@@ -3328,6 +3331,7 @@
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
+   "revised_from": 6.201,
    "priority": "useful",
    "licence": "Federal Reserve Bank research data: free, with attribution"
   },
@@ -3514,6 +3518,7 @@
    "status": "ok",
    "reason": null,
    "judged_by": "days",
+   "revised_from": 3.0421,
    "priority": "useful",
    "licence": "Federal Reserve Bank research data: free, with attribution"
   },
@@ -4150,6 +4155,7 @@
    "status": "ok",
    "reason": null,
    "judged_by": "days",
+   "revised_from": 5.1925,
    "priority": "core",
    "licence": "Federal Reserve Bank research data: free, with attribution"
   },
@@ -4380,16 +4386,16 @@
    "source": "pricedb",
    "source_id": "UUP",
    "release": "market",
-   "asof": "2026-11-20",
-   "value": 29.62,
-   "prior": 29.63,
-   "prior_asof": "2026-11-19",
-   "change": -0.034,
+   "asof": "2026-11-19",
+   "value": 29.63,
+   "prior": 29.62,
+   "prior_asof": "2026-11-18",
+   "change": 0.034,
    "change_unit": "%",
-   "yoy": 7.82,
+   "yoy": 7.932,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": 5.937
+    "chg_63": 6.201
    },
    "released": null,
    "next_release": null,
@@ -4519,6 +4525,7 @@
    "status": "ok",
    "reason": null,
    "judged_by": "days",
+   "revised_from": 97.1306,
    "priority": "useful",
    "licence": "OECD: free reuse with attribution"
   },
@@ -4593,16 +4600,16 @@
    "source": "pricedb",
    "source_id": "CEW",
    "release": "market",
-   "asof": "2026-11-19",
-   "value": 19.17,
-   "prior": 19.32,
-   "prior_asof": "2026-11-18",
-   "change": -0.776,
+   "asof": "2026-11-20",
+   "value": 19.127,
+   "prior": 19.17,
+   "prior_asof": "2026-11-19",
+   "change": -0.224,
    "change_unit": "%",
-   "yoy": 3.061,
+   "yoy": 3.208,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": -4.246
+    "chg_63": -4.317
    },
    "released": null,
    "next_release": null,
@@ -4623,16 +4630,16 @@
    "source": "pricedb",
    "source_id": "EMB",
    "release": "market",
-   "asof": "2026-11-20",
-   "value": 89.92,
-   "prior": 90.32,
-   "prior_asof": "2026-11-19",
-   "change": -0.443,
+   "asof": "2026-11-19",
+   "value": 90.32,
+   "prior": 90.79,
+   "prior_asof": "2026-11-18",
+   "change": -0.518,
    "change_unit": "%",
-   "yoy": -1.669,
+   "yoy": -1.468,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": -4.314
+    "chg_63": -3.756
    },
    "released": null,
    "next_release": null,
