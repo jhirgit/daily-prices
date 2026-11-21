@@ -394,6 +394,21 @@ holding's own return over the ladder's windows (5, 21, 63 and 126 sessions), its
 Run `python rotation_members.py` (network, about 5 minutes: some 900 rest-line names are
 priced after the listed ones). Tests: `python test_rotation_members.py` (no network).
 
+### Deeper books, the row's shape, and vehicle composites (B1, 2026-11-20)
+
+- `rotation_members.py` reads every line, daily, for 6 more rows from the issuers' own files
+  (First Trust CIBR FDN GRID, Amplify HACK SILJ, Invesco QQQ; `ISSUER_FUNDS`, one entry per issuer
+  to switch it off). Global X is switched off (`ISSUER_OFF`): its file forbids reproduction,
+  redistribution and derivative works, and this repo is public; its 8 rows stay on top 10 + N-PORT.
+  It also adds the one-year window `r252`, each line's position against its own 50/200-session
+  average, and a per-row `shape` block (concentration, trend breadth, who moved it). iShares,
+  VanEck and WisdomTree block a plain client and stay on Yahoo's top 10 plus SEC N-PORT.
+- `basket_fundamentals.py` (daily, after it) writes **`data/rotation_fundamentals.json`**:
+  look-through P/E, EV/sales, growth, margins and leverage per row from each company's own SEC
+  filings, shown only where covered companies make up at least 70% of the row's weight. Its
+  company store is **`data/basket_companies.json`** (committed). Tests:
+  `python test_basket_fundamentals.py` (no network). Schemas: `data/README.md`.
+
 ## Sector-ladder correlation (`rotation_corr.py`)
 
 How the ladder's sleeves move together, for the jr-dash Macro tab. Daily, after `rotation_phase.py`;

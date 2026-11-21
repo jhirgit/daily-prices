@@ -40,6 +40,7 @@ def healthy():
         "rotation_members.json": {"generated_at": S + "T22:20:00Z", "asof": S, "rows": {}, "errors": {}},
         "rotation_phase.json": {"generated_at": S + "T22:21:00Z", "asof": S, "rows": {}, "errors": {}},
         "rotation_corr.json": {"generated_at": S + "T22:22:00Z", "asof": S, "rows": {}, "errors": {}},
+        "rotation_fundamentals.json": {"generated_at": S + "T22:24:00Z", "asof": S, "status": "ok", "rows": {}},
         "exhaustion.json": {"generated_at": S + "T22:22:00Z", "asof": S, "universes": {}},
         "thesis_gauge.json": {"generated_at": S + "T22:06:00Z", "asof": S, "inputs": []},
         "options_flow.json": {"generated_at": S + "T22:09:00Z", "as_of": S, "names": {"NVDA": {}}},
@@ -122,6 +123,26 @@ check("outcomes parsed, junk ignored", h["steps"],
       {"rotation_members": "success", "rotation_phase": "failure"})
 check("a failed step is degraded", h["degraded"],
       ["step rotation_phase failed (continue-on-error; its payload is yesterday's)"])
+
+print("\n# B1: an issuer whose every holdings file failed (rotation_members issuer_files)")
+p = healthy()
+p["rotation_members.json"]["issuer_files"] = {
+    "globalx": {"ok": [], "failed": ["COPX", "LIT"], "status": "failed"},
+    "amplify": {"ok": ["HACK"], "failed": ["SILJ"], "status": "partial"}}
+h = run(p)
+check("a wholly failed issuer is degraded; a partial one is not",
+      h["degraded"], ["rotation_members.json: every globalx holdings file failed (2 funds; source changed?)"])
+p = healthy()
+p["rotation_members.json"]["store"] = {"store": "partial", "failed": 900, "wanted": 3000}
+check("a partial constituents store is a warning", run(p)["warnings"],
+      ["rotation_members.json constituents store: partial"])
+p = healthy()
+p["rotation_fundamentals.json"]["status"] = "partial"
+h = run(p)
+check("rotation_fundamentals.json partial: a warning, not degraded",
+      (h["status"], h["warnings"]), ("ok", ["rotation_fundamentals.json is partial (see its error field)"]))
+p["rotation_fundamentals.json"]["status"] = "failed"
+check("...failed: degraded", run(p)["degraded"], ["rotation_fundamentals.json is failed (see its error field)"])
 
 print("\n# options payload near its hard cap: a warning, not a failure")
 p = healthy(); p["options_flow.json"]["pad"] = "x" * int(0.95 * H.options_size_fail())

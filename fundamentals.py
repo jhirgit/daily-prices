@@ -223,6 +223,19 @@ ADR_RATIO = {"TSM": 5.0, "HIMX": 2.0}
 # 2012), and treating a merger as a split would rescale history by the deal.
 SPLIT_RATIOS = [2, 3, 4, 5, 6, 8, 10, 15, 20, 25, 30, 40, 50]
 SPLIT_TOL = 0.03
+# DECLARED SPLITS -- the one table (2026-11-20). A split the market has priced but no
+# filing reports yet: prices.db is re-based on the effective date, while the latest
+# filed share count is still the old basis, so market value and every multiple would be
+# off by the ratio until the next 10-Q. Each entry: ticker -> [(effective date, ratio)],
+# from the company's own announcement. Applied by split_adjust to every share count
+# dated (as of its `end`) BEFORE the effective date. It retires itself: once a filing
+# shows the step and detect_splits finds it (same ratio, within DECLARED_MATCH_DAYS),
+# the declared entry is no longer applied, so nothing is adjusted twice. basket_fundamentals
+# reads this same table.
+DECLARED_SPLITS = {
+    "SNDK": [("2026-11-19", 8.0)],    # Sandisk 8-for-1 forward split, effective 2026-11-19
+}
+DECLARED_MATCH_DAYS = 150
 # A "split" undone by its inverse within this many days is a mis-scaled filing, not a
 # split: both observations between are dropped.
 GLITCH_DAYS = 400
@@ -619,15 +632,31 @@ def detect_splits(obs, restated=None):
     return keep
 
 
+def declared_splits(tk, detected, table=None):
+    """The DECLARED_SPLITS entries for ``tk`` that the filings do not show yet, as
+    split records split_adjust applies by each count's as-of date (`on: end`),
+    flagged `declared`. An entry the filings already show (detect_splits found a
+    step of the same ratio within DECLARED_MATCH_DAYS of its date) is dropped."""
+    out = []
+    for eff, ratio in (DECLARED_SPLITS if table is None else table).get(tk, []):
+        if any(abs(s["ratio"] / ratio - 1) <= SPLIT_TOL and abs(_days(s["after"], eff)) <= DECLARED_MATCH_DAYS
+               for s in detected or []):
+            continue
+        out.append({"after": eff, "ratio": float(ratio), "on": "end", "declared": True, "between": None})
+    return out
+
+
 def split_adjust(obs, splits):
     """Each observation restated to today's share basis (the basis of the
     split-adjusted closes in prices.db). An adjusted count more than 3x away from
     the median of its neighbours (two either side) is a mis-scaled filing, marked
-    `glitch` and left out."""
+    `glitch` and left out. A declared split (`on: end`) applies to counts whose
+    as-of date is before its effective date; a detected one by filing date."""
     for o in obs:
         f = 1.0
         for s in splits:
-            if (o["filed"] or "") < s["after"]:
+            key = (o.get("end") or o["filed"]) if s.get("on") == "end" else o["filed"]
+            if (key or "") < s["after"]:
                 f *= s["ratio"]
         o["adj"] = o["v"] * f
         o["factor"] = f
@@ -881,11 +910,13 @@ def build_company(cf, tk, adr_ratio=None):
 
     obs = share_observations(facts)
     splits = detect_splits(obs, restatements(facts))
+    splits = splits + declared_splits(tk, splits)
     split_adjust(obs, splits)
     rec["shares"] = [{"end": o["end"], "filed": o["filed"], "raw": o["v"], "adj": o["adj"], "src": o["src"]}
                      for o in obs if o["filed"] and not o.get("glitch")
                      and o["filed"] >= (rows[0]["end"] if rows else "")]
     rec["splits"] = splits
+    rec["declared_applied"] = [f"{s['after']}x{s['ratio']:g}" for s in splits if s.get("declared")]
     rec["concepts"] = used
     rec["quarters"] = rows
     if rec["kind"] in ("bank", "insurer"):

@@ -50,7 +50,7 @@ def check_true(name, cond, detail=""):
 # fixtures
 # --------------------------------------------------------------------------
 RNG = random.Random(86)
-N = 200
+N = 300                     # 200 until 2026-11-20; 300 so the r252 window is exercised
 AXIS = [f"2026-{1 + i // 28:02d}-{1 + i % 28:02d}" for i in range(N)]   # sorted, unique
 
 
@@ -272,6 +272,8 @@ TECH = {"regime": {"dates": AXIS, "asof": AXIS[-1], "ladder": {"rows": [
     lrow("XLE", ser["XLE"]), lrow("SLV", ser["SLV"]), lrow("NEOCLOUD", nb),
     {"t": "EWY", **ewy_R},
 ]}}}
+# the one-year return lives off the rows (regime.ladder_r252), as in technicals.json
+TECH["regime"]["ladder_r252"] = {r["t"]: r.pop("r252") for r in TECH["regime"]["ladder"]["rows"]}
 PREV = {"rows": {"XLE": {"tier": "issuer_full", "holdings_asof": "2026-06-20", "n_holdings_total": 2,
                          "source": "State Street daily holdings file",
                          "holdings": [{"t": "XOM", "name": "EXXON", "w": 0.4},
@@ -330,8 +332,8 @@ for k, lag in M.WINDOWS:
                worst < 1e-6, f"worst {worst:.2e}")
     check_close(f"NEOCLOUD {k}: members + daily rebalancing == ladder R",
                 sum(h["c"][k] for h in neo["holdings"] if h["c"][k] is not None) + neo["rest"]["c"][k],
-                TECH["regime"]["ladder"]["rows"][2][k], 1e-5)
-late = dict(ser, LATE=walk(first=150))
+                TECH["regime"]["ladder"]["rows"][2].get(k, TECH["regime"]["ladder_r252"]["NEOCLOUD"]), 1e-5)
+late = dict(ser, LATE=walk(first=N - 50))
 lb = M._basket_holdings({"t": "X", "basket": ["NBIS", "IREN", "LATE"]}, late, {k: None for k, _ in M.WINDOWS}, {})
 lh = {h["t"]: h for h in lb}
 check("a member with no price at the 63d start has no 63d line, and the others split 1/2",
@@ -608,14 +610,15 @@ check("...but not when the weights are a factor of three apart",
 # --------------------------------------------------------------------------
 print("\nquarterly resets: a synthetic equal-weight fund whose answer is known")
 BD = []
-d0 = dt.date(2025, 11, 3)
+d0 = dt.date(2024, 8, 1)          # 2025-11-03 until 2026-11-20: now long enough for r252 and AXIS_TAIL
 while d0 <= dt.date(2026, 9, 25):
     if d0.weekday() < 5:
         BD.append(d0.isoformat())
     d0 += dt.timedelta(days=1)
 RS = M.reset_indices(BD)
 check("resets: the third Fridays of Dec/Mar/Jun/Sep inside the axis",
-      [BD[i] for i in RS], ["2025-12-19", "2026-03-20", "2026-06-19", "2026-09-18"])
+      [BD[i] for i in RS], ["2024-09-20", "2024-12-20", "2025-03-21", "2025-06-20", "2025-09-19",
+                            "2025-12-19", "2026-03-20", "2026-06-19", "2026-09-18"])
 check("today's own third Friday is not a reset yet", M.reset_indices(BD[:BD.index("2026-09-18") + 1])[-1],
       BD.index("2026-06-19"))
 NB_ = len(BD)
@@ -675,7 +678,8 @@ hq = [{"t": s, "name": s + " Inc", "w": w_now[s], "ccy": "USD",
 rest_q = M.rest_line(hq, Rq, 6)
 qisin = {s: "US" + s.rjust(9, "0") + "0" for s in EW_OLD + ["QG"]}
 quarters = {}
-for per in ("2025-12-31", "2026-03-31", "2026-06-30"):
+QPER = ("2024-09-30", "2024-12-31", "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30")
+for per in QPER:
     j = M.asof_index(BD, per)
     quarters[per] = {"period": per, "lines": [{"name": s + " Inc", "isin": qisin[s], "ticker": None, "ccy": "USD",
                                                "w": WQ[j][s], "px": QS[s][j]} for s in WQ[j]]}
@@ -684,7 +688,9 @@ drq, why = M.rebalance_drivers(hq, BD[-1], quarters, qsyms, QS, Fq, BD, Rq, rest
 check("rebalance drivers: no error, dated at the last reset", (why, drq["source"], drq["asof"]),
       (None, "rebalance", "2026-09-18"))
 check("...each earlier quarter anchored on its own filing",
-      drq["anchors"], {"2025-12-19": "2025-12-31", "2026-03-20": "2026-03-31", "2026-06-19": "2026-06-30"})
+      drq["anchors"], {"2024-09-20": "2024-09-30", "2024-12-20": "2024-12-31", "2025-03-21": "2025-03-31",
+                       "2025-06-20": "2025-06-30", "2025-09-19": "2025-09-30", "2025-12-19": "2025-12-31",
+                       "2026-03-20": "2026-03-31", "2026-06-19": "2026-06-30"})
 gone = [x for x in drq["names"] if x.get("gone")]
 check("the name that left at the reset is in the rest line, flagged, with no weight today",
       [(x["t"], x["w"]) for x in gone], [("QF", None)])
@@ -725,6 +731,7 @@ serb = {"SPY": walk(n=len(TB)), "IWM": IWF, "XPH": FQ}
 TECHB = {"regime": {"dates": TB, "asof": TB[-1], "ladder": {"rows": [
     {"t": "IWM", **{k: regime.ret(IWF, lag) for k, lag in M.WINDOWS}},
     {"t": "XPH", **{k: regime.ret(FQ, lag) for k, lag in M.WINDOWS}}]}}}
+TECHB["regime"]["ladder_r252"] = {r["t"]: r.pop("r252") for r in TECHB["regime"]["ladder"]["rows"]}
 jper = TB.index("2026-06-30")
 DEEPB = {"funds": {
     "IWM": {"period": "2026-06-30", "filed": "2026-08-25", "n_sec": 6, "w_sec": 1.0, "tail": {"n": 0, "w": 0.0},
@@ -782,6 +789,332 @@ dumped = json.dumps(outb, indent=0, separators=(",", ":"), ensure_ascii=False)
 check("the payload, written one field per line, is guard-clean", guard_hits(dumped), [])
 check("...and the rows' rest lines keep every section-10 field",
       sorted(outb["rows"]["IWM"]["rest"]), ["c", "drivers", "kind", "n", "w", "w_unpriced"])
+
+# --------------------------------------------------------------------------
+print("\nshape (B1 stage 2): concentration, trend breadth, who moved it")
+
+
+def sl(t, w, r, R, k="r63"):
+    w0, c = M.drift_back(w, r, R)
+    return {"t": t, "w": w, "w0": {k: w0}, "r": {k: r}, "c": {k: c}}
+
+
+WR_ = ((0.40, -0.30), (0.30, -0.10), (0.20, 0.05), (0.10, 0.00))
+RS_ = 1.0 / sum(w / (1.0 + r) for w, r in WR_) - 1.0   # the R a buy-and-hold fund of these lines has
+L5 = [sl("A", 0.40, -0.30, RS_), sl("B", 0.30, -0.10, RS_), sl("C", 0.20, 0.05, RS_), sl("D", 0.10, 0.00, RS_)]
+ws_ = M.window_shape(L5, RS_, "r63")
+cs = sorted((x["c"]["r63"] for x in L5))                    # the move is down: the two most negative lead
+ex_ = sum(x["c"]["r63"] for x in L5)
+check_close("explained = the lines' contributions; with every line listed it is R", ws_["explained"], RS_, 1e-12)
+check_close("resid = R - explained", ws_["resid"], 0.0, 1e-12)
+check_close("top2_share = the two largest contributions in the move's direction over the move",
+            ws_["top2_share"], (cs[0] + cs[1]) / ex_, 1e-12)
+w0A, w0B = L5[0]["w0"]["r63"], L5[1]["w0"]["r63"]
+check_close("ex_top2 = the other lines' return", ws_["ex_top2"],
+            (L5[2]["c"]["r63"] + L5[3]["c"]["r63"]) / (L5[2]["w0"]["r63"] + L5[3]["w0"]["r63"]), 1e-12)
+check_close("...which for buy-and-hold lines is their start-weighted mean return", ws_["ex_top2"],
+            (L5[2]["w0"]["r63"] * 0.05) / (1.0 - w0A - w0B), 1e-12)
+check("n and n_up (a zero return is not up)", (ws_["n"], ws_["n_up"]), (4, 1))
+mu_ = sum(x["w0"]["r63"] * x["r"]["r63"] for x in L5)
+check_close("disp_w = start-weighted s.d. around the weighted mean",
+            ws_["disp_w"], math.sqrt(sum(x["w0"]["r63"] * (x["r"]["r63"] - mu_) ** 2 for x in L5)), 1e-12)
+check("fewer than three lines: no top-two share", M.window_shape(L5[:2], RS_, "r63")["top2_share"], None)
+check("a window with no lines: everything None, n = 0",
+      (M.window_shape(L5, RS_, "r21")["explained"], M.window_shape(L5, RS_, "r21")["n"]), (None, 0))
+sh_ = M.row_shape(L5, {"r63": RS_}, {"A": (True, False), "B": (False, False), "C": (None, None)}, "test")
+check("conc: top-5 / top-10 weight", (sh_["conc"]["top5_w"], sh_["conc"]["top10_w"]), (1.0, 1.0))
+check_close("conc: eff_n = 1/sum(w^2)", sh_["conc"]["eff_n"], round(1 / (0.16 + 0.09 + 0.04 + 0.01), 2), 1e-9)
+check("...and equal to its lower bound when every line is listed", sh_["conc"]["eff_n_min"], sh_["conc"]["eff_n"])
+part_ = M.row_shape(L5[:2], {"r63": RS_}, {}, "test")["conc"]
+check_close("a short list: eff_n_min spreads the unlisted 30% over lines as heavy as the lightest listed",
+            part_["eff_n_min"], round(1 / (0.16 + 0.09 + 0.30 * 0.30), 2), 1e-9)
+check_true("...so the bounds bracket the truth", part_["eff_n_min"] < part_["eff_n"], str(part_))
+check("trend: lines with a readable average only, and weight up among them",
+      sh_["trend"], {"above50": {"n": 2, "n_up": 1, "w_up": round(0.4 / 0.7, 4)},
+                     "above200": {"n": 2, "n_up": 0, "w_up": 0.0}})
+check("trend_flags: above the 50d, below the 200d, and None without 200 sessions",
+      (M.trend_flags([1.0] * 150 + [1.2] * 49 + [2.0]), M.trend_flags([1.0] * 60)),
+      ((True, True), (False, None)))
+check("trend_flags: a gap inside the average is None, not a guess",
+      M.trend_flags([1.0] * 100 + [None] + [1.0] * 99)[1], None)
+
+# the identities on the end-to-end payloads: lines + rest = R; explained + resid = R;
+# for a top-10 row the shape's resid is the rest line's `other` (to rounding)
+worst_id = 0.0
+n_id = 0
+for o in (out, outb):
+    for t, rw in o["rows"].items():
+        for k, _ in M.WINDOWS:
+            R_ = rw["R"].get(k)
+            if R_ is None or rw["rest"]["c"][k] is None:
+                continue
+            got = sum(h["c"][k] for h in rw["holdings"] if h["c"][k] is not None) + rw["rest"]["c"][k]
+            worst_id = max(worst_id, abs(got - R_))
+            n_id += 1
+            s_ = rw["shape"]["win"][k]
+            if s_["explained"] is not None:
+                worst_id = max(worst_id, abs(s_["explained"] + s_["resid"] - R_))
+check_true(f"every row, every window ({n_id}): listed lines + rest = R, and explained + resid = R",
+           worst_id < 2e-6 and n_id > 20, f"worst {worst_id:.2e}")
+iw = outb["rows"]["IWM"]
+for k in ("r21", "r63", "r126", "r252"):
+    if iw["rest"]["drivers"]["other"]["c"][k] is None:
+        continue
+    check_close(f"IWM {k}: shape.resid = rest.drivers.other (the N-PORT names are lines too)",
+                iw["shape"]["win"][k]["resid"], iw["rest"]["drivers"]["other"]["c"][k], 1e-5)
+check_true("IWM: the shape counts the listed two plus the N-PORT names",
+           iw["shape"]["n_lines"] == len(iw["holdings"]) + len([x for x in iw["rest"]["drivers"]["names"] if x.get("w")]),
+           str(iw["shape"]["n_lines"]))
+check("a basket's shape: equal weights, so eff_n = n", out["rows"]["NEOCLOUD"]["shape"]["conc"]["eff_n"], 6.0)
+check_true("every holding carries a50 and a200 (true, false or null)",
+           all("a50" in h and "a200" in h for rw in out["rows"].values() for h in rw["holdings"]))
+check_true("r252 is a window on every holding", all("r252" in h["c"] for rw in out["rows"].values() for h in rw["holdings"]))
+check_true("EWY r252 is attributed (drift-back over a year)", out["rows"]["EWY"]["rest"]["c"]["r252"] is not None)
+check_true("XPH r252 is attributed and its rebalance drivers explain it",
+           outb["rows"]["XPH"]["rest"]["c"]["r252"] is not None
+           and abs(outb["rows"]["XPH"]["rest"]["drivers"]["other"]["c"]["r252"]) < 1e-4,
+           str(outb["rows"]["XPH"]["rest"]["drivers"]["other"]["c"].get("r252")))
+
+# the independent prototype (recon-3 proto_contrib.py) on XLK, 63 sessions to 2026-11-19
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "fixtures",
+                       "rotation_shape_xlk_63d.json"), encoding="utf-8") as fh:
+    PX = json.load(fh)
+XL = [sl(s, w / 100.0, r / 100.0, PX["R"]) for s, w, r in PX["lines"]]
+xs = M.window_shape(XL, PX["R"], "r63")
+xr = M.row_shape(XL, {"r63": PX["R"]}, {}, "fixture")
+E = PX["expect"]
+check_close("XLK 63d explained vs the prototype (inputs rounded to 0.01pp weight, 0.1pp return)",
+            xs["explained"], E["explained"], 0.002)
+check_close("XLK 63d top-2 share of the move vs the prototype (0.51)", xs["top2_share"], E["top2_share"], 0.01)
+check_close("XLK 63d return without the top two vs the prototype (-7.42%)", xs["ex_top2"], E["ex_top2"], 0.002)
+check_close("XLK 63d weighted dispersion vs the prototype (19.2%)", xs["disp_w"], E["disp_w"], 0.003)
+check_close("XLK 63d share of lines up vs the prototype (three in ten)", xs["n_up"] / xs["n"], E["n_up_share"], 1e-4)
+check_close("XLK effective holdings vs the prototype (13.8)", xr["conc"]["eff_n"], E["eff_n"], 0.1)
+check_close("XLK top-5 weight vs the prototype (52.3%)", xr["conc"]["top5_w"], E["top5_w"], 0.001)
+
+# --------------------------------------------------------------------------
+print("\nissuer files (B1 stage 1): Global X, First Trust, Amplify, Invesco")
+# SYNTHETIC fixtures in each issuer's exact layout (columns, header rows, date
+# line, cash lines, footer), with made-up lines: the real files are not
+# committed (Global X's carries a no-redistribution notice). The real files of
+# 2026-11-20 were parsed once outside the repo (board-refactor out/build-b1).
+GX = ("Global X Example Miners ETF\n"
+      "Fund Holdings Data as of 11/19/2026\n"
+      "% of Net Assets,Ticker,Name,SEDOL,Market Price ($),Shares Held,Market Value ($)\n"
+      '30.00,FCX,FREEPORT-MCMORAN INC,2352118,40.00,"750,000.00","30,000,000.00"\n'
+      '20.00,TECK/B CN,TECK RESOURCES LTD-CLS B,2879327,35.00,"571,428.00","20,000,000.00"\n'
+      '15.00,2899 HK,ZIJIN MINING GROUP CO LTD-H,6725299,2.00,"7,500,000.00","15,000,000.00"\n'
+      '15.00,ANTO LN,ANTOFAGASTA PLC,0045614,25.00,"600,000.00","15,000,000.00"\n'
+      '10.00,BOL SS,BOLIDEN AB,BPYTZ57,40.00,"250,000.00","10,000,000.00"\n'
+      '9.50,AMAK AB,AL MASANE AL KOBRA MINING CO,B4R9Z04,8.00,"1,187,500.00","9,500,000.00"\n'
+      '0.30,"",SAUDI RIYAL,"",0.27,"1,111,111.00","300,000.00"\n'
+      '0.20,"",OTHER PAYABLE & RECEIVABLES,"",1.0,"200,000.00","200,000.00"\n'
+      '"The information contained herein may not be reproduced, redistributed or used to create any derivative works."\n')
+a_, h_, n_ = M.parse_globalx(GX.encode())
+check("Global X: date, the lines that map, and n counts every security line",
+      (a_, [h["sym"] for h in h_], n_), ("2026-11-19", ["FCX", "TECK-B.TO", "2899.HK", "ANTO.L", "BOL.ST"], 6))
+check("...TECK/B CN carries .V as its fallback", h_[1]["alts"], ["TECK-B.V"])
+check_close("...the file's own price is market value / shares, in dollars", h_[0]["px"], 40.0, 1e-9)
+check("...a Saudi line under a letter code maps to nothing (it lands in the rest line)", M.bbg_yahoo("AMAK AB"), [])
+for bad, why in ((GX.replace("% of Net Assets", "Pct of NAV"), "header renamed"),
+                 (GX.replace("as of 11/19/2026", "as at 2026-11-19"), "date line changed"),
+                 (GX.replace("30.00,FCX", "3.00,FCX").replace("20.00,TECK", "2.00,TECK"), "weights add to 55%")):
+    try:
+        M.parse_globalx(bad.encode())
+        check(f"Global X source changed shape ({why}) is refused", "parsed", "ValueError")
+    except ValueError as ex:
+        check_true(f"Global X source changed shape ({why}) is refused, loudly", "Global X" in str(ex), str(ex))
+
+AMP = ("Date,Account,StockTicker,CUSIP,SecurityName,Shares,Price,MarketValue,Weightings,NetAssets,"
+       "SharesOutstanding,CreationUnits,MoneyMarketFlag\n"
+       "11/20/2026,OTHR,ZZZ,000000000,Another Fund Line,100,10,1000,100.00%,1000,1,1,\n"
+       "11/20/2026,HACK,AVGO,11135F101,Broadcom Inc,100.0,350.00,35000.00,35.00%,100000,1,1,\n"
+       "11/20/2026,HACK,4704 JP,6125286,Trend Micro Inc/Japan,1000.0,7500.00,47000.00,47.00%,100000,1,1,\n"
+       "11/20/2026,HACK,CHKP,M22465104,Check Point Software,100.0,155.00,15500.00,15.50%,100000,1,1,\n"
+       "11/20/2026,HACK,AGPXX,825252885,Government Portfolio,2500.0,1.00,2500.00,2.50%,100000,1,1,Y\n"
+       "11/20/2026,HACK,Cash&Other,Cash&Other,Cash & Other,1,1,0,0.00%,100000,1,1,Y\n"
+       "11/20/2026,HACK,CAD,CASHCAD,CANADIAN DOLLAR,100.0,1.0,0.00,0.00%,100000,1,1,\n"
+       "11/20/2026,HACK,CASH,59100U108,Pathward Financial Inc,10.0,50.0,500.00,0.50%,100000,1,1,\n")
+a_, h_, n_ = M.parse_amplify(AMP.encode(), "HACK")
+check("Amplify: one fund out of the all-funds file; money market, cash and a currency balance excluded, "
+      "while the company whose ticker is CASH is kept",
+      (a_, [h["sym"] for h in h_], n_), ("2026-11-20", ["AVGO", "4704.T", "CHKP", "CASH"], 4))
+check_close("...px in dollars from market value / shares (the Price column is local currency)", h_[1]["px"], 47.0, 1e-9)
+for bad, why in ((AMP.replace("Weightings", "Weight"), "column renamed"), (AMP, "fund missing")):
+    try:
+        M.parse_amplify(bad.encode(), "HACK" if why != "fund missing" else "SILJ")
+        check(f"Amplify ({why}) is refused", "parsed", "ValueError")
+    except ValueError as ex:
+        check_true(f"Amplify ({why}) is refused, loudly", "Amplify" in str(ex), str(ex))
+
+
+def ft_row(name, ident, w, mv="$1,000.00", sh="10"):
+    return (f"<tr > <td>{name}</td>\n<td>{ident}</td>\n<td>000000000</td>\n<td>Software</td>\n"
+            f"<td align=\"right\">{sh}</td>\n<td align=\"right\">{mv}</td>\n<td align=\"right\">{w}%</td>\n</tr>\n")
+
+
+FT = ('<span id="x" class="PageHeading">Holdings of the Fund as of 11/19/2026</span>\n'
+      '<span id="y">Total Number of Holdings (excluding cash): 4</span>\n'
+      '<table class="fundSilverGrid"><tr class="fundSilverGridHeader">\n'
+      '<td onclick="sortHoldings(\'Name\')">Security Name </td>\n'
+      '<td onclick="sortHoldings(\'TickerSymbol\')">Identifier </td>\n'
+      '<td onclick="sortHoldings(\'Cusip\')">CUSIP </td>\n'
+      '<td onclick="sortHoldings(\'Classification\')">Classification </td>\n'
+      '<td onclick="sortHoldings(\'Quantity\')">Shares / Quantity </td>\n'
+      '<td onclick="sortHoldings(\'MarketValue\')">Market Value </td>\n'
+      '<td onclick="sortHoldings(\'Weighting\')">Weighting <img src=\'/a.gif\' /></td>\n</tr>\n'
+      + ft_row("CrowdStrike, Inc. (Class A)", "CRWD", "40.00", "$2,400.00", "10")
+      + ft_row("Palo Alto Networks, Inc.", "PANW", "30.00")
+      + ft_row("Open Text Corporation", "OTEX.CN", "20.00")
+      + ft_row("Atos Group", "ATO.FP", "9.90")
+      + ft_row("Canadian Dollar", "$CAD", "0.10", "$0.73", "1")
+      + "</table>\n")
+a_, h_, n_ = M.parse_firsttrust(FT.encode())
+check("First Trust: date, lines, CODE.EXCH identifiers mapped, the $CAD balance excluded",
+      (a_, [h["sym"] for h in h_], n_), ("2026-11-19", ["CRWD", "PANW", "OTEX.TO", "ATO.PA"], 4))
+check_close("...px = market value / shares", h_[0]["px"], 240.0, 1e-9)
+for bad, why in ((FT.replace("Weighting", "Weight"), "Weighting column gone"),
+                 (FT.replace("(excluding cash): 4", "(excluding cash): 40"), "the page's own count disagrees"),
+                 (FT.replace("Holdings of the Fund as of", "Fund holdings as of"), "title changed")):
+    try:
+        M.parse_firsttrust(bad.encode())
+        check(f"First Trust ({why}) is refused", "parsed", "ValueError")
+    except ValueError as ex:
+        check_true(f"First Trust ({why}) is refused, loudly", "First Trust" in str(ex), str(ex))
+
+INV = json.dumps({"cusip": "QQQ", "effectiveDate": "2026-11-19", "effectiveBusinessDate": "2026-11-19", "holdings": [
+    {"ticker": "AAPL", "issuerName": "Apple Inc", "percentageOfTotalNetAssets": 60.0, "securityTypeName": "Common Stock"},
+    {"ticker": "ASML", "issuerName": "ASML Holding NV", "percentageOfTotalNetAssets": 39.5,
+     "securityTypeName": "American Depository Receipt - NY"},
+    {"ticker": "NQZ6", "issuerName": "Nasdaq 100 future", "percentageOfTotalNetAssets": 0.3, "securityTypeName": "Index Future"},
+    {"ticker": "USD", "issuerName": "US Dollar", "percentageOfTotalNetAssets": 0.2, "securityTypeName": "Currency"},
+    {"ticker": None, "issuerName": "Synthetic", "percentageOfTotalNetAssets": None, "securityTypeName": "Synthetic Cash"}]})
+a_, h_, n_ = M.parse_invesco(INV.encode())
+check("Invesco: stocks and ADRs only; futures, currency and synthetic cash are not holdings",
+      (a_, [h["sym"] for h in h_], n_), ("2026-11-19", ["AAPL", "ASML"], 2))
+try:
+    M.parse_invesco(b'{"effectiveDate": "2026-11-19", "rows": []}')
+    check("Invesco without a holdings list is refused", "parsed", "ValueError")
+except ValueError as ex:
+    check_true("Invesco without a holdings list is refused, loudly", "Invesco" in str(ex), str(ex))
+
+check("bbg_yahoo: the exchange table", [M.bbg_yahoo(x) for x in ("BOL SS", "5713 JP", "KGH PW", "600111 CH",
+                                                                   "000792 CH", "BHP AU", "NDA FH", "FCX US")],
+      [["BOL.ST"], ["5713.T"], ["KGH.WA"], ["600111.SS"], ["000792.SZ"], ["BHP.AX"], ["NDA.HE"], ["FCX"]])
+check("...an unknown exchange code maps to nothing, never a guess", M.bbg_yahoo("XYZ QQ"), [])
+check("...'NG/ LN' is National Grid in London, NG.L", M.bbg_yahoo("NG/ LN"), ["NG.L"])
+
+# the fetcher: Global X steps back over 404s and weekends only; one Amplify file per run
+import urllib.error as _ue
+seen_urls = []
+
+
+def gx_get(url):
+    seen_urls.append(url)
+    if "20261120" in url or "20261119" in url:
+        raise _ue.HTTPError(url, 404, "Not Found", {}, None)
+    return b"file"
+
+
+fx_ = M.IssuerFetcher(get=gx_get, today="2026-11-20")
+check("Global X: today 404, yesterday 404, then the day before", fx_("globalx", "COPX"), b"file")
+check("...three requests, dated files", [u[-12:-4] for u in seen_urls], ["20261120", "20261119", "20261118"])
+
+
+def gx_500(url):
+    raise _ue.HTTPError(url, 500, "Server Error", {}, None)
+
+
+try:
+    M.IssuerFetcher(get=gx_500, today="2026-11-20")("globalx", "COPX")
+    check("a 500 is not a missing file: it raises", "returned", "HTTPError")
+except _ue.HTTPError:
+    check("a 500 is not a missing file: it raises", "HTTPError", "HTTPError")
+seen_urls.clear()
+fa_ = M.IssuerFetcher(get=lambda u: seen_urls.append(u) or b"x", today="2026-11-23")
+fa_("amplify", "HACK")
+fa_("amplify", "SILJ")
+check("Amplify's one file is fetched once for both funds", (len(seen_urls), fa_.calls), (1, 1))
+seen_urls.clear()
+M.IssuerFetcher(get=lambda u: seen_urls.append(u) or b"x", today="2026-11-23")("globalx", "LIT")
+check("Global X on a Monday tries Monday first", seen_urls[0][-12:-4], "20261123")
+
+# the file-price check picks the candidate that IS the security
+ax_ = AXIS[-30:]
+hv = ([d for d in ax_], [10.0] * 30, "CAD")
+ht = ([d for d in ax_], [99.0] * 30, "CAD")
+fxa = {"CAD": [0.7] * 30, "GBP": [1.25] * 30}
+check("issuer_px_ok: a 7.00 USD close against a 7.00 file price passes", M.issuer_px_ok(7.0, hv, ax_, ax_[-1], fxa), True)
+check("...a 69.30 USD close against it fails (another company under that code)",
+      M.issuer_px_ok(7.0, ht, ax_, ax_[-1], fxa), False)
+check("...pence: 2,000 GBp x 1.25 / 100 = 25.00 against 25.00 passes",
+      M.issuer_px_ok(25.0, (ax_, [2000.0] * 30, "GBp"), ax_, ax_[-1], fxa), True)
+check("...no file price, no check", M.issuer_px_ok(None, ht, ax_, ax_[-1], fxa), True)
+errs_ = {}
+eh = M._etf_holdings("ZZ", [{"sym": "AB.TO", "alts": ["AB.V"], "name": "AB", "w": 1.0, "px": 7.0}],
+                     {"AB.TO": ht, "AB.V": hv}, ax_, fxa, {k: None for k, _ in M.WINDOWS}, errs_, ax_[-1])
+check("_etf_holdings: .TO fails the file price, so the .V listing is the one used", eh[0]["t"], "AB.V")
+eh = M._etf_holdings("ZZ", [{"sym": "AB.TO", "alts": [], "name": "AB", "w": 1.0, "px": 7.0}],
+                     {"AB.TO": ht}, ax_, fxa, {k: None for k, _ in M.WINDOWS}, errs_, ax_[-1])
+check_true("...and with no candidate passing, the line is unpriced and says why",
+           eh[0]["r"]["r21"] is None and "failed the file price check" in errs_["ZZ"][-1], errs_["ZZ"][-1])
+
+# build(): an issuer row, an issuer failure falling back to top 10, the status block
+COPXS = walk()
+tech_i = {"regime": {"dates": AXIS, "asof": AXIS[-1], "ladder": {"rows": [
+    {"t": "COPX", **{k: regime.ret(COPXS, lag) for k, lag in M.WINDOWS if k != "r252"}},
+    {"t": "CIBR", **{k: regime.ret(COPXS, lag) for k, lag in M.WINDOWS if k != "r252"}}]},
+    "ladder_r252": {"COPX": regime.ret(COPXS, 252), "CIBR": regime.ret(COPXS, 252)}}}
+GX1 = GX.replace("11/19/2026", "/".join([AXIS[-1][5:7], AXIS[-1][8:10], AXIS[-1][:4]]))
+HI = {"FCX": hist_of(walk()), "ANTO.L": hist_of([v * 100 for v in walk()], "GBp"), "GBPUSD=X": hist_of([1.25] * N)}
+
+
+def i_fetch(kind, tk):
+    if kind == "globalx":
+        return GX1.encode()
+    raise OSError("HTTP 503")
+
+
+def i_top10(tk):
+    return [("CRWD", "CrowdStrike", 0.5)]
+
+
+# Global X is switched off in production (its file forbids redistribution); the
+# parser is kept, so this test turns it on for COPX for the length of these builds
+check("Global X is OFF: none of its rows read the issuer file", [t for t in M.ISSUER_OFF["globalx"] if t in M.ISSUER_OF], [])
+check("...and the issuers still on", sorted(M.ISSUER_FUNDS), ["amplify", "firsttrust", "invesco"])
+M.ISSUER_OF["COPX"] = "globalx"
+oi = M.build(tech_i, (AXIS, {"SPY": walk(), "COPX": COPXS, "CIBR": COPXS}),
+             {"ssga": fake_ssga, "top10": i_top10, "history": lambda s, st, b=None: {x: HI[x] for x in s if x in HI},
+              "issuer": i_fetch}, today=AXIS[-1], log=lambda *a: None)
+cx = oi["rows"]["COPX"]
+check("COPX from the Global X file: tier, source, date", (cx["tier"], cx["source"], cx["holdings_asof"]),
+      ("issuer_full", "Global X daily full-holdings file", AXIS[-1]))
+check("...n_holdings_total counts every security line of the file", cx["n_holdings_total"], 6)
+check("CIBR's First Trust page failed: Yahoo's top 10, and the error says which file",
+      (oi["rows"]["CIBR"]["tier"], "First Trust daily holdings page failed" in oi["errors"].get("CIBR", "")),
+      ("top10", True))
+check("issuer_files: per issuer, ok / failed / status",
+      {k: (v["ok"], v["failed"], v["status"]) for k, v in oi["issuer_files"].items()},
+      {"globalx": (["COPX"], [], "ok"), "firsttrust": ([], ["CIBR"], "failed")})
+oi2 = M.build(tech_i, (AXIS, {"SPY": walk(), "COPX": COPXS, "CIBR": COPXS}),
+              {"ssga": fake_ssga, "top10": i_top10, "history": lambda s, st, b=None: {x: HI[x] for x in s if x in HI},
+               "issuer": lambda k, t: (_ for _ in ()).throw(OSError("down"))},
+              prev={"rows": {"COPX": cx}}, today=AXIS[-1], log=lambda *a: None)
+check("a failed Global X file carries yesterday's issuer holdings (not a fresh top 10)",
+      (oi2["rows"]["COPX"]["tier"], "carried holdings" in oi2["errors"].get("COPX", "")), ("issuer_full", True))
+check("without an issuer fetcher (old callers) the rows are top 10, as before",
+      M.build(tech_i, (AXIS, {"SPY": walk(), "COPX": COPXS, "CIBR": COPXS}),
+              {"ssga": fake_ssga, "top10": i_top10, "history": lambda s, st, b=None: {}},
+              today=AXIS[-1], log=lambda *a: None)["rows"]["COPX"]["tier"], "top10")
+del M.ISSUER_OF["COPX"]
+check("the payload with issuer rows is guard-clean",
+      guard_hits(json.dumps(oi, indent=0, separators=(",", ":"), ensure_ascii=False)), [])
+
+# the N-PORT store keeps every line now, and a filing cached under the old 80-line cap is fetched once more
+check("DEEP_STORE: every line of a filing is kept", M.DEEP_STORE, None)
+check("a cached filing cut short (tail.n > 0) is due again", M._cut_short({"tail": {"n": 1934, "w": 0.8}}), True)
+check("...a whole one is not", M._cut_short({"tail": {"n": 0, "w": 0.0}}), False)
 
 print("\n" + "-" * 60)
 print(f"{len(PASSED)} passed, {len(FAILS)} failed")

@@ -1,0 +1,76 @@
+name: Basket composite history (one-off back-fill)
+
+# B1 stage 5 (2026-11-20). Point-in-time quarterly history of the rotation ladder's
+# vehicle composites, 2019-Q3 onward: each row's quarter-end SEC N-PORT books, each
+# company's figures as known on each date, the composite per quarter
+# (basket_history.py). ONE-OFF AND RESUMABLE: dispatched by hand, never scheduled.
+# Each dispatch works inside the request and minute budgets below, commits what it
+# finished (data/basket_history/*.json.gz + data/rotation_fundamentals_history.json),
+# and the next dispatch carries on. The log's last line says DONE or RUN AGAIN.
+# The nightly basket_fundamentals.py then adds each row's percentiles to
+# data/rotation_fundamentals.json.
+
+on:
+  workflow_dispatch:
+    inputs:
+      budget_minutes:
+        description: "Wall-clock minutes of SEC work in this dispatch"
+        required: false
+        default: "50"
+      max_requests:
+        description: "SEC requests in this dispatch (EDGAR filings + companyfacts)"
+        required: false
+        default: "2500"
+      rows:
+        description: "'shown' (rows whose composite is shown today), 'all', or a comma list; SPY is always added"
+        required: false
+        default: "shown"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: basket-history
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Unit tests (offline)
+        run: python test_basket_history.py
+
+      - name: Back-fill (resumable)
+        env:
+          BUDGET_MIN: ${{ inputs.budget_minutes || '50' }}
+          MAX_REQ: ${{ inputs.max_requests || '2500' }}
+          ROWS: ${{ inputs.rows || 'shown' }}
+        run: python basket_history.py --budget-min "$BUDGET_MIN" --max-requests "$MAX_REQ" --rows "$ROWS"
+
+      - name: Commit the history
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/basket_history/ data/rotation_fundamentals_history.json
+          if git diff --staged --quiet; then
+            echo "No history changes to commit."
+          else
+            git commit -m "basket history: $(date -u +'%Y-%m-%d %H:%M UTC') [skip ci]"
+            # whole-file snapshots, regenerated and never merged (see daily-prices.yml)
+            for i in 1 2 3 4 5; do
+              git pull --rebase -X theirs && git push && exit 0
+              sleep $((RANDOM % 20 + 5))
+            done
+            exit 1
+          fi

@@ -407,3 +407,31 @@ XLSR       # SSGA US Sector Rotation (SPDR, active)
 SSUS       # Day Hagan / Ned Davis Smart Sector (active)
 # THRO (iShares US thematic rotation) is also a row of this ladder; it is already
 # listed under Broad / thematic / crypto ETFs above.
+
+# --- Economy-read proxies: Europe, emerging-market and US size-segment ETFs, commodity futures (added 11/20/26) ---
+# WHY: the board refactor of 11/20/26 adds an economy view (macro.py, data/macro.json): the dollar,
+# emerging-market and Europe reads and the small- against large-business read need these closes for
+# their trend legs, and closes.json carries every name listed here. Header carries none of
+# technicals.GROUP_PROXY's trigger words, so these fall to SPY; "ETFs" keeps them out of
+# exhaustion.py's coverage universe and marks them as funds for fundamentals.py. The fed funds
+# futures (ZQ) are NOT listed: their contract months roll, so macro.py generates them each night.
+EEM        # Emerging-market stocks (iShares MSCI EM)
+EMLC       # Emerging-market local-currency government bonds (VanEck)
+CEW        # Emerging-market currencies (WisdomTree)
+FXI        # China large caps (iShares)
+INDA       # India stocks (iShares MSCI India)
+EWZ        # Brazil stocks (iShares MSCI Brazil)
+EWW        # Mexico stocks (iShares MSCI Mexico)
+EWT        # Taiwan stocks (iShares MSCI Taiwan)
+VGK        # European stocks (Vanguard FTSE Europe)
+EZU        # Euro-area stocks (iShares MSCI Eurozone)
+EUFN       # European financials (iShares MSCI Europe Financials)
+EWG        # Germany stocks (iShares MSCI Germany)
+EWU        # UK stocks (iShares MSCI United Kingdom)
+IJR        # S&P 600 small caps (iShares Core)
+IJH        # S&P 400 mid caps (iShares Core)
+DBC        # Broad commodities (Invesco DB Commodity Index Tracking Fund)
+CL=F       # WTI crude, front month
+NG=F       # US natural gas (Henry Hub), front month
+TTF=F      # Dutch TTF natural gas, front month (euros per MWh)
+HG=F       # Copper, front month

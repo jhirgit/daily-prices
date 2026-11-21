@@ -145,6 +145,19 @@ jobs:
       # committing: continue-on-error on each step, and a timeout so a hung
       # Yahoo/SSGA call cannot hold the job. rotation_members keeps yesterday's
       # data/rotation_members.json in place when pricing fails wholesale.
+      #
+      # B1 (2026-11-20): the constituents' closes store (constituents_store.py) lives
+      # under data/cache/ (gitignored, NEVER committed) and is kept between runs in the
+      # Actions cache: restored here, saved at the end of the job under a new key. A miss
+      # rebuilds it from Yahoo; rotation_members.json `store` says which happened.
+      - name: Restore the constituents closes store (Actions cache, never committed)
+        if: steps.fallback-guard.outputs.run == 'true'
+        uses: actions/cache@v4
+        with:
+          path: data/cache/constituents
+          key: constituents-${{ github.run_id }}
+          restore-keys: constituents-
+
       - name: Rotation ladder members + contributions (SPEC-86, display-only)
         id: rotation-members
         if: steps.fallback-guard.outputs.run == 'true'
@@ -169,6 +182,18 @@ jobs:
         timeout-minutes: 5
         run: python rotation_corr.py
 
+      # B1 (2026-11-20): look-through SEC composites per ladder row (P/E, EV/sales,
+      # growth, margins, leverage) from rotation_members.json's books and the last
+      # closes it leaves in data/cache/. SEC companyfacts through sec_facts.py,
+      # refetched only when a company's next filing is due, heaviest first, inside a
+      # 360-second budget. Display-only like its siblings.
+      - name: Rotation ladder vehicle composites (display-only)
+        id: basket-fundamentals
+        if: steps.fallback-guard.outputs.run == 'true'
+        continue-on-error: true
+        timeout-minutes: 9
+        run: python basket_fundamentals.py
+
       # 2026-11-17: seller-exhaustion readings (breadth washouts, down-volume
       # share, thrust / follow-through) for three universes, with the backtest
       # of what followed past clusters. prices.db only, no network, seconds.
@@ -179,6 +204,25 @@ jobs:
         continue-on-error: true
         timeout-minutes: 5
         run: python exhaustion.py
+
+      # Board refactor build M1 (2026-11-20): the economic-data job. macro.py fetches
+      # the series in macro_catalogue.json (FRED, Treasury FiscalData, Eurostat, ECB,
+      # BIS, OECD, Cleveland and Atlanta Fed files, the Census C30 workbook, the
+      # prices.db proxies and the fed funds futures strip) and writes data/macro.json,
+      # macro_history.json and macro_releases.json; the commit below picks them up
+      # with data/. ~35 requests, ~12 MB, about a minute. Display-only like its
+      # siblings: it exits 0 on any per-series failure (each is an `error` status
+      # with its reason inside the payload), continue-on-error and a timeout so a
+      # hung source can never cost the price commit, and its outcome feeds health.py.
+      # FRED_API_KEY is optional: unset, the job reads FRED's keyless CSV route.
+      - name: Economic data (macro.py, display-only)
+        id: macro
+        if: steps.fallback-guard.outputs.run == 'true'
+        continue-on-error: true
+        timeout-minutes: 10
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python macro.py
 
       # Review M1: one public-safe line per payload (data/health.json) -- the
       # session each EOD payload speaks for, row counts, error fields, and the
@@ -194,8 +238,10 @@ jobs:
             rotation_members=${{ steps.rotation-members.outcome }}
             rotation_phase=${{ steps.rotation-phase.outcome }}
             rotation_corr=${{ steps.rotation-corr.outcome }}
+            basket_fundamentals=${{ steps.basket-fundamentals.outcome }}
             exhaustion=${{ steps.exhaustion.outcome }}
             thesis_gauge=${{ steps.thesis-gauge.outcome }}
+            macro=${{ steps.macro.outcome }}
         run: python health.py
 
       - name: Commit updated database and exports

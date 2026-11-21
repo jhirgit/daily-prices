@@ -90,6 +90,7 @@ import re
 import sqlite3
 import sys
 import time
+import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 import zipfile
@@ -102,18 +103,22 @@ import regime
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_PATH = os.path.join(HERE, "data", "rotation_members.json")
 DEEP_PATH = os.path.join(HERE, "data", "rotation_deep_holdings.json")
+LAST_PATH = os.path.join(HERE, "data", "cache", "rotation_last_closes.json")   # gitignored (data/cache/)
 TECH_PATH = os.path.join(HERE, "data", "technicals.json")
 DB_PATH = os.path.join(HERE, "prices.db")
 TICKERS_PATH = os.path.join(HERE, "tickers.txt")
 
-WINDOWS = (("r5", 5), ("r21", 21), ("r63", 63), ("r126", 126))
+WINDOWS = (("r5", 5), ("r21", 21), ("r63", 63), ("r126", 126), ("r252", 252))
+# r252 (B1 stage 2, 2026-11-20): the ladder shows a one-year return
+# (technicals.json regime.ladder_r252), so the holdings carry one too.
 PART_WINDOWS = ("r21", "r63")     # spec 3.3: participation on 21d and 63d
 STALE_MAX = 3                     # sessions a member's last bar may trail the axis
 SIGMA_WIN = 126                   # the row's own daily-vol window (spec 4 uses 126d)
 CONC_TOP = 3
-AXIS_TAIL = 200                   # sessions of member history fetched: r126, plus the
-                                  # quarter before it, so a Select Industry row's r126
-                                  # window can reach back to the reset it started in
+AXIS_TAIL = 460                   # sessions of member history fetched: r252, plus the
+                                  # quarter before it (a Select Industry row's r252 window
+                                  # reaches back to the reset it started in), and room
+                                  # for the 200-session average the trend breadth reads
 GLITCH_X = 20.0                   # a one-day close ratio beyond 20x / below 1/20x
                                   # is a unit error (GBp vs GBP), not a price move
 FETCH_WORKERS = 4
@@ -128,7 +133,7 @@ SSGA_FUNDS = ("XLE XLB XLI XLY XLP XLV XLF XLK XLC XLU XLRE XOP XES XME XHB XRT 
               "XBI XPH XSD XAR XTN KBE KRE KIE KCE SPY").split()
 SSGA_URL = ("https://www.ssga.com/us/en/intermediary/library-content/products/"
             "fund-data/etfs/us/holdings-daily-us-en-{tk}.xlsx")
-UA = {"User-Agent": "Mozilla/5.0 (jr-dash daily-prices rotation_members)"}
+UA = {"User-Agent": "Mozilla/5.0 (compatible; daily-prices holdings reader)"}   # generic: no project or owner name (2026-11-20)
 
 TRUSTS = {"SLV": {"t": "XAG", "name": "Physical silver bullion (the trust's only asset)"}}
 
@@ -147,7 +152,11 @@ SERIES_FIX = {
     "DRAM": "S000102337",   # Roundhill Memory ETF (Roundhill ETF Trust, CIK 1976517), found 2026-09-27
 }
 DEEP_STALE_DAYS = 7      # re-list a fund's filings when its check is older than this
-DEEP_STORE = 80          # filing lines kept per fund in the cache, heaviest first
+DEEP_STORE = None        # filing lines kept per fund in the cache: EVERY line since 2026-11-20
+                         # (80 before; IWM's 2,014 lines were 86% off any list). The vehicle
+                         # composites (basket_fundamentals.py) read the whole book from here.
+DEEP_SEARCH_LINES = 90   # ...but only the heaviest 90 per fund are mapped ISIN -> Yahoo symbol
+                         # (what the daily price pass can reach, the listed 10 + DEEP_PRICE_CAP)
 DEEP_PRICE_CAP = 60      # of the lines NOT in the listed top 10, priced per fund per day
 DEEP_SHOW = 15           # driver names shown by default per row (drivers.show); every priced one is carried
 DEEP_BUDGET_S = 180.0    # the deep-name price pass
@@ -155,7 +164,8 @@ SEARCH_BUDGET_S = 150.0  # Yahoo ISIN -> symbol searches (new ISINs only; cached
 SEARCH_RATE = 8.0
 SEARCH_RETRY_DAYS = 30   # an ISIN Yahoo could not map is asked again after this
 RUN_WALL_S = 570.0       # the deep pass gives way to this wall clock (workflow timeout 12 min)
-QUARTERS_KEEP = 3        # a Select Industry fund keeps its last three quarter-end filings
+QUARTERS_KEEP = 5        # a Select Industry fund keeps its last five quarter-end filings
+                         # (three until 2026-11-20; five anchor every quarter of the r252 window)
 PX_TOL = 0.15            # a mapped symbol's close on the filing date (USD) must be within
                          # 15% of the filing's own value per share, or it is not the security
 # 2. The SPDR S&P Select Industry funds: modified equal weight, reset after the
@@ -387,6 +397,365 @@ def fetch_top10(tk):
 
 
 # ==========================================================================
+# more issuers' daily files (B1 stage 1, 2026-11-20)
+# ==========================================================================
+# Four issuers publish every line of a fund to a plain script (board-refactor
+# recon-3 section 2.1, probed 2026-11-20). Each row below moves from Yahoo's
+# top 10 plus a quarterly N-PORT tail to every line, daily. iShares, VanEck and
+# WisdomTree block a plain client (a 503, a cookie redirect, a bot challenge)
+# and are NOT worked around: their rows stay on top 10 + N-PORT. Only derived
+# numbers (weights, tickers, contributions) reach the payload; the raw files
+# are read in memory and never written. To switch an issuer off, delete its
+# entry from ISSUER_FUNDS: its rows fall back to Yahoo's top 10 the same day.
+ISSUER_FUNDS = {
+    "firsttrust": "CIBR FDN GRID".split(),
+    "amplify": "HACK SILJ".split(),
+    "invesco": ["QQQ"],          # proven for QQQ only; PBJ/SPLV answered HTTP 500 on the ticker id
+}
+# Switched OFF (2026-11-20, coordinator): Global X's own file ends "The information
+# contained herein may not be reproduced, redistributed or used to create any
+# derivative works", and this repo is public. Its rows stay on Yahoo's top 10 +
+# SEC N-PORT. The parser (parse_globalx) and its fixture test are kept, unused;
+# moving the entry back into ISSUER_FUNDS would turn it on again.
+ISSUER_OFF = {
+    "globalx": "COPX LIT URA DRIV FINX PAVE BOTZ DTCR".split(),
+}
+ISSUER_OF = {t: k for k, ts in ISSUER_FUNDS.items() for t in ts}
+ISSUER_NAME = {
+    "globalx": "Global X daily full-holdings file",
+    "firsttrust": "First Trust daily holdings page",
+    "amplify": "Amplify daily all-funds holdings file",
+    "invesco": "Invesco daily holdings feed",
+}
+GLOBALX_URL = "https://assets.globalxetfs.com/funds/holdings/{tk}_full-holdings_{ymd}.csv"
+GLOBALX_BACK = 5                 # weekdays tried, today first (a file is dated T-1 by mid-afternoon)
+FIRSTTRUST_URL = "https://www.ftportfolios.com/Retail/Etf/EtfHoldings.aspx?Ticker={tk}"
+AMPLIFY_URL = "https://amplifyetfs.com/wp-content/uploads/feeds/AmplifyWeb.40XL.XL_Holdings.csv"
+INVESCO_URL = ("https://dng-api.invesco.com/cache/v1/accounts/en_US/shareclasses/{tk}/holdings/fund"
+               "?idType=ticker&interval=monthly&productType=ETF")
+ISSUER_UA = {"User-Agent": "Mozilla/5.0 (compatible; daily-prices holdings reader)"}
+W_SUM_OK = (0.90, 1.10)          # every line of a file, cash included, must add up to about 100%
+ISSUER_PX_TOL = PX_TOL           # a mapped symbol's USD close on the file date vs the file's own price
+
+# Bloomberg exchange code -> Yahoo suffix (Global X and Amplify write "CODE EXCH",
+# First Trust "CODE.EXCH"). An unknown code maps to nothing and the line goes to
+# the rest line; a known one is still only USED after its close on the file date
+# matches the file's own price (ISSUER_PX_TOL), so a wrong entry costs a line,
+# never a number.
+BBG_SUFFIX = {
+    "US": "", "UN": "", "UW": "", "UQ": "", "UR": "", "UA": "", "UV": "", "UP": "", "UF": "",
+    "CN": ".TO", "CT": ".TO", "CV": ".V", "LN": ".L", "LI": ".IL", "JP": ".T", "JT": ".T", "AU": ".AX",
+    "AT": ".AX", "SS": ".ST", "PW": ".WA", "GR": ".DE", "GY": ".DE", "FP": ".PA", "NA": ".AS",
+    "IM": ".MI", "SW": ".SW", "SE": ".SW", "SM": ".MC", "FH": ".HE", "DC": ".CO", "NO": ".OL",
+    "BB": ".BR", "ID": ".IR", "PL": ".LS", "AV": ".VI", "KS": ".KS", "KQ": ".KQ", "TT": ".TW",
+    "IN": ".NS", "IB": ".BO", "SJ": ".JO", "MF": ".MX", "MM": ".MX", "BZ": ".SA", "SP": ".SI",
+    "IT": ".TA", "NZ": ".NZ", "TB": ".BK", "MK": ".KL", "IJ": ".JK", "PM": ".PS", "GA": ".AT",
+    "TI": ".IS", "C1": ".SS", "C2": ".SZ", "AB": ".SR", "HK": ".HK", "CH": None,
+}
+_BBG = re.compile(r"^(?P<code>[A-Z0-9/\-]+?)[ .](?P<ex>[A-Z][A-Z0-9])$")
+
+
+def bbg_yahoo(code):
+    """Yahoo symbols for an issuer file's Bloomberg-style ticker, best first;
+    [] when it cannot be mapped. 'BOL SS' -> BOL.ST, '2899 HK' -> 2899.HK,
+    'TECK/B CN' -> TECK-B.TO then TECK-B.V, 'ATO.FP' -> ATO.PA, '600519 CH' ->
+    600519.SS (Shanghai codes start with 6, Shenzhen's do not), a plain US
+    ticker as itself (BRK.B -> BRK-B). A Saudi line under a letter code has no
+    Yahoo symbol (they trade under a number): []."""
+    s = (code or "").strip().upper()
+    if not s:
+        return []
+    m = _BBG.match(s)
+    if not m or m.group("ex") not in BBG_SUFFIX:
+        return [re.sub(r"[./]", "-", s)] if _US_SYM.match(s) else []
+    # 'NG/ LN' (National Grid) is NG.L: a trailing slash is not a share class
+    c, ex = m.group("code").rstrip("/").replace("/", "-"), m.group("ex")
+    if ex == "HK":
+        return [c.zfill(4) + ".HK"] if c.isdigit() else []
+    if ex == "AB":
+        return [c + ".SR"] if c.isdigit() else []
+    if ex == "CH":
+        return [c + (".SS" if c.startswith("6") else ".SZ")] if c.isdigit() else []
+    if ex in ("CN", "CT"):
+        return [c + ".TO", c + ".V"]
+    return [c + BBG_SUFFIX[ex]]
+
+
+def _f(s):
+    """'1,694,935.98' / '$1,497,448,204.70' / '8.75%' -> float, or None."""
+    try:
+        return float(str(s).replace(",", "").replace("$", "").replace("%", "").strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def _usd_px(mv, shares):
+    a, b = _f(mv), _f(shares)
+    return (a / b) if (a is not None and b and b > 0) else None
+
+
+def _issuer_line(sym_raw, name, w, px, out, unmapped):
+    cands = bbg_yahoo(sym_raw)
+    if not cands:
+        unmapped.append(sym_raw or name)
+        return
+    out.append({"sym": cands[0], "alts": cands[1:], "name": name, "w": w, "px": px})
+
+
+def _check_sum(src, total):
+    if not (W_SUM_OK[0] <= total <= W_SUM_OK[1]):
+        raise ValueError(f"{src}: the file's lines add up to {total * 100:.1f} pct, not about 100 "
+                         "(the source changed shape)")
+
+
+def parse_globalx(blob, tk=None):
+    """(asof, holdings, n_total) from a Global X full-holdings CSV:
+    'Fund Holdings Data as of 11/19/2026', then '% of Net Assets,Ticker,Name,
+    SEDOL,Market Price ($),Shares Held,Market Value ($)'. Currency balances,
+    payables and lines with no ticker are cash; px = market value / shares,
+    in US dollars. ValueError when the header, the date or the lines are not
+    there, or the weights do not add up to about 100% (the source changed)."""
+    import csv
+    text = blob.decode("utf-8-sig") if isinstance(blob, bytes) else blob
+    rows = list(csv.reader(io.StringIO(text)))
+    asof, hdr = None, None
+    out, unmapped, total, n_total = [], [], 0.0, 0
+    for r in rows:
+        if hdr is None:
+            m = re.search(r"as of (\d{1,2})/(\d{1,2})/(\d{4})", ",".join(r))
+            if m:
+                asof = dt.date(int(m.group(3)), int(m.group(1)), int(m.group(2))).isoformat()
+            if "% of Net Assets" in r and "Ticker" in r:
+                hdr = {k: i for i, k in enumerate(r)}
+            continue
+        if len(r) < len(hdr):
+            continue                      # the disclaimer line at the foot
+        w = _f(r[hdr["% of Net Assets"]])
+        if w is None:
+            continue
+        w /= 100.0
+        total += w
+        tk_raw, name = r[hdr["Ticker"]].strip(), r[hdr.get("Name", 2)].strip()
+        if not tk_raw or is_cash_line(tk_raw, name) or re.search(r"PAYABLE|RECEIVABLE", name, re.I):
+            continue
+        n_total += 1
+        px = _usd_px(r[hdr["Market Value ($)"]], r[hdr["Shares Held"]]) if (
+            "Market Value ($)" in hdr and "Shares Held" in hdr) else None
+        _issuer_line(tk_raw, name, w, px, out, unmapped)
+    if hdr is None:
+        raise ValueError("Global X file: no '% of Net Assets' / 'Ticker' header (the source changed shape)")
+    if asof is None:
+        raise ValueError("Global X file: no 'as of' date")
+    if not out:
+        raise ValueError("Global X file parsed to zero holdings")
+    _check_sum("Global X file", total)
+    return asof, merge_dupes(out), n_total
+
+
+def parse_amplify(blob, tk):
+    """(asof, holdings, n_total) for fund ``tk`` from Amplify's one all-funds
+    CSV (Date, Account = the fund, StockTicker, Shares, MarketValue in US
+    dollars, Weightings 'n.nn%', MoneyMarketFlag)."""
+    import csv
+    text = blob.decode("utf-8-sig") if isinstance(blob, bytes) else blob
+    rd = csv.DictReader(io.StringIO(text))
+    need = {"Date", "Account", "StockTicker", "SecurityName", "Shares", "MarketValue", "Weightings"}
+    if not need.issubset(set(rd.fieldnames or [])):
+        raise ValueError("Amplify file: missing column(s) " + ", ".join(sorted(need - set(rd.fieldnames or [])))
+                         + " (the source changed shape)")
+    asof, out, unmapped, total, n_total, seen = None, [], [], 0.0, 0, 0
+    for r in rd:
+        if (r.get("Account") or "").strip().upper() != tk.upper():
+            continue
+        seen += 1
+        m = re.match(r"(\d{1,2})/(\d{1,2})/(\d{4})", (r.get("Date") or "").strip())
+        if m and asof is None:
+            asof = dt.date(int(m.group(3)), int(m.group(1)), int(m.group(2))).isoformat()
+        w = _f(r.get("Weightings"))
+        if w is None:
+            continue
+        w /= 100.0
+        total += w
+        sym, name = (r.get("StockTicker") or "").strip(), (r.get("SecurityName") or "").strip()
+        # a currency balance is CUSIP 'CASHCAD', 'CASHEUR'...; the TICKER 'CASH' is a
+        # company (Pathward Financial), so the ticker alone is never the test
+        if ((r.get("MoneyMarketFlag") or "").strip().upper() == "Y" or not sym
+                or (r.get("CUSIP") or "").strip().upper().startswith("CASH")
+                or sym.upper() == "CASH&OTHER" or is_cash_line(sym, name)):
+            continue
+        n_total += 1
+        _issuer_line(sym, name, w, _usd_px(r.get("MarketValue"), r.get("Shares")), out, unmapped)
+    if not seen:
+        raise ValueError(f"Amplify file: no lines for {tk}")
+    if not out:
+        raise ValueError(f"Amplify file: {tk} parsed to zero holdings")
+    _check_sum(f"Amplify file ({tk})", total)
+    return asof, merge_dupes(out), n_total
+
+
+def _cells(tr):
+    import html as _html
+    return [_html.unescape(re.sub(r"<[^>]+>", "", c)).strip()
+            for c in re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S | re.I)]
+
+
+def parse_firsttrust(blob, tk=None):
+    """(asof, holdings, n_total) from a First Trust fund holdings page: the
+    table whose header row reads Security Name, Identifier, CUSIP, ...,
+    Shares / Quantity, Market Value, Weighting, under 'Holdings of the Fund as
+    of mm/dd/yyyy'. A '$CAD'-style identifier is a currency balance. An HTML
+    page, so brittle by nature: every shape check raises."""
+    s = blob.decode("utf-8", "replace") if isinstance(blob, bytes) else blob
+    m = re.search(r"Holdings of the Fund as of (\d{1,2})/(\d{1,2})/(\d{4})", s)
+    if not m:
+        raise ValueError("First Trust page: no 'Holdings of the Fund as of' date (the source changed shape)")
+    asof = dt.date(int(m.group(3)), int(m.group(1)), int(m.group(2))).isoformat()
+    i = s.find("sortHoldings('Weighting')", m.end())
+    if i < 0:
+        raise ValueError("First Trust page: no Weighting column (the source changed shape)")
+    head_start = s.rfind("<tr", 0, i)
+    end = s.find("</table>", i)
+    trs = re.findall(r"<tr[^>]*>(.*?)</tr>", s[head_start:end], re.S | re.I)
+    if not trs:
+        raise ValueError("First Trust page: no table rows")
+    head = [re.sub(r"\s+", " ", c) for c in _cells(trs[0])]
+    col = {h: j for j, h in enumerate(head)}
+    for need in ("Security Name", "Identifier", "Weighting"):
+        if need not in col:
+            raise ValueError(f"First Trust page: no '{need}' column (the source changed shape)")
+    out, unmapped, total, n_total = [], [], 0.0, 0
+    for tr in trs[1:]:
+        c = _cells(tr)
+        if len(c) < len(head):
+            continue
+        w = _f(c[col["Weighting"]])
+        if w is None:
+            continue
+        w /= 100.0
+        total += w
+        sym, name = c[col["Identifier"]], c[col["Security Name"]]
+        if not sym or sym.startswith("$") or is_cash_line(sym, name):
+            continue
+        n_total += 1
+        px = _usd_px(c[col["Market Value"]], c[col["Shares / Quantity"]]) if (
+            "Market Value" in col and "Shares / Quantity" in col) else None
+        _issuer_line(sym, name, w, px, out, unmapped)
+    if not out:
+        raise ValueError("First Trust page parsed to zero holdings")
+    _check_sum("First Trust page", total)
+    mc = re.search(r"Total Number of Holdings \(excluding cash\):\s*(\d+)", s)
+    if mc and abs(int(mc.group(1)) - n_total) > 2:
+        raise ValueError(f"First Trust page: says {mc.group(1)} lines, {n_total} parsed (the source changed shape)")
+    return asof, merge_dupes(out), n_total
+
+
+_INVESCO_SKIP = re.compile(r"currency|future|collateral|synthetic cash|money market|cash|swap|forward", re.I)
+
+
+def parse_invesco(blob, tk=None):
+    """(asof, holdings, n_total) from Invesco's holdings JSON: effectiveDate
+    and holdings[] of {ticker, issuerName, percentageOfTotalNetAssets,
+    securityTypeName}. Currency, futures, collateral and synthetic-cash lines
+    are not holdings. No price in the feed, so no file-price check (QQQ's
+    lines are US listings priced under their own tickers)."""
+    d = json.loads(blob)
+    hs = d.get("holdings") if isinstance(d, dict) else None
+    if not isinstance(hs, list) or not hs:
+        raise ValueError("Invesco feed: no holdings list (the source changed shape)")
+    asof = d.get("effectiveBusinessDate") or d.get("effectiveDate")
+    if not asof or not re.match(r"\d{4}-\d{2}-\d{2}$", str(asof)):
+        raise ValueError("Invesco feed: no effective date")
+    out, unmapped, total, n_total = [], [], 0.0, 0
+    for x in hs:
+        w = x.get("percentageOfTotalNetAssets")
+        if not isinstance(w, (int, float)):
+            continue
+        w /= 100.0
+        typ = str(x.get("securityTypeName") or "")
+        if _INVESCO_SKIP.search(typ):
+            total += w
+            continue
+        total += w
+        n_total += 1
+        _issuer_line(str(x.get("ticker") or ""), str(x.get("issuerName") or ""), w, None, out, unmapped)
+    if not out:
+        raise ValueError("Invesco feed parsed to zero holdings")
+    _check_sum("Invesco feed", total)
+    return asof, merge_dupes(out), n_total
+
+
+ISSUER_PARSE = {"globalx": parse_globalx, "firsttrust": parse_firsttrust,
+                "amplify": parse_amplify, "invesco": parse_invesco}
+
+
+def _http(url, timeout=30):
+    req = urllib.request.Request(url, headers=ISSUER_UA)
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return resp.read()
+
+
+class IssuerFetcher:
+    """fetch(kind, tk) -> the issuer's raw file for one fund. Amplify's one
+    file serves every Amplify fund, so it is fetched once per run. Global X
+    files are dated: today's is tried first, then each weekday back, up to
+    GLOBALX_BACK; only a 404 steps back, anything else raises. ``calls``
+    counts requests."""
+
+    def __init__(self, get=_http, today=None):
+        self.get = get
+        self.today = dt.date.fromisoformat(today) if today else dt.datetime.now(dt.timezone.utc).date()
+        self.calls = 0
+        self._amplify = None
+
+    def __call__(self, kind, tk):
+        if kind == "amplify":
+            if self._amplify is None:
+                self.calls += 1
+                self._amplify = self.get(AMPLIFY_URL)
+            return self._amplify
+        if kind == "globalx":
+            d, tried, last = self.today, 0, None
+            while tried < GLOBALX_BACK:
+                if d.weekday() < 5:
+                    tried += 1
+                    self.calls += 1
+                    try:
+                        return self.get(GLOBALX_URL.format(tk=tk.lower(), ymd=d.strftime("%Y%m%d")))
+                    except urllib.error.HTTPError as ex:   # noqa: PERF203
+                        if ex.code != 404:
+                            raise
+                        last = ex
+                d -= dt.timedelta(days=1)
+            raise ValueError(f"no Global X file in the last {GLOBALX_BACK} weekdays ({last})")
+        url = {"firsttrust": FIRSTTRUST_URL, "invesco": INVESCO_URL}[kind].format(tk=tk)
+        self.calls += 1
+        return self.get(url)
+
+
+def issuer_px_ok(px, hist_entry, axis, h_asof, fx_aligned):
+    """True when a mapped symbol IS the file's security: its US-dollar close on
+    the file date (minor units such as pence divided by 100) is within
+    ISSUER_PX_TOL of the file's own price (market value / shares). True when
+    the file carries no price (the check cannot run)."""
+    if px is None or px <= 0:
+        return True
+    ccy_raw = hist_entry[2]
+    ccy = iso_ccy(ccy_raw) or "USD"
+    usd, _ = member_usd(axis, hist_entry, ccy, fx_aligned)
+    if usd is None:
+        return False
+    i = asof_index(axis, h_asof) if h_asof else len(axis) - 1
+    if i < 0:
+        return False
+    p = usd[i]
+    if p is None:
+        return False
+    if ccy_raw in MINOR_CCY:
+        p /= 100.0
+    return abs(p / px - 1.0) <= ISSUER_PX_TOL
+
+
+# ==========================================================================
 # SEC N-PORT: the whole fund behind a top-10 row
 # ==========================================================================
 # A registered fund files N-PORT monthly and SEC publishes the third month of
@@ -559,6 +928,12 @@ def _doc_entry(doc, rec):
             "excluded": doc["excluded"], "lines": doc["lines"]}
 
 
+def _cut_short(entry):
+    """A cached filing stored under an older, shorter DEEP_STORE (its tail
+    counts lines it dropped) is downloaded once more, whole."""
+    return DEEP_STORE is None and bool(((entry or {}).get("tail") or {}).get("n"))
+
+
 def refresh_deep(tickers, cache, today, get, search=None, log=print,
                  search_budget_s=SEARCH_BUDGET_S, quarterly=SELECT_INDUSTRY):
     """Bring the N-PORT cache up to date for ``tickers``.
@@ -579,7 +954,8 @@ def refresh_deep(tickers, cache, today, get, search=None, log=print,
     # a SERIES_FIX added after the fund was cached as "no series" is picked up on
     # the next run, not after DEEP_STALE_DAYS
     due = [t for t in tickers if deep_due(funds.get(t), today)
-           or (t in SERIES_FIX and (funds.get(t) or {}).get("series") != SERIES_FIX[t])]
+           or (t in SERIES_FIX and (funds.get(t) or {}).get("series") != SERIES_FIX[t])
+           or _cut_short(funds.get(t))]
     smap = None
     for t in due:
         f = funds.get(t) or {}
@@ -623,7 +999,7 @@ def refresh_deep(tickers, cache, today, get, search=None, log=print,
                 funds[t] = {"series": sid, "fund": fund, "checked": today, "quarters": {p: q[p] for p in keep}}
                 continue
             lst = recs[0]
-            if lst["acc"] == f.get("acc") and f.get("lines") is not None:
+            if lst["acc"] == f.get("acc") and f.get("lines") is not None and not _cut_short(f):
                 f["checked"] = today
                 funds[t] = f
                 continue
@@ -649,7 +1025,8 @@ def refresh_deep(tickers, cache, today, get, search=None, log=print,
     want = {}
     for t in tickers:
         f = funds.get(t) or {}
-        for x in deep_lines(f) + [x for q in (f.get("quarters") or {}).values() for x in deep_lines(q)]:
+        for x in deep_lines(f)[:DEEP_SEARCH_LINES] + [x for q in (f.get("quarters") or {}).values()
+                                                      for x in deep_lines(q)]:
             i = x.get("isin")
             if not i:
                 continue
@@ -1085,6 +1462,142 @@ def rest_line(holdings, R, n_total):
 
 
 # ==========================================================================
+# the shape of a row: concentration, trend breadth, who-moved-it statistics
+# (B1 stage 2, 2026-11-20; definitions in board-refactor recon-3 section 3.1)
+# ==========================================================================
+
+TREND_MA = (50, 200)              # sessions: a holding above its own simple average
+
+
+def trend_flags(arr):
+    """(above its 50-session average, above its 200-session average) for one
+    series' last value, in the listing's OWN currency (a holding's trend, not
+    the dollar's). None for an average the series cannot fill (a gap or too
+    little history) or a missing last value."""
+    last = arr[-1] if arr else None
+    out = []
+    for n in TREND_MA:
+        tail = arr[-n:] if arr and len(arr) >= n else []
+        if last is None or len(tail) < n or any(v is None for v in tail):
+            out.append(None)
+        else:
+            out.append(bool(last > sum(tail) / n))
+    return tuple(out)
+
+
+def _quantile_lo(q, p):
+    return q[int(p * (len(q) - 1))]
+
+
+def window_shape(lines, R, k):
+    """Who-moved-it statistics for one window over the ATTRIBUTED lines (each
+    {w0: {k}, r: {k}, c: {k}}; a line without c or w0 for k is skipped).
+
+    explained  sum of the lines' contributions; resid = R - explained (fees,
+               cash, unpriced or unlisted lines, rebalancing, pricing time)
+    n, n_up    lines with a return, and how many rose; w_up = their share of
+               the lines' start weight
+    top1_share, top2_share
+               the largest one / two contributions IN THE DIRECTION of the
+               explained move, divided by it (a share of the move, so 0.76 =
+               three quarters of it); None under 3 lines or a zero move
+    ex_top2    the return of the other lines, (explained - c1 - c2) /
+               (sum w0 - w0_1 - w0_2): the move without those two names
+    disp_w     start-weighted standard deviation of the lines' returns around
+               their weighted mean; disp_eq the plain sample standard
+               deviation; iqr the inter-quartile range (lower-index quantiles)"""
+    live = [x for x in lines if x["c"].get(k) is not None and x["w0"].get(k) is not None
+            and x["r"].get(k) is not None]
+    out = {"explained": None, "resid": None, "n": len(live), "n_up": 0, "w_up": None,
+           "top1_share": None, "top2_share": None, "ex_top2": None,
+           "disp_w": None, "disp_eq": None, "iqr": None}
+    if not live:
+        return out
+    ex = sum(x["c"][k] for x in live)
+    w0s = sum(x["w0"][k] for x in live)
+    up = [x for x in live if x["r"][k] > 0]
+    out["explained"] = ex
+    out["resid"] = (R - ex) if R is not None else None
+    out["n_up"] = len(up)
+    out["w_up"] = (sum(x["w0"][k] for x in up) / w0s) if w0s > 0 else None
+    if len(live) >= 3 and abs(ex) > 1e-9:
+        sgn = 1.0 if ex >= 0 else -1.0
+        lead = sorted(live, key=lambda x: (-sgn * x["c"][k], x["t"]))
+        c1, c2 = lead[0]["c"][k], lead[1]["c"][k]
+        out["top1_share"] = c1 / ex
+        out["top2_share"] = (c1 + c2) / ex
+        rest_w = w0s - lead[0]["w0"][k] - lead[1]["w0"][k]
+        out["ex_top2"] = (ex - c1 - c2) / rest_w if rest_w > 1e-9 else None
+    rs = [x["r"][k] for x in live]
+    if w0s > 0:
+        mu = sum(x["w0"][k] * x["r"][k] for x in live) / w0s
+        out["disp_w"] = math.sqrt(max(0.0, sum(x["w0"][k] * (x["r"][k] - mu) ** 2 for x in live) / w0s))
+    if len(rs) > 1:
+        m = sum(rs) / len(rs)
+        out["disp_eq"] = math.sqrt(sum((r - m) ** 2 for r in rs) / (len(rs) - 1))
+        q = sorted(rs)
+        out["iqr"] = _quantile_lo(q, 0.75) - _quantile_lo(q, 0.25)
+    return out
+
+
+def row_shape(lines, R, trend, basis):
+    """The row's shape block. ``lines`` = every line with a weight today
+    ({t, w, w0, r, c}); ``trend`` = {t: (above 50d, above 200d)}; ``basis``
+    names which lines these are.
+
+    conc   top5_w / top10_w = the heaviest five / ten lines' share of the
+           fund; eff_n = 1 / sum(w^2), the effective number of holdings,
+           counting the weight on no list as perfectly spread (an UPPER
+           bound when the list is short); eff_n_min = the same with that
+           weight spread over lines as heavy as the lightest one listed (the
+           lower bound). The two are equal when every line is listed.
+    trend  of the lines whose average can be read: n, n_up above it, w_up
+           their share of those lines' weight.
+    win    window_shape() per window."""
+    ws = sorted((x["w"] for x in lines if x.get("w") and x["w"] > 0), reverse=True)
+    W = sum(ws)
+    conc = {"top5_w": None, "top10_w": None, "eff_n": None, "eff_n_min": None}
+    if ws:
+        hhi = sum(w * w for w in ws)
+        unlisted = max(0.0, 1.0 - W)
+        conc = {"top5_w": _rnd(sum(ws[:5]), 4), "top10_w": _rnd(sum(ws[:10]), 4),
+                "eff_n": _rnd(1.0 / hhi, 2), "eff_n_min": _rnd(1.0 / (hhi + unlisted * ws[-1]), 2)}
+    tr = {}
+    for i, n in enumerate(TREND_MA):
+        known = [x for x in lines if (trend.get(x["t"]) or (None, None))[i] is not None and x.get("w")]
+        upl = [x for x in known if trend[x["t"]][i]]
+        kw = sum(x["w"] for x in known)
+        tr[f"above{n}"] = {"n": len(known), "n_up": len(upl),
+                           "w_up": _rnd(sum(x["w"] for x in upl) / kw, 4) if kw > 0 else None}
+    win = {}
+    for k, _ in WINDOWS:
+        s = window_shape(lines, R.get(k), k)
+        win[k] = {f: (_rnd(v, 6) if isinstance(v, float) else v) for f, v in s.items()}
+    return {"basis": basis, "n_lines": len(ws), "w_lines": _rnd(W, 4), "conc": conc, "trend": tr, "win": win}
+
+
+def shape_lines(holdings, drivers, R):
+    """(lines, basis) for row_shape: the listed holdings, plus -- for a top-10
+    row -- the N-PORT names priced in its rest line, whose start weights are
+    backed out exactly as theirs were (w0 = w (1+R)/(1+r)). A Select Industry
+    row's rebalance figures are corrections to its listed lines, not lines,
+    so they are not added."""
+    lines = [{"t": h["t"], "w": h["w"], "w0": h["w0"], "r": h["r"], "c": h["c"]} for h in holdings]
+    basis = "listed holdings"
+    if drivers and drivers.get("source") == "sec_nport":
+        for n in drivers.get("names") or []:
+            if n.get("w") is None:
+                continue
+            w0 = {k: drift_back(n["w"], n["r"].get(k), R.get(k))[0] for k, _ in WINDOWS}
+            lines.append({"t": n["t"], "w": n["w"], "w0": w0, "r": n["r"], "c": n["c"]})
+        basis = "listed holdings + SEC N-PORT names priced in the rest line"
+    elif drivers and drivers.get("source") == "rebalance":
+        basis = ("listed holdings, one piece; resid includes the quarterly resets, "
+                 "which the rest line's rebalance drivers itemise")
+    return lines, basis
+
+
+# ==========================================================================
 # what is in the rest line: rest.drivers
 # ==========================================================================
 # rest.c stays R - sum(listed c), so every column still adds up to the ladder.
@@ -1452,7 +1965,7 @@ def rebalance_drivers(holdings, h_asof, quarters, syms, S, F, axis, R, rest, nam
     inside = [axis[b] for b in resets if b > e - WINDOWS[-1][1]]
     src = [f"{lo_d} from the N-PORT of {per}" for lo_d, per in sorted(used.items())]
     note = ("Modified equal weight, reset after the close on the third Friday of Mar/Jun/Sep/Dec "
-            f"({', '.join(inside) or 'none'} inside the 126-session window). Each quarter is attributed "
+            f"({', '.join(inside) or 'none'} inside the {WINDOWS[-1][1]}-session window). Each quarter is attributed "
             f"from its own book: the quarter since {axis[cur]} from today's issuer file"
             + ("; " + "; ".join(f"the quarter since {q}" for q in src) if src else "")
             + (f"; the quarter since {', '.join(fallback)} from today's weights drifted back to the last reset "
@@ -1501,13 +2014,14 @@ def _rnd(v, d=6):
     return None if v is None else round(v, d)
 
 
-def get_holdings(e, fetchers, prev_rows, today, errors):
+def get_holdings(e, fetchers, prev_rows, today, errors, issuer_status=None):
     """(tier, holdings_asof, holdings[{sym,alts,name,w}], n_total, source) for
     one non-basket row. A failed fetch carries yesterday's holdings (old date
     kept) and notes it; with no yesterday either, an SSGA row falls back to
     Yahoo's top 10."""
     t = e["t"]
     prev = prev_rows.get(t)
+    issuer_status = {} if issuer_status is None else issuer_status
 
     def carried(why):
         errors.setdefault(t, []).append(f"{why}; carried holdings from {prev.get('holdings_asof')}")
@@ -1516,6 +2030,18 @@ def get_holdings(e, fetchers, prev_rows, today, errors):
         return (prev["tier"], prev.get("holdings_asof"), hs, prev.get("n_holdings_total"),
                 prev.get("source") or "")
 
+    kind = ISSUER_OF.get(t)
+    if kind and fetchers.get("issuer"):
+        try:
+            asof, hs, n_total = ISSUER_PARSE[kind](fetchers["issuer"](kind, t), t)
+            issuer_status.setdefault(kind, {"ok": [], "failed": []})["ok"].append(t)
+            return "issuer_full", asof, hs, n_total, ISSUER_NAME[kind]
+        except Exception as ex:
+            why = f"{ISSUER_NAME[kind]} failed ({type(ex).__name__}: {str(ex)[:120]})"
+            issuer_status.setdefault(kind, {"ok": [], "failed": []})["failed"].append(t)
+            if prev and prev.get("holdings") and prev.get("tier") == "issuer_full":
+                return carried(why)
+            errors.setdefault(t, []).append(why + "; fell back to Yahoo top 10")
     if t in SSGA_FUNDS:
         try:
             asof, hs, n_total = parse_ssga(fetchers["ssga"](t))
@@ -1539,7 +2065,8 @@ def get_holdings(e, fetchers, prev_rows, today, errors):
         return "top10", None, [], None, ""
 
 
-def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, deep=None, wall_t0=None):
+def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, deep=None, wall_t0=None,
+          last_out=None):
     """Assemble the rotation_members payload. Pure given its inputs:
     ``tech`` = the technicals.json dict, ``panel`` = regime.build_panel's
     (dates, series) from the same prices.db, ``fetchers`` = {"ssga": tk ->
@@ -1547,7 +2074,9 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
     {sym: (dates, closes, ccy)}}, ``prev`` = yesterday's payload or None,
     ``deep`` = the N-PORT cache (refresh_deep's, already up to date) or None
     for no sec_nport drivers. ``wall_t0`` = when the run started, so the deep
-    price pass gives way to RUN_WALL_S."""
+    price pass gives way to RUN_WALL_S. ``last_out``, when a dict, receives
+    every priced symbol's last bar ({"closes": {sym: [date, close, currency]},
+    "fx": {ccy: USD per unit}}) for basket_fundamentals.py's market caps."""
     wall_t0 = wall_t0 or time.time()
     today = today or dt.datetime.now(dt.timezone.utc).date().isoformat()
     names = names or {}
@@ -1559,9 +2088,11 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
         raise RuntimeError(f"prices.db axis ends {p_dates[-1] if p_dates else None} but "
                            f"technicals.json ends {axis_full[-1]}: re-run export_data.py first")
     ladder = {r["t"]: r for r in reg["ladder"]["rows"]}
+    r252 = reg.get("ladder_r252") or {}
     prev_rows = (prev or {}).get("rows") or {}
     errors = {}
-    calls = {"ssga": 0, "top10": 0, "prices": 0, "deep_prices": 0, "fx": 0}
+    calls = {"ssga": 0, "top10": 0, "issuer": 0, "prices": 0, "deep_prices": 0, "fx": 0}
+    issuer_status = {}
 
     def counted(kind, fn):
         def wrap(*a):
@@ -1570,6 +2101,8 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
         return wrap
 
     f = {"ssga": counted("ssga", fetchers["ssga"]), "top10": counted("top10", fetchers["top10"])}
+    if fetchers.get("issuer"):
+        f["issuer"] = fetchers["issuer"]
 
     # ---- 1. holdings ------------------------------------------------------
     plan = {}
@@ -1582,7 +2115,7 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
         elif t in TRUSTS:
             plan[t] = ("trust", asof, None, 1, "Grantor trust holding physical silver only")
         else:
-            plan[t] = get_holdings(e, f, prev_rows, today, errors)
+            plan[t] = get_holdings(e, f, prev_rows, today, errors, issuer_status)
 
     # ---- 2. member prices, then FX ----------------------------------------
     axis = axis_full[-AXIS_TAIL:]
@@ -1650,6 +2183,15 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
             arr, behind = align(axis, fh[0], fh[1])
             if behind <= STALE_MAX:
                 fx_aligned[c] = arr
+    if last_out is not None:
+        last_out["asof"] = asof
+        last_out["closes"] = {s: [h[0][-1], h[1][-1], h[2]] for s, h in hist.items() if h[0]}
+        last_out["fx"] = {c: next((v for v in reversed(a) if v is not None), None) for c, a in fx_aligned.items()}
+    # each priced listing's own-currency trend (above its 50d / 200d average)
+    trend_all = {}
+    for sym, h in hist.items():
+        arr, behind = align(axis, h[0], h[1])
+        trend_all[sym] = trend_flags(arr) if behind <= STALE_MAX else (None, None)
     log(f"prices: {len(hist)} priced of {len(wanted)} members + {len(dw)} rest-line names "
         f"({len(retry)} retried/alternates), "
         f"{len(fx_aligned)}/{len(need_fx)} FX pairs, {time.time() - t0:.1f}s")
@@ -1661,6 +2203,9 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
         if t not in plan:
             continue
         R = {k: ladder[t].get(k) for k, _ in WINDOWS}
+        # the one-year return is published off the rows (regime.ladder_r252), the
+        # same number the board's 1y column shows
+        R["r252"] = r252.get(t)
         tier, h_asof, hs, n_total, source = plan[t]
         row_ser = (regime.basket_series(series, e["basket"]) if e.get("basket") else series.get(t)) or []
         sigma_d = row_sigma(row_ser)
@@ -1671,7 +2216,7 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
                 holdings = [{"t": TRUSTS[t]["t"], "name": TRUSTS[t]["name"], "w": 1.0, "ccy": "USD",
                              "r": dict(R), "c": dict(R), "w0": {k: 1.0 for k, _ in WINDOWS}}]
             else:
-                holdings = _etf_holdings(t, hs, hist, axis, fx_aligned, R, errors)
+                holdings = _etf_holdings(t, hs, hist, axis, fx_aligned, R, errors, h_asof)
         except Exception as ex:
             errors.setdefault(t, []).append(f"contribution failed: {type(ex).__name__}: {ex}")
             holdings = []
@@ -1703,6 +2248,12 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
             if tier == "top10":
                 drivers = {"source": None, "asof": None, "names": [], "other": None,
                            "note": "Not itemised: " + why + "."}
+        if tier == "basket":
+            trend = {m: trend_flags((series.get(m) or [])[-len(axis):]) for m in e["basket"]}
+        else:
+            trend = trend_all
+        lines, basis = shape_lines(holdings, drivers, R)
+        shape = row_shape(lines, R, trend, basis)
         part = {}
         for k in PART_WINDOWS:
             lag = dict(WINDOWS)[k]
@@ -1718,7 +2269,9 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
             "R": R,
             "holdings": [{"t": h["t"], "name": h["name"], "w": _rnd(h["w"]), "ccy": h["ccy"],
                           "r": {k: _rnd(h["r"].get(k)) for k, _ in WINDOWS},
-                          "c": {k: _rnd(h["c"].get(k)) for k, _ in WINDOWS}} for h in holdings],
+                          "c": {k: _rnd(h["c"].get(k)) for k, _ in WINDOWS},
+                          "a50": (trend.get(h["t"]) or (None, None))[0],
+                          "a200": (trend.get(h["t"]) or (None, None))[1]} for h in holdings],
             "rest": {"w": _rnd(rest["w"]), "n": rest["n"],
                      "c": {k: _rnd(v) for k, v in rest["c"].items()},
                      "w_unpriced": {k: _rnd(v) for k, v in rest["w_unpriced"].items()},
@@ -1728,6 +2281,7 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
             "participation": {k: {"share_up": _rnd(v["share_up"], 4), "n_up": v["n_up"], "n": v["n"],
                                   "conc_top3": _rnd(v["conc_top3"], 3), "move_z": _rnd(v["move_z"], 2),
                                   "conc_note": v["conc_note"]} for k, v in part.items()},
+            "shape": shape,
         }
         if drivers is not None:
             rows[t]["rest"]["drivers"] = drivers
@@ -1736,7 +2290,14 @@ def build(tech, panel, fetchers, prev=None, today=None, names=None, log=print, d
         "generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "asof": asof,
         "method": METHOD,
-        "calls": calls,
+        "calls": dict(calls, issuer=getattr(fetchers.get("issuer"), "calls", calls["issuer"])),
+        # B1 stage 1: per issuer, which funds' files parsed today and which failed
+        # (a whole issuer failing is a source that changed shape: health.py says so)
+        "issuer_files": {k: {"name": ISSUER_NAME[k], "funds": ISSUER_FUNDS.get(k) or ISSUER_OFF.get(k) or [],
+                             "ok": sorted(v["ok"]), "failed": sorted(v["failed"]),
+                             "status": ("ok" if not v["failed"] else
+                                        "failed" if not v["ok"] else "partial")}
+                         for k, v in sorted(issuer_status.items())},
         "rows": rows,
         "errors": {t: "; ".join(v) for t, v in errors.items()},
     }
@@ -1781,15 +2342,19 @@ def _basket_holdings(e, series, R, names):
     return holdings
 
 
-def _etf_holdings(t, hs, hist, axis, fx_aligned, R, errors):
+def _etf_holdings(t, hs, hist, axis, fx_aligned, R, errors, h_asof=None):
     out = []
     bad = []
     for h in hs:
         sym = h["sym"]
-        got = sym if sym in hist else next((a for a in h.get("alts") or [] if a in hist), None)
+        priced = [s for s in [sym] + list(h.get("alts") or []) if s in hist]
+        # an issuer file that carries its own price (market value / shares): the
+        # first candidate whose close on the file date matches it IS the security
+        px = h.get("px")
+        got = next((s for s in priced if issuer_px_ok(px, hist[s], axis, h_asof, fx_aligned)), None)
         rec = {"t": got or sym, "name": h["name"], "w": h["w"], "ccy": None, "r": {}, "c": {}, "w0": {}}
         if got is None:
-            bad.append(f"{sym} (no price)")
+            bad.append(f"{sym} ({'failed the file price check' if priced else 'no price'})")
             rec["r"] = {k: None for k, _ in WINDOWS}
         else:
             ccy = iso_ccy(hist[got][2]) or ("USD" if "." not in got else None)
@@ -1847,7 +2412,17 @@ METHOD = (
     "(21d, 63d): share_up = priced weight with r > 0 over priced weight; conc_top3 = the "
     "top-3 holdings' share of the window's contribution over their share of start weight, "
     "defined only when the window's move is at least 1 sigma of the row's own 126-session "
-    "daily volatility scaled to the window (move_z)."
+    "daily volatility scaled to the window (move_z). Windows: r5, r21, r63, r126 and r252 "
+    "(the one-year return, technicals.json regime.ladder_r252). shape (per row): over the "
+    "listed holdings, plus the N-PORT names priced in a top-10 row's rest line -- conc "
+    "(top5_w, top10_w; eff_n = 1/sum(w^2) with unlisted weight counted as perfectly spread, "
+    "eff_n_min with it spread over lines as heavy as the lightest listed), trend (lines above "
+    "their own 50- and 200-session simple average in their own currency: n, n_up, w_up by "
+    "weight; a50/a200 per holding), and per window: explained = sum of the lines' "
+    "contributions, resid = R - explained, n_up and w_up (share of start weight up), "
+    "top1_share/top2_share = the largest one/two contributions in the direction of the move "
+    "over the explained move, ex_top2 = the return of the other lines, disp_w = start-weighted "
+    "standard deviation of returns, disp_eq = plain standard deviation, iqr."
 )
 
 
@@ -1857,6 +2432,10 @@ def main(argv=None):
     ap.add_argument("--tech", default=TECH_PATH)
     ap.add_argument("--out", default=OUT_PATH)
     ap.add_argument("--deep", default=DEEP_PATH, help="the N-PORT cache (read, refreshed, written)")
+    ap.add_argument("--last", default=LAST_PATH, help="the last closes + FX for basket_fundamentals.py (not committed)")
+    ap.add_argument("--store", default=os.path.join(HERE, "data", "cache", "constituents", "closes.json.gz"),
+                    help="the constituents closes store (not committed; Actions cache)")
+    ap.add_argument("--no-store", action="store_true", help="fetch every member's full history, as before")
     args = ap.parse_args(argv)
 
     t0 = time.time()
@@ -1892,9 +2471,38 @@ def main(argv=None):
         print(f"[warn] N-PORT refresh failed ({type(ex).__name__}: {ex}); using the cache as it was")
     print(f"N-PORT cache: {sum(1 for f in (deep.get('funds') or {}).values() if f.get('lines') is not None)} "
           f"funds, {dcalls['edgar']} EDGAR calls, {dcalls['search']} ISIN searches, {time.time() - t0:.1f}s")
-    fetchers = {"ssga": fetch_ssga, "top10": fetch_top10, "history": fetch_history}
-    payload = build(tech, panel, fetchers, prev=prev, names=ticker_names(), deep=deep, wall_t0=t0)
+    # B1 stage 3: member closes go through the constituents store (data/cache/,
+    # never committed; the workflow keeps it in the Actions cache), so a stored
+    # symbol is asked for its last two weeks only
+    import constituents_store as CS
+    cstore, cstate = CS.load(args.store)
+    cstats = {}
+
+    def stored(symbols, start, budget_s=FETCH_BUDGET_S):
+        return CS.stored_history(fetch_history, symbols, start, budget_s, cstore, ap_today, cstats)[0]
+
+    fetchers = {"ssga": fetch_ssga, "top10": fetch_top10,
+                "history": fetch_history if args.no_store else stored,
+                "issuer": IssuerFetcher(today=ap_today)}
+    last = {}
+    payload = build(tech, panel, fetchers, prev=prev, names=ticker_names(), deep=deep, wall_t0=t0, last_out=last)
     payload["calls"].update(dcalls)
+    if not args.no_store:
+        try:
+            size = CS.save(cstore, args.store)
+        except OSError as ex:
+            size = 0
+            print(f"[warn] constituents store not saved ({ex}); tomorrow rebuilds it")
+        payload["store"] = CS.status(cstats, cstate, size)
+        print(f"constituents store: {payload['store']}")
+    # the run's last closes, for basket_fundamentals.py (B1 stage 4): a CACHE beside
+    # the payload, never committed (data/cache/ is gitignored), rebuilt every run
+    try:
+        os.makedirs(os.path.dirname(args.last), exist_ok=True)
+        with open(args.last, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump(last, fh, separators=(",", ":"))
+    except OSError as ex:
+        print(f"[warn] could not write {args.last} ({ex}); basket_fundamentals.py will have no prices")
 
     # A wholesale pricing failure (Yahoo down) would blank every contribution.
     # Keep yesterday's file instead and fail loudly; the workflow step is

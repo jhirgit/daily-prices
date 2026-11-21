@@ -55,6 +55,7 @@ EOD = [
     ("rotation_members.json", lambda j: j.get("asof")),
     ("rotation_phase.json", lambda j: j.get("asof")),
     ("rotation_corr.json", lambda j: j.get("asof")),
+    ("rotation_fundamentals.json", lambda j: j.get("asof")),     # B1, 2026-11-20
     ("exhaustion.json", lambda j: j.get("asof")),
     ("thesis_gauge.json", lambda j: j.get("asof")),
     ("options_flow.json", lambda j: j.get("as_of")),
@@ -175,6 +176,43 @@ def build(data=DATA, tickers_path=TICKERS, steps_env=None, now=None):
         j = docs.get(name) or {}
         if j.get("errors"):
             payloads[name]["errors"] = {"rows": sorted(j["errors"])}
+    # B1 (2026-11-20): an issuer whose EVERY fund file failed has changed shape or gone away
+    for k, v in sorted(((docs.get("rotation_members.json") or {}).get("issuer_files") or {}).items()):
+        if (v or {}).get("status") == "failed":
+            degraded.append("rotation_members.json: every %s holdings file failed (%d funds; source changed?)"
+                            % (k, len(v.get("failed") or [])))
+    cst = (docs.get("rotation_members.json") or {}).get("store") or {}
+    if cst.get("store") == "partial" or cst.get("warning"):
+        warnings.append("rotation_members.json constituents store: %s" % (cst.get("warning") or "partial"))
+    rf = docs.get("rotation_fundamentals.json") or {}
+    if rf.get("status") in ("partial", "failed"):
+        payloads["rotation_fundamentals.json"]["errors"] = {"status": rf["status"]}
+        (degraded if rf["status"] == "failed" else warnings).append(
+            "rotation_fundamentals.json is %s (see its error field)" % rf["status"])
+    # M1 (2026-11-20): the economic-data payload (macro.py). Reported when the file exists or the macro step
+    # ran: its asof (the run date) must not trail the session; one line per core series not ok, summarised past
+    # five; calendar-source and futures-strip failures each get a line. Series ids and dates only (public-safe).
+    mac, why = _read(os.path.join(data, "macro.json"))
+    ran_macro = "macro" in parse_steps(steps_env if steps_env is not None else os.environ.get("STEP_OUTCOMES"))
+    if mac is not None or ran_macro:
+        rec = {"present": mac is not None}
+        if mac is None:
+            rec["problem"] = why
+            degraded.append("macro.json %s" % why)
+        else:
+            rec.update({"bytes": os.path.getsize(os.path.join(data, "macro.json")), "generated_at": mac.get("generated_at"),
+                        "asof": mac.get("asof"), "rows": len(mac.get("series") or {})})
+            rec["errors"] = {"counts": mac.get("counts") or {},
+                             "not_ok": sorted(k for k, r in (mac.get("series") or {}).items() if (r or {}).get("status") != "ok")}
+            if session and rec["asof"] and rec["asof"] < session:
+                degraded.append("macro.json speaks for %s, behind the %s session" % (rec["asof"], session))
+            core = [x for x in mac.get("degraded") or [] if x.startswith("core series ")]
+            rest = [x for x in mac.get("degraded") or [] if not x.startswith("core series ")]
+            if len(core) > 5:
+                core = ["%d core series not ok: %s" % (len(core), ", ".join(x[len("core series "):].split(":")[0] for x in core))]
+            for line in core + rest:
+                degraded.append("macro.json: " + line)
+        payloads["macro.json"] = rec
 
     det = docs.get("earnings_detected.json") or {}
     c = det.get("counts") or {}

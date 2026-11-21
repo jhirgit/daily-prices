@@ -1,0 +1,755 @@
+{
+ "note": "Hand-verified release dates that no machine-readable source gives keylessly. Each row names its source and the date it was verified. BLS dates come from the 2027 schedule page as saved by recon-2 on 2026-11-20, which was cut off at 64 KB inside August 2027, so BLS rows are complete only through 2027-08-20; December 2026 BLS dates other than CPI and payrolls were not verified (www.bls.gov blocks automated requests). With a FRED API key, macro.py can generate the BLS and Census rows instead (fred/releases/dates). Re-verify and extend by hand before 2027-08-20.",
+ "coverage": {
+  "bls_through": "2027-08-20",
+  "census_through": "2027-02-25",
+  "fomc_through": "2027-11-17",
+  "ecb_through": "2027-12-16",
+  "boe_through": "2027-12-16"
+ },
+ "events": [
+  {
+   "release": "bls_cpi",
+   "date": "2026-09-11",
+   "time_et": "08:30",
+   "ref": "August 2026",
+   "source": "jr-dash deploy-jr-dash/macro-calendar.json (transcribed 2026-09-06 from bls.gov/schedule/news_release)",
+   "verified": "2026-09-06"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2026-10-02",
+   "time_et": "08:30",
+   "ref": "September 2026",
+   "source": "jr-dash deploy-jr-dash/macro-calendar.json (transcribed 2026-09-06 from bls.gov/schedule/news_release)",
+   "verified": "2026-09-06"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2026-10-14",
+   "time_et": "08:30",
+   "ref": "September 2026",
+   "source": "jr-dash deploy-jr-dash/macro-calendar.json (transcribed 2026-09-06 from bls.gov/schedule/news_release)",
+   "verified": "2026-09-06"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2026-11-06",
+   "time_et": "08:30",
+   "ref": "October 2026",
+   "source": "jr-dash deploy-jr-dash/macro-calendar.json (transcribed 2026-09-06 from bls.gov/schedule/news_release)",
+   "verified": "2026-09-06"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2026-11-10",
+   "time_et": "08:30",
+   "ref": "October 2026",
+   "source": "jr-dash deploy-jr-dash/macro-calendar.json (transcribed 2026-09-06 from bls.gov/schedule/news_release)",
+   "verified": "2026-09-06"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2026-12-04",
+   "time_et": "08:30",
+   "ref": "November 2026",
+   "source": "jr-dash deploy-jr-dash/macro-calendar.json (transcribed 2026-09-06 from bls.gov/schedule/news_release)",
+   "verified": "2026-09-06"
+  },
+  {
+   "release": "fomc",
+   "date": "2026-12-09",
+   "time_et": "14:00",
+   "ref": "Dec 8-9 meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2026-12-08",
+   "sep": true
+  },
+  {
+   "release": "fomc_sep",
+   "date": "2026-12-09",
+   "time_et": "14:00",
+   "ref": "Dec 8-9 meeting projections",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2026-12-10",
+   "time_et": "08:30",
+   "ref": "November 2026",
+   "source": "jr-dash deploy-jr-dash/macro-calendar.json (transcribed 2026-09-06 from bls.gov/schedule/news_release)",
+   "verified": "2026-09-06"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2026-12-17",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2026-12-17",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "congress",
+   "date": "2027-01-03",
+   "time_et": null,
+   "ref": "120th Congress convenes",
+   "source": "US Constitution, 20th Amendment, section 2 (noon on 3 January unless Congress sets another day by law)",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "census_c30",
+   "date": "2027-01-04",
+   "time_et": "10:00",
+   "ref": "November 2026",
+   "source": "https://www.census.gov/economic-indicators/calendar-listview.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_jolts",
+   "date": "2027-01-05",
+   "time_et": "10:00",
+   "ref": "November 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2027-01-08",
+   "time_et": "08:30",
+   "ref": "December 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2027-01-13",
+   "time_et": "08:30",
+   "ref": "December 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "census_bfs",
+   "date": "2027-01-13",
+   "time_et": "10:00",
+   "ref": "December 2026",
+   "source": "https://www.census.gov/economic-indicators/calendar-listview.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_ppi",
+   "date": "2027-01-14",
+   "time_et": "08:30",
+   "ref": "December 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_mxp",
+   "date": "2027-01-15",
+   "time_et": "08:30",
+   "ref": "December 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "census_m3",
+   "date": "2027-01-27",
+   "time_et": "08:30",
+   "ref": "December 2026",
+   "source": "https://www.census.gov/economic-indicators/calendar-listview.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "fomc",
+   "date": "2027-01-27",
+   "time_et": "14:00",
+   "ref": "Jan 26-27 meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2027-01-26",
+   "sep_note": "the live page does not yet mark which 2027 meetings publish projections"
+  },
+  {
+   "release": "bls_eci",
+   "date": "2027-01-29",
+   "time_et": "08:30",
+   "ref": "Fourth Quarter 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "census_c30",
+   "date": "2027-02-01",
+   "time_et": "10:00",
+   "ref": "December 2026",
+   "source": "https://www.census.gov/economic-indicators/calendar-listview.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_jolts",
+   "date": "2027-02-02",
+   "time_et": "10:00",
+   "ref": "December 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_productivity",
+   "date": "2027-02-04",
+   "time_et": "08:30",
+   "ref": "Fourth Quarter 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20",
+   "note": "Productivity and Costs (P)"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2027-02-04",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2027-02-04",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2027-02-05",
+   "time_et": "08:30",
+   "ref": "January 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "census_bfs",
+   "date": "2027-02-10",
+   "time_et": "10:00",
+   "ref": "January 2027",
+   "source": "https://www.census.gov/economic-indicators/calendar-listview.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2027-02-11",
+   "time_et": "08:30",
+   "ref": "January 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_ppi",
+   "date": "2027-02-12",
+   "time_et": "08:30",
+   "ref": "January 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_mxp",
+   "date": "2027-02-17",
+   "time_et": "08:30",
+   "ref": "January 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "census_m3",
+   "date": "2027-02-25",
+   "time_et": "08:30",
+   "ref": "January 2027",
+   "source": "https://www.census.gov/economic-indicators/calendar-listview.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_productivity",
+   "date": "2027-03-04",
+   "time_et": "08:30",
+   "ref": "Fourth Quarter 2026",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20",
+   "note": "Productivity and Costs (R)"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2027-03-05",
+   "time_et": "08:30",
+   "ref": "February 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_jolts",
+   "date": "2027-03-09",
+   "time_et": "10:00",
+   "ref": "January 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2027-03-10",
+   "time_et": "08:30",
+   "ref": "February 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_ppi",
+   "date": "2027-03-12",
+   "time_et": "08:30",
+   "ref": "February 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_mxp",
+   "date": "2027-03-17",
+   "time_et": "08:30",
+   "ref": "February 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "fomc",
+   "date": "2027-03-17",
+   "time_et": "14:00",
+   "ref": "Mar 16-17 meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2027-03-16",
+   "sep_note": "the live page does not yet mark which 2027 meetings publish projections"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2027-03-18",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2027-03-18",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_jolts",
+   "date": "2027-03-30",
+   "time_et": "10:00",
+   "ref": "February 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2027-04-02",
+   "time_et": "08:30",
+   "ref": "March 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2027-04-13",
+   "time_et": "08:30",
+   "ref": "March 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_ppi",
+   "date": "2027-04-14",
+   "time_et": "08:30",
+   "ref": "March 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_mxp",
+   "date": "2027-04-16",
+   "time_et": "08:30",
+   "ref": "March 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "fomc",
+   "date": "2027-04-28",
+   "time_et": "14:00",
+   "ref": "Apr 27-28 meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2027-04-27",
+   "sep_note": "the live page does not yet mark which 2027 meetings publish projections"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2027-04-29",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2027-04-29",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_eci",
+   "date": "2027-04-30",
+   "time_et": "08:30",
+   "ref": "First Quarter 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_jolts",
+   "date": "2027-05-04",
+   "time_et": "10:00",
+   "ref": "March 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_productivity",
+   "date": "2027-05-06",
+   "time_et": "08:30",
+   "ref": "First Quarter 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20",
+   "note": "Productivity and Costs (P)"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2027-05-07",
+   "time_et": "08:30",
+   "ref": "April 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2027-05-12",
+   "time_et": "08:30",
+   "ref": "April 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_ppi",
+   "date": "2027-05-13",
+   "time_et": "08:30",
+   "ref": "April 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_mxp",
+   "date": "2027-05-14",
+   "time_et": "08:30",
+   "ref": "April 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_jolts",
+   "date": "2027-06-02",
+   "time_et": "10:00",
+   "ref": "April 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_productivity",
+   "date": "2027-06-03",
+   "time_et": "08:30",
+   "ref": "First Quarter 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20",
+   "note": "Productivity and Costs (R)"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2027-06-04",
+   "time_et": "08:30",
+   "ref": "May 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "fomc",
+   "date": "2027-06-09",
+   "time_et": "14:00",
+   "ref": "Jun 8-9 meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2027-06-08",
+   "sep_note": "the live page does not yet mark which 2027 meetings publish projections"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2027-06-10",
+   "time_et": "08:30",
+   "ref": "May 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2027-06-10",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_ppi",
+   "date": "2027-06-11",
+   "time_et": "08:30",
+   "ref": "May 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_mxp",
+   "date": "2027-06-16",
+   "time_et": "08:30",
+   "ref": "May 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2027-06-17",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_jolts",
+   "date": "2027-06-29",
+   "time_et": "10:00",
+   "ref": "May 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2027-07-02",
+   "time_et": "08:30",
+   "ref": "June 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2027-07-14",
+   "time_et": "08:30",
+   "ref": "June 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_ppi",
+   "date": "2027-07-15",
+   "time_et": "08:30",
+   "ref": "June 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_mxp",
+   "date": "2027-07-16",
+   "time_et": "08:30",
+   "ref": "June 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2027-07-22",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "fomc",
+   "date": "2027-07-28",
+   "time_et": "14:00",
+   "ref": "Jul 27-28 meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2027-07-27",
+   "sep_note": "the live page does not yet mark which 2027 meetings publish projections"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2027-07-29",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_eci",
+   "date": "2027-07-30",
+   "time_et": "08:30",
+   "ref": "Second Quarter 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_jolts",
+   "date": "2027-08-03",
+   "time_et": "10:00",
+   "ref": "June 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_productivity",
+   "date": "2027-08-05",
+   "time_et": "08:30",
+   "ref": "Second Quarter 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20",
+   "note": "Productivity and Costs (P)"
+  },
+  {
+   "release": "bls_empsit",
+   "date": "2027-08-06",
+   "time_et": "08:30",
+   "ref": "July 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_ppi",
+   "date": "2027-08-10",
+   "time_et": "08:30",
+   "ref": "July 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_cpi",
+   "date": "2027-08-11",
+   "time_et": "08:30",
+   "ref": "July 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "bls_mxp",
+   "date": "2027-08-13",
+   "time_et": "08:30",
+   "ref": "July 2027",
+   "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2027-09-09",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "fomc",
+   "date": "2027-09-15",
+   "time_et": "14:00",
+   "ref": "Sep 14-15 meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2027-09-14",
+   "sep_note": "the live page does not yet mark which 2027 meetings publish projections"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2027-09-16",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "fomc_strategy",
+   "date": "2027-10-27",
+   "time_et": null,
+   "ref": "Oct 26-27 Monetary Policy Strategy Meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2027-10-26",
+   "note": "labelled 'Monetary Policy Strategy Meeting' on the live page, not one of the eight policy meetings"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2027-10-28",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2027-11-04",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "fomc",
+   "date": "2027-11-17",
+   "time_et": "14:00",
+   "ref": "Nov 16-17 meeting",
+   "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (page 'Last Update: November 18, 2026')",
+   "verified": "2026-11-20",
+   "start": "2027-11-16",
+   "sep_note": "the live page does not yet mark which 2027 meetings publish projections"
+  },
+  {
+   "release": "boe_mpc",
+   "date": "2027-12-16",
+   "time_et": "07:00",
+   "ref": "MPC decision",
+   "source": "https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates",
+   "verified": "2026-11-20"
+  },
+  {
+   "release": "ecb_mp",
+   "date": "2027-12-16",
+   "time_et": "08:15",
+   "ref": "Governing Council monetary policy meeting, day 2 (decision)",
+   "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+   "verified": "2026-11-20"
+  }
+ ]
+}

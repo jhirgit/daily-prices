@@ -137,6 +137,46 @@ class Shares(unittest.TestCase):
         s = F.detect_splits(obs, [(0.1, "2024-01-15", "2024-02-15")])
         self.assertEqual(s[0]["ratio"], 0.1)
 
+    # declared splits (2026-11-20): SNDK 8-for-1 effective 2026-11-19, no filing shows it yet
+    def _sndk(self, extra=()):
+        return [{"end": "2026-04-24", "filed": "2026-05-01", "v": 148.09e6, "src": "dei cover"},
+                {"end": "2026-08-07", "filed": "2026-08-17", "v": 146.419e6, "src": "dei cover"},
+                {"end": "2026-10-26", "filed": "2026-10-30", "v": 142.289e6, "src": "dei cover"}] + list(extra)
+
+    def test_declared_split_rescales_counts_before_the_effective_date(self):
+        obs = self._sndk()
+        det = F.detect_splits(obs, [])
+        decl = F.declared_splits("SNDK", det)
+        self.assertEqual([(s["after"], s["ratio"], s["declared"]) for s in decl], [("2026-11-19", 8.0, True)])
+        F.split_adjust(obs, det + decl)
+        self.assertAlmostEqual(obs[-1]["adj"], 142.289e6 * 8)
+        self.assertFalse(any(o.get("glitch") for o in obs))
+
+    def test_declared_split_control_other_ticker_untouched(self):
+        obs = self._sndk()
+        self.assertEqual(F.declared_splits("MU", F.detect_splits(obs, [])), [])
+        F.split_adjust(obs, F.detect_splits(obs, []))
+        self.assertAlmostEqual(obs[-1]["adj"], 142.289e6)
+
+    def test_declared_split_leaves_a_post_split_count_alone(self):
+        # the next 10-Q's cover count, as of a date after the split, before detection confirms it
+        obs = self._sndk([{"end": "2027-01-23", "filed": "2027-02-01", "v": 1138.3e6, "src": "dei cover"}])
+        det = F.detect_splits(obs, [])                      # no restatement yet: not detected
+        self.assertEqual(det, [])
+        F.split_adjust(obs, det + F.declared_splits("SNDK", det))
+        self.assertAlmostEqual(obs[-1]["adj"], 1138.3e6)    # new basis, not x8 again
+        self.assertAlmostEqual(obs[-2]["adj"], 142.289e6 * 8)
+        self.assertFalse(any(o.get("glitch") for o in obs))
+
+    def test_declared_split_retires_once_the_filings_show_it(self):
+        obs = self._sndk([{"end": "2027-01-23", "filed": "2027-02-01", "v": 1138.3e6, "src": "dei cover"}])
+        det = F.detect_splits(obs, [(8.0, "2026-05-01", "2027-02-01")])   # restated x8: detected
+        self.assertEqual([(s["after"], s["ratio"]) for s in det], [("2027-02-01", 8.0)])
+        self.assertEqual(F.declared_splits("SNDK", det), [])               # nothing applied twice
+        F.split_adjust(obs, det)
+        self.assertAlmostEqual(obs[0]["adj"], 148.09e6 * 8)
+        self.assertAlmostEqual(obs[-1]["adj"], 1138.3e6)
+
     def test_misscaled_filing_dropped(self):
         obs = self._obs([13.3e6, 13.2e6, 13.3e6, 13.3e3])   # one filing tagged in thousands
         F.split_adjust(obs, F.detect_splits(obs, []))
