@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T06:25:28Z",
+ "generated_at": "2026-11-21T08:38:29Z",
  "asof": "2026-11-20",
  "evidence_asof": "2026-09-25",
  "evidence_summary": {
@@ -10923,10 +10923,10 @@
      "label": "Bitcoin (retail risk appetite, BTC-USD)",
      "window": 63,
      "s": 1,
-     "m": -0.29211,
-     "z": -1.327,
+     "m": -0.29487,
+     "z": -1.339,
      "status": "confirms",
-     "value": "−25.3% over 63d",
+     "value": "−25.5% over 63d",
      "note": "",
      "inputs": [
       "BTC-USD"
@@ -11116,10 +11116,10 @@
      "label": "Bitcoin (retail risk appetite, BTC-USD)",
      "window": 63,
      "s": 1,
-     "m": -0.29211,
-     "z": -1.327,
+     "m": -0.29487,
+     "z": -1.339,
      "status": "leans_down",
-     "value": "−25.3% over 63d",
+     "value": "−25.5% over 63d",
      "note": "",
      "inputs": [
       "BTC-USD"
@@ -11253,10 +11253,10 @@
      "label": "Bitcoin (BTC-USD)",
      "window": 63,
      "s": 1,
-     "m": -0.29211,
-     "z": -1.327,
+     "m": -0.29487,
+     "z": -1.339,
      "status": "confirms",
-     "value": "−25.3% over 63d",
+     "value": "−25.5% over 63d",
      "note": "",
      "inputs": [
       "BTC-USD"
@@ -16811,10 +16811,10 @@
      "label": "Bitcoin (ex-miners still move with it, BTC-USD)",
      "window": 63,
      "s": 1,
-     "m": -0.29211,
-     "z": -1.327,
+     "m": -0.29487,
+     "z": -1.339,
      "status": "confirms",
-     "value": "−25.3% over 63d",
+     "value": "−25.5% over 63d",
      "note": "",
      "inputs": [
       "BTC-USD"
@@ -17043,10 +17043,10 @@
      "label": "Bitcoin (speculative appetite, BTC-USD)",
      "window": 63,
      "s": 1,
-     "m": -0.29211,
-     "z": -1.327,
+     "m": -0.29487,
+     "z": -1.339,
      "status": "confirms",
-     "value": "−25.3% over 63d",
+     "value": "−25.5% over 63d",
      "note": "",
      "inputs": [
       "BTC-USD"

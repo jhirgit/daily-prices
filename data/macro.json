@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T06:26:57Z",
+ "generated_at": "2026-11-21T08:39:31Z",
  "asof": "2026-11-21",
  "status": "ok",
  "counts": {
@@ -29,9 +29,9 @@
   "energy": "Energy"
  },
  "meta": {
-  "requests": 35,
-  "bytes": 12075938,
-  "seconds": 51.6,
+  "requests": 36,
+  "bytes": 12126965,
+  "seconds": 55.6,
   "by_host": {
    "api.fiscaldata.treasury.gov": {
     "requests": 5,
@@ -51,7 +51,7 @@
    },
    "fred.stlouisfed.org": {
     "requests": 10,
-    "bytes": 677821
+    "bytes": 715378
    },
    "sdmx.oecd.org": {
     "requests": 3,

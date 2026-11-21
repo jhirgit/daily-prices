@@ -1,5 +1,5 @@
 {
-"generated_at":"2026-11-21T06:25:59Z",
+"generated_at":"2026-11-21T08:38:31Z",
 "asof":"2026-11-20",
 "status":"ok",
 "error":null,
@@ -13,8 +13,8 @@
 "companies":1775,
 "fresh":1393,
 "wanted":1775,
-"due":68,
-"fetched":68,
+"due":0,
+"fetched":0,
 "failed":0,
 "waiting":0
 },
@@ -2342,7 +2342,29 @@ null,
 "fcf_yield":1.0,
 "pb":1.0
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IVV (a proxy: SPY files no N-PORT)",
+"min_quarters":16,
+"pct":{
+"pe":0.2143,
+"ev_sales":0.7857,
+"ev_ebit":0.2857,
+"fcf_yield":0.2857,
+"pb":0.75
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"status":"complete"
+}
 },
 "QQQ":{
 "lines_source":"Invesco daily holdings feed, 2026-11-19",
@@ -2828,7 +2850,30 @@ null,
 "fcf_yield":0.871,
 "pb":1.398
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":3,
+"from":"2025-12-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of QQQ",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"3 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "IWM":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -5853,7 +5898,30 @@ null,
 "fcf_yield":2.759,
 "pb":0.428
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":0,
+"from":null,
+"to":null,
+"book":"SEC N-PORT books of XLE",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"0 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "OIH":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -6001,7 +6069,29 @@ null,
 "fcf_yield":1.395,
 "pb":0.318
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":23,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of OIH",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":0.2609,
+"ev_ebit":0.4706,
+"fcf_yield":0.3478,
+"pb":0.5652
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":0.2174,
+"ev_ebit":0.5294,
+"fcf_yield":0.3913,
+"pb":0.4783
+},
+"status":"complete"
+}
 },
 "XES":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -6203,7 +6293,29 @@ null,
 "fcf_yield":0.944,
 "pb":0.269
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":16,
+"from":"2022-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XES",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":0.3125,
+"ev_ebit":0.375,
+"fcf_yield":0.1875,
+"pb":0.4375
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":0.1875,
+"ev_ebit":0.375,
+"fcf_yield":0.1875,
+"pb":0.375
+},
+"status":"complete"
+}
 },
 "XOP":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -6498,7 +6610,30 @@ null,
 "fcf_yield":4.752,
 "pb":0.266
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":12,
+"from":"2023-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XOP",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"12 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "AMLP":{
 "lines_source":"SEC N-PORT, every line as of 2026-08-31",
@@ -6609,7 +6744,30 @@ null,
 "fcf_yield":3.464,
 "pb":0.336
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":13,
+"from":"2023-08-31",
+"to":"2026-08-31",
+"book":"SEC N-PORT books of AMLP",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"13 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "URA":{
 "lines_source":"SEC N-PORT, every line as of 2026-07-31",
@@ -6811,7 +6969,30 @@ null,
 "fcf_yield":1.304,
 "pb":0.504
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":0,
+"from":null,
+"to":null,
+"book":"SEC N-PORT books of XLB",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"0 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "XME":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -7028,7 +7209,29 @@ null,
 "fcf_yield":0.73,
 "pb":0.298
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XME",
+"min_quarters":16,
+"pct":{
+"pe":0.5652,
+"ev_sales":0.5,
+"ev_ebit":0.5556,
+"fcf_yield":0.25,
+"pb":0.1429
+},
+"pct_vs_spy":{
+"pe":0.6522,
+"ev_sales":0.0714,
+"ev_ebit":0.6667,
+"fcf_yield":0.2857,
+"pb":0.1071
+},
+"status":"complete"
+}
 },
 "SLX":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -7806,7 +8009,29 @@ null,
 "fcf_yield":1.392,
 "pb":1.19
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XLI",
+"min_quarters":16,
+"pct":{
+"pe":0.4643,
+"ev_sales":0.8214,
+"ev_ebit":0.3214,
+"fcf_yield":0.8929,
+"pb":0.8214
+},
+"pct_vs_spy":{
+"pe":0.6429,
+"ev_sales":0.4286,
+"ev_ebit":0.6071,
+"fcf_yield":0.9643,
+"pb":0.6071
+},
+"status":"complete"
+}
 },
 "ITA":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -8086,7 +8311,29 @@ null,
 "fcf_yield":0.853,
 "pb":1.108
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":27,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of ITA",
+"min_quarters":16,
+"pct":{
+"pe":0.1852,
+"ev_sales":0.6667,
+"ev_ebit":0.0741,
+"fcf_yield":0.4815,
+"pb":0.7407
+},
+"pct_vs_spy":{
+"pe":0.1481,
+"ev_sales":0.2222,
+"ev_ebit":0.0741,
+"fcf_yield":0.7037,
+"pb":0.7407
+},
+"status":"complete"
+}
 },
 "XAR":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -8371,7 +8618,29 @@ null,
 "fcf_yield":0.367,
 "pb":0.66
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":27,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XAR",
+"min_quarters":16,
+"pct":{
+"pe":0.7778,
+"ev_sales":0.7407,
+"ev_ebit":0.8148,
+"fcf_yield":0.0741,
+"pb":0.3333
+},
+"pct_vs_spy":{
+"pe":0.9259,
+"ev_sales":0.2963,
+"ev_ebit":0.8519,
+"fcf_yield":0.0741,
+"pb":0.0
+},
+"status":"complete"
+}
 },
 "PPA":{
 "lines_source":"SEC N-PORT, every line as of 2026-07-31",
@@ -8707,7 +8976,29 @@ null,
 "fcf_yield":1.129,
 "pb":0.914
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-10-31",
+"to":"2026-07-31",
+"book":"SEC N-PORT books of PPA",
+"min_quarters":16,
+"pct":{
+"pe":0.2143,
+"ev_sales":0.6429,
+"ev_ebit":0.1071,
+"fcf_yield":0.7857,
+"pb":0.6071
+},
+"pct_vs_spy":{
+"pe":0.3929,
+"ev_sales":0.2143,
+"ev_ebit":0.2143,
+"fcf_yield":0.9643,
+"pb":0.3929
+},
+"status":"complete"
+}
 },
 "GRID":{
 "lines_source":"First Trust daily holdings page, 2026-11-19",
@@ -9347,7 +9638,29 @@ null,
 "fcf_yield":1.157,
 "pb":0.689
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-11-30",
+"to":"2026-08-31",
+"book":"SEC N-PORT books of PAVE",
+"min_quarters":16,
+"pct":{
+"pe":0.6786,
+"ev_sales":0.75,
+"ev_ebit":0.6786,
+"fcf_yield":0.25,
+"pb":0.7143
+},
+"pct_vs_spy":{
+"pe":0.9259,
+"ev_sales":0.4444,
+"ev_ebit":0.9259,
+"fcf_yield":0.2963,
+"pb":0.5185
+},
+"status":"complete"
+}
 },
 "IYT":{
 "lines_source":"SEC N-PORT, every line as of 2026-07-31",
@@ -9589,7 +9902,29 @@ null,
 "fcf_yield":1.317,
 "pb":0.786
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-10-31",
+"to":"2026-07-31",
+"book":"SEC N-PORT books of IYT",
+"min_quarters":16,
+"pct":{
+"pe":0.875,
+"ev_sales":0.5714,
+"ev_ebit":0.6538,
+"fcf_yield":0.5714,
+"pb":0.4643
+},
+"pct_vs_spy":{
+"pe":0.7917,
+"ev_sales":0.2143,
+"ev_ebit":0.7308,
+"fcf_yield":0.75,
+"pb":0.25
+},
+"status":"complete"
+}
 },
 "XTN":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -9836,7 +10171,29 @@ null,
 "fcf_yield":0.68,
 "pb":0.56
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XTN",
+"min_quarters":16,
+"pct":{
+"pe":0.8889,
+"ev_sales":0.25,
+"ev_ebit":0.8261,
+"fcf_yield":0.2857,
+"pb":0.8929
+},
+"pct_vs_spy":{
+"pe":0.9444,
+"ev_sales":0.0357,
+"ev_ebit":0.913,
+"fcf_yield":0.3571,
+"pb":0.6429
+},
+"status":"complete"
+}
 },
 "JETS":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -9967,7 +10324,29 @@ null,
 "fcf_yield":-0.696,
 "pb":0.687
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":17,
+"from":"2022-03-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of JETS",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":0.1765,
+"ev_ebit":0.7647,
+"fcf_yield":0.2353,
+"pb":0.7059
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":0.1176,
+"ev_ebit":0.7647,
+"fcf_yield":0.2353,
+"pb":0.5294
+},
+"status":"complete"
+}
 },
 "XLY":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -10243,7 +10622,29 @@ null,
 "fcf_yield":0.856,
 "pb":1.408
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XLY",
+"min_quarters":16,
+"pct":{
+"pe":0.3571,
+"ev_sales":0.7143,
+"ev_ebit":0.2857,
+"fcf_yield":0.3214,
+"pb":0.1071
+},
+"pct_vs_spy":{
+"pe":0.4643,
+"ev_sales":0.4286,
+"ev_ebit":0.4643,
+"fcf_yield":0.3214,
+"pb":0.0357
+},
+"status":"complete"
+}
 },
 "DRIV":{
 "lines_source":"SEC N-PORT, every line as of 2026-08-31",
@@ -10666,7 +11067,29 @@ null,
 "fcf_yield":1.868,
 "pb":0.372
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of ITB",
+"min_quarters":16,
+"pct":{
+"pe":0.9643,
+"ev_sales":0.4643,
+"ev_ebit":1.0,
+"fcf_yield":0.4286,
+"pb":0.1071
+},
+"pct_vs_spy":{
+"pe":1.0,
+"ev_sales":0.1786,
+"ev_ebit":1.0,
+"fcf_yield":0.5357,
+"pb":0.0
+},
+"status":"complete"
+}
 },
 "XHB":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -10881,7 +11304,29 @@ null,
 "fcf_yield":1.636,
 "pb":0.484
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XHB",
+"min_quarters":16,
+"pct":{
+"pe":0.9643,
+"ev_sales":0.5,
+"ev_ebit":0.9643,
+"fcf_yield":0.2857,
+"pb":0.1071
+},
+"pct_vs_spy":{
+"pe":1.0,
+"ev_sales":0.2143,
+"ev_ebit":1.0,
+"fcf_yield":0.5357,
+"pb":0.0714
+},
+"status":"complete"
+}
 },
 "PEJ":{
 "lines_source":"SEC N-PORT, every line as of 2026-07-31",
@@ -11053,7 +11498,30 @@ null,
 "fcf_yield":2.176,
 "pb":1.274
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":3,
+"from":"2026-01-31",
+"to":"2026-07-31",
+"book":"SEC N-PORT books of PEJ",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"3 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "XRT":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -11441,7 +11909,30 @@ null,
 "fcf_yield":2.188,
 "pb":0.5
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":14,
+"from":"2023-03-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XRT",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"14 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "XLP":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -11633,7 +12124,29 @@ null,
 "fcf_yield":1.254,
 "pb":1.06
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":26,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XLP",
+"min_quarters":16,
+"pct":{
+"pe":0.7692,
+"ev_sales":0.2692,
+"ev_ebit":0.8462,
+"fcf_yield":0.1154,
+"pb":0.4615
+},
+"pct_vs_spy":{
+"pe":0.8462,
+"ev_sales":0.2308,
+"ev_ebit":0.8462,
+"fcf_yield":0.4231,
+"pb":0.3077
+},
+"status":"complete"
+}
 },
 "PBJ":{
 "lines_source":"SEC N-PORT, every line as of 2026-07-31",
@@ -11791,7 +12304,30 @@ null,
 "fcf_yield":1.041,
 "pb":0.238
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":6,
+"from":"2023-04-30",
+"to":"2026-07-31",
+"book":"SEC N-PORT books of PBJ",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"6 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "XLV":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -12136,7 +12672,29 @@ null,
 "fcf_yield":1.144,
 "pb":1.025
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XLV",
+"min_quarters":16,
+"pct":{
+"pe":0.8571,
+"ev_sales":1.0,
+"ev_ebit":0.75,
+"fcf_yield":0.1071,
+"pb":1.0
+},
+"pct_vs_spy":{
+"pe":0.9643,
+"ev_sales":0.6786,
+"ev_ebit":0.9643,
+"fcf_yield":0.3214,
+"pb":0.5357
+},
+"status":"complete"
+}
 },
 "IHI":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -12407,7 +12965,29 @@ null,
 "fcf_yield":1.16,
 "pb":0.709
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IHI",
+"min_quarters":16,
+"pct":{
+"pe":0.25,
+"ev_sales":0.0714,
+"ev_ebit":0.0,
+"fcf_yield":0.9643,
+"pb":0.1071
+},
+"pct_vs_spy":{
+"pe":0.5357,
+"ev_sales":0.0714,
+"ev_ebit":0.0357,
+"fcf_yield":0.9286,
+"pb":0.0714
+},
+"status":"complete"
+}
 },
 "IHF":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -12752,7 +13332,29 @@ null,
 "fcf_yield":1.561,
 "pb":0.479
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IHF",
+"min_quarters":16,
+"pct":{
+"pe":0.1429,
+"ev_sales":0.3929,
+"ev_ebit":0.5185,
+"fcf_yield":0.5357,
+"pb":0.2857
+},
+"pct_vs_spy":{
+"pe":0.4643,
+"ev_sales":0.1429,
+"ev_ebit":0.7037,
+"fcf_yield":0.6071,
+"pb":0.2143
+},
+"status":"complete"
+}
 },
 "XBI":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -13284,7 +13886,30 @@ null,
 "fcf_yield":-0.63,
 "pb":0.987
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":8,
+"from":"2024-06-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XBI",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"8 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "IBB":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -13884,7 +14509,30 @@ null,
 "fcf_yield":0.285,
 "pb":1.14
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":13,
+"from":"2023-03-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IBB",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"13 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "XPH":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -14155,7 +14803,29 @@ null,
 "fcf_yield":0.643,
 "pb":0.558
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":16,
+"from":"2022-03-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XPH",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":0.25,
+"ev_ebit":null,
+"fcf_yield":0.0625,
+"pb":0.8125
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":0.3125,
+"ev_ebit":null,
+"fcf_yield":0.0625,
+"pb":0.875
+},
+"status":"complete"
+}
 },
 "PJP":{
 "lines_source":"SEC N-PORT, every line as of 2026-07-31",
@@ -14343,7 +15013,29 @@ null,
 "fcf_yield":1.768,
 "pb":0.681
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-10-31",
+"to":"2026-07-31",
+"book":"SEC N-PORT books of PJP",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":0.2857,
+"ev_ebit":1.0,
+"fcf_yield":0.3571,
+"pb":0.6786
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":0.25,
+"ev_ebit":1.0,
+"fcf_yield":0.6071,
+"pb":0.3929
+},
+"status":"complete"
+}
 },
 "XLF":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -14726,7 +15418,29 @@ null,
 "fcf_yield":1.395,
 "pb":0.434
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":21,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XLF",
+"min_quarters":16,
+"pct":{
+"pe":0.4762,
+"ev_sales":0.7619,
+"ev_ebit":0.381,
+"fcf_yield":0.381,
+"pb":0.9048
+},
+"pct_vs_spy":{
+"pe":0.9524,
+"ev_sales":0.381,
+"ev_ebit":0.5714,
+"fcf_yield":0.8095,
+"pb":0.9524
+},
+"status":"complete"
+}
 },
 "KBE":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -15409,7 +16123,29 @@ null,
 "fcf_yield":2.47,
 "pb":0.537
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IAI",
+"min_quarters":16,
+"pct":{
+"pe":0.5714,
+"ev_sales":0.3214,
+"ev_ebit":0.5357,
+"fcf_yield":0.6786,
+"pb":0.75
+},
+"pct_vs_spy":{
+"pe":0.75,
+"ev_sales":0.1786,
+"ev_ebit":0.6071,
+"fcf_yield":0.9286,
+"pb":0.75
+},
+"status":"complete"
+}
 },
 "KCE":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -15757,7 +16493,29 @@ null,
 "fcf_yield":2.276,
 "pb":0.519
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":26,
+"from":"2020-03-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of KCE",
+"min_quarters":16,
+"pct":{
+"pe":0.9615,
+"ev_sales":0.4231,
+"ev_ebit":0.6,
+"fcf_yield":0.6154,
+"pb":0.6538
+},
+"pct_vs_spy":{
+"pe":0.9615,
+"ev_sales":0.3077,
+"ev_ebit":0.88,
+"fcf_yield":0.6923,
+"pb":0.3846
+},
+"status":"complete"
+}
 },
 "FINX":{
 "lines_source":"SEC N-PORT, every line as of 2026-08-31",
@@ -16011,7 +16769,30 @@ null,
 "fcf_yield":1.063,
 "pb":0.416
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":12,
+"from":"2023-11-30",
+"to":"2026-08-31",
+"book":"SEC N-PORT books of FINX",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"12 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "KIE":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -16321,7 +17102,29 @@ null,
 "fcf_yield":1.401,
 "pb":0.299
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of KIE",
+"min_quarters":16,
+"pct":{
+"pe":0.25,
+"ev_sales":0.9286,
+"ev_ebit":0.0714,
+"fcf_yield":0.25,
+"pb":0.6786
+},
+"pct_vs_spy":{
+"pe":0.4286,
+"ev_sales":0.8214,
+"ev_ebit":0.3929,
+"fcf_yield":0.2857,
+"pb":0.6071
+},
+"status":"complete"
+}
 },
 "XLK":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -16749,7 +17552,29 @@ null,
 "fcf_yield":1.003,
 "pb":1.671
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XLK",
+"min_quarters":16,
+"pct":{
+"pe":0.2857,
+"ev_sales":0.5357,
+"ev_ebit":0.2857,
+"fcf_yield":0.4286,
+"pb":0.4286
+},
+"pct_vs_spy":{
+"pe":0.3929,
+"ev_sales":0.1429,
+"ev_ebit":0.3571,
+"fcf_yield":0.6071,
+"pb":0.0714
+},
+"status":"complete"
+}
 },
 "IGM":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -17799,7 +18624,29 @@ null,
 "fcf_yield":0.922,
 "pb":1.378
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IGM",
+"min_quarters":16,
+"pct":{
+"pe":0.1429,
+"ev_sales":0.6786,
+"ev_ebit":0.1429,
+"fcf_yield":0.4286,
+"pb":0.3214
+},
+"pct_vs_spy":{
+"pe":0.1071,
+"ev_sales":0.3929,
+"ev_ebit":0.0714,
+"fcf_yield":0.8571,
+"pb":0.1071
+},
+"status":"complete"
+}
 },
 "IGV":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -18279,7 +19126,29 @@ null,
 "fcf_yield":0.624,
 "pb":1.212
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IGV",
+"min_quarters":16,
+"pct":{
+"pe":0.5926,
+"ev_sales":0.2143,
+"ev_ebit":0.1429,
+"fcf_yield":0.0357,
+"pb":0.0714
+},
+"pct_vs_spy":{
+"pe":0.6667,
+"ev_sales":0.1071,
+"ev_ebit":0.1786,
+"fcf_yield":0.2857,
+"pb":0.1429
+},
+"status":"complete"
+}
 },
 "WCLD":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -18630,7 +19499,30 @@ null,
 "fcf_yield":1.226,
 "pb":1.177
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":14,
+"from":"2023-03-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of WCLD",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"14 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "CIBR":{
 "lines_source":"First Trust daily holdings page, 2026-11-19",
@@ -18871,7 +19763,29 @@ null,
 "fcf_yield":1.053,
 "pb":1.575
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":18,
+"from":"2021-06-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of CIBR",
+"min_quarters":16,
+"pct":{
+"pe":0.0556,
+"ev_sales":0.9444,
+"ev_ebit":0.5556,
+"fcf_yield":0.1667,
+"pb":0.9444
+},
+"pct_vs_spy":{
+"pe":0.5,
+"ev_sales":0.9444,
+"ev_ebit":0.6667,
+"fcf_yield":0.3333,
+"pb":0.8333
+},
+"status":"complete"
+}
 },
 "HACK":{
 "lines_source":"Amplify daily all-funds holdings file, 2026-11-23",
@@ -19022,7 +19936,30 @@ null,
 "fcf_yield":0.953,
 "pb":1.637
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":10,
+"from":"2024-03-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of HACK",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"10 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "OPTICS":{
 "lines_source":"Equal-weight basket defined in regime.REG_ETFS, 2026-11-20",
@@ -19100,7 +20037,29 @@ null,
 "fcf_yield":-1.571,
 "pb":0.667
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":29,
+"from":"2019-09-30",
+"to":"2026-09-30",
+"book":"today's members at equal weight, priced on each quarter end (membership hindsight)",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":0.7931,
+"ev_ebit":null,
+"fcf_yield":0.0,
+"pb":0.7586
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":0.8214,
+"ev_ebit":null,
+"fcf_yield":0.0,
+"pb":0.7857
+},
+"status":"complete"
+}
 },
 "SMH":{
 "lines_source":"SEC N-PORT, every line as of 2026-09-30",
@@ -19257,7 +20216,29 @@ null,
 "fcf_yield":1.044,
 "pb":1.396
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":21,
+"from":"2020-03-31",
+"to":"2026-09-30",
+"book":"SEC N-PORT books of SMH",
+"min_quarters":16,
+"pct":{
+"pe":0.2381,
+"ev_sales":0.6667,
+"ev_ebit":0.2381,
+"fcf_yield":0.7143,
+"pb":0.8095
+},
+"pct_vs_spy":{
+"pe":0.25,
+"ev_sales":0.6,
+"ev_ebit":0.3,
+"fcf_yield":0.75,
+"pb":0.95
+},
+"status":"complete"
+}
 },
 "SOXX":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -19429,7 +20410,29 @@ null,
 "fcf_yield":1.028,
 "pb":1.272
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of SOXX",
+"min_quarters":16,
+"pct":{
+"pe":0.2857,
+"ev_sales":0.8571,
+"ev_ebit":0.2857,
+"fcf_yield":0.5,
+"pb":0.8571
+},
+"pct_vs_spy":{
+"pe":0.4286,
+"ev_sales":0.8214,
+"ev_ebit":0.3929,
+"fcf_yield":0.5714,
+"pb":0.6071
+},
+"status":"complete"
+}
 },
 "XSD":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -19700,7 +20703,29 @@ null,
 "fcf_yield":0.417,
 "pb":0.716
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XSD",
+"min_quarters":16,
+"pct":{
+"pe":0.6957,
+"ev_sales":0.4286,
+"ev_ebit":0.5556,
+"fcf_yield":0.1786,
+"pb":0.3214
+},
+"pct_vs_spy":{
+"pe":0.6957,
+"ev_sales":0.1071,
+"ev_ebit":0.5556,
+"fcf_yield":0.1429,
+"pb":0.2143
+},
+"status":"complete"
+}
 },
 "DRAM":{
 "lines_source":"SEC N-PORT, every line as of 2026-06-30",
@@ -19809,7 +20834,29 @@ null,
 "fcf_yield":-0.451,
 "pb":0.411
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":27,
+"from":"2019-09-30",
+"to":"2026-09-30",
+"book":"today's members at equal weight, priced on each quarter end (membership hindsight)",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":0.4444,
+"ev_ebit":null,
+"fcf_yield":0.1852,
+"pb":0.2222
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":0.3462,
+"ev_ebit":null,
+"fcf_yield":0.1538,
+"pb":0.1923
+},
+"status":"complete"
+}
 },
 "XLC":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -19949,7 +20996,30 @@ null,
 "fcf_yield":1.693,
 "pb":0.569
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":0,
+"from":null,
+"to":null,
+"book":"SEC N-PORT books of XLC",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"0 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "ESPO":{
 "lines_source":"SEC N-PORT, every line as of 2026-09-30",
@@ -20229,7 +21299,29 @@ null,
 "fcf_yield":0.611,
 "pb":1.215
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":27,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of FDN",
+"min_quarters":16,
+"pct":{
+"pe":0.087,
+"ev_sales":0.3704,
+"ev_ebit":0.0833,
+"fcf_yield":0.2222,
+"pb":0.2593
+},
+"pct_vs_spy":{
+"pe":0.0435,
+"ev_sales":0.2593,
+"ev_ebit":0.125,
+"fcf_yield":0.2963,
+"pb":0.1111
+},
+"status":"complete"
+}
 },
 "XLU":{
 "lines_source":"State Street daily holdings file, 2026-11-19",
@@ -20670,7 +21762,29 @@ null,
 "fcf_yield":1.078,
 "pb":0.603
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of XLRE",
+"min_quarters":16,
+"pct":{
+"pe":0.25,
+"ev_sales":0.0,
+"ev_ebit":0.0,
+"fcf_yield":0.5357,
+"pb":0.5714
+},
+"pct_vs_spy":{
+"pe":0.4286,
+"ev_sales":0.0,
+"ev_ebit":0.1071,
+"fcf_yield":0.6071,
+"pb":0.3929
+},
+"status":"complete"
+}
 },
 "VNQ":{
 "lines_source":"SEC N-PORT, every line as of 2026-07-31",
@@ -21288,7 +22402,29 @@ null,
 "fcf_yield":-0.433,
 "pb":0.954
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":29,
+"from":"2019-09-30",
+"to":"2026-09-30",
+"book":"today's members at equal weight, priced on each quarter end (membership hindsight)",
+"min_quarters":16,
+"pct":{
+"pe":0.0,
+"ev_sales":0.4138,
+"ev_ebit":0.1034,
+"fcf_yield":0.0,
+"pb":0.0
+},
+"pct_vs_spy":{
+"pe":0.0,
+"ev_sales":0.1071,
+"ev_ebit":0.25,
+"fcf_yield":0.0,
+"pb":0.0
+},
+"status":"complete"
+}
 },
 "NEOCLOUD":{
 "lines_source":"Equal-weight basket defined in regime.REG_ETFS, 2026-11-20",
@@ -21363,7 +22499,29 @@ null,
 "fcf_yield":-23.332,
 "pb":0.579
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":16,
+"from":"2019-09-30",
+"to":"2026-09-30",
+"book":"today's members at equal weight, priced on each quarter end (membership hindsight)",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"status":"complete"
+}
 },
 "QUANTUM":{
 "lines_source":"Equal-weight basket defined in regime.REG_ETFS, 2026-11-20",
@@ -21433,7 +22591,30 @@ null,
 "fcf_yield":-1.893,
 "pb":0.268
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":14,
+"from":"2023-03-31",
+"to":"2026-09-30",
+"book":"today's members at equal weight, priced on each quarter end (membership hindsight)",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"14 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "UFO":{
 "lines_source":"SEC N-PORT, every line as of 2026-07-31",
@@ -21640,7 +22821,30 @@ null,
 "fcf_yield":0.063,
 "pb":0.469
 },
-"vs_spy_why":null
+"vs_spy_why":null,
+"history":{
+"n":12,
+"from":"2023-04-30",
+"to":"2026-07-31",
+"book":"SEC N-PORT books of UFO",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"12 quarters with a composite; a percentile needs 16",
+"status":"complete"
+}
 },
 "BOTZ":{
 "lines_source":"SEC N-PORT, every line as of 2026-08-31",
@@ -24044,6 +25248,28 @@ null,
 "pb":1.0
 },
 "vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IVV (a proxy: SPY files no N-PORT)",
+"min_quarters":16,
+"pct":{
+"pe":0.2143,
+"ev_sales":0.7857,
+"ev_ebit":0.2857,
+"fcf_yield":0.2857,
+"pb":0.75
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"status":"complete"
+},
 "same_book_as":"SPY",
 "extra":true
 },
@@ -24690,6 +25916,29 @@ null,
 "pb":1.398
 },
 "vs_spy_why":null,
+"history":{
+"n":3,
+"from":"2025-12-31",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of QQQ",
+"min_quarters":16,
+"pct":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"why":"3 quarters with a composite; a percentile needs 16",
+"status":"complete"
+},
 "same_book_as":"QQQ",
 "extra":true
 },
@@ -29451,16 +30700,38 @@ null,
 "pb":1.0
 },
 "vs_spy_why":null,
+"history":{
+"n":28,
+"from":"2019-09-30",
+"to":"2026-06-30",
+"book":"SEC N-PORT books of IVV (a proxy: SPY files no N-PORT)",
+"min_quarters":16,
+"pct":{
+"pe":0.2143,
+"ev_sales":0.7857,
+"ev_ebit":0.2857,
+"fcf_yield":0.2857,
+"pb":0.75
+},
+"pct_vs_spy":{
+"pe":null,
+"ev_sales":null,
+"ev_ebit":null,
+"fcf_yield":null,
+"pb":null
+},
+"status":"complete"
+},
 "same_book_as":"SPY",
 "extra":true
 }
 },
 "calls":{
-"sec":68,
+"sec":0,
 "sec_failed":0,
 "unavailable":0,
-"due":68,
+"due":0,
 "budget_left":0
 },
-"run_s":27.4
+"run_s":0.2
 }
