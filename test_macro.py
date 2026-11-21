@@ -451,7 +451,9 @@ class EndToEnd(unittest.TestCase):
 
 class CatalogueText(unittest.TestCase):
     def test_every_label_in_the_catalogue(self):
-        advice = re.compile(r"\b(buy|sell|should|will|likely|target|recommend|hold|trim|add)\b", re.I)
+        # the board's test (jr-dash tools/test_econ_tabs.js) also checks the inflections, e.g. "buying"
+        advice = re.compile(r"\b(buy|buys|buying|sell|sells|selling|should|will|likely|unlikely|target|targets|recommend\w*"
+                            r"|hold|holds|holding|trim|add|cheap|expensive)\b", re.I)
         word = re.compile("(" + "|".join(test_guard_words.GENERIC) + ")", re.I)
         for e in CAT["series"]:
             for t in (e["name"], e["what"]):
@@ -463,6 +465,111 @@ class CatalogueText(unittest.TestCase):
         for d in CAT["reads"]:
             for t in (d["title"], d["formula"], d["limits"]):
                 self.assertIsNone(advice.search(t), t)
+
+
+class UnitsAndNewSeries(unittest.TestCase):
+    def test_reserves_shown_in_billions_like_the_reverse_repo(self):
+        c = ctx_for(lambda url: None)
+        c.fred["WRESBAL"] = [("2026-11-11", 2960603.0), ("2026-11-18", 2979656.0)]     # FRED's unit: millions
+        obs = M.a_fred(entry("wresbal"), c)
+        self.assertAlmostEqual(obs[-1][1], 2979.656)
+        rec = M.make_record(entry("wresbal"), obs, TODAY, CAT, {}, {})
+        self.assertEqual((rec["unit"], rec["change_unit"]), ("billions of dollars", "billions of dollars"))
+        self.assertAlmostEqual(rec["change"], 19.053)
+        self.assertEqual(BY_ID["rrpontsyd"]["unit"], "billions of dollars")
+
+    def test_one_and_three_year_treasury_points(self):
+        for i, sid in (("dgs1", "DGS1"), ("dgs3", "DGS3")):
+            e = BY_ID[i]
+            self.assertEqual((e["source"], e["source_id"], e["group"], e["priority"], e["kind"], e["unit"]),
+                             ("fred", sid, "fed", "useful", "rate", "percent"))
+
+    def test_bank_of_england_csv(self):
+        body = b"DATE,IUDBEDR\r\n04 Nov 2026,3.75\r\n05 Nov 2026,4\r\n"
+        self.assertEqual(M.a_boe(entry("boe_bank_rate"), ctx_for(one(body)))[-1], ("2026-11-05", 4.0))
+        with self.assertRaisesRegex(M.SourceError, "header"):
+            M.a_boe(entry("boe_bank_rate"), ctx_for(one(b"<html>Sorry, the page cannot be shown</html>")))
+        with self.assertRaisesRegex(M.SourceError, "no dated values"):
+            M.a_boe(entry("boe_bank_rate"), ctx_for(one(b"DATE,IUDBEDR\r\n")))
+
+
+class ReleaseCalendar(unittest.TestCase):
+    KEY = "fixture-key-0000"
+
+    @staticmethod
+    def base(url):
+        return fx("bea_schedule.json") if "bea.gov" in url else fx("fiscaldata_calendar.json")
+
+    def cal(self, today, router=None, keys=None):
+        return M.build_calendar(CAT, M.Http(offline=router or self.base, pace=0), today, keys=keys)
+
+    def test_claims_move_off_a_thursday_holiday(self):
+        ev, _ = self.cal(TODAY)
+        c = {e["date"]: e for e in ev if e["release"] == "dol_claims"}
+        self.assertIn("2026-11-25", c)                         # Thanksgiving Thursday -> Wednesday
+        self.assertNotIn("2026-11-26", c)
+        self.assertIn("2026-11-19", c)
+        self.assertIn("2026-12-03", c)
+        self.assertIsNone(c["2026-11-25"]["verified"])         # a rule, not a checked date
+        self.assertIn("2026-11-26", c["2026-11-25"]["note"])
+        self.assertNotIn("note", c["2026-12-03"])
+        st, why, rel, nxt, how = M.judge(entry("icsa"), "2026-11-14", TODAY, CAT["releases"]["dol_claims"], M.release_dates(ev))
+        self.assertEqual(nxt, "2026-11-25")
+        ev, _ = self.cal(dt.date(2027, 11, 1))                 # Veterans Day and Thanksgiving 2027 are both Thursdays
+        ds = {e["date"] for e in ev if e["release"] == "dol_claims"}
+        self.assertTrue({"2027-11-10", "2027-11-24", "2027-11-04", "2027-12-02"} <= ds)
+        self.assertFalse({"2027-11-11", "2027-11-25"} & ds)
+
+    def test_no_key_no_fred_calendar_request(self):
+        urls = []
+        self.cal(TODAY, router=lambda u: urls.append(u) or self.base(u))
+        self.assertFalse(any("stlouisfed" in u for u in urls))
+
+    def test_keyed_fred_release_dates_fill_the_gaps(self):
+        urls, key = [], self.KEY
+        dates = {50: ["2026-11-06", "2026-12-04", "2027-09-03"], 180: ["2026-11-19", "2026-11-25", "2026-12-03"],
+                 22: ["2026-11-14", "2026-11-21"], 229: ["2026-12-01", "2027-04-01"]}
+
+        def router(u):
+            urls.append(u)
+            if "api.stlouisfed.org" in u:
+                rid = int(re.search(r"release_id=(\d+)", u).group(1))
+                if rid == 191:
+                    raise M.SourceError("HTTP 500 for %s after 3 attempts" % u)        # the message carries the key
+                return json.dumps({"release_dates": [{"release_id": rid, "date": d} for d in dates.get(rid, [])]}).encode()
+            return self.base(u)
+        ev, src = self.cal(TODAY, router=router, keys={"FRED_API_KEY": key})
+        fred_urls = [u for u in urls if "stlouisfed" in u]
+        self.assertEqual(len(fred_urls), sum(1 for r in CAT["releases"].values() if r.get("fred_release")))
+        for u in fred_urls:
+            self.assertTrue(u.startswith("https://api.stlouisfed.org/fred/release/dates?"), u)
+            self.assertIn("include_release_dates_with_no_data=true", u)
+            self.assertIn("realtime_start=", u)
+        emp = [e for e in ev if e["release"] == "bls_empsit"]
+        self.assertEqual(sum(1 for e in emp if e["date"] == "2026-12-04"), 1)        # the hand-kept row is not doubled
+        late = next(e for e in emp if e["date"] == "2027-09-03")                    # past the hand-kept rows' end
+        self.assertEqual((late["time_et"], late["verified"]), ("08:30", TODAY.isoformat()))
+        self.assertIn("release_id 50", late["source"])
+        claims = [e for e in ev if e["release"] == "dol_claims"]
+        self.assertEqual([e["date"] for e in claims], dates[180])                   # FRED's dates replace the rule
+        self.assertTrue(all("FRED API" in e["source"] for e in claims))
+        self.assertIn("2027-04-01", {e["date"] for e in ev if e["release"] == "census_c30"})
+        rec_dates = M.release_dates(ev)
+        st, why, rel, nxt, how = M.judge(entry("busloans"), "2026-10", TODAY, CAT["releases"]["fed_h8"], rec_dates)
+        self.assertEqual((st, nxt, how), ("ok", "2026-11-21", "calendar"))
+        self.assertEqual(src["fred"]["status"], "warn")
+        self.assertNotIn(key, json.dumps([src, ev]))
+        self.assertIn("***", src["fred"]["reason"])
+
+    def test_keyed_fred_refusal_is_loud_and_the_rule_returns(self):
+        def router(u):
+            if "api.stlouisfed.org" in u:
+                return b'{"error_code": 400, "error_message": "Bad Request.  The value for variable api_key is not registered."}'
+            return self.base(u)
+        ev, src = self.cal(TODAY, router=router, keys={"FRED_API_KEY": self.KEY})
+        self.assertEqual(src["fred"]["status"], "error")
+        self.assertIn("release_dates", src["fred"]["reason"])
+        self.assertIn("2026-11-25", {e["date"] for e in ev if e["release"] == "dol_claims"})
 
 
 class Views(unittest.TestCase):

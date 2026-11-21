@@ -5,7 +5,37 @@
   "census_through": "2027-02-25",
   "fomc_through": "2027-11-17",
   "ecb_through": "2027-12-16",
-  "boe_through": "2027-12-16"
+  "boe_through": "2027-12-16",
+  "holidays_through": "2027-12-31"
+ },
+ "federal_holidays": {
+  "note": "Federal holidays as observed (a Saturday holiday on the Friday before, a Sunday holiday on the Monday after). Used to move the weekly jobless-claims release to the prior business day when Thursday is a holiday, as the Department of Labor does. Thursdays in this table: 2026-01-01, 2026-11-26, 2027-11-11, 2027-11-25. 2028-01-01 falls on a Saturday; OPM's 2027 table does not list its Friday 2027-12-31 observance, so it is left out.",
+  "source": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/ (2026 and 2027 Holiday Schedule tables)",
+  "verified": "2026-11-20",
+  "dates": [
+   "2026-01-01",
+   "2026-01-19",
+   "2026-02-16",
+   "2026-05-25",
+   "2026-06-19",
+   "2026-07-03",
+   "2026-09-07",
+   "2026-10-12",
+   "2026-11-11",
+   "2026-11-26",
+   "2026-12-25",
+   "2027-01-01",
+   "2027-01-18",
+   "2027-02-15",
+   "2027-05-31",
+   "2027-06-18",
+   "2027-07-05",
+   "2027-09-06",
+   "2027-10-11",
+   "2027-11-11",
+   "2027-11-25",
+   "2027-12-24"
+  ]
  },
  "events": [
   {

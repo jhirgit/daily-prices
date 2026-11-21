@@ -11,7 +11,8 @@ against its release calendar, compute the fixed reads and views, write three pay
     data/macro_releases.json  the generated forward release calendar, each row with its source
 
 Sources (one small adapter each): FRED (keyless fredgraph.csv now; the keyed API when FRED_API_KEY is
-set -- same adapter), Treasury FiscalData, Eurostat, SDMX CSV (ECB, BIS, OECD), the Cleveland Fed
+set -- same adapter; with the key the release calendar also takes FRED's fred/release/dates for every
+release whose catalogue entry names a fred_release id), the Bank of England database CSV, Treasury FiscalData, Eurostat, SDMX CSV (ECB, BIS, OECD), the Cleveland Fed
 nowcast JSON, Atlanta Fed workbooks, the Census C30 workbook, the repo's own price database, and the
 CBOT fed funds futures strip through yfinance (contract months generated from the date; never the
 generic ZQ=F, which pointed at January 2027 on 2026-11-20).
@@ -414,11 +415,12 @@ def a_fred(e, ctx):
         v = ctx.fred.get(e["source_id"].upper())
     if isinstance(v, Exception):
         raise v
+    sc = e.get("scale", 1.0)          # e.g. WRESBAL comes in millions; the catalogue shows it in billions
     out = []
     for d, x in v:
         p = period_of(d, e["freq"])
         if p:
-            out.append((p, x))
+            out.append((p, None if x is None else x * sc))
     if not any(x is not None for _, x in out):
         raise SourceError("FRED series %s answered with no values" % e["source_id"])
     return out
@@ -609,8 +611,40 @@ def a_pricedb(e, ctx):
     return rows
 
 
+# ---------------- Bank of England database CSV ------------------------------------------------------------
+
+def boe_url(code, start):
+    return ("https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=%s&Dateto=now"
+            "&SeriesCodes=%s&CSVF=TN&UsingCodes=Y&VPD=Y&VFD=N" % (start.strftime("%d/%b/%Y"), code))
+
+
+def a_boe(e, ctx):
+    """Keyless Bank of England database CSV: 'DATE,<code>' then rows like '05 Nov 2026,4'."""
+    code = e["source_id"]
+    t = ctx.http.get(boe_url(code, fetch_start(e, ctx.today))).decode("utf-8-sig", "replace")
+    rows = list(csv.reader(io.StringIO(t)))
+    hdr = [h.strip().upper() for h in rows[0]] if rows else []
+    if len(hdr) < 2 or hdr[0] != "DATE" or hdr[1] != code.upper():
+        raise SourceError("Bank of England CSV header is %r, not DATE,%s (the format changed or an error page came back)" % (hdr[:2], code))
+    out = {}
+    for r in rows[1:]:
+        if len(r) < 2:
+            continue
+        try:
+            d = dt.datetime.strptime(r[0].strip(), "%d %b %Y").date().isoformat()
+        except ValueError:
+            continue
+        p = period_of(d, e["freq"])
+        if p:
+            out[p] = _num(r[1])
+    if not any(v is not None for v in out.values()):
+        raise SourceError("Bank of England CSV carried no dated values for %s" % code)
+    return sorted(out.items())
+
+
 ADAPTERS = {"fred": a_fred, "fiscaldata": a_fiscaldata, "eurostat_json": a_eurostat, "sdmx_csv": a_sdmx_csv,
-            "clevelandfed_json": a_cleveland, "atlantafed_xlsx": a_atlanta, "census_xlsx": a_census, "pricedb": a_pricedb}
+            "clevelandfed_json": a_cleveland, "atlantafed_xlsx": a_atlanta, "census_xlsx": a_census, "pricedb": a_pricedb,
+            "boe_csv": a_boe}
 
 
 # ---------------- fed funds futures strip ----------------------------------------------------------------
@@ -670,10 +704,51 @@ def fed_path(today, quote=None, log=print, attempts=ATTEMPTS, pause=1.0):
 # release calendar
 # =====================================================================================
 
-def build_calendar(cat, http, today, fixed_path=FIXED_CAL):
-    """-> (events sorted by date, sources status). Events: date, time_et, release, name, ref, source, verified."""
+def prior_business_day(d, holidays):
+    d -= dt.timedelta(days=1)
+    while d.weekday() >= 5 or d.isoformat() in holidays:
+        d -= dt.timedelta(days=1)
+    return d
+
+
+def fred_release_dates(rel, http, today, key):
+    """Keyed FRED: fred/release/dates for each catalogue release that names its FRED release id (fred_release).
+    include_release_dates_with_no_data=true is what makes FRED list future dates. -> (events, list of failures)."""
+    events, bad = [], []
+    lo = (today - dt.timedelta(days=400)).isoformat()
+    for k, r in rel.items():
+        rid = r.get("fred_release")
+        if not rid:
+            continue
+        url = ("https://api.stlouisfed.org/fred/release/dates?release_id=%d&api_key=%s&file_type=json&realtime_start=%s"
+               "&realtime_end=9999-12-31&include_release_dates_with_no_data=true&sort_order=asc&limit=1000" % (int(rid), key, lo))
+        try:
+            try:
+                j = json.loads(http.get(url))
+            except ValueError:
+                raise SourceError("FRED API answer is not JSON")
+            rows = j.get("release_dates") if isinstance(j, dict) else None
+            if not isinstance(rows, list):
+                raise SourceError("FRED API answer has no 'release_dates' (%s)" % str((j or {}).get("error_message", ""))[:120])
+        except SourceError as ex:
+            bad.append("%s (release %s): %s" % (k, rid, str(ex).replace(key, "***")[:160]))
+            continue
+        for x in rows:
+            d = str(x.get("date") or "")
+            if re.match(r"^\d{4}-\d{2}-\d{2}$", d):
+                events.append({"date": d, "time_et": r.get("time_et"), "release": k, "name": r["name"],
+                               "source": "FRED API fred/release/dates (release_id %s)" % rid, "verified": today.isoformat()})
+    return events, bad
+
+
+def build_calendar(cat, http, today, fixed_path=FIXED_CAL, keys=None):
+    """-> (events sorted by date, sources status). Events: date, time_et, release, name, ref, source, verified.
+    keys: {"FRED_API_KEY": ...}; with a FRED key, FRED's release dates fill the BLS, Census, claims and Fed releases the
+    hand-kept file lacks (never read from the environment here: build() passes the job's keys)."""
     events, sources = [], {}
     rel = cat["releases"]
+    keys = keys or {}
+    holidays = set()
     # BEA (keyless JSON schedule)
     bea_names = {r["calendar"][4:]: k for k, r in rel.items() if (r.get("calendar") or "").startswith("bea:")}
     try:
@@ -713,6 +788,7 @@ def build_calendar(cat, http, today, fixed_path=FIXED_CAL):
             fx = json.load(fh)
         for r in fx["events"]:
             events.append(dict(r, name=(rel.get(r["release"]) or {}).get("name") or r.get("ref")))
+        holidays = set((fx.get("federal_holidays") or {}).get("dates") or [])
         cov = fx.get("coverage") or {}
         soon = sorted(k for k, v in cov.items() if v and (dt.date.fromisoformat(v) - today).days < 60)
         sources["fixed"] = {"status": "ok", "coverage": cov,
@@ -722,14 +798,39 @@ def build_calendar(cat, http, today, fixed_path=FIXED_CAL):
             sources["fixed"]["status"] = "warn"
     except (OSError, ValueError, KeyError) as ex:
         sources["fixed"] = {"status": "error", "reason": "macro_calendar_fixed.json unreadable (%s)" % type(ex).__name__}
-    # weekly claims: every Thursday (holiday shifts not applied)
+    # keyed FRED release dates: added only where the rows above do not already carry that release on that date
+    from_fred = set()
+    if keys.get("FRED_API_KEY"):
+        fe, bad = fred_release_dates(rel, http, today, keys["FRED_API_KEY"])
+        have = {(x["release"], x["date"]) for x in events}
+        times = {}                                   # FRED gives no time of day: borrow the hand-kept rows' time
+        for x in events:
+            if x.get("time_et"):
+                times.setdefault(x["release"], x["time_et"])
+        for x in fe:
+            if not x.get("time_et"):
+                x["time_et"] = times.get(x["release"])
+            if (x["release"], x["date"]) not in have:
+                events.append(x)
+                have.add((x["release"], x["date"]))
+            from_fred.add(x["release"])
+        sources["fred"] = {"status": "error" if (bad and not fe) else ("warn" if bad else "ok"),
+                           "reason": ("; ".join(bad)[:400]) if bad else None}
+    # weekly claims: every Thursday; when Thursday is a federal holiday the Department of Labor releases on the prior
+    # business day (Thanksgiving 2026-11-26 -> Wednesday 2026-11-25). Holidays: macro_calendar_fixed.json federal_holidays.
     for k, r in rel.items():
-        if (r.get("calendar") or "") == "weekly:Thu":
+        if (r.get("calendar") or "") == "weekly:Thu" and k not in from_fred:
             d = today - dt.timedelta(days=28)
             while d <= today + dt.timedelta(days=56):
                 if d.weekday() == 3:
-                    events.append({"date": d.isoformat(), "time_et": "08:30", "release": k, "name": r["name"],
-                                   "source": "rule: every Thursday (holiday shifts are not applied)", "verified": None})
+                    ev = {"date": d.isoformat(), "time_et": "08:30", "release": k, "name": r["name"],
+                          "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
+                          "verified": None}
+                    if d.isoformat() in holidays:
+                        ev["date"] = prior_business_day(d, holidays).isoformat()
+                        ev["note"] = ("moved from Thursday %s (a federal holiday on the OPM schedule) by the Department of "
+                                      "Labor's practice; the moved date is not confirmed against a DOL notice" % d.isoformat())
+                    events.append(ev)
                 d += dt.timedelta(days=1)
     events.sort(key=lambda x: (x["date"], x["release"]))
     return events, sources
@@ -874,7 +975,7 @@ def judge(e, asof, today, rel, dates, grace_days=1):
                 limit -= dt.timedelta(days=1)
             missed = [d for d in ds if d > nxt_end + dt.timedelta(days=lag) and d <= limit]
             if missed:
-                return ("stale", "the %s release of %s should have carried %s; the latest here is %s"
+                return ("stale", "the %s release of %s was due to carry %s; the latest here is %s"
                         % (rel.get("name") or e["release"], missed[0].isoformat(), period_shift(asof, 1), asof),
                         released, nxt.isoformat(), "calendar")
             return "ok", None, released, nxt.isoformat(), "calendar"
@@ -990,7 +1091,7 @@ def build(cat, http, today, db=None, out_dir=DATA, only=None, quote=None, log=pr
     prev_hist = _read_json(os.path.join(out_dir, "macro_history.json")) or {}
     first_prev = prev_hist.get("first") or {}
 
-    events, cal_sources = build_calendar(cat, http, today, fixed_path)
+    events, cal_sources = build_calendar(cat, http, today, fixed_path, keys=ctx.keys)
     dates = release_dates(events)
 
     entries = [e for e in cat["series"] if e["store"] is True and (not only or e["source"] in only)]

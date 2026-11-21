@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T05:43:27Z",
+ "generated_at": "2026-11-21T06:18:44Z",
  "asof": "2026-11-21",
  "note": "Release dates, generated each night. Each row carries its source and the date it was verified; rows from macro_calendar_fixed.json are hand-verified.",
  "sources": {
@@ -18,7 +18,8 @@
     "census_through": "2027-02-25",
     "fomc_through": "2027-11-17",
     "ecb_through": "2027-12-16",
-    "boe_through": "2027-12-16"
+    "boe_through": "2027-12-16",
+    "holidays_through": "2027-12-31"
    },
    "reason": null
   }
@@ -144,7 +145,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -160,7 +161,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -186,7 +187,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -194,7 +195,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -214,19 +215,20 @@
    "verified": "2026-11-21"
   },
   {
-   "date": "2026-11-26",
+   "date": "2026-11-25",
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
-   "verified": null
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
+   "verified": null,
+   "note": "moved from Thursday 2026-11-26 (a federal holiday on the OPM schedule) by the Department of Labor's practice; the moved date is not confirmed against a DOL notice"
   },
   {
    "date": "2026-12-03",
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -280,7 +282,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -305,7 +307,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -338,7 +340,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -346,7 +348,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -389,7 +391,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {
@@ -433,7 +435,7 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday (holiday shifts are not applied)",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
    "verified": null
   },
   {

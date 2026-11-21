@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-11-21T05:43:27Z",
+ "generated_at": "2026-11-21T06:18:44Z",
  "asof": "2026-11-21",
  "status": "ok",
  "counts": {
-  "ok": 146
+  "ok": 149
  },
  "degraded": [],
  "not_published": {
@@ -29,9 +29,9 @@
   "energy": "Energy"
  },
  "meta": {
-  "requests": 35,
-  "bytes": 12075936,
-  "seconds": 43.2,
+  "requests": 36,
+  "bytes": 12126966,
+  "seconds": 49.1,
   "by_host": {
    "api.fiscaldata.treasury.gov": {
     "requests": 5,
@@ -51,7 +51,7 @@
    },
    "fred.stlouisfed.org": {
     "requests": 10,
-    "bytes": 677819
+    "bytes": 715379
    },
    "sdmx.oecd.org": {
     "requests": 3,
@@ -64,6 +64,10 @@
    "www.atlantafed.org": {
     "requests": 2,
     "bytes": 643211
+   },
+   "www.bankofengland.co.uk": {
+    "requests": 1,
+    "bytes": 13470
    },
    "www.census.gov": {
     "requests": 1,
@@ -1607,7 +1611,7 @@
     "chg_13w": -1.932
    },
    "released": null,
-   "next_release": "2026-11-26",
+   "next_release": "2026-11-25",
    "status": "ok",
    "reason": null,
    "judged_by": "days",
@@ -1637,7 +1641,7 @@
     "chg_13w": -3.182
    },
    "released": null,
-   "next_release": "2026-11-26",
+   "next_release": "2026-11-25",
    "status": "ok",
    "reason": null,
    "judged_by": "days",
@@ -1667,7 +1671,7 @@
     "chg_13w": -1.837
    },
    "released": null,
-   "next_release": "2026-11-26",
+   "next_release": "2026-11-25",
    "status": "ok",
    "reason": null,
    "judged_by": "days",
@@ -3846,15 +3850,15 @@
    "source_id": "WRESBAL",
    "release": "fed_h41",
    "asof": "2026-11-18",
-   "value": 2979656.0,
-   "prior": 2960603.0,
+   "value": 2979.656,
+   "prior": 2960.603,
    "prior_asof": "2026-11-11",
-   "change": 19053.0,
+   "change": 19.053,
    "change_unit": "billions of dollars",
    "yoy": 4.365,
    "yoy_unit": "%",
    "extra": {
-    "chg_13w": 44369.0
+    "chg_13w": 44.369
    },
    "released": null,
    "next_release": null,
@@ -3954,6 +3958,36 @@
    "priority": "useful",
    "licence": "US federal government work: public domain"
   },
+  "dgs1": {
+   "id": "dgs1",
+   "name": "1-year Treasury yield",
+   "what": "Constant-maturity 1-year Treasury yield; with the 2- and 10-year it lets forward rates be computed exactly.",
+   "group": "fed",
+   "unit": "percent",
+   "freq": "D",
+   "kind": "rate",
+   "source": "fred",
+   "source_id": "DGS1",
+   "release": "fed_h15",
+   "asof": "2026-11-19",
+   "value": 4.62,
+   "prior": 4.62,
+   "prior_asof": "2026-11-18",
+   "change": 0.0,
+   "change_unit": "pp",
+   "yoy": 0.94,
+   "yoy_unit": "pp",
+   "extra": {
+    "chg_63": 0.62
+   },
+   "released": null,
+   "next_release": null,
+   "status": "ok",
+   "reason": null,
+   "judged_by": "days",
+   "priority": "useful",
+   "licence": "US federal government work: public domain"
+  },
   "dgs2": {
    "id": "dgs2",
    "name": "2-year Treasury yield",
@@ -3982,6 +4016,36 @@
    "reason": null,
    "judged_by": "days",
    "priority": "core",
+   "licence": "US federal government work: public domain"
+  },
+  "dgs3": {
+   "id": "dgs3",
+   "name": "3-year Treasury yield",
+   "what": "Constant-maturity 3-year Treasury yield; with the 2- and 10-year it lets forward rates be computed exactly.",
+   "group": "fed",
+   "unit": "percent",
+   "freq": "D",
+   "kind": "rate",
+   "source": "fred",
+   "source_id": "DGS3",
+   "release": "fed_h15",
+   "asof": "2026-11-19",
+   "value": 4.81,
+   "prior": 4.84,
+   "prior_asof": "2026-11-18",
+   "change": -0.03,
+   "change_unit": "pp",
+   "yoy": 1.22,
+   "yoy_unit": "pp",
+   "extra": {
+    "chg_63": 0.56
+   },
+   "released": null,
+   "next_release": null,
+   "status": "ok",
+   "reason": null,
+   "judged_by": "days",
+   "priority": "useful",
    "licence": "US federal government work: public domain"
   },
   "dgs10": {
@@ -4222,7 +4286,7 @@
   "dexuseu": {
    "id": "dexuseu",
    "name": "Euro in dollars",
-   "what": "US dollars per euro, noon buying rate.",
+   "what": "US dollars per euro, the rate certified by the New York Fed at noon.",
    "group": "dollar",
    "unit": "dollars per euro",
    "freq": "D",
@@ -5041,6 +5105,36 @@
    "judged_by": "days",
    "priority": "core",
    "licence": "ECB: free reuse with source attribution"
+  },
+  "boe_bank_rate": {
+   "id": "boe_bank_rate",
+   "name": "Bank of England Bank Rate",
+   "what": "The official rate the Bank of England pays on reserves; its main policy rate.",
+   "group": "europe",
+   "unit": "percent",
+   "freq": "D",
+   "kind": "rate",
+   "source": "boe_csv",
+   "source_id": "IUDBEDR",
+   "release": "boe_mpc",
+   "asof": "2026-11-19",
+   "value": 4.0,
+   "prior": 4.0,
+   "prior_asof": "2026-11-18",
+   "change": 0.0,
+   "change_unit": "pp",
+   "yoy": 0.0,
+   "yoy_unit": "pp",
+   "extra": {
+    "chg_63": 0.25
+   },
+   "released": null,
+   "next_release": "2026-12-17",
+   "status": "ok",
+   "reason": null,
+   "judged_by": "days",
+   "priority": "useful",
+   "licence": "Bank of England Database: free reuse with source attribution"
   },
   "estr": {
    "id": "estr",

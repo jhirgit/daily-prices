@@ -32,49 +32,58 @@
    "publisher": "BLS",
    "calendar": "fixed",
    "min_lag_days": 0,
-   "url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+   "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+   "fred_release": 50
   },
   "bls_cpi": {
    "name": "Consumer Price Index",
    "publisher": "BLS",
    "calendar": "fixed",
    "min_lag_days": 3,
-   "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+   "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+   "fred_release": 10
   },
   "bls_jolts": {
    "name": "Job Openings and Labor Turnover Survey",
    "publisher": "BLS",
    "calendar": "fixed",
-   "min_lag_days": 20
+   "min_lag_days": 20,
+   "fred_release": 192
   },
   "bls_ppi": {
    "name": "Producer Price Index",
    "publisher": "BLS",
    "calendar": "fixed",
-   "min_lag_days": 3
+   "min_lag_days": 3,
+   "fred_release": 46
   },
   "bls_mxp": {
    "name": "Import and Export Price Indexes",
    "publisher": "BLS",
    "calendar": "fixed",
-   "min_lag_days": 3
+   "min_lag_days": 3,
+   "fred_release": 188
   },
   "bls_eci": {
    "name": "Employment Cost Index",
    "publisher": "BLS",
    "calendar": "fixed",
-   "min_lag_days": 15
+   "min_lag_days": 15,
+   "fred_release": 11
   },
   "bls_productivity": {
    "name": "Productivity and Costs",
    "publisher": "BLS",
    "calendar": "fixed",
-   "min_lag_days": 15
+   "min_lag_days": 15,
+   "fred_release": 47
   },
   "dol_claims": {
    "name": "Unemployment Insurance Weekly Claims",
    "publisher": "Department of Labor",
-   "calendar": "weekly:Thu"
+   "calendar": "weekly:Thu",
+   "fred_release": 180,
+   "time_et": "08:30"
   },
   "bea_pio": {
    "name": "Personal Income and Outlays",
@@ -98,19 +107,22 @@
    "name": "Construction Spending",
    "publisher": "Census",
    "calendar": "fixed",
-   "min_lag_days": 15
+   "min_lag_days": 15,
+   "fred_release": 229
   },
   "census_m3": {
    "name": "Advance Report on Durable Goods",
    "publisher": "Census",
    "calendar": "fixed",
-   "min_lag_days": 15
+   "min_lag_days": 15,
+   "fred_release": 95
   },
   "census_bfs": {
    "name": "Business Formation Statistics",
    "publisher": "Census",
    "calendar": "fixed",
-   "min_lag_days": 3
+   "min_lag_days": 3,
+   "fred_release": 443
   },
   "treasury_mts": {
    "name": "Monthly Treasury Statement",
@@ -152,17 +164,20 @@
   "fed_sloos": {
    "name": "fed_sloos",
    "publisher": null,
-   "calendar": null
+   "calendar": null,
+   "fred_release": 191
   },
   "fed_h8": {
    "name": "fed_h8",
    "publisher": null,
-   "calendar": null
+   "calendar": null,
+   "fred_release": 22
   },
   "fed_g17": {
    "name": "fed_g17",
    "publisher": null,
-   "calendar": null
+   "calendar": null,
+   "fred_release": 13
   },
   "fed_h15": {
    "name": "fed_h15",
@@ -177,7 +192,8 @@
   "fed_h41": {
    "name": "fed_h41",
    "publisher": null,
-   "calendar": null
+   "calendar": null,
+   "fred_release": 20
   },
   "fed_kw": {
    "name": "fed_kw",
@@ -2182,7 +2198,7 @@
    "source_id": "WRESBAL",
    "name": "Bank reserves at the Fed",
    "what": "Balances banks keep at Federal Reserve Banks (billions).",
-   "unit": "billions of dollars",
+   "unit": "millions of dollars",
    "freq": "W",
    "kind": "level",
    "release": "fed_h41",
@@ -2191,7 +2207,9 @@
    "priority": "core",
    "licence": "US federal government work: public domain",
    "revised": false,
-   "stale_after_days": 12
+   "stale_after_days": 12,
+   "unit_out": "billions of dollars",
+   "scale": 0.001
   },
   {
    "id": "rrpontsyd",
@@ -2246,6 +2264,23 @@
    "stale_after_days": 6
   },
   {
+   "id": "dgs1",
+   "source": "fred",
+   "source_id": "DGS1",
+   "name": "1-year Treasury yield",
+   "what": "Constant-maturity 1-year Treasury yield; with the 2- and 10-year it lets forward rates be computed exactly.",
+   "unit": "percent",
+   "freq": "D",
+   "kind": "rate",
+   "release": "fed_h15",
+   "group": "fed",
+   "store": true,
+   "priority": "useful",
+   "licence": "US federal government work: public domain",
+   "revised": false,
+   "stale_after_days": 6
+  },
+  {
    "id": "dgs2",
    "source": "fred",
    "source_id": "DGS2",
@@ -2258,6 +2293,23 @@
    "group": "fed",
    "store": true,
    "priority": "core",
+   "licence": "US federal government work: public domain",
+   "revised": false,
+   "stale_after_days": 6
+  },
+  {
+   "id": "dgs3",
+   "source": "fred",
+   "source_id": "DGS3",
+   "name": "3-year Treasury yield",
+   "what": "Constant-maturity 3-year Treasury yield; with the 2- and 10-year it lets forward rates be computed exactly.",
+   "unit": "percent",
+   "freq": "D",
+   "kind": "rate",
+   "release": "fed_h15",
+   "group": "fed",
+   "store": true,
+   "priority": "useful",
    "licence": "US federal government work: public domain",
    "revised": false,
    "stale_after_days": 6
@@ -2413,7 +2465,7 @@
    "source": "fred",
    "source_id": "DEXUSEU",
    "name": "Euro in dollars",
-   "what": "US dollars per euro, noon buying rate.",
+   "what": "US dollars per euro, the rate certified by the New York Fed at noon.",
    "unit": "dollars per euro",
    "freq": "D",
    "kind": "index",
@@ -2911,6 +2963,23 @@
    "revised": false,
    "stale_after_days": 10,
    "url": "https://data-api.ecb.europa.eu/service/data/FM/D.U2.EUR.4F.KR.DFR.LEV?format=csvdata&startPeriod={start_day}"
+  },
+  {
+   "id": "boe_bank_rate",
+   "source": "boe_csv",
+   "source_id": "IUDBEDR",
+   "name": "Bank of England Bank Rate",
+   "what": "The official rate the Bank of England pays on reserves; its main policy rate.",
+   "unit": "percent",
+   "freq": "D",
+   "kind": "rate",
+   "release": "boe_mpc",
+   "group": "europe",
+   "store": true,
+   "priority": "useful",
+   "licence": "Bank of England Database: free reuse with source attribution",
+   "revised": false,
+   "stale_after_days": 10
   },
   {
    "id": "estr",
