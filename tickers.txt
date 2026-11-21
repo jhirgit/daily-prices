@@ -380,6 +380,10 @@ AGG        # US aggregate bond index (iShares) — the bond benchmark
 MBB        # Agency MBS (iShares)
 BKLN       # Senior/leveraged loans (Invesco) — floating-rate credit
 MUB        # National munis (iShares)
+CMF        # California munis (iShares) - state muni comparison, added 11/20/26
+PWZ        # California munis, long (Invesco)
+PZA        # National munis, long (Invesco)
+HYMB       # High-yield munis (SPDR Nuveen)
 BNDX       # International IG, USD-hedged (Vanguard)
 EMB        # EM sovereign USD (iShares)
 # TLT, IEF, HYG and LQD are already listed under Macro / benchmarks above.
