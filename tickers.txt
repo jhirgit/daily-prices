@@ -288,7 +288,7 @@ DLR        # Digital Realty (data-center REIT; valuation peer for EQIX, added 11
 # --- Broad / thematic / crypto ETFs ---
 SPY        # S&P 500
 QQQ        # Nasdaq 100
-QQQM       # Nasdaq 100 (Invesco mini) - a held sleeve; needs its own marks
+QQQM       # Nasdaq 100 (Invesco mini) - tracks the same index as QQQ at a lower fee
 IWM        # Russell 2000
 SMH        # semiconductors
 SOXX       # semiconductors (iShares)

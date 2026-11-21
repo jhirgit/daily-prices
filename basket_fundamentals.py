@@ -80,6 +80,7 @@ STORE_PATH = os.path.join(DATA, "basket_companies.json")
 LAST_PATH = os.path.join(DATA, "cache", "rotation_last_closes.json")
 OUT_PATH = os.path.join(DATA, "rotation_fundamentals.json")
 DB_PATH = os.path.join(HERE, "prices.db")
+EXTRA_PATH = os.path.join(HERE, "extra_funds.json")   # funds that are not ladder rows (extra_rows)
 
 COVER_MIN = 0.70            # a composite is shown only above this share of the row's weight
 STALE_DAYS = 200            # a company whose TTM ends longer ago is uncovered (annual 20-F/40-F filers)
@@ -424,8 +425,37 @@ def per_line(cos):
 # the run
 # ==========================================================================
 
+def read_extras(path=EXTRA_PATH, log=print):
+    """extra_funds.json -> {ticker: entry}. Each entry is {"same_book_as": <ladder row>} (a fund
+    tracking the same index as a ladder row: its composite IS that row's) or {"nport": true} (its
+    own latest SEC N-PORT book, which rotation_members.py lists weekly). Absent file -> {}; an
+    unreadable one is reported, never silently dropped."""
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, encoding="utf-8") as fh:
+            return (json.load(fh).get("funds")) or {}
+    except Exception as ex:
+        log(f"[warn] {os.path.basename(path)} unreadable ({type(ex).__name__}: {ex}); no extra funds tonight")
+        return {"__error__": f"{os.path.basename(path)} unreadable ({type(ex).__name__})"}
+
+
+def extra_plan(extras, rows_in, funds, syms):
+    """{ticker: (lines, src)} for the N-PORT extras that are not already ladder rows."""
+    plan = {}
+    for t, e in sorted((extras or {}).items()):
+        if t.startswith("__") or t in rows_in or not isinstance(e, dict) or not e.get("nport"):
+            continue
+        fund = funds.get(t)
+        if fund and fund.get("lines"):
+            plan[t] = vehicle_lines({"tier": "extra"}, fund, syms)
+        else:
+            plan[t] = ([], "no SEC N-PORT book cached yet for this fund (rotation_members.py lists it weekly)")
+    return plan
+
+
 def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetch=None,
-          budget_s=SEC_BUDGET_S, max_fetch=SEC_MAX, log=print, history=None):
+          budget_s=SEC_BUDGET_S, max_fetch=SEC_MAX, log=print, history=None, extras=None):
     """Pure given its inputs (``fetch`` = cik -> companyfacts dict, raising on
     failure; None = offline). Returns (payload, store, calls)."""
     cmap = (cik_map or {}).get("map") or {}
@@ -448,9 +478,11 @@ def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetc
     rows_in = (members or {}).get("rows") or {}
     plan = {}
     want = {}
-    for t, row in rows_in.items():
-        lines, src = vehicle_lines(row, funds.get(t), syms)
-        plan[t] = (lines, src)
+    xplan = extra_plan(extras, rows_in, funds, syms)
+    for t, row in list(rows_in.items()) + [(t, None) for t in xplan]:
+        lines, src = vehicle_lines(row, funds.get(t), syms) if row is not None else xplan[t]
+        if row is not None:
+            plan[t] = (lines, src)
         for ln in lines:
             s = ln.get("sym")
             if is_us_symbol(s) and cik_of(s) and price_of(s):
@@ -527,6 +559,31 @@ def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetc
             if t in hrows:
                 out["history"] = H.history_block(t, out.get("m"), hrows[t], hrows.get("SPY"), spy_m)
                 out["history"]["status"] = history.get("status")
+    # extra funds (extra_funds.json): not ladder rows, the same machinery, a separate key so
+    # every reader of `rows` sees exactly the ladder
+    extra_rows = {}
+    for t, e in sorted((extras or {}).items()):
+        if t.startswith("__") or t in rows:
+            continue
+        if isinstance(e, dict) and e.get("same_book_as"):
+            b = e["same_book_as"]
+            if b in rows:
+                out = json.loads(json.dumps(rows[b]))
+                out["lines_source"] = f"the same book as {b} (both track the same index): " + (rows[b].get("lines_source") or "")
+            else:
+                out = {"shown": False, "m": None, "why": f"not shown: its book, the ladder row {b}, has no composite tonight"}
+            out["same_book_as"] = b
+        elif t in xplan:
+            out, cos = row_composite(xplan[t][0], xplan[t][1], cik_of, company_of, price_of, fx_of, today)
+            out["per_line"] = per_line(cos)
+            if out.get("m") and spy_m:
+                out["vs_spy"] = {k: (_r(out["m"][k] / spy_m[k], 3) if (out["m"].get(k) and spy_m.get(k)) else None)
+                                 for k in ("pe", "ev_sales", "ev_ebit", "fcf_yield", "pb")}
+            out["history"] = {"n": 0, "why": "no own history: the back-fill covers ladder rows only"}
+        else:
+            out = {"shown": False, "m": None, "why": "extra_funds.json entry names neither same_book_as nor nport"}
+        out["extra"] = True
+        extra_rows[t] = out
     n_shown = sum(1 for r in rows.values() if r.get("shown"))
     fresh = sum(1 for c in comps.values() if c.get("end") and _days(c["end"], today) <= STALE_DAYS)
     status = "ok"
@@ -542,6 +599,8 @@ def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetc
         errors.append(f"SEC: {calls['sec_failed']} of {calls['sec']} companyfacts fetches failed")
     if calls["budget_left"]:
         errors.append(f"{calls['budget_left']} companies still wait for their first or next SEC fetch")
+    if (extras or {}).get("__error__"):
+        errors.append(extras["__error__"])
     payload = {
         "generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "asof": (members or {}).get("asof"),
@@ -553,6 +612,7 @@ def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetc
                   "fetched": calls["sec"], "failed": calls["sec_failed"], "waiting": calls["budget_left"]},
         "n_rows": len(rows), "n_shown": n_shown,
         "rows": rows,
+        "n_extra": len(extra_rows), "extra_rows": extra_rows,
     }
     return payload, store, calls
 
@@ -680,7 +740,8 @@ def main(argv=None):
     payload, store, calls = build(members, _load(args.deep, {}), _load(CIK_PATH, {}), store, fund_names,
                                   _load(args.last, {}), db_closer(args.db), today, fetch=fetch,
                                   budget_s=args.budget,
-                                  history=_load(os.path.join(DATA, "rotation_fundamentals_history.json"), {}))
+                                  history=_load(os.path.join(DATA, "rotation_fundamentals_history.json"), {}),
+                                  extras=read_extras())
     payload["calls"] = calls
     payload["run_s"] = round(time.time() - t0, 1)
     if calls["sec"] and not args.offline:

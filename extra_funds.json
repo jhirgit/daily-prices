@@ -1,0 +1,12 @@
+{
+  "what": "Funds that are not rows of the sector ladder but get a look-through SEC composite from basket_fundamentals.py (payload key extra_rows of data/rotation_fundamentals.json). same_book_as: the fund tracks the same index as that ladder row, so its composite is that row's. nport: the composite is built from the fund's own latest SEC N-PORT book, which rotation_members.py lists weekly beside the top-10 rows. Add a fund by adding a line; nothing else is needed.",
+  "funds": {
+    "QQQM": { "same_book_as": "QQQ" },
+    "IVV":  { "same_book_as": "SPY" },
+    "VOO":  { "same_book_as": "SPY" },
+    "KXI":  { "nport": true },
+    "VGT":  { "nport": true },
+    "VIG":  { "nport": true },
+    "SCHD": { "nport": true }
+  }
+}

@@ -934,6 +934,14 @@ def _cut_short(entry):
     return DEEP_STORE is None and bool(((entry or {}).get("tail") or {}).get("n"))
 
 
+def extra_nport(extras, already):
+    """The `nport` funds of extra_funds.json (basket_fundamentals.read_extras) that are not
+    already on the N-PORT list, sorted: they are listed and downloaded exactly like a top-10
+    row's fund, so basket_fundamentals.py can build their composite from the cached book."""
+    return sorted(t for t, e in (extras or {}).items()
+                  if not t.startswith("__") and isinstance(e, dict) and e.get("nport") and t not in already)
+
+
 def refresh_deep(tickers, cache, today, get, search=None, log=print,
                  search_budget_s=SEARCH_BUDGET_S, quarterly=SELECT_INDUSTRY):
     """Bring the N-PORT cache up to date for ``tickers``.
@@ -2460,6 +2468,10 @@ def main(argv=None):
     deep_rows = [e["t"] for e in regime.REG_ETFS
                  if not e.get("basket") and e["t"] not in TRUSTS and e["t"] not in SSGA_FUNDS]
     deep_rows += [e["t"] for e in regime.REG_ETFS if e["t"] in SELECT_INDUSTRY]
+    # funds that are not ladder rows but want a look-through composite (extra_funds.json,
+    # read by basket_fundamentals.py): their N-PORT book rides the same weekly listing
+    import basket_fundamentals
+    deep_rows += extra_nport(basket_fundamentals.read_extras(), deep_rows)
     deep = load_deep(args.deep)
     dcalls = {"edgar": 0, "search": 0}
     try:
