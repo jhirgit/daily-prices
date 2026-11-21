@@ -45,6 +45,7 @@ import csv
 import datetime as dt
 import gzip
 import io
+import http.client
 import json
 import math
 import os
@@ -110,6 +111,11 @@ class Http:
         except SourceError as e:
             self.cache[url] = e
             raise
+        except (ValueError, http.client.HTTPException) as e:
+            # e.g. http.client.InvalidURL for a control character in the URL: the request was never made
+            e2 = SourceError("the request could not be made (%s): check the URL or the key" % type(e).__name__)
+            self.cache[url] = e2
+            raise e2
         self.cache[url] = body
         return body
 
@@ -363,6 +369,10 @@ class Ctx:
         self.http, self.today, self.db, self.log = http, today, db, log
         self.keys = keys if keys is not None else {k: os.environ.get(k) for k in
                                                      ("FRED_API_KEY", "BLS_API_KEY", "BEA_API_KEY", "CENSUS_API_KEY")}
+        # A secret pasted or piped into place can carry a trailing space or newline; a URL built from it
+        # is then refused before any request is made (2026-11-21). Keep printable non-space characters only.
+        self.keys = {k: ("".join(c for c in v if c.isprintable() and not c.isspace()) or None) if isinstance(v, str) else v
+                     for k, v in self.keys.items()}
         self.fred = {}          # ID -> obs or SourceError
         self.price_cache = {}
 
