@@ -1422,7 +1422,7 @@
   "unrate": {
    "id": "unrate",
    "name": "Unemployment rate",
-   "what": "Share of the labour force without a job and looking for one (U-3).",
+   "what": "The unemployment rate (U-3): people without a job who looked for one in the past four weeks, as a percent of the labour force, seasonally adjusted, from the BLS household survey in the monthly Employment Situation. It is one half of the Fed's mandate. A rise of half a point or more from its recent low (the Sahm gap) has marked the start of past recessions.",
    "group": "labour",
    "unit": "percent",
    "freq": "M",
@@ -1711,7 +1711,7 @@
   "jtsqur": {
    "id": "jtsqur",
    "name": "Quits rate",
-   "what": "Share of workers who quit in the month; a gauge of worker confidence and wage pressure.",
+   "what": "The quits rate: workers who left their jobs voluntarily during the month, as a percent of total employment, seasonally adjusted, from the BLS Job Openings and Labor Turnover Survey (JOLTS). People quit when they are confident of finding another job, often at higher pay, so a high rate signals a tight labour market and wage pressure; a falling rate signals cooling.",
    "group": "labour",
    "unit": "percent",
    "freq": "M",
@@ -1865,7 +1865,7 @@
   "eciwag": {
    "id": "eciwag",
    "name": "Employment Cost Index, wages and salaries",
-   "what": "Wage cost per hour with the mix of jobs kept fixed, so a shift between high- and low-paid jobs does not move it.",
+   "what": "The Employment Cost Index for wages and salaries of private industry workers, quarterly, seasonally adjusted (index, December 2005 = 100), BLS. It prices the same mix of jobs each quarter, so a shift between high- and low-paid work does not move it, which makes it the cleanest measure of wage growth. Wage growth of about 3.5% a year is roughly what 2% inflation and productivity growth near 1.5% allow.",
    "group": "labour",
    "unit": "index",
    "freq": "Q",
@@ -2529,7 +2529,7 @@
   "customs_net": {
    "id": "customs_net",
    "name": "Customs duties, net",
-   "what": "Customs duties kept in the month: gross minus refunds.",
+   "what": "Customs duties the US Treasury collected in the month minus duties paid back to importers, from the Monthly Treasury Statement (Treasury Fiscal Data), in dollars. It measures how much tariff revenue is actually being taken in, and so how large a cost tariffs place on importers and, through them, on prices. A falling 12-month total means tariffs are adding less to costs.",
    "group": "government",
    "unit": "millions of dollars",
    "freq": "M",
@@ -2591,7 +2591,7 @@
   "tga": {
    "id": "tga",
    "name": "Treasury cash at the Fed (TGA)",
-   "what": "The Treasury's cash balance at the Federal Reserve, start of day; a rising balance drains bank reserves.",
+   "what": "The cash the US Treasury keeps at the Federal Reserve to pay its bills (the TGA), opening balance each business day, from the Daily Treasury Statement on Treasury Fiscal Data, shown in billions of dollars. When it rises, for example after tax dates or heavy debt issuance, money moves out of bank reserves; when it falls, reserves rise. Swings of a few hundred billion dollars can move funding rates.",
    "group": "fed",
    "unit": "millions of dollars",
    "freq": "D",
@@ -2883,7 +2883,7 @@
   "cpiaucsl": {
    "id": "cpiaucsl",
    "name": "Consumer prices (CPI)",
-   "what": "Consumer price index, all items, seasonally adjusted.",
+   "what": "The consumer price index for all urban consumers (CPI-U): the cost of a fixed basket of goods and services that households in US cities pay for, seasonally adjusted (index, 1982-84 = 100), published monthly by the Bureau of Labor Statistics (BLS). It is the headline US inflation figure. The Fed's 2% goal is set on PCE prices instead, which usually run a few tenths of a point below CPI because they weight the basket differently and cover more.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -2917,7 +2917,7 @@
   "cpilfesl": {
    "id": "cpilfesl",
    "name": "Core consumer prices",
-   "what": "CPI excluding food and energy.",
+   "what": "Core CPI: the consumer price index for all urban consumers excluding food and energy, seasonally adjusted, published monthly by BLS. Food and fuel prices swing with harvests and oil, so leaving them out gives a steadier read of the underlying trend that interest rates can influence. Read the 3-month pace at an annual rate for the recent trend and the year-over-year change for the level against the 2% goal.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -2951,7 +2951,7 @@
   "cusr0000sah1": {
    "id": "cusr0000sah1",
    "name": "Shelter prices",
-   "what": "CPI shelter: rent, owners' equivalent rent and lodging.",
+   "what": "CPI shelter: the cost of housing services, made up mainly of rent of a primary residence, owners' equivalent rent and lodging away from home, seasonally adjusted, BLS. It is about a third of the CPI basket and moves slowly, because each sampled home is priced only every six months and most leases reset once a year, so it trails market rents by about a year. A 3-month annual rate below the year-over-year rate means shelter inflation is slowing.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -2985,7 +2985,7 @@
   "cusr0000sehc": {
    "id": "cusr0000sehc",
    "name": "Owners' equivalent rent",
-   "what": "CPI estimate of what owners would pay to rent their own homes.",
+   "what": "Owners' equivalent rent of primary residence (OER): the CPI's estimate of what homeowners would pay to rent their own homes, worked out by BLS from the rents of comparable rented homes, seasonally adjusted. It is the largest single CPI item, about a quarter of the basket, and it tracks rents, not house prices or mortgage rates. Because it follows leases as they renew, it trails new-lease market rents by about a year.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -3019,7 +3019,7 @@
   "cusr0000sacl1e": {
    "id": "cusr0000sacl1e",
    "name": "Core goods prices",
-   "what": "CPI goods excluding food and energy; the channel tariffs pass through.",
+   "what": "CPI core goods (commodities less food and energy commodities): prices of physical goods other than food and fuel, such as cars, clothing, furniture and appliances, seasonally adjusted, BLS. Before 2020 these prices tended to drift down slowly. A rising rate points to tariffs or supply costs passing through to shoppers, and it is the first place a tariff increase shows up in consumer prices.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -3053,7 +3053,7 @@
   "cusr0000sasle": {
    "id": "cusr0000sasle",
    "name": "Core services prices",
-   "what": "CPI services excluding energy services.",
+   "what": "CPI core services (services less energy services): prices of services other than electricity and piped gas, such as rent, medical care, insurance, transport and recreation, seasonally adjusted, BLS. It is about 60% of the CPI basket and is driven largely by housing and labour costs, so it changes slowly. A high 3-month rate here is the main reason core inflation stays above the 2% goal.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -3087,7 +3087,7 @@
   "cusr0000sasl2rs": {
    "id": "cusr0000sasl2rs",
    "name": "Services prices excluding shelter",
-   "what": "CPI services less rent of shelter; the part most tied to wages.",
+   "what": "CPI services less rent of shelter: all CPI services other than rent, owners' equivalent rent and lodging, seasonally adjusted, BLS. It still includes energy services such as electricity, so it is close to, but not the same as, the core-services-excluding-housing measure Fed officials discuss. These prices depend most on wages, so a high rate here means labour costs are feeding inflation.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -3121,7 +3121,7 @@
   "pcepi": {
    "id": "pcepi",
    "name": "Consumer spending prices (PCE)",
-   "what": "Personal consumption expenditures price index.",
+   "what": "The price index for personal consumption expenditures (PCE): prices of everything households consume, including spending made on their behalf such as employer-paid health insurance (index, 2017 = 100, seasonally adjusted). Published monthly by the Bureau of Economic Analysis (BEA) in its Personal Income and Outlays release, about two weeks after CPI. Its change from a year earlier is the measure the Fed's 2% inflation goal is defined on.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -3152,7 +3152,7 @@
   "pcepilfe": {
    "id": "pcepilfe",
    "name": "Core PCE prices",
-   "what": "PCE price index excluding food and energy; the measure the Fed's 2% goal refers to.",
+   "what": "Core PCE prices: the PCE price index excluding food and energy, seasonally adjusted, published monthly by BEA. The Fed's 2% goal is defined on headline PCE, but the FOMC treats core PCE as the better guide to where inflation is heading and projects it in its Summary of Economic Projections. A year-over-year figure above 2% means underlying inflation is running above the goal.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -3183,7 +3183,7 @@
   "medcpim158sfrbcle": {
    "id": "medcpim158sfrbcle",
    "name": "Median CPI (Cleveland Fed)",
-   "what": "Price change of the middle CPI component each month, at an annual rate; resists outliers.",
+   "what": "Median CPI, from the Federal Reserve Bank of Cleveland: each month the CPI components are ranked by price change, and the change of the component in the middle of the spending-weighted ranking is taken, shown as a one-month change at an annual rate (seasonally adjusted). Because it ignores the largest rises and falls, it shows what the typical price is doing. Median CPI above headline means inflation is broad; below it means a few large movers are carrying the headline.",
    "group": "inflation",
    "unit": "percent, annual rate",
    "freq": "M",
@@ -3215,7 +3215,7 @@
   "trmmeancpim158sfrbcle": {
    "id": "trmmeancpim158sfrbcle",
    "name": "Trimmed-mean CPI (Cleveland Fed)",
-   "what": "CPI change with the 16% most extreme components removed, at an annual rate.",
+   "what": "The 16% trimmed-mean CPI, from the Federal Reserve Bank of Cleveland: the spending-weighted average of CPI component price changes after dropping the components in the top 8% and bottom 8% of the ranking, shown as a one-month change at an annual rate. Cutting both tails removes one-off swings, such as a jump in airfares, and leaves the underlying trend. Read it beside median CPI: both well below headline means outliers are driving the headline.",
    "group": "inflation",
    "unit": "percent, annual rate",
    "freq": "M",
@@ -3247,7 +3247,7 @@
   "pcetrim12m159sfrbdal": {
    "id": "pcetrim12m159sfrbdal",
    "name": "Trimmed-mean PCE (Dallas Fed)",
-   "what": "PCE inflation with the most extreme components removed, 12-month change.",
+   "what": "The trimmed-mean PCE inflation rate, from the Federal Reserve Bank of Dallas: each month the price changes of the individual PCE components are ranked, 24% of the spending weight is cut from the bottom and 31% from the top, and the rest is averaged by weight; this is the change over 12 months. It filters unusual price moves out of the PCE measure the Fed's goal is set on. A reading near 2% means underlying PCE inflation is close to the goal.",
    "group": "inflation",
    "unit": "percent",
    "freq": "M",
@@ -3278,7 +3278,7 @@
   "corestickm159sfrbatl": {
    "id": "corestickm159sfrbatl",
    "name": "Sticky-price core CPI (Atlanta Fed)",
-   "what": "Year-over-year change of core CPI items whose prices change slowly.",
+   "what": "Sticky-price core CPI, from the Federal Reserve Bank of Atlanta: the change from a year earlier in the core CPI items (excluding food and energy) whose prices are reset relatively rarely. Prices that change rarely tend to build in expected future inflation when they are set, so this measure moves slowly and shows the persistent part of inflation. Compare it with flexible-price CPI: sticky running above flexible means inflation is embedded rather than passing.",
    "group": "inflation",
    "unit": "percent",
    "freq": "M",
@@ -3310,7 +3310,7 @@
   "flexcpim159sfrbatl": {
    "id": "flexcpim159sfrbatl",
    "name": "Flexible-price CPI (Atlanta Fed)",
-   "what": "Year-over-year change of CPI items whose prices change often.",
+   "what": "Flexible-price CPI, from the Federal Reserve Bank of Atlanta: the change from a year earlier in the CPI items whose prices are reset often, food and energy included. These prices react quickly to demand, supply shocks and commodity prices, so the measure is volatile and shows current pressure rather than the lasting trend. Flexible running well above sticky points to a fast, possibly passing impulse such as an oil shock.",
    "group": "inflation",
    "unit": "percent",
    "freq": "M",
@@ -3342,7 +3342,7 @@
   "ppifis": {
    "id": "ppifis",
    "name": "Producer prices, final demand",
-   "what": "Prices received by domestic producers for goods, services and construction.",
+   "what": "The producer price index for final demand: prices domestic producers receive for goods, services and construction sold to final users, seasonally adjusted (index, November 2009 = 100), published monthly by BLS. It measures prices at the producer's gate, so it shows cost pressure before it reaches shops. Several of its parts, such as medical care and airfares, feed directly into the PCE price index.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -3373,7 +3373,7 @@
   "ir": {
    "id": "ir",
    "name": "Import prices",
-   "what": "Prices of imported goods, excluding duties (so tariffs paid do not show here).",
+   "what": "The import price index for all commodities: prices of goods brought into the US, measured by BLS in dollars before any duties are paid, not seasonally adjusted (index, 2000 = 100), monthly. Because duties are left out, a rise here means foreign sellers or a weaker dollar are raising prices. A flat reading while tariffs rise means the duty is being paid on the US side, by importers or their customers.",
    "group": "inflation",
    "unit": "index",
    "freq": "M",
@@ -3407,7 +3407,7 @@
   "t5yie": {
    "id": "t5yie",
    "name": "5-year breakeven inflation",
-   "what": "Inflation compensation priced in 5-year Treasuries: nominal yield minus TIPS yield.",
+   "what": "The 5-year breakeven inflation rate: the 5-year Treasury yield minus the 5-year Treasury inflation-protected (TIPS) yield, both at constant maturity, computed daily by the St. Louis Fed's FRED from Treasury data. It is the average yearly CPI inflation at which the two bonds would pay the same, so it is the market's inflation compensation for the next five years. It carries a risk premium and a TIPS liquidity effect, so it is not a pure forecast; about 2.3-2.5% has usually been read as consistent with 2% PCE inflation.",
    "group": "inflation",
    "unit": "percent",
    "freq": "D",
@@ -3437,7 +3437,7 @@
   "t10yie": {
    "id": "t10yie",
    "name": "10-year breakeven inflation",
-   "what": "Inflation compensation priced in 10-year Treasuries.",
+   "what": "The 10-year breakeven inflation rate: the 10-year Treasury yield minus the 10-year TIPS yield, both at constant maturity, computed daily by the St. Louis Fed's FRED from Treasury data. It is the market's average yearly CPI inflation compensation over the next decade, including risk and liquidity premiums. It moves less than the 5-year rate on oil shocks, so a rise here says more about long-run inflation worries.",
    "group": "inflation",
    "unit": "percent",
    "freq": "D",
@@ -3467,7 +3467,7 @@
   "t5yifr": {
    "id": "t5yifr",
    "name": "5-year inflation compensation, 5 years ahead",
-   "what": "Breakeven inflation for the five years starting five years from now (the 5y5y).",
+   "what": "The 5-year, 5-year forward inflation rate (5y5y): the average yearly inflation the bond market prices for the five years that begin five years from now, worked out by FRED from the 5- and 10-year Treasury and TIPS yields. By looking past near-term shocks it is the market gauge Fed officials watch for whether long-run expectations stay anchored. A sustained move well above about 2.5% would mean markets doubt the 2% goal.",
    "group": "inflation",
    "unit": "percent",
    "freq": "D",
@@ -3497,7 +3497,7 @@
   "expinf1yr": {
    "id": "expinf1yr",
    "name": "1-year expected inflation (Cleveland Fed model)",
-   "what": "Model estimate from Treasury yields, inflation data, swaps and surveys.",
+   "what": "Expected inflation over the next 12 months from the Federal Reserve Bank of Cleveland's model, monthly. The model combines Treasury yields, inflation data, inflation swaps and surveys of inflation expectations, and separates expected inflation from the risk premiums inside bond yields. It is a smoother, model-based alternative to raw breakevens; a reading above 3% means near-term expectations sit well above the 2% goal.",
    "group": "inflation",
    "unit": "percent",
    "freq": "M",
@@ -3529,7 +3529,7 @@
   "nowcast_cpi": {
    "id": "nowcast_cpi",
    "name": "Nowcast of this month's CPI change (Cleveland Fed)",
-   "what": "Cleveland Fed model estimate of the current month's CPI change, month over month, updated each weekday.",
+   "what": "The Federal Reserve Bank of Cleveland's estimate of this month's headline CPI change before BLS publishes it, as a month-over-month percent change (not at an annual rate). The model uses daily oil prices, weekly retail gasoline prices, food prices and past CPI and PCE readings, and is refreshed each business day. It is most useful for energy-driven headline moves; 0.17% a month is roughly 2% a year.",
    "group": "inflation",
    "unit": "percent, month over month",
    "freq": "D",
@@ -3557,7 +3557,7 @@
   "nowcast_core_cpi": {
    "id": "nowcast_core_cpi",
    "name": "Nowcast of this month's core CPI change (Cleveland Fed)",
-   "what": "Cleveland Fed model estimate of the current month's core CPI change, month over month, updated each weekday.",
+   "what": "The Federal Reserve Bank of Cleveland's estimate of this month's core CPI change (excluding food and energy) before BLS publishes it, month over month and not at an annual rate, refreshed each business day. For core prices the model leans mainly on past core readings, so it extends the recent trend rather than spotting turns. About 0.17% a month is roughly 2% a year.",
    "group": "inflation",
    "unit": "percent, month over month",
    "freq": "D",
@@ -3585,7 +3585,7 @@
   "nowcast_pce": {
    "id": "nowcast_pce",
    "name": "Nowcast of this month's PCE change (Cleveland Fed)",
-   "what": "Cleveland Fed model estimate of the current month's PCE change, month over month, updated each weekday.",
+   "what": "The Federal Reserve Bank of Cleveland's estimate of this month's headline PCE price change before BEA publishes it, month over month and not at an annual rate. The model uses daily oil prices, weekly gasoline prices, food prices and past CPI and PCE readings, and is refreshed each business day. PCE is the measure the Fed's 2% goal is set on; about 0.17% a month is roughly 2% a year.",
    "group": "inflation",
    "unit": "percent, month over month",
    "freq": "D",
@@ -3613,7 +3613,7 @@
   "nowcast_core_pce": {
    "id": "nowcast_core_pce",
    "name": "Nowcast of this month's core PCE change (Cleveland Fed)",
-   "what": "Cleveland Fed model estimate of the current month's core PCE change, month over month, updated each weekday.",
+   "what": "The Federal Reserve Bank of Cleveland's estimate of this month's core PCE price change (excluding food and energy) before BEA publishes it, month over month and not at an annual rate, refreshed each business day. It leans mainly on past core readings, and once CPI and PPI for the month are out it mostly reflects how they map into PCE. About 0.17% a month is roughly 2% a year.",
    "group": "inflation",
    "unit": "percent, month over month",
    "freq": "D",
@@ -3641,7 +3641,7 @@
   "dfedtaru": {
    "id": "dfedtaru",
    "name": "Fed funds policy range, top",
-   "what": "Upper end of the Fed's policy-rate range.",
+   "what": "The top of the federal funds policy range set by the Federal Open Market Committee (FOMC), daily (Federal Reserve Board via FRED). The Fed sets a range a quarter point wide for the overnight rate banks charge each other and steers the market rate into it with the interest it pays on reserves and its reverse-repo rate. A change in this figure is a change in monetary policy.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -3671,7 +3671,7 @@
   "dfedtarl": {
    "id": "dfedtarl",
    "name": "Fed funds policy range, bottom",
-   "what": "Lower end of the Fed's policy-rate range.",
+   "what": "The bottom of the federal funds policy range set by the FOMC, daily (Federal Reserve Board via FRED). It is also the rate the Fed pays at its overnight reverse-repo facility, so it acts as a floor for overnight money-market rates. The policy range moves only at FOMC decisions, normally in steps of a quarter point.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -3701,7 +3701,7 @@
   "effr": {
    "id": "effr",
    "name": "Effective fed funds rate",
-   "what": "Volume-weighted overnight rate banks pay each other for reserves.",
+   "what": "The effective federal funds rate: the volume-weighted median rate on overnight unsecured loans of reserves between banks and other institutions, computed daily by the New York Fed from the FR 2420 report. It is the market rate the FOMC's policy range is set for and normally sits a few hundredths of a point above the bottom of the range. A drift toward the top of the range is a sign reserves are getting scarce.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -3731,7 +3731,7 @@
   "sofr": {
    "id": "sofr",
    "name": "Secured overnight financing rate",
-   "what": "Overnight borrowing rate against Treasury collateral.",
+   "what": "The Secured Overnight Financing Rate: the volume-weighted median rate on overnight loans of cash secured by Treasury securities (repurchase agreements), published daily by the New York Fed from tri-party, GCF and centrally cleared bilateral repo trades. It replaced LIBOR as the main benchmark for dollar loans and derivatives. SOFR above the effective fed funds rate signals tight cash in funding markets, often around tax dates and Treasury settlements.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -3761,7 +3761,7 @@
   "fedtarmd": {
    "id": "fedtarmd",
    "name": "FOMC projection of the policy rate, median",
-   "what": "Median year-end fed funds projection in the latest Summary of Economic Projections, by year.",
+   "what": "The median of FOMC participants' projections of the appropriate federal funds rate at the end of each year, from the Summary of Economic Projections (SEP, the dot plot), published at four meetings a year by the Federal Reserve Board. Each participant's dot is the midpoint of the range that person sees as appropriate; the median is not a Committee decision or a commitment. Futures above the median mean markets price a higher path than the Committee projects.",
    "group": "fed",
    "unit": "percent",
    "freq": "A",
@@ -3786,7 +3786,7 @@
   "fedtarmdlr": {
    "id": "fedtarmdlr",
    "name": "FOMC longer-run policy rate, median",
-   "what": "Median longer-run fed funds projection in the latest Summary of Economic Projections.",
+   "what": "The median of FOMC participants' estimates of the federal funds rate in the longer run, once the economy is at full strength and inflation is at 2%, from the Summary of Economic Projections (Federal Reserve Board). It is the Committee's estimate of the neutral nominal rate: a policy rate above it is restrictive, below it accommodative. Subtracting 2% inflation gives the implied neutral real rate, known as r-star.",
    "group": "fed",
    "unit": "percent",
    "freq": "A",
@@ -3811,7 +3811,7 @@
   "walcl": {
    "id": "walcl",
    "name": "Fed balance sheet",
-   "what": "Total assets of the Federal Reserve (millions).",
+   "what": "Total assets of the Federal Reserve, Wednesday level, from the weekly H.4.1 release (millions of dollars, shown in billions). It is mostly Treasury securities and mortgage-backed securities bought during quantitative easing, and it shrinks when the Fed lets maturing securities run off (quantitative tightening). A shrinking balance sheet drains reserves from the banking system and puts some upward pressure on longer yields.",
    "group": "fed",
    "unit": "millions of dollars",
    "freq": "W",
@@ -3841,7 +3841,7 @@
   "wresbal": {
    "id": "wresbal",
    "name": "Bank reserves at the Fed",
-   "what": "Balances banks keep at Federal Reserve Banks (billions).",
+   "what": "Reserve balances with Federal Reserve Banks: the deposits banks keep at the Fed, as a weekly average from the H.4.1 release (shown in billions of dollars). Reserves are the banking system's cash for settling payments. When they fall too far, overnight rates rise toward the top of the policy range, as in September 2019, so the Fed ends balance-sheet runoff near the level it judges ample.",
    "group": "fed",
    "unit": "billions of dollars",
    "freq": "W",
@@ -3871,7 +3871,7 @@
   "rrpontsyd": {
    "id": "rrpontsyd",
    "name": "Overnight reverse repo",
-   "what": "Cash parked at the Fed's overnight reverse-repo facility (billions).",
+   "what": "Cash invested overnight at the Federal Reserve's overnight reverse-repo facility (ON RRP), mainly by money market funds, in billions of dollars, daily (New York Fed via FRED). The facility pays the bottom of the policy range and soaks up surplus cash. Once it has run down near zero, further balance-sheet runoff comes out of bank reserves instead.",
    "group": "fed",
    "unit": "billions of dollars",
    "freq": "D",
@@ -3901,7 +3901,7 @@
   "nfci": {
    "id": "nfci",
    "name": "Financial conditions (Chicago Fed)",
-   "what": "National Financial Conditions Index; negative means looser than average.",
+   "what": "The Chicago Fed National Financial Conditions Index, weekly: a weighted average of 105 measures of risk, credit and leverage across money markets, debt and equity markets and the traditional and shadow banking systems. It is scaled so that zero is the average since 1971 and each unit is one standard deviation. Positive means tighter than average, negative looser; loose conditions support demand and can work against Fed tightening.",
    "group": "fed",
    "unit": "index",
    "freq": "W",
@@ -3931,7 +3931,7 @@
   "dgs3mo": {
    "id": "dgs3mo",
    "name": "3-month Treasury yield",
-   "what": "Constant-maturity 3-month Treasury bill yield.",
+   "what": "The yield on a 3-month Treasury bill at constant maturity, read from the Treasury's daily par yield curve (Federal Reserve H.15 via FRED). It trades close to the policy range, so it moves mainly with the policy rate expected over the next three months. It is also what cash earns, the yardstick for longer bonds' returns.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -3961,7 +3961,7 @@
   "dgs1": {
    "id": "dgs1",
    "name": "1-year Treasury yield",
-   "what": "Constant-maturity 1-year Treasury yield; with the 2- and 10-year it lets forward rates be computed exactly.",
+   "what": "The yield on a 1-year Treasury at constant maturity, from the Treasury's daily par yield curve (Federal Reserve H.15 via FRED). It reflects the policy rate the market expects over the coming year, so it rises ahead of expected rate increases. Together with the 2- and 10-year yields it lets forward rates be worked out exactly.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -3991,7 +3991,7 @@
   "dgs2": {
    "id": "dgs2",
    "name": "2-year Treasury yield",
-   "what": "Constant-maturity 2-year Treasury yield; the most policy-sensitive point of the curve.",
+   "what": "The yield on a 2-year Treasury note at constant maturity, from the Treasury's daily par yield curve (Federal Reserve H.15 via FRED). It is the point of the curve most sensitive to expected Fed policy over the next two years and moves first when markets reprice rate increases or cuts. A 2-year yield above the policy-range midpoint means the market prices rate rises ahead.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -4021,7 +4021,7 @@
   "dgs3": {
    "id": "dgs3",
    "name": "3-year Treasury yield",
-   "what": "Constant-maturity 3-year Treasury yield; with the 2- and 10-year it lets forward rates be computed exactly.",
+   "what": "The yield on a 3-year Treasury note at constant maturity, from the Treasury's daily par yield curve (Federal Reserve H.15 via FRED). It reflects the expected policy path over three years plus a small term premium. Together with the 1-, 2- and 10-year yields it lets forward rates be worked out exactly.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -4051,7 +4051,7 @@
   "dgs10": {
    "id": "dgs10",
    "name": "10-year Treasury yield",
-   "what": "Constant-maturity 10-year Treasury yield.",
+   "what": "The yield on a 10-year Treasury note at constant maturity, from the Treasury's daily par yield curve (Federal Reserve H.15 via FRED). It is the expected path of short rates over a decade plus a term premium, and it sets the level for mortgage rates and corporate borrowing costs. It is also the main discount rate for long-lived assets, so a rise tightens financial conditions.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -4081,7 +4081,7 @@
   "t10y2y": {
    "id": "t10y2y",
    "name": "Yield curve, 10-year minus 2-year",
-   "what": "Spread between 10- and 2-year Treasury yields.",
+   "what": "The 10-year Treasury yield minus the 2-year yield, in percentage points, daily (FRED). A negative spread, an inverted curve, means markets price lower short rates ahead, and it has come before most US recessions with long and variable lags. A spread rising back above zero often comes as the Fed starts to cut.",
    "group": "fed",
    "unit": "percentage points",
    "freq": "D",
@@ -4111,7 +4111,7 @@
   "dfii10": {
    "id": "dfii10",
    "name": "10-year real yield (TIPS)",
-   "what": "Yield on 10-year inflation-protected Treasuries.",
+   "what": "The yield on a 10-year Treasury inflation-protected security (TIPS) at constant maturity: the return above CPI inflation that is locked in for ten years (Federal Reserve H.15 via FRED). It is the market's real interest rate, and a rising real yield tightens financial conditions and weighs on spending. The 10-year Treasury yield minus this figure is the 10-year breakeven inflation rate.",
    "group": "fed",
    "unit": "percent",
    "freq": "D",
@@ -4141,7 +4141,7 @@
   "threefytp10": {
    "id": "threefytp10",
    "name": "10-year term premium (Kim-Wright)",
-   "what": "Extra yield investors demand for owning a 10-year Treasury instead of rolling short bills (Fed Board model).",
+   "what": "The 10-year term premium from the Kim-Wright model, published by Federal Reserve Board staff: the part of the 10-year zero-coupon Treasury yield that is extra pay for tying money up for ten years rather than rolling short bills, once the model's estimate of expected short rates is taken out. The model fits three factors to Treasury yields since 1990, so the split is an estimate and gets revised. A rising premium means investors want more for duration and inflation risk, as with large deficits.",
    "group": "fed",
    "unit": "percentage points",
    "freq": "D",
@@ -4171,7 +4171,7 @@
   "gdpnow": {
    "id": "gdpnow",
    "name": "GDPNow (Atlanta Fed)",
-   "what": "Running model estimate of this quarter's real GDP growth, annual rate.",
+   "what": "GDPNow, from the Federal Reserve Bank of Atlanta: a running model estimate of real GDP growth in the current quarter, at a seasonally adjusted annual rate, re-estimated about six times a month as new data arrive. It is not an official forecast and moves with each release, and early in a quarter it can miss by a point or more. Growth well above the economy's long-run pace of about 2% keeps pressure on prices.",
    "group": "fed",
    "unit": "percent, annual rate",
    "freq": "Q",
@@ -4198,7 +4198,7 @@
   "atl_taylor": {
    "id": "atl_taylor",
    "name": "Taylor-rule prescription (Atlanta Fed utility)",
-   "what": "Policy rate the 1999 Taylor rule gives using core PCE, a 2% goal, the FOMC's median neutral rate and unemployment gap.",
+   "what": "The policy rate a Taylor rule prescribes, from the Federal Reserve Bank of Atlanta's Taylor Rule Utility, quarterly (its FOMCTaylor99UR version). It adds the neutral real rate implied by FOMC projections, the 2% goal, 1.5 times the gap between four-quarter core PCE inflation and 2%, and 1.0 times the resource gap, taken as twice the gap between the FOMC's longer-run unemployment rate and the actual rate (the 1999 weighting). It is a benchmark, not what the Fed does: a prescription well above the actual policy rate means policy is looser than this rule.",
    "group": "fed",
    "unit": "percent",
    "freq": "Q",
@@ -4502,7 +4502,7 @@
   "oecd_cli_usa": {
    "id": "oecd_cli_usa",
    "name": "OECD leading indicator, United States",
-   "what": "OECD composite leading indicator for United States, amplitude-adjusted; 100 is the long-run trend.",
+   "what": "The OECD composite leading indicator for the United States, monthly and amplitude-adjusted: a combination of series that tend to turn before the business cycle does, scaled so that 100 is the long-run trend. Above 100 and rising signals growth above trend over the next six to nine months; below 100 and falling signals a slowdown. It is a free stand-in for the proprietary leading indices.",
    "group": "fed",
    "unit": "index",
    "freq": "M",
@@ -4959,7 +4959,7 @@
   "ea_hicp_energy": {
    "id": "ea_hicp_energy",
    "name": "Euro-area energy inflation",
-   "what": "HICP energy, change from a year earlier.",
+   "what": "Euro-area energy inflation: the change from a year earlier in the energy part of the Harmonised Index of Consumer Prices (HICP), the euro area's official consumer price measure, from Eurostat, monthly. It covers electricity, gas, heating oil and motor fuel. It shows how much of Europe's inflation comes from energy, and its gas prices react to the same shocks that move US energy costs.",
    "group": "energy",
    "unit": "percent",
    "freq": "M",
@@ -5381,7 +5381,7 @@
   "neworder": {
    "id": "neworder",
    "name": "Core capital-goods orders",
-   "what": "New orders for nondefence capital goods excluding aircraft (millions); a lead on business equipment spending.",
+   "what": "New orders for nondefence capital goods excluding aircraft, called core capital-goods orders, from the Census Bureau's monthly durable-goods report, in millions of dollars. Firms order equipment months before they install it, so this leads business equipment spending in GDP. Strong growth means business investment is supporting demand.",
    "group": "capex",
    "unit": "millions of dollars",
    "freq": "M",
@@ -5471,7 +5471,7 @@
   "dc_construction": {
    "id": "dc_construction",
    "name": "Data-centre construction spending",
-   "what": "Private construction put in place on data centres, seasonally adjusted annual rate (Census C30; not on FRED).",
+   "what": "Private construction spending on data centres, at a seasonally adjusted annual rate, from the Census Bureau's monthly construction spending report (C30, the private seasonally adjusted table; not on FRED). It measures building work put in place that month, so it follows projects already under way. Fast growth adds demand for electricians, power equipment and materials, an input to inflation.",
    "group": "capex",
    "unit": "millions of dollars SAAR",
    "freq": "M",
@@ -5502,7 +5502,7 @@
   "pcu335311335311": {
    "id": "pcu335311335311",
    "name": "Transformer prices (PPI)",
-   "what": "Producer prices for electric power and specialty transformers.",
+   "what": "The producer price index for electric power and specialty transformer manufacturing: prices US makers of transformers receive, not seasonally adjusted (index, June 1981 = 100), BLS. Transformers are a bottleneck for data centres and the power grid, so this price shows whether that capital-spending demand is pushing up equipment costs.",
    "group": "capex",
    "unit": "index",
    "freq": "M",
@@ -5660,7 +5660,7 @@
   "gasregw": {
    "id": "gasregw",
    "name": "US gasoline price",
-   "what": "Average retail price of regular gasoline, weekly (EIA).",
+   "what": "The average US retail price of regular gasoline, weekly, from the Energy Information Administration (EIA), in dollars a gallon. Gasoline is the energy price households see most, so it moves headline CPI and household inflation expectations quickly. A change of about 10% moves headline CPI by roughly 0.3 percentage points.",
    "group": "energy",
    "unit": "dollars per gallon",
    "freq": "W",
@@ -5720,7 +5720,7 @@
   "px_bz_f": {
    "id": "px_bz_f",
    "name": "Brent crude, front month",
-   "what": "Front-month future or fund close, from the repo's own price history.",
+   "what": "Brent crude oil, the front-month futures contract: the international benchmark price of a barrel of North Sea oil, daily close from the repository's own price history. Oil feeds directly into gasoline, heating and transport costs, so a sustained rise lifts headline inflation within a few months and inflation expectations with it.",
    "group": "energy",
    "unit": "price",
    "freq": "D",
