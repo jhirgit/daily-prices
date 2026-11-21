@@ -204,7 +204,9 @@ DEEP = {"funds": {"IWM": {"period": "2026-09-30", "lines": [["Apple Inc", "US037
                                                            ["Small Co", "US0000000001", None, "USD", 0.4, 3.0]]}},
         "symbols": {"US0378331005": ["AAPL", "2026-11-01"]}}
 CM = {"map": {"AAPL": "0000320193", "MSFT": "0000789019", "NOPE": "0000000009"}}
-LAST = {"closes": {"AAPL": ["2026-11-20", 270.0, "USD"], "MSFT": ["2026-11-20", 500.0, "USD"],
+# prices that give the market row a sane composite (AAPL 21x, MSFT 25x): market_gate withholds every
+# ratio to SPY when SPY's own composite falls outside MARKET_BAND
+LAST = {"closes": {"AAPL": ["2026-11-20", 0.16, "USD"], "MSFT": ["2026-11-20", 0.30, "USD"],
                    "NOPE": ["2026-11-20", 10.0, "USD"]}, "fx": {}}
 GOOD = {"0000320193": dict(B.summarise(REC_B, {}, t="AAPL", today=TODAY)),
         "0000789019": dict(B.summarise(dict(REC_B, quarters=[dict(q, ni=q["ni"] * 0.8) for q in REC_B["quarters"]],
@@ -236,7 +238,7 @@ check("IWM's lines are its whole N-PORT book, the unmapped line uncovered",
 check_true("XLK carries a ratio to SPY's composite", (pl["rows"]["XLK"].get("vs_spy") or {}).get("pe") is not None)
 check("per_line: each company's own P/E and revenue growth for the holdings table",
       sorted(pl["rows"]["XLK"]["per_line"]), ["AAPL", "MSFT"])
-check_close("...AAPL's own P/E = 270 x 14,600 / 110", pl["rows"]["XLK"]["per_line"]["AAPL"][0], round(270 * 14600 / 110, 1))
+check_close("...AAPL's own P/E = 0.16 x 14,600 / 110", pl["rows"]["XLK"]["per_line"]["AAPL"][0], round(0.16 * 14600 / 110, 1))
 check("status ok, error says nothing waits", (pl["status"], pl["error"]), ("ok", None))
 fetched.clear()
 pl2, store, calls = B.build(MEM, DEEP, CM, store, {}, LAST, None, TODAY, fetch=fake_fetch, log=lambda *a: None)
@@ -279,6 +281,93 @@ FUND = {"AAPL": dict(REC_B, status="ok")}
 plF, _, _ = B.build(MEM, DEEP, CM, {"companies": {}}, FUND, LAST, None, TODAY, fetch=None, log=lambda *a: None)
 check("offline with an empty store, fundamentals.json stands in for the names it carries",
       sorted(plF["rows"]["XLK"]["per_line"]), ["AAPL"])
+
+# --------------------------------------------------------------------------
+print("\nimplausible market values (the 2026-11-21 SPY defect: ERIE's one-class count carried the row)")
+# ERIE's store record that night: TTM 2026-09-30, but its latest whole-company count (0.003 million,
+# one class) dated 2021-06-30 -- its newer covers tag counts by class only. At a 300 close its market
+# value read 0.9 million against 576 million of earnings: one company at 0.011 pct of SPY's weight
+# added about 0.08 to SPY's earnings yield and 0.05 to its dividend yield.
+ER = {"status": "partial", "kind": "insurer", "ccy": "USD", "end": "2026-09-30", "ni": 576.1, "rev": 4122.6,
+      "equity": 2552.7, "div": 267.9, "sh": 0.003, "sh_end": "2021-06-30", "t": "ERIE"}
+cs_, g_ = B.resolve([{"sym": "ERIE", "w": 1.0}], {"ERIE": "922621"}.get, lambda c, s: dict(ER),
+                    {"ERIE": 300.0}.get, {"USD": 1.0}.get, TODAY)
+check("a share count dated years before the latest quarter: uncovered, with its reason",
+      (cs_, list(g_)), ([], [B.share_count_stale(ER)]))
+cs_, g_ = B.resolve([{"sym": "ERIE", "w": 1.0}], {"ERIE": "922621"}.get, lambda c, s: dict(ER, sh_end="2026-10-20"),
+                    {"ERIE": 300.0}.get, {"USD": 1.0}.get, TODAY)
+check_true("...and a CURRENT-dated count that is one class only (or in thousands): doubted by its market value",
+           cs_ == [] and "implausible" in list(g_)[0], str(g_))
+HUBG = {"status": "ok", "ccy": "USD", "end": "2026-09-30", "ni": 105.0, "rev": 3728.9, "equity": 1700.0,
+        "sh": 0.06, "sh_end": "2026-09-30", "t": "HUBG"}       # 60 thousand where 60 million is right
+cs_, g_ = B.resolve([{"sym": "HUBG", "w": 1.0}], {"HUBG": "7"}.get, lambda c, s: dict(HUBG),
+                    {"HUBG": 40.0}.get, {"USD": 1.0}.get, TODAY)
+check("a count tagged in thousands: doubted", cs_, [])
+cs_, _ = B.resolve([{"sym": "HUBG", "w": 1.0}], {"HUBG": "7"}.get, lambda c, s: dict(HUBG, sh=60.0),
+                   {"HUBG": 40.0}.get, {"USD": 1.0}.get, TODAY)
+check("...control: the same company with its right count is covered", [c["t"] for c in cs_], ["HUBG"])
+check("thin real companies stay in: a value of 1.2 pct of revenue (an exchange booking gross sales)",
+      B.mcap_doubt(2876.0, {"rev": 245000.0, "equity": 3200.0, "ni": -760.0}), None)
+check("...a value of 8 pct of equity (a steelmaker at a trough)",
+      B.mcap_doubt(3390.0, {"rev": 55000.0, "equity": 41500.0, "ni": 840.0, "div": 630.0}), None)
+check("...a P/E of 1.2 from a one-off gain on an asset sale", B.mcap_doubt(29600.0, {"rev": 12167.0, "ni": 24336.0}), None)
+check_true("dividends paid above the market value: doubted", B.mcap_doubt(100.0, {"div": 150.0}) is not None)
+check_true("earnings above five times the market value: doubted", B.mcap_doubt(100.0, {"ni": 600.0}) is not None)
+# end to end: the one-class company in the market row no longer drags its P/E or dividend yield
+LINES = [{"sym": "AAPL", "w": 0.6}, {"sym": "MSFT", "w": 0.399}, {"sym": "ERIE", "w": 0.001}]
+CM2 = {"AAPL": "2", "MSFT": "8", "ERIE": "922621"}
+REC2 = {"2": dict(REC["2"], equity=80.0, div=15.0, t="AAPL"),
+        "8": {"status": "ok", "end": "2026-09-30", "ni": 100.0, "rev": 300.0, "sh": 7.5, "ccy": "USD",
+              "equity": 120.0, "div": 25.0, "t": "MSFT"},
+        "922621": dict(ER, sh_end="2026-10-20")}
+PX2 = {"AAPL": 170.0, "MSFT": 340.0, "ERIE": 300.0}
+out_, cos_ = B.row_composite(LINES, "test", CM2.get, lambda c, s: REC2.get(c), PX2.get, {"USD": 1.0}.get, TODAY)
+check_true("the market row with a one-class company in it: P/E and dividend yield inside the sane band",
+           B.MARKET_BAND["pe"][0] <= out_["m"]["pe"] <= B.MARKET_BAND["pe"][1]
+           and B.MARKET_BAND["div_yield"][0] <= out_["m"]["div_yield"] <= B.MARKET_BAND["div_yield"][1],
+           f"pe {out_['m']['pe']}, dividend yield {out_['m']['div_yield']}")
+check_close("...and equal to the composite without that company (its weight is a gap, not a ratio)",
+            out_["m"]["pe"], B.row_composite(LINES[:2], "t", CM2.get, lambda c, s: REC2.get(c), PX2.get,
+                                             {"USD": 1.0}.get, TODAY)[0]["m"]["pe"], 1e-9)
+
+print("\ngrowth on a base that is mostly cancellation is n/m, not a ratio")
+gm = B.composite([co("P", 0.5, 100.0, 10.0, ni_p=5.0), co("L", 0.5, 100.0, 5.0, ni_p=-4.9)], 1.0)
+check("year-ago earnings +5 and -4.9 (base 0.1 of a gross 9.9): earnings growth n/m with the reason",
+      (gm["earn_growth"], gm["earn_growth_nm"]), (None, "year-ago base near zero or negative"))
+gm = B.composite([co("P", 0.5, 100.0, 10.0, ni_p=8.0), co("L", 0.5, 100.0, 5.0, ni_p=-1.0)], 1.0)
+check_close("...a base of 7 of a gross 9: growth shown (15 / 7 - 1)", gm["earn_growth"], 15.0 / 7.0 - 1.0, 1e-9)
+
+print("\nthe market row's invariant: no sane market composite, no ratio to it")
+SANE = {"pe": 24.0, "div_yield": 0.013, "ev_sales": 3.5, "ev_ebit": 21.0, "fcf_yield": 0.03, "pb": 4.8}
+ROW = {"pe": 30.0, "ev_sales": 7.0, "ev_ebit": 25.0, "fcf_yield": 0.03, "pb": 9.0}
+m_, why_ = B.market_gate({"SPY": {"shown": True, "m": SANE}})
+check("a sane market composite passes the gate", (m_ is SANE, why_), (True, None))
+check_close("...and a row's P/E against it is the plain ratio", B.vs_market(ROW, m_, why_)[0]["pe"], 1.25, 1e-9)
+for label, rows_ in (("the committed 2026-11-21 SPY (P/E 7.72x, dividend yield 6.7 pct)",
+                      {"SPY": {"shown": True, "m": dict(SANE, pe=7.72, div_yield=0.067)}}),
+                     ("a P/E above the band", {"SPY": {"shown": True, "m": dict(SANE, pe=80.0)}}),
+                     ("an aggregate loss (no P/E)", {"SPY": {"shown": True, "m": dict(SANE, pe=None)}}),
+                     ("an EV/sales of 0.45x", {"SPY": {"shown": True, "m": dict(SANE, ev_sales=0.45)}}),
+                     ("the market row not shown (cold store)", {"SPY": {"shown": False, "m": None, "why": "not shown"}}),
+                     ("no market row at all", {})):
+    m_, why_ = B.market_gate(rows_)
+    vs_, vwhy_ = B.vs_market(ROW, m_, why_)
+    check_true(f"{label}: every ratio to the market reads n/a, with a plain reason",
+               m_ is None and all(v is None for v in vs_.values()) and set(vs_) == set(B.VS_KEYS)
+               and bool(vwhy_) and "SPY" in vwhy_, f"{vs_} / {vwhy_}")
+BAD = {"asof": TODAY, "rows": {"SPY": MEM["rows"]["SPY"], "XLK": MEM["rows"]["XLK"]}}
+LAST_BAD = {"closes": dict(LAST["closes"], AAPL=["2026-11-20", 0.02, "USD"], MSFT=["2026-11-20", 0.03, "USD"]),
+            "fx": {}}
+plB, _, _ = B.build(BAD, DEEP, CM, {"companies": dict(store["companies"])}, {}, LAST_BAD, None, TODAY,
+                    fetch=None, log=lambda *a: None)
+check("build(): a shown market composite outside the band withholds XLK's ratios (all n/a)",
+      plB["rows"]["XLK"]["vs_spy"], {k: None for k in B.VS_KEYS})
+check_true("...says why on the row, in payload.market, and loudly in status and error",
+           "outside its sane band" in (plB["rows"]["XLK"].get("vs_spy_why") or "")
+           and plB["market"]["ok"] is False and plB["status"] == "partial"
+           and "outside its sane band" in (plB["error"] or ""), f"{plB['market']} / {plB['status']}")
+check("...while a sane market row leaves no reason on the rows", (pl["market"]["ok"], pl["rows"]["XLK"]["vs_spy_why"]),
+      (True, None))
 
 # --------------------------------------------------------------------------
 print("\nfiles: the store round trip, guard-clean, no advice words")

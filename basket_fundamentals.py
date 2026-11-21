@@ -92,6 +92,25 @@ NA_RETRY_DAYS = 30
 SEC_BUDGET_S = 360.0        # wall clock for companyfacts fetches per run (a cold store fills in ~2 nights)
 SEC_MAX = 1200              # and a request cap per run
 TAX = 0.21                  # ROIC's tax rate
+SHARES_STALE_DAYS = 400     # a share count dated this long before the latest quarter is not current:
+                            # a multi-class filer whose recent covers tag counts by class only leaves
+                            # an old (often one-class or pre-split) count as its "latest" (ERIE, COKE)
+# A market value is doubted (the company is uncovered) when it is implausible against the company's
+# OWN filings -- the sign of a share count that is one class only or tagged in thousands (ERIE,
+# HUBG, SEI, TEM on 2026-11-21). The bounds sit far outside any listed company's range: the lowest
+# real value / revenue in the store that night was 1.2 pct, value / equity 8 pct.
+DOUBT_MCAP_REV = 0.005      # market value below 0.5 pct of TTM revenue
+DOUBT_MCAP_EQ = 0.03        # ...or below 3 pct of shareholders' equity
+DOUBT_NI_MCAP = 5.0         # ...or TTM earnings above 5x market value (a P/E under 0.2)
+DOUBT_DIV_MCAP = 1.0        # ...or TTM dividends paid above market value
+# The market row (SPY) is the denominator of every "against the market" ratio. Its composite must sit
+# inside this band or no ratio is published: S&P 500 trailing GAAP figures since 1990 have run about
+# 13-30x P/E (outside the 2009 earnings collapse), 1.1-3.6 pct dividend yield, 1-3.5x EV/sales; the
+# band is wider than that so only an arithmetic or data defect falls outside it.
+GROWTH_BASE_MIN = 0.25      # growth is n/m when the year-ago aggregate is under this share of its gross size
+MARKET_ROW = "SPY"
+MARKET_BAND = {"pe": (10.0, 45.0), "div_yield": (0.005, 0.04), "ev_sales": (0.8, 6.0)}
+VS_KEYS = ("pe", "ev_sales", "ev_ebit", "fcf_yield", "pb")
 EXTRA = {                   # TTM flows fundamentals.py does not carry in its quarter rows
     "div": {"us-gaap": ["PaymentsOfDividends", "PaymentsOfDividendsCommonStock"],
             "ifrs-full": ["DividendsPaidClassifiedAsFinancingActivities", "DividendsPaid"]},
@@ -249,6 +268,58 @@ def declared_factor(tk, c):
     return f
 
 
+def share_count_stale(c):
+    """The reason a record's share count is not current, or None: dated more than
+    SHARES_STALE_DAYS before its latest quarter."""
+    if c.get("sh_end") and c.get("end") and _days(c["sh_end"], c["end"]) > SHARES_STALE_DAYS:
+        return (f"share count out of date (the latest one tagged for the whole company is dated more "
+                f"than {SHARES_STALE_DAYS} days before the latest quarter)")
+    return None
+
+
+def mcap_doubt(mcap, c):
+    """The reason a market value (USD millions) is implausible against the company's own
+    figures ``c`` (USD millions), or None. Catches a share count that is one class only or
+    in thousands, which no other check sees: one such company can carry a whole row."""
+    if not mcap or mcap <= 0:
+        return "market value not positive"
+    rev, eq, ni, div = c.get("rev"), c.get("equity"), c.get("ni"), c.get("div")
+    if (rev and rev > 0 and mcap < DOUBT_MCAP_REV * rev) or (eq and eq > 0 and mcap < DOUBT_MCAP_EQ * eq) \
+            or (ni and ni > DOUBT_NI_MCAP * mcap) or (div and div > DOUBT_DIV_MCAP * mcap):
+        return ("market value implausible against the company's own filings "
+                "(the share count looks like one class only, or is in thousands)")
+    return None
+
+
+def market_gate(rows):
+    """(market composite or None, reason or None). The market row's composite is the
+    denominator of every "against the market" ratio, so it must be shown and inside
+    MARKET_BAND; otherwise no ratio is published and every row says why."""
+    r = rows.get(MARKET_ROW)
+    if not r:
+        return None, f"no market row ({MARKET_ROW}) tonight"
+    if not r.get("shown") or not r.get("m"):
+        return None, f"the market row ({MARKET_ROW}) has no composite tonight ({r.get('why') or 'not shown'})"
+    m = r["m"]
+    for k, (lo, hi) in MARKET_BAND.items():
+        v = m.get(k)
+        if (v is None and k == "pe") or (v is not None and not (lo <= v <= hi)):   # P/E must exist
+            label = {"pe": "P/E", "div_yield": "dividend yield", "ev_sales": "EV/sales"}.get(k, k)
+            if v is None:
+                return None, f"not published: the market row ({MARKET_ROW}) has no {label} tonight (an aggregate loss)"
+            return None, (f"not published: the market row's ({MARKET_ROW}) {label} of {v:g} is outside its sane "
+                          f"band {lo:g} to {hi:g}, so a ratio to it would mislead")
+    return m, None
+
+
+def vs_market(m, spy_m, why):
+    """The row's ratio to the market composite on VS_KEYS; every field None with ``why``
+    when the market composite failed market_gate."""
+    if not spy_m:
+        return {k: None for k in VS_KEYS}, why
+    return {k: (_r(m[k] / spy_m[k], 3) if (m.get(k) and spy_m.get(k)) else None) for k in VS_KEYS}, None
+
+
 def is_us_symbol(sym):
     return bool(sym) and "." not in sym and "=" not in sym and not sym.startswith("^")
 
@@ -303,11 +374,19 @@ def resolve(lines, cik_of, company_of, price_of, fx_of, today):
         if not fx:
             gap(f"no FX rate for {c.get('ccy')}", w)
             continue
+        stale = share_count_stale(c)
+        if stale:
+            gap(stale, w)
+            continue
         f = declared_factor(c.get("t") or sym, c)
         mcap = px * c["sh"] * f / (c.get("adr") or 1.0)
         conv = {k: (None if c.get(k) is None else c[k] * fx) for k in
                 ("rev", "oi", "ni", "ebitda", "fcf", "capex", "cash", "debt", "equity",
                  "rev_p", "oi_p", "ni_p", "div", "bb", "intexp")}
+        doubt = mcap_doubt(mcap, conv)
+        if doubt:
+            gap(doubt, w)
+            continue
         by_cik[cik] = dict(conv, cik=cik, t=sym, w=w, mcap=mcap, kind=c.get("kind") or "operating",
                            end=c["end"], sh=c["sh"] * f, sh_p=(c["sh_p"] * f) if c.get("sh_p") else None)
     return list(by_cik.values()), gaps
@@ -354,10 +433,14 @@ def composite(cos, total_w):
     m["fcf_yield"] = yld("fcf", ops)
     m["div_yield"] = yld("div", cos)
     m["buyback_yield"] = yld("bb", ops)
-    g = ratio("rev", "rev_p", [c for c in cos if c.get("rev") is not None])
-    m["rev_growth"] = (g - 1.0) if g is not None else None
-    g = ratio("ni", "ni_p", [c for c in cos if c.get("ni") is not None])
-    m["earn_growth"] = (g - 1.0) if g is not None else None
+    for key, k, kp in (("rev_growth", "rev", "rev_p"), ("earn_growth", "ni", "ni_p")):
+        pool = [c for c in cos if c.get(k) is not None and c.get(kp) is not None]
+        g = ratio(k, kp, pool)
+        base = sum(own(c, kp) for c in pool)
+        gross = sum(c["w"] * abs(c[kp]) / c["mcap"] for c in pool)
+        # a year-ago base that is mostly profits and losses cancelling makes any growth rate noise
+        m[key] = (g - 1.0) if (g is not None and base >= GROWTH_BASE_MIN * gross) else None
+        m[key + "_nm"] = ("year-ago base near zero or negative" if pool and m[key] is None else None)
     m["op_margin"] = ratio("oi", "rev", ops)
     prev_pool = [c for c in ops if c.get("oi_p") is not None and c.get("rev_p") is not None]
     m["op_margin_prev"] = ratio("oi_p", "rev_p", prev_pool)
@@ -544,12 +627,10 @@ def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetc
         out, cos = row_composite(lines, src, cik_of, company_of, price_of, fx_of, today)
         out["per_line"] = per_line(cos)
         rows[t] = out
-    spy = rows.get("SPY")
-    spy_m = (spy or {}).get("m") if (spy or {}).get("shown") else None
+    spy_m, vs_why = market_gate(rows)
     for t, out in rows.items():
-        if out.get("m") and spy_m:
-            out["vs_spy"] = {k: (_r(out["m"][k] / spy_m[k], 3) if (out["m"].get(k) and spy_m.get(k)) else None)
-                             for k in ("pe", "ev_sales", "ev_ebit", "fcf_yield", "pb")}
+        if out.get("m"):
+            out["vs_spy"], out["vs_spy_why"] = vs_market(out["m"], spy_m, vs_why)
     # B1 stage 5: today's composite against the row's own point-in-time quarters
     # (data/rotation_fundamentals_history.json, written by basket_history.py)
     if history and history.get("rows"):
@@ -576,9 +657,8 @@ def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetc
         elif t in xplan:
             out, cos = row_composite(xplan[t][0], xplan[t][1], cik_of, company_of, price_of, fx_of, today)
             out["per_line"] = per_line(cos)
-            if out.get("m") and spy_m:
-                out["vs_spy"] = {k: (_r(out["m"][k] / spy_m[k], 3) if (out["m"].get(k) and spy_m.get(k)) else None)
-                                 for k in ("pe", "ev_sales", "ev_ebit", "fcf_yield", "pb")}
+            if out.get("m"):
+                out["vs_spy"], out["vs_spy_why"] = vs_market(out["m"], spy_m, vs_why)
             out["history"] = {"n": 0, "why": "no own history: the back-fill covers ladder rows only"}
         else:
             out = {"shown": False, "m": None, "why": "extra_funds.json entry names neither same_book_as nor nport"}
@@ -601,6 +681,11 @@ def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetc
         errors.append(f"{calls['budget_left']} companies still wait for their first or next SEC fetch")
     if (extras or {}).get("__error__"):
         errors.append(extras["__error__"])
+    if vs_why and (rows.get(MARKET_ROW) or {}).get("shown"):
+        # a SHOWN market composite outside its band is a data defect: loud. (A market row not
+        # shown yet -- a cold store -- is said on the row and in every vs_spy_why.)
+        status = "partial" if status == "ok" else status
+        errors.append(vs_why)
     payload = {
         "generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "asof": (members or {}).get("asof"),
@@ -610,6 +695,8 @@ def build(members, deep, cik_map, store, fund_names, last, db_close, today, fetc
         "rules": {"cover_min": COVER_MIN, "stale_days": STALE_DAYS, "tax_roic": TAX},
         "store": {"companies": len(comps), "fresh": fresh, "wanted": len(want), "due": calls["due"],
                   "fetched": calls["sec"], "failed": calls["sec_failed"], "waiting": calls["budget_left"]},
+        "market": {"row": MARKET_ROW, "ok": spy_m is not None, "why": vs_why,
+                   "band": {k: list(v) for k, v in MARKET_BAND.items()}},
         "n_rows": len(rows), "n_shown": n_shown,
         "rows": rows,
         "n_extra": len(extra_rows), "extra_rows": extra_rows,
@@ -628,7 +715,12 @@ METHOD = (
     "run's FX; market value = last close x latest filed share count (per ADR for an ADR); companies "
     "aggregated by CIK. Covered = a US listing in SEC's ticker map whose company has usable SEC figures "
     "ending no more than 200 days ago, a last close and an FX rate. A composite is shown only when covered "
-    "companies make up at least 70 pct of the row's weight. No analyst estimates or revisions: there is no free "
+    "companies make up at least 70 pct of the row's weight. A company is left out (uncovered, with its reason) "
+    "when its latest whole-company share count is dated more than 400 days before its latest quarter, or when "
+    "the market value it implies is implausible against its own filings (under 0.5 pct of revenue or 3 pct of "
+    "equity, earnings above 5x or dividends above 1x the value). Ratios to the market (SPY) are published only "
+    "when SPY's own composite is shown and inside a sane band (P/E 10-45x, dividend yield 0.5-4 pct, EV/sales "
+    "0.8-6x); otherwise each reads not available with the reason. No analyst estimates or revisions: there is no free "
     "source. A fund's own published figures use other definitions (vendor earnings, losses often excluded) "
     "and are a cross-check, not this number."
 )

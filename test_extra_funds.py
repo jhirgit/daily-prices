@@ -43,7 +43,9 @@ STORE = {"companies": {
     "0000000001": dict(B.summarise(REC, {}, t="AAA", today=TODAY), fetched=TODAY),
     "0000000002": dict(B.summarise(REC, {}, t="BBB", today=TODAY), fetched=TODAY)}}
 CM = {"map": {"AAA": "0000000001", "BBB": "0000000002"}}
-LAST = {"closes": {"AAA": [TODAY, 100.0, "USD"], "BBB": [TODAY, 50.0, "USD"]}, "fx": {}}
+# prices that give the market row a sane composite (P/E about 21x): basket_fundamentals.market_gate
+# withholds every ratio to SPY when SPY's own composite falls outside MARKET_BAND
+LAST = {"closes": {"AAA": [TODAY, 0.17, "USD"], "BBB": [TODAY, 0.15, "USD"]}, "fx": {}}
 MEM = {"asof": TODAY, "rows": {
     "SPY": {"tier": "issuer_full", "source": "State Street daily holdings file", "holdings_asof": "2026-11-19",
             "holdings": [{"t": "AAA", "w": 0.5}, {"t": "BBB", "w": 0.5}]},

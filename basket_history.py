@@ -333,6 +333,10 @@ def composite_on(lines, date, cmap, isin_sym, vint):
             continue
         sh = c["sh"] * (later_split_factor((vint.get(cik) or {}).get("splits"), date) if rebased else 1.0)
         mcap = px * sh / (c.get("adr") or 1.0)
+        doubt = B.mcap_doubt(mcap, c)        # USD only here (other currencies are gapped above)
+        if doubt:
+            gap(doubt, w)
+            continue
         by_cik[cik] = dict(c, cik=cik, t=sym, w=w, mcap=mcap, kind=c.get("kind") or "operating",
                            div=None, bb=None, intexp=None, sh_p=None)
     cov = sum(c["w"] for c in by_cik.values())
