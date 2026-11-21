@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T16:18:15Z",
+ "generated_at": "2026-11-21T16:45:32Z",
  "asof": "2026-11-20",
  "evidence_asof": "2026-09-25",
  "evidence_summary": {
@@ -40,11 +40,11 @@
      "label": "Equal-weight vs cap-weight S&P (RSP/SPY)",
      "window": 63,
      "s": 1,
-     "m": null,
-     "z": null,
-     "status": "n/a",
-     "value": "n/a",
-     "note": "no price series for RSP",
+     "m": 0.03521,
+     "z": 0.787,
+     "status": "confirms",
+     "value": "+3.6% over 63d",
+     "note": "",
      "inputs": [
       "RSP",
       "SPY"
@@ -135,7 +135,7 @@
      }
     }
    ],
-   "read": "Slowing up since 10/30 — 0 of 2 checks confirm; the VIX curve inverted — near-term stress priced above 3-month (^VIX3M − ^VIX −4.95 pts (^VIX3M below ^VIX)); also credit not confirming — high yield lagging Treasuries; washed out: 3rd pct of its 3y range.",
+   "read": "Slowing up since 10/30 — 1 of 3 checks confirm; the VIX curve inverted — near-term stress priced above 3-month (^VIX3M − ^VIX −4.95 pts (^VIX3M below ^VIX)); also credit not confirming — high yield lagging Treasuries; washed out: 3rd pct of its 3y range.",
    "topping": "The index keeps rising while equal-weight lags, high yield stops beating Treasuries and the VIX curve flattens toward inversion — a narrowing, credit-unconfirmed advance.",
    "bottoming": "The index is still down but equal-weight and high yield start outperforming and the VIX curve rebuilds contango — stress draining before price turns.",
    "phase_evidence": {
@@ -2474,11 +2474,11 @@
      "label": "Hot-rolled coil steel (HRC=F)",
      "window": 63,
      "s": 1,
-     "m": 0.1226,
-     "z": 1.965,
-     "status": "diverges",
-     "value": "+13.0% over 63d",
-     "note": "steel prices rising",
+     "m": null,
+     "z": null,
+     "status": "n/a",
+     "value": "n/a",
+     "note": "no price series for HRC=F",
      "inputs": [
       "HRC=F"
      ],
@@ -2682,7 +2682,7 @@
      }
     }
    ],
-   "read": "Accelerating down since 11/16 — 5 of 6 checks confirm the down-trend; steel prices rising (HRC=F +13.0% over 63d); washed out: 0th pct of its 3y range.",
+   "read": "Accelerating down since 11/16 — 5 of 5 checks confirm the down-trend; nothing diverging; washed out: 0th pct of its 3y range.",
    "topping": "XME rising on fewer names while steel and copper roll over — gold alone carrying an equal-weight metals fund.",
    "bottoming": "XME still down, but steel and copper firm and more members rise — the equal-weight basket turning from the inside.",
    "phase_evidence": {
@@ -2739,11 +2739,11 @@
      "label": "Hot-rolled coil steel (HRC=F)",
      "window": 63,
      "s": 1,
-     "m": 0.1226,
-     "z": 1.965,
-     "status": "diverges",
-     "value": "+13.0% over 63d",
-     "note": "US steel prices rising while the fund falls",
+     "m": null,
+     "z": null,
+     "status": "n/a",
+     "value": "n/a",
+     "note": "no price series for HRC=F",
      "inputs": [
       "HRC=F"
      ],
@@ -2895,7 +2895,7 @@
      }
     }
    ],
-   "read": "Accelerating down since 11/12 — 1 of 3 checks confirm the down-trend; US steel prices rising while the fund falls (HRC=F +13.0% over 63d); also steel beating the wider metals complex; washed out: 2nd pct of its 3y range.",
+   "read": "Accelerating down since 11/12 — 1 of 2 checks confirm the down-trend; steel beating the wider metals complex (SLX/XME +18.8% over 63d); washed out: 2nd pct of its 3y range.",
    "topping": "SLX up while hot-rolled coil prices fall and the iron-ore miners, not the steelmakers, carry it — the tariff premium fading.",
    "bottoming": "SLX still down, but HRC turns up and the steelmakers start leading the iron-ore names.",
    "phase_evidence": {
@@ -6288,11 +6288,11 @@
      "label": "Hot-rolled coil steel (HRC=F)",
      "window": 63,
      "s": 1,
-     "m": 0.1226,
-     "z": 1.965,
-     "status": "diverges",
-     "value": "+13.0% over 63d",
-     "note": "steel prices rising",
+     "m": null,
+     "z": null,
+     "status": "n/a",
+     "value": "n/a",
+     "note": "no price series for HRC=F",
      "inputs": [
       "HRC=F"
      ],
@@ -6398,7 +6398,7 @@
      }
     }
    ],
-   "read": "Accelerating down since 11/19 — 2 of 4 checks confirm the down-trend; steel prices rising (HRC=F +13.0% over 63d); washed out: 2nd pct of its 3y range.",
+   "read": "Accelerating down since 11/19 — 2 of 3 checks confirm the down-trend; nothing diverging; washed out: 2nd pct of its 3y range.",
    "topping": "PAVE up but lagging XLI while steel prices fall and yields rise — spending priced ahead of the inputs.",
    "bottoming": "PAVE still down, but it begins beating XLI, steel firms and more members rise.",
    "phase_evidence": {
@@ -17512,10 +17512,16 @@
  },
  "errors": {
   "_fetch": {
-   "RSP": "no bars returned"
+   "HRC=F": "no bars returned"
   },
-  "SPY": [
-   "breadth: no price series for RSP"
+  "XME": [
+   "steel: no price series for HRC=F"
+  ],
+  "SLX": [
+   "hrc: no price series for HRC=F"
+  ],
+  "PAVE": [
+   "steel: no price series for HRC=F"
   ]
  }
 }

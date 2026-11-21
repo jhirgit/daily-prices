@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T08:39:31Z",
+ "generated_at": "2026-11-21T16:48:09Z",
  "asof": "2026-11-21",
  "status": "ok",
  "counts": {
@@ -29,13 +29,17 @@
   "energy": "Energy"
  },
  "meta": {
-  "requests": 36,
-  "bytes": 12126965,
-  "seconds": 55.6,
+  "requests": 136,
+  "bytes": 14514959,
+  "seconds": 150.3,
   "by_host": {
    "api.fiscaldata.treasury.gov": {
     "requests": 5,
     "bytes": 1858384
+   },
+   "api.stlouisfed.org": {
+    "requests": 110,
+    "bytes": 3103372
    },
    "apps.bea.gov": {
     "requests": 1,
@@ -48,10 +52,6 @@
    "ec.europa.eu": {
     "requests": 7,
     "bytes": 83923
-   },
-   "fred.stlouisfed.org": {
-    "requests": 10,
-    "bytes": 715378
    },
    "sdmx.oecd.org": {
     "requests": 3,
@@ -78,7 +78,7 @@
     "bytes": 7703887
    }
   },
-  "fred_route": "keyless fredgraph.csv"
+  "fred_route": "api (FRED_API_KEY)"
  },
  "fed_path": {
   "what": "CBOT 30-day fed funds futures, one contract per month; implied rate = 100 minus price, the market-priced average overnight rate for that month. Contract symbols are generated from the date (never the generic ZQ=F).",
@@ -454,7 +454,7 @@
      "label": "Policy-range midpoint",
      "value": 3.875,
      "unit": "%",
-     "asof": "2026-11-20"
+     "asof": "2026-11-21"
     },
     {
      "label": "Taylor-rule prescription (Atlanta Fed, FOMCTaylor99UR)",
@@ -512,7 +512,7 @@
      "name": "Fed funds policy range, top",
      "field": "value",
      "value": 4.0,
-     "asof": "2026-11-20",
+     "asof": "2026-11-21",
      "status": "ok"
     },
     {
@@ -520,7 +520,7 @@
      "name": "Fed funds policy range, bottom",
      "field": "value",
      "value": 3.75,
-     "asof": "2026-11-20",
+     "asof": "2026-11-21",
      "status": "ok"
     },
     {
@@ -1700,8 +1700,8 @@
    "extra": {
     "d3avg": 113.667
    },
-   "released": null,
-   "next_release": "2027-01-05",
+   "released": "2026-11-03",
+   "next_release": "2026-12-01",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -1731,8 +1731,8 @@
     "avg3": 1.967,
     "chg_3": 0.1
    },
-   "released": null,
-   "next_release": "2027-01-05",
+   "released": "2026-11-03",
+   "next_release": "2026-12-01",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -1762,8 +1762,8 @@
     "avg3": 3.3,
     "chg_3": 0.0
    },
-   "released": null,
-   "next_release": "2027-01-05",
+   "released": "2026-11-03",
+   "next_release": "2026-12-01",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -1792,8 +1792,8 @@
    "extra": {
     "d3avg": -48.0
    },
-   "released": null,
-   "next_release": "2027-01-05",
+   "released": "2026-11-03",
+   "next_release": "2026-12-01",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -1882,7 +1882,7 @@
    "yoy": 3.117,
    "yoy_unit": "%",
    "ann3m": 3.147,
-   "released": null,
+   "released": "2026-10-30",
    "next_release": "2027-01-29",
    "status": "ok",
    "reason": null,
@@ -1910,7 +1910,7 @@
    "yoy": 3.37,
    "yoy_unit": "%",
    "ann3m": 3.189,
-   "released": null,
+   "released": "2026-10-30",
    "next_release": "2027-01-29",
    "status": "ok",
    "reason": null,
@@ -1938,8 +1938,8 @@
    "yoy": 2.058,
    "yoy_unit": "%",
    "ann3m": 3.555,
-   "released": null,
-   "next_release": "2027-02-04",
+   "released": "2026-11-05",
+   "next_release": "2026-12-08",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -1966,8 +1966,8 @@
    "yoy": 2.386,
    "yoy_unit": "%",
    "ann3m": -0.663,
-   "released": null,
-   "next_release": "2027-02-04",
+   "released": "2026-11-05",
+   "next_release": "2026-12-08",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -2082,11 +2082,11 @@
    "extra": {
     "pct_3m": 3.78
    },
-   "released": null,
-   "next_release": null,
+   "released": "2026-11-20",
+   "next_release": "2026-11-27",
    "status": "ok",
    "reason": null,
-   "judged_by": "days",
+   "judged_by": "calendar",
    "priority": "core",
    "licence": "US federal government work: public domain"
   },
@@ -2112,8 +2112,8 @@
    "extra": {
     "d3avg": -24630.667
    },
-   "released": null,
-   "next_release": "2027-01-13",
+   "released": "2026-11-12",
+   "next_release": "2026-12-11",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -2142,8 +2142,8 @@
    "extra": {
     "d3avg": -2496.667
    },
-   "released": null,
-   "next_release": "2027-01-13",
+   "released": "2026-11-12",
+   "next_release": "2026-12-11",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -2235,11 +2235,11 @@
    "extra": {
     "pct_3m": 0.221
    },
-   "released": null,
-   "next_release": null,
+   "released": "2026-11-17",
+   "next_release": "2026-11-24",
    "status": "ok",
    "reason": null,
-   "judged_by": "days",
+   "judged_by": "calendar",
    "priority": "useful",
    "licence": "US federal government work: public domain"
   },
@@ -3362,8 +3362,8 @@
    "extra": {
     "pct_3m": 2.181
    },
-   "released": null,
-   "next_release": "2027-01-14",
+   "released": "2026-11-13",
+   "next_release": "2026-12-15",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -3393,8 +3393,8 @@
    "extra": {
     "pct_3m": 2.67
    },
-   "released": null,
-   "next_release": "2027-01-15",
+   "released": "2026-11-17",
+   "next_release": "2026-12-17",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -3649,10 +3649,10 @@
    "source": "fred",
    "source_id": "DFEDTARU",
    "release": "fomc",
-   "asof": "2026-11-20",
+   "asof": "2026-11-21",
    "value": 4.0,
    "prior": 4.0,
-   "prior_asof": "2026-11-19",
+   "prior_asof": "2026-11-20",
    "change": 0.0,
    "change_unit": "pp",
    "yoy": 0.0,
@@ -3679,10 +3679,10 @@
    "source": "fred",
    "source_id": "DFEDTARL",
    "release": "fomc",
-   "asof": "2026-11-20",
+   "asof": "2026-11-21",
    "value": 3.75,
    "prior": 3.75,
-   "prior_asof": "2026-11-19",
+   "prior_asof": "2026-11-20",
    "change": 0.0,
    "change_unit": "pp",
    "yoy": 0.0,
@@ -3831,7 +3831,7 @@
     "chg_13w": -0.063
    },
    "released": null,
-   "next_release": null,
+   "next_release": "2026-11-27",
    "status": "ok",
    "reason": null,
    "judged_by": "days",
@@ -3861,7 +3861,7 @@
     "chg_13w": 44.369
    },
    "released": null,
-   "next_release": null,
+   "next_release": "2026-11-27",
    "status": "ok",
    "reason": null,
    "judged_by": "days",
@@ -5401,8 +5401,8 @@
    "extra": {
     "pct_3m": 2.831
    },
-   "released": null,
-   "next_release": "2027-01-27",
+   "released": "2026-11-03",
+   "next_release": "2026-11-25",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -5460,8 +5460,8 @@
    "extra": {
     "pct_3m": 2.47
    },
-   "released": null,
-   "next_release": "2027-01-04",
+   "released": "2026-11-02",
+   "next_release": "2026-12-01",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -5491,8 +5491,8 @@
    "extra": {
     "pct_3m": 32.694
    },
-   "released": null,
-   "next_release": "2027-01-04",
+   "released": "2026-11-02",
+   "next_release": "2026-12-01",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -5522,8 +5522,8 @@
    "extra": {
     "pct_3m": 1.912
    },
-   "released": null,
-   "next_release": "2027-01-14",
+   "released": "2026-11-13",
+   "next_release": "2026-12-15",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -5553,8 +5553,8 @@
    "extra": {
     "pct_3m": 2.791
    },
-   "released": null,
-   "next_release": "2027-01-14",
+   "released": "2026-11-13",
+   "next_release": "2026-12-15",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",

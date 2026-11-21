@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T08:39:31Z",
+ "generated_at": "2026-11-21T16:48:09Z",
  "asof": "2026-11-21",
  "note": "Release dates, generated each night. Each row carries its source and the date it was verified; rows from macro_calendar_fixed.json are hand-verified.",
  "sources": {
@@ -22,9 +22,29 @@
     "holidays_through": "2027-12-31"
    },
    "reason": null
+  },
+  "fred": {
+   "status": "ok",
+   "reason": null
   }
  },
  "events": [
+  {
+   "date": "2026-07-24",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-07-27",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
   {
    "date": "2026-07-30",
    "time_et": "08:30",
@@ -39,6 +59,54 @@
    "release": "bea_pio",
    "name": "Personal Income and Outlays",
    "source": "https://apps.bea.gov/API/signup/release_dates.json",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-07-30",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-07-30",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-07-31",
+   "time_et": "08:30",
+   "release": "bls_eci",
+   "name": "Employment Cost Index",
+   "source": "FRED API fred/release/dates (release_id 11)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-07-31",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-03",
+   "time_et": "10:00",
+   "release": "census_c30",
+   "name": "Construction Spending",
+   "source": "FRED API fred/release/dates (release_id 229)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-03",
+   "time_et": null,
+   "release": "fed_sloos",
+   "name": "fed_sloos",
+   "source": "FRED API fred/release/dates (release_id 191)",
    "verified": "2026-11-21"
   },
   {
@@ -50,6 +118,150 @@
    "verified": "2026-11-21"
   },
   {
+   "date": "2026-08-04",
+   "time_et": "10:00",
+   "release": "bls_jolts",
+   "name": "Job Openings and Labor Turnover Survey",
+   "source": "FRED API fred/release/dates (release_id 192)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-04",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-06",
+   "time_et": "08:30",
+   "release": "bls_productivity",
+   "name": "Productivity and Costs",
+   "source": "FRED API fred/release/dates (release_id 47)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-06",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-06",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-07",
+   "time_et": "08:30",
+   "release": "bls_empsit",
+   "name": "Employment Situation",
+   "source": "FRED API fred/release/dates (release_id 50)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-07",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-12",
+   "time_et": "08:30",
+   "release": "bls_cpi",
+   "name": "Consumer Price Index",
+   "source": "FRED API fred/release/dates (release_id 10)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-12",
+   "time_et": "10:00",
+   "release": "census_bfs",
+   "name": "Business Formation Statistics",
+   "source": "FRED API fred/release/dates (release_id 443)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-13",
+   "time_et": "08:30",
+   "release": "bls_ppi",
+   "name": "Producer Price Index",
+   "source": "FRED API fred/release/dates (release_id 46)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-13",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-13",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-14",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-18",
+   "time_et": "08:30",
+   "release": "bls_mxp",
+   "name": "Import and Export Price Indexes",
+   "source": "FRED API fred/release/dates (release_id 188)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-18",
+   "time_et": null,
+   "release": "fed_g17",
+   "name": "fed_g17",
+   "source": "FRED API fred/release/dates (release_id 13)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-20",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-20",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-21",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
    "date": "2026-08-26",
    "time_et": "08:30",
    "release": "bea_gdp",
@@ -66,11 +278,131 @@
    "verified": "2026-11-21"
   },
   {
+   "date": "2026-08-26",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-27",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-27",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-08-28",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-01",
+   "time_et": "10:00",
+   "release": "bls_jolts",
+   "name": "Job Openings and Labor Turnover Survey",
+   "source": "FRED API fred/release/dates (release_id 192)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-01",
+   "time_et": "10:00",
+   "release": "census_c30",
+   "name": "Construction Spending",
+   "source": "FRED API fred/release/dates (release_id 229)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-02",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
+  {
    "date": "2026-09-03",
    "time_et": "08:30",
    "release": "bea_trade",
    "name": "U.S. International Trade in Goods and Services",
    "source": "https://apps.bea.gov/API/signup/release_dates.json",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-03",
+   "time_et": "08:30",
+   "release": "bls_productivity",
+   "name": "Productivity and Costs",
+   "source": "FRED API fred/release/dates (release_id 47)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-03",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-03",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-04",
+   "time_et": "08:30",
+   "release": "bls_empsit",
+   "name": "Employment Situation",
+   "source": "FRED API fred/release/dates (release_id 50)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-04",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-10",
+   "time_et": "08:30",
+   "release": "bls_ppi",
+   "name": "Producer Price Index",
+   "source": "FRED API fred/release/dates (release_id 46)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-10",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-10",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
    "verified": "2026-11-21"
   },
   {
@@ -83,6 +415,102 @@
    "name": "Consumer Price Index"
   },
   {
+   "date": "2026-09-11",
+   "time_et": "10:00",
+   "release": "census_bfs",
+   "name": "Business Formation Statistics",
+   "source": "FRED API fred/release/dates (release_id 443)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-11",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-16",
+   "time_et": "08:30",
+   "release": "bls_mxp",
+   "name": "Import and Export Price Indexes",
+   "source": "FRED API fred/release/dates (release_id 188)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-17",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-17",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-18",
+   "time_et": null,
+   "release": "fed_g17",
+   "name": "fed_g17",
+   "source": "FRED API fred/release/dates (release_id 13)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-18",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-24",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-24",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-25",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-25",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-09-29",
+   "time_et": "10:00",
+   "release": "bls_jolts",
+   "name": "Job Openings and Labor Turnover Survey",
+   "source": "FRED API fred/release/dates (release_id 192)",
+   "verified": "2026-11-21"
+  },
+  {
    "date": "2026-09-30",
    "time_et": "08:30",
    "release": "bea_gdp",
@@ -96,6 +524,30 @@
    "release": "bea_pio",
    "name": "Personal Income and Outlays",
    "source": "https://apps.bea.gov/API/signup/release_dates.json",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-01",
+   "time_et": "10:00",
+   "release": "census_c30",
+   "name": "Construction Spending",
+   "source": "FRED API fred/release/dates (release_id 229)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-01",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-01",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
    "verified": "2026-11-21"
   },
   {
@@ -108,11 +560,51 @@
    "name": "Employment Situation"
   },
   {
+   "date": "2026-10-02",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-02",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
    "date": "2026-10-06",
    "time_et": "08:30",
    "release": "bea_trade",
    "name": "U.S. International Trade in Goods and Services",
    "source": "https://apps.bea.gov/API/signup/release_dates.json",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-08",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-08",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-09",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
    "verified": "2026-11-21"
   },
   {
@@ -125,6 +617,94 @@
    "name": "Consumer Price Index"
   },
   {
+   "date": "2026-10-14",
+   "time_et": "10:00",
+   "release": "census_bfs",
+   "name": "Business Formation Statistics",
+   "source": "FRED API fred/release/dates (release_id 443)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-15",
+   "time_et": "08:30",
+   "release": "bls_ppi",
+   "name": "Producer Price Index",
+   "source": "FRED API fred/release/dates (release_id 46)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-15",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-15",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-16",
+   "time_et": "08:30",
+   "release": "bls_mxp",
+   "name": "Import and Export Price Indexes",
+   "source": "FRED API fred/release/dates (release_id 188)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-16",
+   "time_et": null,
+   "release": "fed_g17",
+   "name": "fed_g17",
+   "source": "FRED API fred/release/dates (release_id 13)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-16",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-22",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-22",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-23",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-27",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
+  {
    "date": "2026-10-29",
    "time_et": "08:30",
    "release": "bea_gdp",
@@ -145,8 +725,64 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-29",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-30",
+   "time_et": "08:30",
+   "release": "bls_eci",
+   "name": "Employment Cost Index",
+   "source": "FRED API fred/release/dates (release_id 11)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-10-30",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-02",
+   "time_et": "10:00",
+   "release": "census_c30",
+   "name": "Construction Spending",
+   "source": "FRED API fred/release/dates (release_id 229)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-02",
+   "time_et": null,
+   "release": "fed_sloos",
+   "name": "fed_sloos",
+   "source": "FRED API fred/release/dates (release_id 191)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-03",
+   "time_et": "10:00",
+   "release": "bls_jolts",
+   "name": "Job Openings and Labor Turnover Survey",
+   "source": "FRED API fred/release/dates (release_id 192)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-03",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
   },
   {
    "date": "2026-11-04",
@@ -159,10 +795,26 @@
   {
    "date": "2026-11-05",
    "time_et": "08:30",
+   "release": "bls_productivity",
+   "name": "Productivity and Costs",
+   "source": "FRED API fred/release/dates (release_id 47)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-05",
+   "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-05",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
   },
   {
    "release": "bls_empsit",
@@ -172,6 +824,14 @@
    "source": "jr-dash deploy-jr-dash/macro-calendar.json (transcribed 2026-09-06 from bls.gov/schedule/news_release)",
    "verified": "2026-09-06",
    "name": "Employment Situation"
+  },
+  {
+   "date": "2026-11-06",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
   },
   {
    "release": "bls_cpi",
@@ -184,19 +844,91 @@
   },
   {
    "date": "2026-11-12",
+   "time_et": "10:00",
+   "release": "census_bfs",
+   "name": "Business Formation Statistics",
+   "source": "FRED API fred/release/dates (release_id 443)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-12",
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-12",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": "08:30",
+   "release": "bls_ppi",
+   "name": "Producer Price Index",
+   "source": "FRED API fred/release/dates (release_id 46)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-13",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-17",
+   "time_et": "08:30",
+   "release": "bls_mxp",
+   "name": "Import and Export Price Indexes",
+   "source": "FRED API fred/release/dates (release_id 188)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-17",
+   "time_et": null,
+   "release": "fed_g17",
+   "name": "fed_g17",
+   "source": "FRED API fred/release/dates (release_id 13)",
+   "verified": "2026-11-21"
   },
   {
    "date": "2026-11-19",
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-19",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-20",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-24",
+   "time_et": null,
+   "release": "fed_g17",
+   "name": "fed_g17",
+   "source": "FRED API fred/release/dates (release_id 13)",
+   "verified": "2026-11-21"
   },
   {
    "date": "2026-11-25",
@@ -217,19 +949,74 @@
   {
    "date": "2026-11-25",
    "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-25",
+   "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null,
-   "note": "moved from Thursday 2026-11-26 (a federal holiday on the OPM schedule) by the Department of Labor's practice; the moved date is not confirmed against a DOL notice"
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-27",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-11-27",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-01",
+   "time_et": "10:00",
+   "release": "bls_jolts",
+   "name": "Job Openings and Labor Turnover Survey",
+   "source": "FRED API fred/release/dates (release_id 192)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-01",
+   "time_et": "10:00",
+   "release": "census_c30",
+   "name": "Construction Spending",
+   "source": "FRED API fred/release/dates (release_id 229)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-03",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
   },
   {
    "date": "2026-12-03",
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-03",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
   },
   {
    "release": "bls_empsit",
@@ -241,11 +1028,27 @@
    "name": "Employment Situation"
   },
   {
+   "date": "2026-12-04",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
    "date": "2026-12-08",
    "time_et": "08:30",
    "release": "bea_trade",
    "name": "U.S. International Trade in Goods and Services",
    "source": "https://apps.bea.gov/API/signup/release_dates.json",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-08",
+   "time_et": "08:30",
+   "release": "bls_productivity",
+   "name": "Productivity and Costs",
+   "source": "FRED API fred/release/dates (release_id 47)",
    "verified": "2026-11-21"
   },
   {
@@ -282,8 +1085,16 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-10",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
   },
   {
    "date": "2026-12-10",
@@ -291,6 +1102,46 @@
    "release": "treasury_mts",
    "name": "Monthly Treasury Statement",
    "source": "https://api.fiscaldata.treasury.gov/services/calendar/release (dataset 015-BFS-2014Q1-13)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-11",
+   "time_et": "10:00",
+   "release": "census_bfs",
+   "name": "Business Formation Statistics",
+   "source": "FRED API fred/release/dates (release_id 443)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-11",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-15",
+   "time_et": "08:30",
+   "release": "bls_ppi",
+   "name": "Producer Price Index",
+   "source": "FRED API fred/release/dates (release_id 46)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-16",
+   "time_et": null,
+   "release": "fed_g17",
+   "name": "fed_g17",
+   "source": "FRED API fred/release/dates (release_id 13)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-17",
+   "time_et": "08:30",
+   "release": "bls_mxp",
+   "name": "Import and Export Price Indexes",
+   "source": "FRED API fred/release/dates (release_id 188)",
    "verified": "2026-11-21"
   },
   {
@@ -307,8 +1158,8 @@
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
   },
   {
    "release": "ecb_mp",
@@ -318,6 +1169,22 @@
    "source": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
    "verified": "2026-11-20",
    "name": "ECB monetary policy meeting"
+  },
+  {
+   "date": "2026-12-17",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-18",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
   },
   {
    "date": "2026-12-23",
@@ -336,20 +1203,60 @@
    "verified": "2026-11-21"
   },
   {
+   "date": "2026-12-23",
+   "time_et": "08:30",
+   "release": "census_m3",
+   "name": "Advance Report on Durable Goods",
+   "source": "FRED API fred/release/dates (release_id 95)",
+   "verified": "2026-11-21"
+  },
+  {
    "date": "2026-12-24",
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-24",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-24",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
   },
   {
    "date": "2026-12-31",
    "time_et": "08:30",
    "release": "dol_claims",
    "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
+   "source": "FRED API fred/release/dates (release_id 180)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-31",
+   "time_et": null,
+   "release": "fed_h41",
+   "name": "fed_h41",
+   "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-21"
+  },
+  {
+   "date": "2026-12-31",
+   "time_et": null,
+   "release": "fed_h8",
+   "name": "fed_h8",
+   "source": "FRED API fred/release/dates (release_id 22)",
+   "verified": "2026-11-21"
   },
   {
    "release": "congress",
@@ -387,14 +1294,6 @@
    "verified": "2026-11-21"
   },
   {
-   "date": "2027-01-07",
-   "time_et": "08:30",
-   "release": "dol_claims",
-   "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
-  },
-  {
    "release": "bls_empsit",
    "date": "2027-01-08",
    "time_et": "08:30",
@@ -429,14 +1328,6 @@
    "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
    "verified": "2026-11-20",
    "name": "Producer Price Index"
-  },
-  {
-   "date": "2027-01-14",
-   "time_et": "08:30",
-   "release": "dol_claims",
-   "name": "Unemployment Insurance Weekly Claims",
-   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
-   "verified": null
   },
   {
    "release": "bls_mxp",
