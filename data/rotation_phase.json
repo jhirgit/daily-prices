@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T08:38:29Z",
+ "generated_at": "2026-11-21T16:18:15Z",
  "asof": "2026-11-20",
  "evidence_asof": "2026-09-25",
  "evidence_summary": {
@@ -40,11 +40,11 @@
      "label": "Equal-weight vs cap-weight S&P (RSP/SPY)",
      "window": 63,
      "s": 1,
-     "m": 0.03521,
-     "z": 0.787,
-     "status": "confirms",
-     "value": "+3.6% over 63d",
-     "note": "",
+     "m": null,
+     "z": null,
+     "status": "n/a",
+     "value": "n/a",
+     "note": "no price series for RSP",
      "inputs": [
       "RSP",
       "SPY"
@@ -135,7 +135,7 @@
      }
     }
    ],
-   "read": "Slowing up since 10/30 — 1 of 3 checks confirm; the VIX curve inverted — near-term stress priced above 3-month (^VIX3M − ^VIX −4.95 pts (^VIX3M below ^VIX)); also credit not confirming — high yield lagging Treasuries; washed out: 3rd pct of its 3y range.",
+   "read": "Slowing up since 10/30 — 0 of 2 checks confirm; the VIX curve inverted — near-term stress priced above 3-month (^VIX3M − ^VIX −4.95 pts (^VIX3M below ^VIX)); also credit not confirming — high yield lagging Treasuries; washed out: 3rd pct of its 3y range.",
    "topping": "The index keeps rising while equal-weight lags, high yield stops beating Treasuries and the VIX curve flattens toward inversion — a narrowing, credit-unconfirmed advance.",
    "bottoming": "The index is still down but equal-weight and high yield start outperforming and the VIX curve rebuilds contango — stress draining before price turns.",
    "phase_evidence": {
@@ -6147,15 +6147,15 @@
      "label": "Top-3 share of the move",
      "window": 63,
      "s": 0,
-     "m": 0.765,
+     "m": 0.707,
      "z": null,
      "status": "info",
-     "value": "0.8× their weight share of the 63d move (broader than the fund)",
+     "value": "0.7× their weight share of the 63d move (broader than the fund)",
      "note": "whether a few electrical names carry the fund",
      "who": [
       "PWR",
       "JCI",
-      "ETN"
+      "ABBN.SW"
      ],
      "evidence": {
       "tag": "uncalibrated",
@@ -12579,7 +12579,7 @@
      "label": "Share of the fund's weight rising",
      "window": 63,
      "s": 1,
-     "m": 0.4255,
+     "m": 0.4306,
      "z": null,
      "status": "neutral",
      "value": "43% of covered weight up over 63d · 23 of 45 names · 13% over 21d",
@@ -14732,7 +14732,7 @@
      "label": "Top-3 share of the move",
      "window": 63,
      "s": 0,
-     "m": 0.475,
+     "m": 0.477,
      "z": null,
      "status": "info",
      "value": "0.5× their weight share of the 63d move (broader than the fund)",
@@ -15361,7 +15361,7 @@
      "label": "Top-3 share of the move",
      "window": 63,
      "s": 0,
-     "m": 0.853,
+     "m": 0.856,
      "z": null,
      "status": "info",
      "value": "0.9× their weight share of the 63d move (in line with the fund)",
@@ -15553,12 +15553,12 @@
      "m": null,
      "z": null,
      "status": "info",
-     "value": "operators −0.5pp · fuel −10.1pp · SMR developers −2.5pp · the rest −22.5pp of the 63d −35.6%",
+     "value": "operators −0.6pp · fuel −10.1pp · SMR developers −2.5pp · the rest −22.4pp of the 63d −35.6%",
      "note": "operators earn on PPAs today; SMR developers are the speculative layer",
      "groups": [
       {
        "name": "operators",
-       "c": -0.00464,
+       "c": -0.00565,
        "found": [
         "CEG",
         "PEG",
@@ -15583,7 +15583,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.22524,
+       "c": -0.22424,
        "found": null
       }
      ],
@@ -17510,5 +17510,12 @@
    }
   }
  },
- "errors": {}
+ "errors": {
+  "_fetch": {
+   "RSP": "no bars returned"
+  },
+  "SPY": [
+   "breadth: no price series for RSP"
+  ]
+ }
 }

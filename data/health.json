@@ -1,8 +1,10 @@
 {
- "generated_at": "2026-11-21T08:39:31Z",
+ "generated_at": "2026-11-21T16:18:22Z",
  "session": "2026-11-20",
- "status": "ok",
- "degraded": [],
+ "status": "degraded",
+ "degraded": [
+  "step macro failed (continue-on-error; its payload is yesterday's)"
+ ],
  "warnings": [],
  "steps": {
   "rotation_members": "success",
@@ -11,14 +13,14 @@
   "basket_fundamentals": "success",
   "exhaustion": "success",
   "thesis_gauge": "success",
-  "macro": "success"
+  "macro": "failure"
  },
  "note": "Public-safe pipeline health (review M1): counts, dates and ticker symbols only. `asof` is the session a payload speaks for; EOD payloads should equal `session`. Degraded = something shipped fresh-stamped but short or stale.",
  "payloads": {
   "latest.json": {
    "present": true,
-   "bytes": 112410,
-   "generated_at": "2026-11-21T08:30:30Z",
+   "bytes": 112418,
+   "generated_at": "2026-11-21T16:14:11Z",
    "rows": 318,
    "asof": "2026-11-20",
    "errors": {
@@ -27,34 +29,33 @@
   },
   "technicals.json": {
    "present": true,
-   "bytes": 1967099,
-   "generated_at": "2026-11-21T08:30:38Z",
+   "bytes": 1967109,
+   "generated_at": "2026-11-21T16:14:20Z",
    "rows": 304,
    "asof": "2026-11-20"
   },
   "closes.json": {
    "present": true,
    "bytes": 1730865,
-   "generated_at": "2026-11-21T08:30:39Z",
+   "generated_at": "2026-11-21T16:14:22Z",
    "rows": 316,
    "asof": "2026-11-20"
   },
   "crowd.json": {
    "present": true,
-   "bytes": 43757,
-   "generated_at": "2026-11-21T08:30:39Z",
+   "bytes": 43905,
+   "generated_at": "2026-11-21T16:14:21Z",
    "rows": 316,
    "asof": "2026-11-21"
   },
   "rotation_members.json": {
    "present": true,
-   "bytes": 1542074,
-   "generated_at": "2026-11-21T08:38:25Z",
+   "bytes": 1541997,
+   "generated_at": "2026-11-21T16:18:10Z",
    "rows": 81,
    "asof": "2026-11-20",
    "errors": {
     "rows": [
-     "GRID",
      "LIT",
      "SILJ"
     ]
@@ -62,58 +63,64 @@
   },
   "rotation_phase.json": {
    "present": true,
-   "bytes": 398242,
-   "generated_at": "2026-11-21T08:38:29Z",
+   "bytes": 398352,
+   "generated_at": "2026-11-21T16:18:15Z",
    "rows": 81,
-   "asof": "2026-11-20"
+   "asof": "2026-11-20",
+   "errors": {
+    "rows": [
+     "SPY",
+     "_fetch"
+    ]
+   }
   },
   "rotation_corr.json": {
    "present": true,
    "bytes": 454434,
-   "generated_at": "2026-11-21T08:38:30Z",
+   "generated_at": "2026-11-21T16:18:16Z",
    "rows": 86,
    "asof": "2026-11-20"
   },
   "rotation_fundamentals.json": {
    "present": true,
    "bytes": 294301,
-   "generated_at": "2026-11-21T08:38:31Z",
+   "generated_at": "2026-11-21T16:18:17Z",
    "rows": 81,
    "asof": "2026-11-20"
   },
   "exhaustion.json": {
    "present": true,
    "bytes": 275468,
-   "generated_at": "2026-11-21T08:38:35Z",
+   "generated_at": "2026-11-21T16:18:21Z",
    "rows": null,
    "asof": "2026-11-20"
   },
   "thesis_gauge.json": {
    "present": true,
    "bytes": 98074,
-   "generated_at": "2026-11-21T08:30:39Z",
+   "generated_at": "2026-11-21T16:14:21Z",
    "rows": null,
    "asof": "2026-11-20"
   },
   "options_flow.json": {
    "present": true,
-   "bytes": 259077,
-   "generated_at": "2026-11-21T06:30:52Z",
+   "bytes": 259324,
+   "generated_at": "2026-11-21T08:43:12Z",
    "rows": 273,
    "asof": "2026-11-20",
-   "cap_share": 0.843
+   "cap_share": 0.844
   },
   "earnings_dates.json": {
    "present": true,
    "bytes": 13011,
-   "generated_at": "2026-11-21T06:28:39Z",
+   "generated_at": "2026-11-21T08:41:09Z",
    "rows": 140,
    "asof": "2026-11-21"
   },
   "earnings_detected.json": {
    "present": true,
    "bytes": 1497,
-   "generated_at": "2026-11-21T06:28:39Z",
+   "generated_at": "2026-11-21T08:41:10Z",
    "rows": 2,
    "asof": "2026-11-21",
    "errors": {
@@ -148,9 +155,9 @@
   },
   "insiders_12m.json": {
    "present": true,
-   "bytes": 36772,
-   "generated_at": "2026-11-14T18:36:49Z",
-   "rows": 258,
+   "bytes": 37749,
+   "generated_at": "2026-11-21T13:02:10Z",
+   "rows": 291,
    "errors": {
     "fetch_error": []
    }
