@@ -829,10 +829,15 @@ def build_calendar(cat, http, today, fixed_path=FIXED_CAL, keys=None):
     # weekly claims: every Thursday; when Thursday is a federal holiday the Department of Labor releases on the prior
     # business day (Thanksgiving 2026-11-26 -> Wednesday 2026-11-25). Holidays: macro_calendar_fixed.json federal_holidays.
     for k, r in rel.items():
-        if (r.get("calendar") or "") == "weekly:Thu" and k not in from_fred:
+        if (r.get("calendar") or "") == "weekly:Thu":
+            # FRED lists this release only to the end of its own calendar year (2026-11-21: claims stop at
+            # 2026-12-31), so the rule still supplies every week FRED does not carry; a week FRED carries is
+            # left to FRED's date.
+            fred_weeks = {dt.date.fromisoformat(x["date"]).isocalendar()[:2] for x in events
+                          if x["release"] == k and str(x.get("source") or "").startswith("FRED API")}
             d = today - dt.timedelta(days=28)
             while d <= today + dt.timedelta(days=56):
-                if d.weekday() == 3:
+                if d.weekday() == 3 and d.isocalendar()[:2] not in fred_weeks:
                     ev = {"date": d.isoformat(), "time_et": "08:30", "release": k, "name": r["name"],
                           "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
                           "verified": None}

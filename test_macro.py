@@ -551,8 +551,15 @@ class ReleaseCalendar(unittest.TestCase):
         self.assertEqual((late["time_et"], late["verified"]), ("08:30", TODAY.isoformat()))
         self.assertIn("release_id 50", late["source"])
         claims = [e for e in ev if e["release"] == "dol_claims"]
-        self.assertEqual([e["date"] for e in claims], dates[180])                   # FRED's dates replace the rule
-        self.assertTrue(all("FRED API" in e["source"] for e in claims))
+        # FRED carries its own weeks; the Thursday rule supplies every other week in its window (FRED lists a
+        # release only to the end of its calendar year), and never a second date in a week FRED carries
+        fred_rows = [e for e in claims if "FRED API" in e["source"]]
+        rule_rows = [e for e in claims if "FRED API" not in e["source"]]
+        self.assertEqual([e["date"] for e in fred_rows], dates[180])
+        self.assertTrue(rule_rows)
+        wk = lambda s: dt.date.fromisoformat(s).isocalendar()[:2]
+        self.assertFalse({wk(e["date"]) for e in rule_rows} & {wk(d) for d in dates[180]})
+        self.assertNotIn("2026-11-26", [e["date"] for e in claims])                 # Thanksgiving week is FRED's
         self.assertIn("2027-04-01", {e["date"] for e in ev if e["release"] == "census_c30"})
         rec_dates = M.release_dates(ev)
         st, why, rel, nxt, how = M.judge(entry("busloans"), "2026-10", TODAY, CAT["releases"]["fed_h8"], rec_dates)
