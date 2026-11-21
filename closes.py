@@ -24,6 +24,8 @@ import json
 import os
 import sqlite3
 
+import pricedb
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DB = os.path.join(HERE, "prices.db")
 DEFAULT_TICKERS = os.path.join(HERE, "tickers.txt")
@@ -42,7 +44,7 @@ def load_tickers(path=DEFAULT_TICKERS):
 
 
 def build(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, n=756):
-    conn = sqlite3.connect(db)
+    conn = pricedb.connect(db, readonly=True)
     dates = [r[0] for r in conn.execute(
         "SELECT date FROM daily_prices WHERE ticker=? AND close IS NOT NULL ORDER BY date", (AXIS,))]
     dates = dates[-n:]

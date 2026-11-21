@@ -37,6 +37,8 @@ import json
 import os
 import sqlite3
 
+import pricedb
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DB = os.path.join(HERE, "prices.db")
 DEFAULT_TICKERS = os.path.join(HERE, "tickers.txt")
@@ -122,7 +124,7 @@ def build(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, ins_path=DEFAULT_INS, today=No
     """`asof` truncates every series to that session (tests); production leaves
     it None and reads to the end of prices.db."""
     today = today or dt.date.today()
-    conn = sqlite3.connect(db)
+    conn = pricedb.connect(db, readonly=True)
     ins, ins_gen = {}, None
     if os.path.exists(ins_path):
         with open(ins_path, "r", encoding="utf-8") as fh:

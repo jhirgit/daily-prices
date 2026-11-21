@@ -1,3 +1,6 @@
 # Shell scripts must keep LF: a CRLF shebang (`#!/bin/sh`) is not executable,
 # and core.autocrlf=true on a Windows checkout would rewrite this hook into one.
 *.sh text eol=lf
+# The price database (pricedb.py): binary SQLite files. Never text-convert, diff or
+# three-way merge them; a conflict is resolved by taking ONE side's whole set.
+*.db binary

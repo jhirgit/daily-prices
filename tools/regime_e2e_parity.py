@@ -23,6 +23,7 @@ import sys
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # dp8/
 sys.path.insert(0, HERE)
+import pricedb  # noqa: E402
 import regime as RG          # noqa: E402
 import technicals as T       # noqa: E402
 
@@ -62,7 +63,7 @@ def diff(exp, act, path=""):
 
 def main():
     os.makedirs(PAR, exist_ok=True)
-    conn = sqlite3.connect(os.path.join(HERE, "prices.db"))
+    conn = pricedb.connect(os.path.join(HERE, "prices.db"), readonly=True)
     syms = [r[0] for r in conn.execute(
         "SELECT DISTINCT ticker FROM daily_prices ORDER BY ticker")]
     emitted = sorted(s for s in syms if len(T.load_bars(conn, s)) >= T.MIN_BARS)

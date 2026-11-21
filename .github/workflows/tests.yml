@@ -3,8 +3,9 @@ name: Tests
 # Every test_*.py plus the two parity verifiers, on any push or PR that touches
 # code, fixtures, the ticker lists or the workflows (review H3, 2026-09-26: ~3,400
 # lines of tests existed and nothing ran them; a parity gate had been failing
-# unnoticed). The bot's data commits touch only data/ and prices.db, so the path
-# filter keeps this off the daily runs.
+# unnoticed). The bot's data commits touch only data/ and the price files
+# (prices-live.db, prices-archive-N.db), so the path filter keeps this off the
+# daily runs.
 #
 # Offline by construction: the test steps point every proxy variable at a closed
 # local port, so a test that reaches for Yahoo or EDGAR fails here instead of
@@ -68,7 +69,8 @@ jobs:
           exit $fail
 
       # Frozen-fixture parity: options_flow on a synthetic chain fixture,
-      # earnings_reactions on the committed prices.db (the #26 d-N convention).
+      # earnings_reactions on the committed price files, read through pricedb.py
+      # (the #26 d-N convention).
       - name: Parity verifiers (network blocked)
         run: |
           # GitHub rejects env keys that differ only by case (HTTP_PROXY vs http_proxy),

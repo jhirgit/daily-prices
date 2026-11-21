@@ -75,6 +75,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
+import pricedb  # noqa: E402
 import regime  # noqa: E402  -- the published engine; never a copy of it
 
 TRADING_DAYS = 252.0
@@ -880,7 +881,7 @@ def selfcheck(conn, dates, series, state, cut_frac=0.7):
 # ==========================================================================
 
 def build_context(db):
-    conn = sqlite3.connect(db)
+    conn = pricedb.connect(db, readonly=True)
     dates, series = regime.build_panel(conn)
     end_idx = len(dates) - 1
     if END_DATE in dates:

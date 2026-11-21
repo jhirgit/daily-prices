@@ -34,6 +34,7 @@ from bisect import bisect_right, insort
 from collections import deque
 from datetime import datetime, timezone
 
+import pricedb
 import technicals as T
 
 FWD = (21, 63)
@@ -82,7 +83,7 @@ def day_flags(highs, lows, closes, vols):
 
 
 def main() -> int:
-    conn = sqlite3.connect(T.DEFAULT_DB)
+    conn = pricedb.connect(T.DEFAULT_DB, readonly=True)
     syms = [r[0] for r in conn.execute(
         "SELECT DISTINCT ticker FROM daily_prices ORDER BY ticker")]
 

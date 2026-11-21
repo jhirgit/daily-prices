@@ -45,6 +45,7 @@ import numpy as np
 import pandas as pd
 from numpy.lib.stride_tricks import sliding_window_view
 
+import pricedb
 import regime as RG
 import rotation_theses as TH
 
@@ -1044,7 +1045,7 @@ def main(argv=None):
     ap.add_argument("--no-fetch", action="store_true", help="skip the yfinance driver fetch")
     a = ap.parse_args(argv)
 
-    conn = sqlite3.connect(a.db)
+    conn = pricedb.connect(a.db, readonly=True)
     dates, series = RG.build_panel(conn)
     conn.close()
     inp = Inputs(dates, series, {})

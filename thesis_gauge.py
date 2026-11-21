@@ -618,9 +618,8 @@ def main(argv=None):
     ap.add_argument("--stdout", action="store_true")
     ap.add_argument("--reps", type=int, default=REPS)
     a = ap.parse_args(argv)
-    import pathlib
-    import sqlite3
-    conn = sqlite3.connect(pathlib.Path(os.path.abspath(a.db)).as_uri() + "?mode=ro", uri=True)
+    import pricedb
+    conn = pricedb.connect(a.db, readonly=True)
     try:
         out = build(conn, reps=a.reps)
     finally:

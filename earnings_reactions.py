@@ -72,6 +72,8 @@ import re
 import sqlite3
 import sys
 
+import pricedb
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DB = os.path.join(HERE, "prices.db")
 DEFAULT_TICKERS = os.path.join(HERE, "tickers.txt")
@@ -297,7 +299,7 @@ def compute_one(conn, cache, groups, ticker, date, session=None):
 
 
 def compute(prints, db=DEFAULT_DB, tickers=DEFAULT_TICKERS):
-    conn = sqlite3.connect(db)
+    conn = pricedb.connect(db, readonly=True)
     try:
         groups = load_groups(tickers)
         cache = {}
@@ -324,7 +326,7 @@ def verify(db=DEFAULT_DB, tickers=DEFAULT_TICKERS, path=PARITY):
     # SMH excess is asserted separately from the displayed proxy: #26 benchmarked
     # everything against SMH, the emitter now uses the per-name cohort proxy, and
     # this proves the difference is that decision and not an arithmetic slip.
-    conn = sqlite3.connect(db)
+    conn = pricedb.connect(db, readonly=True)
     smh = load_series(conn, "SMH")
     conn.close()
 
@@ -382,7 +384,7 @@ def self_test(db=DEFAULT_DB, tickers=DEFAULT_TICKERS):
         print("  %-58s %s" % (name, "ok" if cond else "FAIL"))
         ok = ok and bool(cond)
 
-    conn = sqlite3.connect(db)
+    conn = pricedb.connect(db, readonly=True)
     groups = load_groups(tickers)
     cache = {}
 

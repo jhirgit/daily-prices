@@ -32,6 +32,46 @@ Data source: **Yahoo Finance** via [`yfinance`](https://github.com/ranaroussi/yf
 `close` is the official daily close; `spot_quotes.price` is the (delayed) last
 trade at the moment the job ran — distinct values while the market is open.
 
+### Where the tables live: one logical `prices.db`, several files (2026-11-20)
+
+The database used to be one file, `prices.db`; at 78.8 MB it was closing on
+GitHub's 100 MB per-file limit. It is now split by date:
+
+| File | Holds | Written by |
+|---|---|---|
+| `prices-live.db` | every row dated on or after the boundary (1 January of the current year), plus `pricedb_meta` | every scheduled run |
+| `prices-archive-1.db` | rows before 2021-01-01 | a run whose dividend/split re-base reaches them, a backfill of old dates, the yearly roll |
+| `prices-archive-2.db` | 2021-01-01 up to the boundary | the same |
+
+Each file stores final values, exactly as the single file did — a plain date
+split. A dividend re-base multiplies a ticker's whole history, so an archive part
+is re-committed whenever a run re-bases a ticker it holds (about 15–20 commits a
+month, measured 2026-11-20; git stores each as a small binary delta).
+
+**Open it only through `pricedb.py`** (Node: `pricedb.js`, read-only). Pass the
+logical path `prices.db` — every script's `--db` still means that — and
+`daily_prices` / `spot_quotes` read exactly as the single table did:
+
+```python
+import pricedb
+conn = pricedb.connect("prices.db", readonly=True)     # or connect() with no argument
+conn.execute("SELECT date, close FROM daily_prices WHERE ticker='NVDA' ORDER BY date DESC LIMIT 5")
+```
+
+Writers use `pricedb.upsert_daily / insert_spot / rebase / set_adj`, which route
+each row by date; `rebase` runs the same UPDATE on every file, so the numbers
+are bit-for-bit what one file would hold. `test_pricedb.py` fails on any direct
+`sqlite3.connect` of the price files outside the helper.
+
+Housekeeping, all through the helper:
+
+```powershell
+python pricedb.py verify                    # files paired, rows inside their date ranges
+python pricedb.py roll                      # each January: move the finished year into the archive
+python pricedb.py sql "SELECT ..."          # a one-off read-only query
+python tools/split_prices_db.py --rejoin    # rollback: rebuild one prices.db, verified
+```
+
 ## Configure
 
 Edit **`tickers.txt`** — one Yahoo symbol per line, `#` comments allowed:
@@ -53,7 +93,9 @@ pip install -r requirements.txt
 python fetch_prices.py
 ```
 
-Creates / updates `prices.db` in this folder. Re-running the same day is safe —
+Creates / updates the price database in this folder (`prices-live.db`, and an
+archive part for a backfill of old dates; a fresh folder gets one `prices.db`,
+which `tools/split_prices_db.py` splits). Re-running the same day is safe —
 daily bars upsert by `(ticker, date)`, and the lookback window backfills any
 days the job missed (weekends, holidays, outages).
 
@@ -172,7 +214,8 @@ success. Full contract: `cron-dispatch/README.md` in the jr-dash repo.
 ### Enabling the daily job in a fresh fork
 
 `.github/workflows/daily-prices.yml` runs the script at **22:00 UTC on weekdays**
-and commits the updated `prices.db` back to the repo. To enable it:
+and commits the updated price files (`prices-live.db`, and any `prices-archive-N.db`
+a run had to touch) back to the repo. To enable it:
 
 1. Push **this folder as the repository root** (the workflow expects
    `fetch_prices.py` and `requirements.txt` at the root, and GitHub only runs
@@ -704,13 +747,16 @@ keeps it running when `earnings-dates` goes red on an overdue print. Roughly
 
 ## Querying the data
 
+Always through `pricedb` (the tables span several files; see "Where the tables
+live" above):
+
 ```powershell
-sqlite3 prices.db "SELECT date, close FROM daily_prices WHERE ticker='NVDA' ORDER BY date DESC LIMIT 10;"
+python pricedb.py sql "SELECT date, close FROM daily_prices WHERE ticker='NVDA' ORDER BY date DESC LIMIT 10"
 ```
 
 ```python
-import sqlite3, pandas as pd
-con = sqlite3.connect("prices.db")
+import pandas as pd, pricedb
+con = pricedb.connect("prices.db", readonly=True)
 df = pd.read_sql("SELECT * FROM daily_prices WHERE ticker = 'NVDA' ORDER BY date", con)
 ```
 
@@ -721,6 +767,9 @@ df = pd.read_sql("SELECT * FROM daily_prices WHERE ticker = 'NVDA' ORDER BY date
 - **Yahoo is unofficial.** It's free and reliable enough for a personal history,
   but not an SLA-backed feed. A bad symbol is skipped (logged `[FAIL]`); the job
   only fails if *every* ticker fails.
-- **Repo growth.** Each run commits a new copy of the binary `prices.db`, so git
-  history grows over time. Fine for years at a modest watchlist; if it ever
-  bloats, squash history or migrate the DB to a release asset.
+- **Repo growth.** Each run commits a new copy of the binary `prices-live.db`
+  (~12 MB), and an archive part whenever a dividend or split re-base reaches its
+  rows (about 15–20 a month). Git stores each as a binary delta, ~0.1 MB pushed
+  per routine commit (measured 2026-11-20). Every file stays under GitHub's 50 MB warning: a roll starts
+  a new archive part once the newest is past 35 MB, and the jr-dash gate
+  "prices.db size" warns per file (archive 45 MB, live 30 MB).

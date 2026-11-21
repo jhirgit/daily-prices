@@ -40,6 +40,7 @@ import re
 import sqlite3
 from datetime import datetime, timezone
 
+import pricedb
 import regime  # cross-sectional regime/rotation/rank-receipt port (SPEC-8)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -774,7 +775,7 @@ INPUT_ONLY = frozenset(["^VIX3M", "^VIX9D"])
 
 
 def build(db=DEFAULT_DB, tickers_file=DEFAULT_TICKERS):
-    conn = sqlite3.connect(db)
+    conn = pricedb.connect(db, readonly=True)
     groups = load_groups(tickers_file)
     syms = [r[0] for r in conn.execute(
         "SELECT DISTINCT ticker FROM daily_prices ORDER BY ticker")]

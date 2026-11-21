@@ -48,8 +48,11 @@ from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
+import pricedb
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 # Allow overriding the DB location for hosted deployments (e.g. a mounted volume).
+# The logical prices.db path: pricedb resolves it to the split files beside it.
 DB_PATH = os.environ.get("PRICES_DB", os.path.join(HERE, "prices.db"))
 
 # Hard cap on rows returned by any single tool call, to keep responses bounded.
@@ -100,13 +103,14 @@ def _connect(timeout_s: float | None = None) -> sqlite3.Connection:
     QUERY_TIMEOUT_S) have elapsed since the connection was opened. Callers
     should wrap it in ``contextlib.closing`` so the handle is released.
     """
-    if not os.path.exists(DB_PATH):
+    if not pricedb.exists(DB_PATH):
         raise FileNotFoundError(
-            f"Database not found at {DB_PATH}. Run fetch_prices.py first, "
+            f"Database not found at {DB_PATH} (nor the split prices-live.db + "
+            "prices-archive-N.db beside it). Run fetch_prices.py first, "
             "or set the PRICES_DB environment variable."
         )
-    uri = f"file:{DB_PATH}?mode=ro"
-    conn = sqlite3.connect(uri, uri=True)
+    # pricedb opens every file mode=ro (one prices.db, or the split set).
+    conn = pricedb.connect(DB_PATH, readonly=True)
     conn.row_factory = sqlite3.Row
     deadline = time.monotonic() + (QUERY_TIMEOUT_S if timeout_s is None else timeout_s)
     # A non-zero return from the handler aborts the running statement.

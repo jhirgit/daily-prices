@@ -46,6 +46,7 @@ import sqlite3
 import sys
 from datetime import datetime, timezone
 
+import pricedb
 import regime as RG
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -1527,7 +1528,7 @@ def main(argv=None):
         print("exhaustion --check: %s" % ("ok" if not probs else "%d problem(s)" % len(probs)))
         return 1 if probs else 0
     specs = universes_from(a.tickers)
-    conn = sqlite3.connect(a.db)
+    conn = pricedb.connect(a.db, readonly=True)
     axis = RG.reference_dates(conn)
     need = sorted({t for s in specs.values() for t in s["members"]} | {s["proxy"] for s in specs.values()}
                   | {VIX_T, VIX9D_T, VIX3M_T} | set(VIX_BT_PROXIES))

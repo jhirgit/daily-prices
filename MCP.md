@@ -41,7 +41,9 @@ python mcp_server.py --host 0.0.0.0 --port 8000      # serves at /<token>/mcp
 python mcp_server.py --transport stdio
 ```
 
-Point it at a database elsewhere with `PRICES_DB=/path/to/prices.db`.
+Point it at a database elsewhere with `PRICES_DB=/path/to/prices.db` — the LOGICAL
+name: since the 2026-11 split the data is `prices-live.db` + `prices-archive-N.db`
+in that folder, and `pricedb.py` opens them together (see the README).
 
 On an HTTP transport bound to anything other than loopback (`127.0.0.1`, `::1`,
 `localhost`) the server **refuses to start** without `MCP_AUTH_TOKEN`, unless you
@@ -76,10 +78,10 @@ ngrok http 8000          # or: cloudflared tunnel --url http://localhost:8000
 Add the tunnel's `https://…/<token>/mcp` URL as the connector.
 
 > **Note on the data.** The DB is regenerated and committed daily by the GitHub
-> Actions job. A hosted server reads whatever `prices.db` it was deployed with,
-> so redeploy (or mount a synced copy / pull the latest `prices.db`) to pick up
-> new days. The bundled Dockerfile bakes in the current DB and lets you mount a
-> fresher one read-only: `-v "$PWD/prices.db:/app/prices.db:ro"`.
+> Actions job. A hosted server reads whatever price files it was deployed with,
+> so redeploy (or mount a synced copy / pull the latest `prices-*.db`) to pick up
+> new days. The bundled Dockerfile bakes in the current files and lets you mount a
+> fresher folder read-only: `-v "$PWD:/data:ro" -e PRICES_DB=/data/prices.db`.
 
 ### Authentication
 

@@ -95,6 +95,7 @@ import xml.etree.ElementTree as ET
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
 
+import pricedb
 import fetch_insiders            # SEC EDGAR politeness: its UA and its paced get() (<=10 req/s)
 import regime
 
@@ -1861,7 +1862,7 @@ def main(argv=None):
     t0 = time.time()
     with open(args.tech, encoding="utf-8") as fh:
         tech = json.load(fh)
-    conn = sqlite3.connect(f"file:{args.db}?mode=ro", uri=True)
+    conn = pricedb.connect(args.db, readonly=True)
     try:
         panel = regime.build_panel(conn)
     finally:

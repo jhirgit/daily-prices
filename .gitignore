@@ -10,3 +10,10 @@ venv/
 
 # SPEC-86: rotation_evidence.py's long-history cache (reproducible by re-running it)
 data/cache/
+
+# pricedb.py / tools/split_prices_db.py leftovers, never committed: the pre-split
+# original (78 MB), pre-roll safety copies, a rollback's set-aside files, temp builds.
+prices.db.orig
+*.db.preroll
+*.db.split-orig
+*.db.tmp

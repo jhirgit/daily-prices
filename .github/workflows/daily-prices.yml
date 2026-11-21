@@ -203,21 +203,41 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add prices.db data/
+          # The price database is several files since 2026-11-20 (pricedb.py):
+          # prices-live.db, which every run writes, and prices-archive-N.db,
+          # which a run writes whenever a dividend or split re-base reaches a
+          # ticker's older rows. They are ONE database -- never commit a set that does
+          # not open as a pair. `-A` + the quoted glob (git expands it) stages
+          # a new archive part or a removed one too.
+          python pricedb.py verify
+          git add -A -- 'prices-*.db' data/
           if git diff --staged --quiet; then
             echo "No price changes to commit."
           else
             git commit -m "prices: $(date -u +'%Y-%m-%d %H:%M UTC')"
-            # prices.db and everything under data/ are whole-file artifacts,
-            # REGENERATED from scratch each run and never merged, so `-X theirs`
-            # (during a rebase: the replayed commit, i.e. this run's newer
-            # snapshot) is the only correct resolution -- a three-way merge of a
-            # binary SQLite file or a rewritten JSON snapshot is meaningless.
-            # The loop covers the other half, `! [rejected] main -> main (fetch
-            # first)`, when another job pushed between our fetch and our push.
-            # Jittered sleep so two racers do not re-collide in step.
+            # The price files and everything under data/ are whole-file artifacts,
+            # REGENERATED each run and never merged, so `-X theirs` (during a
+            # rebase: the replayed commit, i.e. this run's newer snapshot) is the
+            # only correct resolution -- a three-way merge of a binary SQLite file
+            # or a rewritten JSON snapshot is meaningless. The loop covers the
+            # other half, `! [rejected] main -> main (fetch first)`, when another
+            # job pushed between our fetch and our push. Jittered sleep so two
+            # racers do not re-collide in step.
+            #
+            # -X theirs works per FILE, so if someone pushed an archive change
+            # (a backfill) during this run, the rebase keeps THEIR archive part
+            # and OUR live file -- two halves of different databases. pricedb
+            # stamps a pairing token into both on every archive write, so
+            # `pricedb.py verify` fails on exactly that mix: stop, push nothing,
+            # go red (the alert issue opens); the next run re-fetches the window.
             for i in 1 2 3 4 5; do
-              git pull --rebase -X theirs && git push && exit 0
+              if git pull --rebase -X theirs; then
+                if ! python pricedb.py verify; then
+                  echo "::error::after rebasing onto upstream the price files are not one database (an archive part was pushed during this run); nothing pushed -- re-run this workflow"
+                  exit 1
+                fi
+                git push && exit 0
+              fi
               sleep $((RANDOM % 20 + 5))
             done
             exit 1

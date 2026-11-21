@@ -34,6 +34,7 @@ import sqlite3
 import statistics
 import sys
 
+import pricedb
 import fundamentals as F
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -417,7 +418,7 @@ def build(at=None, only=None):
     P = load_peers()
     overrides = P.get("overrides") or {}
     sections = {tk: hdr for tk, _, hdr in F.read_tickers()}
-    con = sqlite3.connect(DB)
+    con = pricedb.connect(DB, readonly=True)
     have_px = {r[0] for r in con.execute("SELECT DISTINCT ticker FROM daily_prices")}
     fx_cache = {}
     names = FU.get("names", {})

@@ -30,6 +30,7 @@ import os
 import sqlite3
 from datetime import datetime, timezone
 
+import pricedb
 import technicals
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -71,10 +72,13 @@ def _latest_snapshot(conn: sqlite3.Connection) -> dict:
     daily = {
         r["ticker"]: r
         for r in conn.execute(
+            # MATERIALIZED: compute each ticker's last date once. Over the split
+            # database's view SQLite would otherwise redo the GROUP BY for every
+            # file the view spans (483 -> 163 ms measured 2026-11-20; same rows).
             """
+            WITH t AS MATERIALIZED (SELECT ticker, MAX(date) AS m FROM daily_prices GROUP BY ticker)
             SELECT d.ticker, d.date, d.open, d.high, d.low, d.close, d.adj_close, d.volume
-            FROM daily_prices d
-            JOIN (SELECT ticker, MAX(date) AS m FROM daily_prices GROUP BY ticker) t
+            FROM t JOIN daily_prices d
               ON d.ticker = t.ticker AND d.date = t.m
             """
         )
@@ -164,7 +168,7 @@ def main() -> int:
     args = ap.parse_args()
 
     os.makedirs(args.out, exist_ok=True)
-    conn = sqlite3.connect(args.db)
+    conn = pricedb.connect(args.db, readonly=True)
     conn.row_factory = sqlite3.Row
 
     daily_csv = os.path.join(args.out, "daily_prices.csv.gz")

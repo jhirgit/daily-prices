@@ -50,6 +50,7 @@ from datetime import datetime, timezone
 import numpy as np
 import pandas as pd
 
+import pricedb
 import regime as RG
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -282,7 +283,7 @@ def main(argv=None):
     ap.add_argument("--db", default=DB_PATH)
     ap.add_argument("--out", default=OUT_PATH)
     a = ap.parse_args(argv)
-    conn = sqlite3.connect(a.db)
+    conn = pricedb.connect(a.db, readonly=True)
     dates, series = RG.build_panel(conn)
     conn.close()
     if not dates:

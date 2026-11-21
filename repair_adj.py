@@ -41,6 +41,8 @@ import sqlite3
 import sys
 import time
 
+import pricedb
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DB = os.path.join(HERE, "prices.db")
 
@@ -151,7 +153,7 @@ def main() -> int:
     ap.add_argument("--apply", action="store_true", help="write prices.db (default: dry run)")
     args = ap.parse_args()
 
-    conn = sqlite3.connect(args.db)
+    conn = pricedb.connect(args.db)
     syms = ([t.strip().upper() for t in args.tickers.split(",") if t.strip()] or
             [r[0] for r in conn.execute("SELECT DISTINCT ticker FROM daily_prices ORDER BY 1")])
     sample = [t.strip().upper() for t in args.sample.split(",") if t.strip()]
@@ -185,8 +187,8 @@ def main() -> int:
         if sym in sample:
             worst[sym] = sample_report(sym, before, updates)
         if args.apply and updates:
-            conn.executemany("UPDATE daily_prices SET adj_close=? WHERE ticker=? AND date=?",
-                             [(a, sym, d) for d, a in updates])
+            # pricedb routes each row to the file holding its date.
+            pricedb.set_adj(conn, [(a, sym, d) for d, a in updates])
             conn.commit()
         if i < len(syms) - 1:
             time.sleep(SLEEP_BETWEEN)

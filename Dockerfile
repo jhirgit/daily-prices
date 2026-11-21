@@ -2,7 +2,9 @@
 # Build:  docker build -t daily-prices-mcp .
 # Run:    docker run -p 8000:8000 \
 #           -e MCP_AUTH_TOKEN="$(python -c 'import secrets;print(secrets.token_urlsafe(32))')" \
-#           -v "$PWD/prices.db:/app/prices.db:ro" daily-prices-mcp
+#           -v "$PWD:/data:ro" -e PRICES_DB=/data/prices.db daily-prices-mcp
+#         (PRICES_DB is the LOGICAL prices.db path: pricedb.py opens prices-live.db +
+#         prices-archive-N.db beside it, so mount the folder, not one file)
 #
 # With MCP_AUTH_TOKEN set, the endpoint is served at the secret path
 # /<token>/mcp (the startup log prints a masked confirmation). Expose port 8000
@@ -16,9 +18,10 @@ WORKDIR /app
 COPY requirements-mcp.txt .
 RUN pip install --no-cache-dir -r requirements-mcp.txt
 
-COPY mcp_server.py .
-# Bake in a copy of the DB; mount a fresh one read-only at runtime to override.
-COPY prices.db .
+COPY mcp_server.py pricedb.py ./
+# Bake in a copy of the DB (the split files); mount a fresh folder read-only at
+# runtime and point PRICES_DB at it to override.
+COPY prices-live.db prices-archive-*.db ./
 
 ENV PRICES_DB=/app/prices.db
 EXPOSE 8000

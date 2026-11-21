@@ -37,8 +37,10 @@ from datetime import datetime, timezone
 
 import yfinance as yf
 
+import pricedb
+
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_DB = os.path.join(HERE, "prices.db")
+DEFAULT_DB = pricedb.DEFAULT_DB      # the logical name; pricedb resolves the split files
 DEFAULT_TICKERS = os.path.join(HERE, "tickers.txt")
 
 # Calendar-day window of daily bars to pull each run. A window >1 day means a
@@ -101,37 +103,9 @@ def load_tickers(path: str) -> list[str]:
 
 
 def init_db(conn: sqlite3.Connection) -> None:
-    conn.executescript(
-        """
-        CREATE TABLE IF NOT EXISTS daily_prices (
-            ticker      TEXT NOT NULL,
-            date        TEXT NOT NULL,      -- trading date, YYYY-MM-DD
-            open        REAL,
-            high        REAL,
-            low         REAL,
-            close       REAL,
-            adj_close   REAL,               -- split/dividend-adjusted close
-            volume      INTEGER,
-            source      TEXT,
-            updated_at  TEXT,               -- UTC time this row was last written
-            PRIMARY KEY (ticker, date)
-        );
-
-        CREATE TABLE IF NOT EXISTS spot_quotes (
-            ticker         TEXT NOT NULL,
-            captured_at    TEXT NOT NULL,   -- UTC time of capture
-            price          REAL,            -- delayed last trade price
-            previous_close REAL,
-            currency       TEXT,
-            source         TEXT,
-            PRIMARY KEY (ticker, captured_at)
-        );
-
-        CREATE INDEX IF NOT EXISTS idx_daily_ticker ON daily_prices (ticker);
-        CREATE INDEX IF NOT EXISTS idx_spot_ticker  ON spot_quotes  (ticker);
-        """
-    )
-    conn.commit()
+    """Create the two tables if missing (pricedb.SCHEMA is the original DDL, verbatim).
+    A split database (prices-live.db + prices-archive-N.db) already has them."""
+    pricedb.init_db(conn)
 
 
 def _fast_get(fast_info, *keys):
@@ -214,43 +188,27 @@ def rebase_history(conn, ticker, bars) -> dict:
     k_adj = k_div * k_split
     n = conn.execute("SELECT COUNT(*) FROM daily_prices WHERE ticker=? AND date<?",
                      (ticker, d)).fetchone()[0]
-    if k_split != 1.0:
-        conn.execute(
-            "UPDATE daily_prices SET open=open*?, high=high*?, low=low*?, close=close*?, "
-            "adj_close=adj_close*?, volume=CAST(ROUND(volume/?) AS INTEGER) "
-            "WHERE ticker=? AND date<?",
-            (k_split, k_split, k_split, k_split, k_adj, k_split, ticker, d))
-    else:
-        conn.execute("UPDATE daily_prices SET adj_close=adj_close*? WHERE ticker=? AND date<?",
-                     (k_adj, ticker, d))
+    # The write goes through pricedb: the same UPDATE as before, run on each file
+    # of the price database (one file, or the archive parts and the live file).
+    pricedb.rebase(conn, ticker, d, k_adj, k_split)
     return dict(out, status="rebased", k_adj=k_adj, k_split=k_split, rows=n)
 
 
 def upsert_daily(conn, ticker, bars) -> int:
-    """Insert/update every bar in the lookback window; returns rows touched."""
+    """Insert/update every bar in the lookback window; returns rows touched.
+    pricedb routes each row by date (live file, or an archive part for a backfill
+    of old dates) with the same ON CONFLICT upsert as before."""
     now = utc_now_iso()
-    n = 0
-    for ts, row in bars.iterrows():
-        conn.execute(
-            """
-            INSERT INTO daily_prices
-                (ticker, date, open, high, low, close, adj_close, volume, source, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'yfinance', ?)
-            ON CONFLICT(ticker, date) DO UPDATE SET
-                open=excluded.open, high=excluded.high, low=excluded.low,
-                close=excluded.close, adj_close=excluded.adj_close,
-                volume=excluded.volume, source=excluded.source,
-                updated_at=excluded.updated_at
-            """,
-            (
-                ticker, ts.strftime("%Y-%m-%d"),
-                _f(row.get("Open")), _f(row.get("High")), _f(row.get("Low")),
-                _f(row.get("Close")), _f(row.get("Adj Close")),
-                _i(row.get("Volume")), now,
-            ),
+    rows = [
+        (
+            ticker, ts.strftime("%Y-%m-%d"),
+            _f(row.get("Open")), _f(row.get("High")), _f(row.get("Low")),
+            _f(row.get("Close")), _f(row.get("Adj Close")),
+            _i(row.get("Volume")), "yfinance", now,
         )
-        n += 1
-    return n
+        for ts, row in bars.iterrows()
+    ]
+    return pricedb.upsert_daily(conn, rows)
 
 
 def record_spot(conn, ticker, tkr):
@@ -259,12 +217,7 @@ def record_spot(conn, ticker, tkr):
     price = _f(_fast_get(fi, "last_price", "lastPrice"))
     prev = _f(_fast_get(fi, "previous_close", "previousClose"))
     cur = _fast_get(fi, "currency")
-    conn.execute(
-        "INSERT OR REPLACE INTO spot_quotes "
-        "(ticker, captured_at, price, previous_close, currency, source) "
-        "VALUES (?, ?, ?, ?, ?, 'yfinance')",
-        (ticker, utc_now_iso(), price, prev, cur),
-    )
+    pricedb.insert_spot(conn, (ticker, utc_now_iso(), price, prev, cur, "yfinance"))
     return price
 
 
@@ -311,7 +264,8 @@ def process_with_retry(conn, symbol, lookback=LOOKBACK):
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Fetch daily prices into SQLite.")
-    ap.add_argument("--db", default=DEFAULT_DB, help="SQLite database path")
+    ap.add_argument("--db", default=DEFAULT_DB,
+                    help="price database (logical prices.db path; see pricedb.py)")
     ap.add_argument("--tickers", default=DEFAULT_TICKERS, help="ticker list file")
     ap.add_argument("--lookback", default=LOOKBACK,
                     help="history window per run, yfinance period syntax (default %(default)s; "
@@ -323,7 +277,7 @@ def main() -> int:
         print(f"No tickers found in {args.tickers}", file=sys.stderr)
         return 1
 
-    conn = sqlite3.connect(args.db)
+    conn = pricedb.connect(args.db)
     init_db(conn)
 
     print(f"Fetching {len(symbols)} ticker(s) into {args.db}")
