@@ -1,5 +1,5 @@
 {
-"generated_at":"2026-11-21T16:45:27Z",
+"generated_at":"2026-11-21T17:22:59Z",
 "asof":"2026-11-20",
 "method":"Holdings by tier: 'basket' = the members in regime.REG_ETFS at equal weight (exact); 'trust' = SLV's one asset, physical silver, whose return is the trust's own; 'issuer_full' = State Street's daily holdings file for the SPDR funds (every holding, dated by the file); 'top10' = Yahoo's top-holdings list (undated; the date shown is the fetch date). Cash, money-market, currency and futures lines are excluded. R is the ladder row's own return from technicals.json, never recomputed. Member returns are Yahoo adjusted closes as-of aligned onto the ladder's session axis (SPY sessions); a member whose last bar trails it by more than 3 sessions has no return. Foreign listings are converted to USD, r_usd = (1+r_local)(1+r_fx) - 1, with Yahoo <CCY>USD=X. ETF contributions use start-of-window weights backed out of the current weights, w0 = w(1+R)/(1+r), c = w0 r -- exact only under full holdings and no rebalance inside the window. Baskets are daily-rebalanced equal weight; each member is attributed buy-and-hold, c_i = r_i / n with n the members priced at the window start, so every line is its weight times its own return, and the basket's own return minus those lines is the 'daily rebalancing' line (rest.kind), what the daily reset added or cost. The rest line is R minus the listed contributions: it holds the unlisted holdings, any listed holding with no return, rebalancing inside the window and the one-day lag of an issuer file dated the prior session. rest.drivers splits it into names and an other line (names + other = rest in every window): for a 'top10' row, source 'sec_nport' = the fund's latest public SEC N-PORT filing (every security, weight as of the filing's period end), the lines the listed ten do not cover, mapped to Yahoo symbols by ISIN and kept only when the symbol's close on the filing date matches the filing's own value per share within 15 percent; the top 60 by weight are priced, their filing weights drifted to today with their own return against the fund's, w_today = w_filing (1+r_i)/(1+R_fund) since the filing, then backed out per window like the listed lines; unpriced names stay in other with their weight. For a SPDR S&P Select Industry row (modified equal weight, reset after the close on the third Friday of Mar/Jun/Sep/Dec), source 'rebalance': today's weights are drifted back to the last reset and every earlier quarter is assumed to start from those same reset weights (an approximation: membership and caps change at each reset); each name's figure is its contribution with the resets modeled minus its one-piece line. Participation (21d, 63d): share_up = priced weight with r > 0 over priced weight; conc_top3 = the top-3 holdings' share of the window's contribution over their share of start weight, defined only when the window's move is at least 1 sigma of the row's own 126-session daily volatility scaled to the window (move_z). Windows: r5, r21, r63, r126 and r252 (the one-year return, technicals.json regime.ladder_r252). shape (per row): over the listed holdings, plus the N-PORT names priced in a top-10 row's rest line -- conc (top5_w, top10_w; eff_n = 1/sum(w^2) with unlisted weight counted as perfectly spread, eff_n_min with it spread over lines as heavy as the lightest listed), trend (lines above their own 50- and 200-session simple average in their own currency: n, n_up, w_up by weight; a50/a200 per holding), and per window: explained = sum of the lines' contributions, resid = R - explained, n_up and w_up (share of start weight up), top1_share/top2_share = the largest one/two contributions in the direction of the move over the explained move, ex_top2 = the return of the other lines, disp_w = start-weighted standard deviation of returns, disp_eq = plain standard deviation, iqr.",
 "calls":{
@@ -118389,14 +118389,14 @@
 },
 "store":{
 "wanted":2514,
-"appended":2459,
+"appended":2149,
 "rebased":0,
 "refetched":15,
 "new":0,
-"served_from_store":0,
+"served_from_store":310,
 "failed":40,
 "store":"hit",
-"bytes":6413992,
+"bytes":6414000,
 "note":"constituent closes kept in the GitHub Actions cache, never committed; a miss rebuilds it from Yahoo"
 }
 }

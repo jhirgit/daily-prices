@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T16:48:09Z",
+ "generated_at": "2026-11-21T17:25:44Z",
  "asof": "2026-11-21",
  "note": "Release dates, generated each night. Each row carries its source and the date it was verified; rows from macro_calendar_fixed.json are hand-verified.",
  "sources": {
@@ -1294,6 +1294,14 @@
    "verified": "2026-11-21"
   },
   {
+   "date": "2027-01-07",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
+   "verified": null
+  },
+  {
    "release": "bls_empsit",
    "date": "2027-01-08",
    "time_et": "08:30",
@@ -1328,6 +1336,14 @@
    "source": "https://www.bls.gov/schedule/2027/home.htm (page 'Last Modified Date: November 09, 2026')",
    "verified": "2026-11-20",
    "name": "Producer Price Index"
+  },
+  {
+   "date": "2027-01-14",
+   "time_et": "08:30",
+   "release": "dol_claims",
+   "name": "Unemployment Insurance Weekly Claims",
+   "source": "rule: every Thursday, moved to the prior business day when Thursday is a federal holiday",
+   "verified": null
   },
   {
    "release": "bls_mxp",
