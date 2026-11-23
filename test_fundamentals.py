@@ -48,6 +48,47 @@ class TTM(unittest.TestCase):
         self.assertEqual(Q["2025-12-31"]["known"], "2026-02-05")
         self.assertEqual(Q["2025-12-31"]["start"], "2025-10-01")
 
+    def _hubs_da(self):
+        # HUBS shape: total D&A tagged YTD only; P&E-only D&A also tagged per quarter
+        tot = [fact("2025-01-01", "2025-09-30", 97.7, "2025-11-05"),
+               fact("2025-01-01", "2025-12-31", 136.3, "2026-02-11", form="10-K"),
+               fact("2026-01-01", "2026-03-31", 40.2, "2026-05-01"),
+               fact("2026-01-01", "2026-06-30", 84.6, "2026-08-01"),
+               fact("2026-01-01", "2026-09-30", 130.8, "2026-11-04")]
+        narrow = [fact("2026-04-01", "2026-06-30", 10.0, "2026-08-01"),
+                  fact("2026-07-01", "2026-09-30", 11.3, "2026-11-04")]
+        return facts_with({"DepreciationDepletionAndAmortization": ("USD", tot),
+                           "DepreciationAndAmortization": ("USD", narrow)})
+
+    NAMES = ["DepreciationDepletionAndAmortization", "DepreciationAndAmortization"]
+
+    def test_da_ttm_comes_from_one_concept(self):
+        o = F.OneConcept(self._hubs_da(), "us-gaap", self.NAMES, "USD")
+        self.assertAlmostEqual(o.ttm("2026-09-30")[0], 169.4, places=6)   # the cash-flow statements' figure
+
+    def test_mixed_concepts_control(self):
+        # control: the period-level fill mixes the two scopes and gives the 100.1 the audit
+        # found wrong; OneConcept is what changes it
+        P = F.flow_periods(self._hubs_da(), "us-gaap", self.NAMES, "USD")
+        self.assertAlmostEqual(F.ttm_at(P, F.quarters_from_periods(P), "2026-09-30")[0], 100.1, places=6)
+
+    def test_one_concept_falls_back_to_the_next_concept(self):
+        # a filer with only the narrow concept still gets a D&A line (from that concept alone)
+        f = facts_with({"DepreciationAndAmortization": ("USD", [
+            fact("2025-01-01", "2025-12-31", 40.0, "2026-02-01", form="10-K"),
+            fact("2025-01-01", "2025-09-30", 30.0, "2025-11-01"),
+            fact("2026-01-01", "2026-09-30", 33.0, "2026-11-01")])})
+        self.assertAlmostEqual(F.OneConcept(f, "us-gaap", self.NAMES, "USD").ttm("2025-12-31")[0], 40.0)
+
+    def test_proxy_statement_facts_are_ignored(self):
+        # HUBS: the 2026 proxy's pay-versus-performance table re-tags FY2023 net income as first
+        # reported (-176.3), after the 10-K that restated it (-164.5)
+        ni = [fact("2023-01-01", "2023-12-31", -176.3, "2024-02-14", form="10-K"),
+              fact("2023-01-01", "2023-12-31", -164.5, "2026-02-11", form="10-K"),
+              fact("2023-01-01", "2023-12-31", -176.3, "2026-04-27", form="DEF 14A")]
+        P = F.flow_periods(facts_with({"NetIncomeLoss": ("USD", ni)}), "us-gaap", ["NetIncomeLoss"], "USD")
+        self.assertEqual(P[("2023-01-01", "2023-12-31")]["v"], -164.5)
+
     def test_cash_flow_quarters_from_ytd_only(self):
         # 10-Q cash flows are YTD only: Q2 = 6M - Q1, Q3 = 9M - 6M
         cfo = [fact("2025-01-01", "2025-03-31", 10, "2025-04-30"),
@@ -295,6 +336,72 @@ class Debt(unittest.TestCase):
     def test_earlier_balance_sheet_is_used_labelled_stale(self):
         r = self.resolve({"LongTermDebt": [fact(None, "2026-03-31", 500e6, "2026-05-01")]}, "2026-06-30")
         self.assertEqual((r["v"], r["asof"], r.get("stale")), (500e6, "2026-03-31", True))
+
+    # -- one borrowing counted once (process audit 2026-11-22) ---------------------
+    def test_lite_shape_double_tag_counted_once(self):
+        # LITE 10-Q 2026-09-26: the current converts tagged as BOTH LongTermDebtCurrent and
+        # ShortTermBorrowings in one filing. Was 2 x 1,360.3 + 39.3 = 2,759.9.
+        a = "0001628280-26-069615"
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2026-09-26", 39.3e6, "2026-11-03", accn=a)],
+                          "LongTermDebtCurrent": [fact(None, "2026-09-26", 1360.3e6, "2026-11-03", accn=a)],
+                          "ShortTermBorrowings": [fact(None, "2026-09-26", 1360.3e6, "2026-11-03", accn=a)]},
+                         "2026-09-26")
+        self.assertAlmostEqual(r["v"], 1399.6e6)
+        self.assertIn("counted once", r["src"])
+
+    def test_same_amount_in_different_filings_is_two_borrowings(self):
+        # control: equal amounts that no single filing reports together are not a double tag
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2026-09-30", 500e6, "2026-11-03", accn="a1")],
+                          "LongTermDebtCurrent": [fact(None, "2026-09-30", 100e6, "2026-11-03", accn="a1")],
+                          "ShortTermBorrowings": [fact(None, "2026-09-30", 100e6, "2026-11-20", accn="a2")]},
+                         "2026-09-30")
+        self.assertAlmostEqual(r["v"], 700e6)
+        self.assertNotIn("counted once", r["src"])
+
+    def test_different_amounts_same_filing_both_count(self):
+        # control: the usual shape (AMZN-like) - current portion and separate short-term debt
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2026-09-30", 500e6, "2026-11-03")],
+                          "LongTermDebtCurrent": [fact(None, "2026-09-30", 100e6, "2026-11-03")],
+                          "ShortTermBorrowings": [fact(None, "2026-09-30", 40e6, "2026-11-03")]}, "2026-09-30")
+        self.assertAlmostEqual(r["v"], 640e6)
+
+    def test_equal_noncurrent_and_current_are_two_amounts(self):
+        # control: an amortizing loan with equal current and noncurrent parts is not collapsed
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2026-09-30", 75e6, "2026-11-03")],
+                          "LongTermDebtCurrent": [fact(None, "2026-09-30", 75e6, "2026-11-03")]}, "2026-09-30")
+        self.assertAlmostEqual(r["v"], 150e6)
+
+    def test_total_debt_holds_its_current_maturities(self):
+        # LongTermDebt (total) + a ShortTermBorrowings fact equal to LongTermDebtCurrent in
+        # the same filing: the current maturities are already inside the total
+        r = self.resolve({"LongTermDebt": [fact(None, "2026-09-30", 900e6, "2026-11-03")],
+                          "LongTermDebtCurrent": [fact(None, "2026-09-30", 200e6, "2026-11-03")],
+                          "ShortTermBorrowings": [fact(None, "2026-09-30", 200e6, "2026-11-03")]}, "2026-09-30")
+        self.assertAlmostEqual(r["v"], 900e6)
+
+    def test_debt_current_contains_commercial_paper(self):
+        # INTC / LLY shape: DebtCurrent is short-term debt INCLUDING commercial paper
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2025-06-28", 46000e6, "2025-08-01")],
+                          "DebtCurrent": [fact(None, "2025-06-28", 4757e6, "2025-08-01")],
+                          "CommercialPaper": [fact(None, "2025-06-28", 2000e6, "2025-08-01")]}, "2025-06-28")
+        self.assertAlmostEqual(r["v"], 50757e6)
+        self.assertIn("inside DebtCurrent", r["src"])
+
+    def test_commercial_paper_larger_than_debt_current_still_counts(self):
+        # control: a DebtCurrent smaller than the paper cannot contain it - both stay
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2025-06-28", 1000e6, "2025-08-01")],
+                          "DebtCurrent": [fact(None, "2025-06-28", 50e6, "2025-08-01")],
+                          "CommercialPaper": [fact(None, "2025-06-28", 300e6, "2025-08-01")]}, "2025-06-28")
+        self.assertAlmostEqual(r["v"], 1350e6)
+
+    def test_ifrs_total_current_replaces_its_part(self):
+        f = facts_with({"LongtermBorrowings": ("EUR", [fact(None, "2025-12-31", 1800e6, "2026-03-01")]),
+                        "CurrentPortionOfLongtermBorrowings": ("EUR", [fact(None, "2025-12-31", 150e6, "2026-03-01")]),
+                        "CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings":
+                            ("EUR", [fact(None, "2025-12-31", 240e6, "2026-03-01", accn="b")])}, tax="ifrs-full")
+        r = F.debt_resolver(f, "ifrs-full", "EUR", "X")("2025-12-31")
+        self.assertAlmostEqual(r["v"], 2040e6)
+        self.assertIn("counted once", r["src"])
 
     def test_unknown_debt_means_no_ev(self):
         m = V.multiples({"rev": 100.0, "ni": 10.0, "ebitda": 20.0, "oi": 15.0, "fcf": 5.0, "cash": 1.0,

@@ -152,6 +152,21 @@ DEBT_CHAIN = {
 }
 DEBT_ST = {"us-gaap": ["CommercialPaper", "ShortTermBorrowings", "OtherShortTermBorrowings"],
            "ifrs-full": ["ShorttermBorrowings", "CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings"]}
+# ---- one borrowing, counted once (process audit 2026-11-22) ------------------------
+# The sum above double-counts in two shapes, both read from the facts themselves:
+#  1. DOUBLE TAG: the filer tags ONE balance-sheet amount under two of the concepts summed
+#     (LITE, 10-Q 2026-09-26: its $1,360.3M current converts are both LongTermDebtCurrent
+#     and ShortTermBorrowings, so debt read 2 x 1,360.3 + 39.3 = 2,759.9 against 1,399.6).
+#     Test: the same value at the same instant, reported together in one filing (same
+#     accession = same context). Two different borrowings of identical size to the unit
+#     in one filing is not a shape any filer on this board shows.
+#  2. TOTAL-CURRENT CONCEPT: a concept whose definition already contains short-term
+#     borrowings and the current portion of long-term debt (us-gaap DebtCurrent; IFRS
+#     CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings). Adding a short-term tag on
+#     top of it, or it on top of a current-portion tag, counts the overlap twice. When the
+#     facts agree with the definition (the total is at least the part), the part is not added
+#     (or the total replaces the part); when they do not, both stay and the label says so.
+DEBT_TOTAL_CURRENT = {"DebtCurrent", "CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings"}
 # A debt value from an earlier balance sheet is used (labelled, partial) only if it
 # is at most this old relative to the balance sheet the cash comes from.
 DEBT_ASOF_MAX_DAYS = 200
@@ -321,11 +336,25 @@ def _units(concept_obj, currency=None):
     return None, []
 
 
+# Forms whose XBRL carries the financial statements. A proxy statement's pay-versus-
+# performance table (DEF 14A) re-tags five years of net income AS FIRST REPORTED, filed
+# after the 10-K that restated them, so "latest filing wins" took the stale figure (HUBS
+# FY2023 net income: -176.3 from the 2026 proxy against -164.5 in the 10-K; process audit
+# 2026-11-22). Facts from any other form are ignored; a fact with no form (fixtures) is kept.
+STATEMENT_FORMS = re.compile(r"^(10-K|10-Q|10-KT|10-QT|20-F|40-F|6-K|8-K|S-1|S-4|F-1|F-4|424B\d?)(/A)?$")
+
+
+def statement_fact(x):
+    f = x.get("form")
+    return f is None or bool(STATEMENT_FORMS.match(f))
+
+
 def flow_periods(facts, taxonomy, names, currency):
     """{(start, end): {"v", "first", "last", "concept"}} across the concepts in priority
     order. Within one concept the latest-filed value wins (restatement), and the first
     filing date is kept as when the period became known. A lower-priority concept fills
-    only periods the higher ones lack."""
+    only periods the higher ones lack (see OneConcept for lines whose concepts differ
+    in scope, where that fill is wrong)."""
     out = {}
     tax = facts.get(taxonomy, {})
     for name in names:
@@ -336,7 +365,7 @@ def flow_periods(facts, taxonomy, names, currency):
         mine = {}
         for x in arr:
             s, e = x.get("start"), x.get("end")
-            if not s or not e or x.get("val") is None:
+            if not s or not e or x.get("val") is None or not statement_fact(x):
                 continue
             k = (s, e)
             cur = mine.get(k)
@@ -367,7 +396,7 @@ def instant_points(facts, taxonomy, names, currency):
         mine = {}
         for x in arr:
             e = x.get("end")
-            if not e or x.get("start") or x.get("val") is None:
+            if not e or x.get("start") or x.get("val") is None or not statement_fact(x):
                 continue
             filed = x.get("filed") or "9999-12-31"
             cur = mine.get(e)
@@ -429,6 +458,52 @@ def ttm_at(periods, quarters, end):
         cur = max(prev)
         chain.append(quarters[cur])
     return sum(c["v"] for c in chain), max(c["known"] for c in chain), "4Q"
+
+
+class OneConcept:
+    """Trailing twelve months from ONE concept at a time (process audit 2026-11-22).
+
+    flow_periods fills a period the preferred concept lacks from the next concept, which
+    is right for synonyms (revenue) and wrong for concepts that differ in SCOPE. D&A and
+    stock pay are such lines: HUBS tags total D&A (DepreciationDepletionAndAmortization)
+    year-to-date only and property-and-equipment D&A (DepreciationAndAmortization) per
+    quarter too, and the fill built a TTM of 100.1 from both against the 169.4 its
+    cash-flow statements report; MRVL's fiscal-year Depreciation (221.7) beside its
+    OtherDepreciationAndAmortization year-to-date figures read 1,134.6 for 1,261.5. Here
+    each concept builds its own quarters and the first, in priority order, that gives the
+    twelve months is used; pieces are never combined across concepts."""
+
+    def __init__(self, facts, taxonomy, names, currency):
+        self.parts = []
+        for n in names:
+            P = flow_periods(facts, taxonomy, [n], currency)
+            if P:
+                self.parts.append((n, P, quarters_from_periods(P)))
+        self.periods = {k: v for _, P, _ in reversed(self.parts) for k, v in P.items()}
+        # the period-level fill across concepts (the pre-2026-11-22 reading), used ONLY when no
+        # single concept gives the twelve months, so a line is never lost to this rule
+        self.mixed_P = flow_periods(facts, taxonomy, names, currency)
+        self.mixed_Q = quarters_from_periods(self.mixed_P)
+
+    def ttm(self, end, mixed_ok=True):
+        for _, P, Q in self.parts:
+            r = ttm_at(P, Q, end)
+            if r:
+                return r
+        return ttm_at(self.mixed_P, self.mixed_Q, end) if mixed_ok else None
+
+    def run(self, end):
+        for _, _, Q in self.parts:
+            r = run_back(Q, end)
+            if len(r) >= 2:
+                return r
+        return []
+
+    def concepts(self):
+        return sorted(n for n, _, _ in self.parts)
+
+    def last_end(self):
+        return max((e for (s, e) in self.periods), default="")
 
 
 def run_back(quarters, end, n=4):
@@ -683,7 +758,19 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
         names.update(b)
     pts = {n: instant_points(facts, taxonomy, [n], ccy) for n in names}
     st = DEBT_ST.get(taxonomy, [])
+    cur_tags = [t for _, _, b, _ in chain for t in b]
     over = DEBT_OVERRIDE.get(tk or "", {})
+    # {concept: {end: {accession: value}}}: which filing reported which amount, for the
+    # double-tag test (one borrowing under two concepts in the same filing).
+    by_filing = {}
+    for n in names:
+        c = facts.get(taxonomy, {}).get(n)
+        if not c:
+            continue
+        _, arr = _units(c, ccy)
+        for x in arr:
+            if x.get("end") and not x.get("start") and x.get("val") is not None and x.get("accn"):
+                by_filing.setdefault(n, {}).setdefault(x["end"], {})[x["accn"]] = float(x["val"])
 
     def first(tags, end):
         for t in tags:
@@ -691,6 +778,16 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
             if p is not None:
                 return p["v"], t
         return None
+
+    def same_amount(a, b):
+        return abs(a - b) <= max(0.5, 1e-9 * abs(a))
+
+    def double_tag(t1, v1, t2, v2, end):
+        """True when t1 and t2 carry the same amount at `end` in one filing."""
+        if not same_amount(v1, v2):
+            return False
+        f1, f2 = by_filing.get(t1, {}).get(end, {}), by_filing.get(t2, {}).get(end, {})
+        return any(k in f2 and same_amount(f1[k], v1) and same_amount(f2[k], v2) for k in f1)
 
     def at(end):
         if end in over:
@@ -700,17 +797,38 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
             b = first(base, end)
             if b is None:
                 continue
-            v, used = b[0], [b[1]]
+            parts = [(b[1], b[0])]            # (concept, value) actually summed
+            notes = []
             c = first(cur, end)
             if c is not None:
-                v += c[0]
-                used.append(c[1])
+                # noncurrent and current are disjoint by definition: an equal pair is two
+                # real amounts (an amortizing loan), never tested as a double tag
+                parts.append((c[1], c[0]))
             if not incl_st:
                 s = first(st, end)
                 if s is not None:
-                    v += s[0]
-                    used.append(s[1])
-            return {"v": v, "src": " + ".join(used), "asof": end}
+                    # current portion and short-term borrowings DO overlap (both current)
+                    # -- against every current-portion fact at this instant, summed or not: a
+                    # total LongTermDebt already holds its current maturities
+                    seen = list(parts[1:]) + [(t, pts[t][end]["v"]) for t in cur_tags
+                                              if t in pts and end in pts[t] and t != s[1]]
+                    dup = next((t for t, v in seen if double_tag(t, v, s[1], s[0], end)), None)
+                    tot = next(((t, v) for t, v in parts if t in DEBT_TOTAL_CURRENT), None)
+                    cur_part = next(((t, v) for t, v in parts[1:] if t not in DEBT_TOTAL_CURRENT), None)
+                    if dup:
+                        notes.append("%s is the same amount as %s in one filing: counted once" % (s[1], dup))
+                    elif tot and s[0] <= tot[1] + 0.5:
+                        notes.append("%s is inside %s: counted once" % (s[1], tot[0]))
+                    elif s[1] in DEBT_TOTAL_CURRENT and cur_part and cur_part[1] <= s[0] + 0.5:
+                        parts.remove(cur_part)
+                        parts.append((s[1], s[0]))
+                        notes.append("%s is inside %s: counted once" % (cur_part[0], s[1]))
+                    else:
+                        parts.append((s[1], s[0]))
+            src = " + ".join(t for t, _ in parts)
+            if notes:
+                src += " (" + "; ".join(notes) + ")"
+            return {"v": sum(v for _, v in parts), "src": src, "asof": end}
         return None
 
     # override dates join the walk-back, so a later balance sheet can fall back to a
@@ -772,32 +890,30 @@ def build_company(cf, tk, adr_ratio=None):
         Q[key] = quarters_from_periods(P[key])
         used[key] = sorted({v["concept"] for v in P[key].values()})
     # D&A, chosen per company
-    Pc = flow_periods(facts, taxonomy, DA_COMBINED.get(taxonomy, []), ccy)
-    Pd = flow_periods(facts, taxonomy, DA_DEP.get(taxonomy, []), ccy)
-    Pa = flow_periods(facts, taxonomy, DA_AMORT.get(taxonomy, []), ccy)
-    Qc, Qd, Qa = quarters_from_periods(Pc), quarters_from_periods(Pd), quarters_from_periods(Pa)
-    last_c = max((e for (s, e) in Pc), default="")
-    last_d = max((e for (s, e) in Pd), default="")
+    Oc = OneConcept(facts, taxonomy, DA_COMBINED.get(taxonomy, []), ccy)
+    Od = OneConcept(facts, taxonomy, DA_DEP.get(taxonomy, []), ccy)
+    Oa = OneConcept(facts, taxonomy, DA_AMORT.get(taxonomy, []), ccy)
+    last_c, last_d = Oc.last_end(), Od.last_end()
     da_method = "combined" if last_c and last_c >= last_d else ("components" if last_d else "none")
-    rec["da_method"] = {"combined": "one tag: " + ", ".join(sorted({v["concept"] for v in Pc.values()})),
+    rec["da_method"] = {"combined": "one tag: " + ", ".join(Oc.concepts()),
                         "components": "Depreciation + AmortizationOfIntangibleAssets (" +
-                                      ", ".join(sorted({v["concept"] for v in list(Pd.values()) + list(Pa.values())})) + ")",
+                                      ", ".join(sorted(set(Od.concepts() + Oa.concepts()))) + ")",
                         "none": "no D&A tag found"}[da_method]
 
     def amort_ttm(end):
         """(value, known, partial) for intangibles amortization, or None."""
-        a = ttm_at(Pa, Qa, end)
+        a = Oa.ttm(end)
         if a:
             return a[0], a[1], False
         # Tagged for only 2-3 of the four quarters (a tag the filer started using
         # mid-year): annualise the consecutive run ending here, marked partial.
-        run = run_back(Qa, end)
+        run = Oa.run(end)
         if len(run) >= 2:
             return sum(x["v"] for x in run) * 4.0 / len(run), max(x["known"] for x in run), True
         return None
 
     def combined_ttm(end):
-        r = ttm_at(Pc, Qc, end)
+        r = Oc.ttm(end)
         if not r:
             return None
         a = amort_ttm(end)
@@ -808,7 +924,7 @@ def build_company(cf, tk, adr_ratio=None):
         return r[0], r[1], False
 
     def components_ttm(end):
-        r = ttm_at(Pd, Qd, end)
+        r = Od.ttm(end)
         if not r:
             return None
         a = amort_ttm(end)
@@ -825,6 +941,7 @@ def build_company(cf, tk, adr_ratio=None):
                 return r
         return None
 
+    O_sbc = OneConcept(facts, taxonomy, FLOW["sbc"].get(taxonomy, []), ccy)
     I = {k: instant_points(facts, taxonomy, spec.get(taxonomy, []), ccy) for k, spec in INSTANT.items()}
     debt_at = debt_resolver(facts, taxonomy, ccy, tk)
 
@@ -837,7 +954,8 @@ def build_company(cf, tk, adr_ratio=None):
         row = {"end": end}
         known = []
         for key in ("rev", "gp", "oi", "ni", "eps", "cfo", "capex", "sbc"):
-            r = ttm_at(P[key], Q[key], end)
+            # stock pay: its two concepts differ in scope (cash-flow add-back vs expense), one at a time
+            r = O_sbc.ttm(end) if key == "sbc" else ttm_at(P[key], Q[key], end)
             if r:
                 row[key] = r[0]
                 known.append(r[1])
@@ -1003,7 +1121,8 @@ def main(argv=None):
                       "reported (3 months) or derived (a longer period minus the same-start period one quarter "
                       "shorter, e.g. Q4 = FY - 9M). Restated values keep the latest filing; `known` is the first "
                       "filing date. Debt = long-term noncurrent + current portion + commercial paper/short-term "
-                      "borrowings, operating leases excluded. Cash = cash + short-term marketable securities."),
+                      "borrowings, operating leases excluded; one amount a filing tags under two of these "
+                      "concepts is counted once. Cash = cash + short-term marketable securities."),
            "names": {}, "na": {}}
     for tk, why in na.items():
         out["na"][tk] = why
