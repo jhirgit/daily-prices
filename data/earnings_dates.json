@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-23T22:22:32Z",
+  "generated_at": "2026-11-24T22:21:27Z",
   "source": "yfinance Ticker._quote calendarEvents.earnings (soonest earningsDate, plus Yahoo's isEarningsDateEstimate hint) -- same request as Ticker.calendar",
   "note": "ADVISORY. Aggregator dates slip; a board date marked `confirmed` outranks this file. `dates[ticker].estimated` is Yahoo's own hint that IT projected the date (true) vs took it from its calendar vendor (false) -- false is NOT company confirmation, and estimated may be null when Yahoo omits the flag. Public repo: tickers and public reporting dates only, never coverage or position data.",
   "count": 140,
@@ -190,10 +190,10 @@
     },
     "005930.KS": {
       "date": "2027-01-27",
-      "estimated": true
+      "estimated": false
     },
     "6981.T": {
-      "date": "2026-10-30",
+      "date": "2027-02-02",
       "estimated": false
     },
     "AAOI": {
@@ -202,7 +202,7 @@
     },
     "AAPL": {
       "date": "2027-01-28",
-      "estimated": true
+      "estimated": false
     },
     "ADBE": {
       "date": "2026-12-09",
@@ -217,59 +217,59 @@
       "estimated": true
     },
     "AEHR": {
-      "date": "2026-11-02",
-      "estimated": false
+      "date": "2027-02-04",
+      "estimated": true
     },
     "AEIS": {
-      "date": "2026-11-02",
-      "estimated": false
+      "date": "2027-02-10",
+      "estimated": true
     },
     "AEM": {
-      "date": "2026-10-28",
+      "date": "2027-02-11",
       "estimated": false
     },
     "AG": {
-      "date": "2026-11-05",
-      "estimated": false
+      "date": "2027-02-18",
+      "estimated": true
     },
     "AGI": {
-      "date": "2026-10-28",
-      "estimated": false
+      "date": "2027-02-17",
+      "estimated": true
     },
     "ALAB": {
-      "date": "2026-11-03",
-      "estimated": false
+      "date": "2027-02-09",
+      "estimated": true
     },
     "AMAT": {
       "date": "2027-02-11",
-      "estimated": true
+      "estimated": false
     },
     "AMD": {
       "date": "2027-02-02",
-      "estimated": true
+      "estimated": false
     },
     "AMSC": {
       "date": "2027-02-03",
       "estimated": true
     },
     "AMZN": {
-      "date": "2026-10-29",
-      "estimated": false
+      "date": "2027-02-04",
+      "estimated": true
     },
     "ANET": {
-      "date": "2026-11-03",
-      "estimated": false
+      "date": "2027-02-09",
+      "estimated": true
     },
     "AOSL": {
-      "date": "2026-11-05",
-      "estimated": false
+      "date": "2027-02-09",
+      "estimated": true
     },
     "APLD": {
       "date": "2027-01-06",
-      "estimated": true
+      "estimated": false
     },
     "APP": {
-      "date": "2026-11-04",
+      "date": "2027-02-10",
       "estimated": false
     },
     "ARQQ": {
@@ -281,7 +281,7 @@
       "estimated": false
     },
     "AU": {
-      "date": "2026-11-05",
+      "date": "2027-02-18",
       "estimated": false
     },
     "AVGO": {
@@ -289,16 +289,16 @@
       "estimated": false
     },
     "AXTI": {
-      "date": "2026-10-29",
-      "estimated": false
+      "date": "2027-02-18",
+      "estimated": true
     },
     "BAC": {
       "date": "2027-01-15",
       "estimated": false
     },
     "BE": {
-      "date": "2026-10-22",
-      "estimated": false
+      "date": "2027-02-04",
+      "estimated": true
     },
     "BFLY": {
       "date": "2026-10-29",
@@ -313,11 +313,11 @@
       "estimated": false
     },
     "CAT": {
-      "date": "2027-01-28",
+      "date": "2027-02-02",
       "estimated": false
     },
     "CDE": {
-      "date": "2026-11-04",
+      "date": "2027-02-17",
       "estimated": false
     },
     "CEG": {
@@ -330,7 +330,7 @@
     },
     "CLS": {
       "date": "2027-01-27",
-      "estimated": true
+      "estimated": false
     },
     "COHR": {
       "date": "2027-02-03",
@@ -361,12 +361,12 @@
       "estimated": false
     },
     "DDOG": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-11",
+      "estimated": true
     },
     "DLR": {
-      "date": "2026-10-29",
-      "estimated": false
+      "date": "2027-02-11",
+      "estimated": true
     },
     "DPC": {
       "date": "2026-11-12",
@@ -377,16 +377,16 @@
       "estimated": false
     },
     "ENPH": {
-      "date": "2026-10-27",
+      "date": "2027-02-02",
       "estimated": false
     },
     "EQIX": {
-      "date": "2026-10-28",
-      "estimated": false
+      "date": "2027-02-10",
+      "estimated": true
     },
     "ETN": {
       "date": "2027-02-02",
-      "estimated": true
+      "estimated": false
     },
     "EXK": {
       "date": "2026-11-09",
@@ -394,7 +394,7 @@
     },
     "FLEX": {
       "date": "2027-01-27",
-      "estimated": true
+      "estimated": false
     },
     "FN": {
       "date": "2027-02-01",
@@ -409,7 +409,7 @@
       "estimated": false
     },
     "FTNT": {
-      "date": "2026-10-28",
+      "date": "2027-02-04",
       "estimated": false
     },
     "GEV": {
@@ -417,7 +417,7 @@
       "estimated": false
     },
     "GFS": {
-      "date": "2026-11-04",
+      "date": "2027-02-10",
       "estimated": false
     },
     "GLW": {
@@ -433,7 +433,7 @@
       "estimated": true
     },
     "GOOGL": {
-      "date": "2026-10-28",
+      "date": "2027-02-03",
       "estimated": false
     },
     "HIMS": {
@@ -441,7 +441,7 @@
       "estimated": false
     },
     "HIMX": {
-      "date": "2026-11-05",
+      "date": "2027-02-11",
       "estimated": false
     },
     "HL": {
@@ -453,8 +453,8 @@
       "estimated": false
     },
     "HUBS": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-10",
+      "estimated": true
     },
     "IFNNY": {
       "date": "2027-02-03",
@@ -465,7 +465,7 @@
       "estimated": true
     },
     "INVH": {
-      "date": "2026-10-28",
+      "date": "2027-02-17",
       "estimated": false
     },
     "IONQ": {
@@ -481,8 +481,8 @@
       "estimated": false
     },
     "KGC": {
-      "date": "2026-10-28",
-      "estimated": false
+      "date": "2027-02-17",
+      "estimated": true
     },
     "KLAC": {
       "date": "2027-01-28",
@@ -490,11 +490,11 @@
     },
     "LITE": {
       "date": "2027-02-02",
-      "estimated": false
+      "estimated": true
     },
     "LLY": {
-      "date": "2026-10-29",
-      "estimated": false
+      "date": "2027-02-03",
+      "estimated": true
     },
     "LPKFF": {
       "date": "2026-10-29",
@@ -505,23 +505,23 @@
       "estimated": true
     },
     "LULU": {
-      "date": "2026-12-10",
-      "estimated": true
+      "date": "2026-12-08",
+      "estimated": false
     },
     "META": {
       "date": "2027-01-27",
       "estimated": true
     },
     "MPWR": {
-      "date": "2026-10-29",
-      "estimated": false
+      "date": "2027-02-04",
+      "estimated": true
     },
     "MRAAF": {
-      "date": "2026-10-30",
+      "date": "2027-02-02",
       "estimated": false
     },
     "MRNA": {
-      "date": "2026-11-06",
+      "date": "2027-02-12",
       "estimated": false
     },
     "MRVL": {
@@ -538,15 +538,15 @@
     },
     "NBIS": {
       "date": "2027-02-11",
-      "estimated": true
+      "estimated": false
     },
     "NEM": {
-      "date": "2026-10-22",
+      "date": "2027-02-18",
       "estimated": false
     },
     "NET": {
-      "date": "2026-11-05",
-      "estimated": false
+      "date": "2027-02-09",
+      "estimated": true
     },
     "NLST": {
       "date": "2026-11-10",
@@ -558,7 +558,7 @@
     },
     "NOW": {
       "date": "2027-01-27",
-      "estimated": true
+      "estimated": false
     },
     "NRG": {
       "date": "2026-11-09",
@@ -570,31 +570,31 @@
     },
     "NVEC": {
       "date": "2027-01-20",
-      "estimated": true
+      "estimated": false
     },
     "NVO": {
       "date": "2027-02-03",
       "estimated": false
     },
     "NVTS": {
-      "date": "2026-11-03",
-      "estimated": false
+      "date": "2027-02-22",
+      "estimated": true
     },
     "OKTA": {
       "date": "2026-12-01",
       "estimated": false
     },
     "ON": {
-      "date": "2026-11-02",
-      "estimated": false
+      "date": "2027-02-08",
+      "estimated": true
     },
     "ORCL": {
       "date": "2026-12-14",
       "estimated": false
     },
     "PAAS": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-17",
+      "estimated": true
     },
     "PANW": {
       "date": "2027-02-16",
@@ -609,7 +609,7 @@
       "estimated": true
     },
     "PYPL": {
-      "date": "2026-10-27",
+      "date": "2027-02-02",
       "estimated": false
     },
     "QBTS": {
@@ -618,7 +618,7 @@
     },
     "QCOM": {
       "date": "2027-02-03",
-      "estimated": true
+      "estimated": false
     },
     "QLYS": {
       "date": "2027-02-02",
@@ -629,12 +629,12 @@
       "estimated": false
     },
     "RDDT": {
-      "date": "2026-10-29",
-      "estimated": false
+      "date": "2027-02-04",
+      "estimated": true
     },
     "RGLD": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-17",
+      "estimated": true
     },
     "RGTI": {
       "date": "2026-11-10",
@@ -645,8 +645,8 @@
       "estimated": false
     },
     "SHOP": {
-      "date": "2026-11-03",
-      "estimated": false
+      "date": "2027-02-10",
+      "estimated": true
     },
     "SIEGY": {
       "date": "2027-02-11",
@@ -661,15 +661,15 @@
       "estimated": true
     },
     "SNDK": {
-      "date": "2026-10-29",
-      "estimated": false
+      "date": "2027-02-15",
+      "estimated": true
     },
     "SPCX": {
-      "date": "2026-10-20",
-      "estimated": false
+      "date": "2027-02-09",
+      "estimated": true
     },
     "SSRM": {
-      "date": "2026-11-03",
+      "date": "2027-02-16",
       "estimated": false
     },
     "STM": {
@@ -678,15 +678,15 @@
     },
     "STX": {
       "date": "2027-01-26",
-      "estimated": true
+      "estimated": false
     },
     "TENB": {
-      "date": "2026-10-28",
-      "estimated": false
+      "date": "2027-02-03",
+      "estimated": true
     },
     "TFPM": {
-      "date": "2026-11-03",
-      "estimated": false
+      "date": "2027-02-17",
+      "estimated": true
     },
     "TLN": {
       "date": "2026-11-03",
@@ -698,19 +698,19 @@
     },
     "TXN": {
       "date": "2027-01-26",
-      "estimated": true
+      "estimated": false
     },
     "VICR": {
-      "date": "2026-10-20",
+      "date": "2027-02-16",
       "estimated": false
     },
     "VPG": {
-      "date": "2026-11-04",
-      "estimated": false
+      "date": "2027-02-09",
+      "estimated": true
     },
     "VRT": {
-      "date": "2026-10-28",
-      "estimated": false
+      "date": "2027-02-10",
+      "estimated": true
     },
     "VST": {
       "date": "2026-11-06",
@@ -722,7 +722,7 @@
     },
     "WDC": {
       "date": "2027-01-28",
-      "estimated": true
+      "estimated": false
     },
     "WFC": {
       "date": "2027-01-14",

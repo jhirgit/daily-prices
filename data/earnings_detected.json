@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-23T22:22:34Z",
+  "generated_at": "2026-11-24T22:21:28Z",
   "source": "EDGAR submissions API; 8-K filings carrying Item 2.02 (Results of Operations) for watchlist tickers with an expected date in the window",
   "note": "Records THAT a filing exists (accession + URL), never its content. `overdue` means the expected date passed by more than 2 sessions with nothing on EDGAR: either the date is wrong or the print was missed. Public repo: tickers, accessions and filing dates only.",
   "window_days": 10,
@@ -7,8 +7,8 @@
   "counts": {
     "in_window": 6,
     "checked": 6,
-    "detected": 3,
-    "awaiting": 3,
+    "detected": 6,
+    "awaiting": 0,
     "overdue": 0,
     "errors": 0,
     "carried": 0,
@@ -20,7 +20,16 @@
   "names": {
     "ADI": {
       "expected": "2026-11-24",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-11-24",
+      "period": "2026-11-24",
+      "accession": "0000006281-26-000087",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/6281/000000628126000087/adi-20261124.htm"
     },
     "CRWD": {
       "expected": "2026-11-23",
@@ -37,7 +46,17 @@
     },
     "HPQ": {
       "expected": "2026-11-24",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-11-24",
+      "period": "2026-11-24",
+      "accession": "0000047217-26-000054",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721726000054/hpq-20261124.htm"
     },
     "NVDA": {
       "expected": "2026-11-17",
@@ -54,7 +73,16 @@
     },
     "WDAY": {
       "expected": "2026-11-24",
-      "status": "awaiting"
+      "status": "detected",
+      "form": "8-K",
+      "filed": "2026-11-24",
+      "period": "2026-11-24",
+      "accession": "0001327811-26-000057",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000057/wday-20261124.htm"
     },
     "ZS": {
       "expected": "2026-11-23",
