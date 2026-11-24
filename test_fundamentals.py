@@ -80,6 +80,55 @@ class TTM(unittest.TestCase):
             fact("2026-01-01", "2026-09-30", 33.0, "2026-11-01")])})
         self.assertAlmostEqual(F.OneConcept(f, "us-gaap", self.NAMES, "USD").ttm("2025-12-31")[0], 40.0)
 
+    # -- fix-all 2026-11-23: AMSC's mis-dated stock-pay contexts ---------------------------
+    @staticmethod
+    def _amsc_sbc(twin=True):
+        """AMSC shape (fiscal year from April 1), cut from its filings: the fiscal-Q2 10-Q (q2)
+        tags the cash-flow stock pay 2026-01-01..09-30 (and 2025-01-01..09-30) for the six months;
+        the fiscal-Q1 10-Q (q1) tags April-June 2026 a second time as October-December 2025."""
+        def fq(s, e, v, filed, accn, fp, form="10-Q"):
+            d = fact(s, e, v, filed, accn=accn, form=form)
+            d["fp"] = fp
+            return d
+        sbc = [fq("2025-04-01", "2025-09-30", 8292000, "2025-11-05", "q2a", "Q2"),
+               fq("2025-04-01", "2025-12-31", 12114000, "2026-02-04", "q3", "Q3"),
+               fq("2025-04-01", "2026-03-31", 15869000, "2026-05-27", "k", "FY", form="10-K"),
+               fq("2026-04-01", "2026-06-30", 5264000, "2026-08-05", "q1", "Q1"),
+               fq("2025-01-01", "2025-09-30", 8292000, "2026-11-04", "q2", "Q2"),
+               fq("2026-01-01", "2026-09-30", 11781000, "2026-11-04", "q2", "Q2")]
+        alloc = [fq("2025-07-01", "2025-09-30", 3766000, "2026-11-04", "q2", "Q2"),
+                 fq("2025-04-01", "2025-09-30", 8292000, "2026-11-04", "q2", "Q2"),
+                 fq("2026-07-01", "2026-09-30", 6517000, "2026-11-04", "q2", "Q2"),
+                 fq("2025-10-01", "2025-12-31", 3822000, "2026-02-04", "q3", "Q3"),
+                 fq("2025-10-01", "2025-12-31", 5264000, "2026-08-05", "q1", "Q1")]
+        if twin:
+            alloc.append(fq("2026-04-01", "2026-09-30", 11781000, "2026-11-04", "q2", "Q2"))
+        return facts_with({"ShareBasedCompensation": ("USD", sbc),
+                           "AllocatedShareBasedCompensationExpense": ("USD", alloc)})
+
+    SBC = ["ShareBasedCompensation", "AllocatedShareBasedCompensationExpense"]
+
+    def test_amsc_misdated_stock_pay_read_on_the_filed_period(self):
+        # was 20.8 (6.517 + 5.264 mis-dated + 3.755 + 5.264); the filings give 15.869 + 11.781 - 8.292
+        o = F.OneConcept(self._amsc_sbc(), "us-gaap", self.SBC, "USD")
+        self.assertAlmostEqual(o.ttm("2026-09-30")[0], 19358000, places=0)
+        fx = F.misdated_fixes(self._amsc_sbc(), "us-gaap", self.SBC, "USD")
+        self.assertEqual(fx[("ShareBasedCompensation", "q2", "2026-01-01", "2026-09-30")], ("2026-04-01", "2026-09-30"))
+        self.assertEqual(fx[("AllocatedShareBasedCompensationExpense", "q1", "2025-10-01", "2025-12-31")],
+                         ("2026-04-01", "2026-06-30"))
+
+    def test_misdated_control_no_twin_is_left_as_filed(self):
+        # control: without the same amount on a period the filing reports, an odd period is left
+        # exactly as filed (a predecessor stub after a fresh start is real data: WOLF, TLN)
+        fx = F.misdated_fixes(self._amsc_sbc(twin=False), "us-gaap", self.SBC, "USD")
+        self.assertNotIn(("ShareBasedCompensation", "q2", "2026-01-01", "2026-09-30"), fx)
+
+    def test_misdated_control_correct_contexts_untouched(self):
+        # control: a filer whose contexts are right gets no fixes at all
+        rows = [dict(x, fp=fp) for x, fp in zip(self.rev, ["Q1", "Q2", "Q2", "Q3", "Q3", "FY", "Q1"])]
+        f = facts_with({"Revenues": ("USD", rows)})
+        self.assertEqual(F.misdated_fixes(f, "us-gaap", ["Revenues"], "USD"), {})
+
     def test_proxy_statement_facts_are_ignored(self):
         # HUBS: the 2026 proxy's pay-versus-performance table re-tags FY2023 net income as first
         # reported (-176.3), after the 10-K that restated it (-164.5)
@@ -357,6 +406,90 @@ class Debt(unittest.TestCase):
                          "2026-09-30")
         self.assertAlmostEqual(r["v"], 700e6)
         self.assertNotIn("counted once", r["src"])
+
+    # -- fix-all 2026-11-23: the two shapes the first fix missed ---------------------
+    def test_be_shape_rounding_in_one_filing_counted_once(self):
+        # BE 10-K 2024-12-31: the 2025 converts are LongTermDebtCurrent 114,385,000 and, in the
+        # debt note's $0.1M table, ShortTermBorrowings 114,400,000. LongTermDebt (total) is
+        # 1,128,792,000 = noncurrent + current portion, so the short-term tag is the same notes.
+        a = "0001628280-25-008747"
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2024-12-31", 1014407000, "2025-02-27", accn=a)],
+                          "LongTermDebtCurrent": [fact(None, "2024-12-31", 114385000, "2025-02-27", accn=a)],
+                          "ShortTermBorrowings": [fact(None, "2024-12-31", 114400000, "2025-02-27", accn=a)]},
+                         "2024-12-31")
+        self.assertAlmostEqual(r["v"], 1128792000)
+        self.assertIn("to rounding", r["src"])
+
+    def test_rounding_control_amounts_that_round_apart_both_count(self):
+        # control: 4.0M against 3.6M in one filing is two borrowings, whatever the unit
+        a = "acc-1"
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2026-09-30", 500e6, "2026-11-03", accn=a)],
+                          "LongTermDebtCurrent": [fact(None, "2026-09-30", 3.6e6, "2026-11-03", accn=a)],
+                          "ShortTermBorrowings": [fact(None, "2026-09-30", 4.0e6, "2026-11-03", accn=a)]},
+                         "2026-09-30")
+        self.assertAlmostEqual(r["v"], 507.6e6)
+        self.assertNotIn("counted once", r["src"])
+
+    def test_rounded_equal_unit_rules(self):
+        self.assertTrue(F.rounded_equal(114400000, 114385000))     # to the $0.1M
+        self.assertTrue(F.rounded_equal(4000000, 3959000))         # 4,000,000 read to the $0.1M
+        self.assertTrue(F.rounded_equal(3000000, 2950000))         # half up
+        self.assertFalse(F.rounded_equal(1000000, 600000))         # a $1M unit is 100% of the amount
+        self.assertFalse(F.rounded_equal(1200000000, 1195000000))  # units stop at $1M
+        self.assertFalse(F.rounded_equal(114385000, 114386000))    # same unit, different figures
+
+    def test_aosl_shape_relabelled_between_filings_counted_once(self):
+        # AOSL 2026-06-30: the 10-K tags the current part of its loans ShortTermBorrowings, the next
+        # 10-Q's comparative column tags the same 3,094,000 LongTermDebtCurrent; both filings show
+        # LongTermDebtNoncurrent 537,000, and DebtLongtermAndShorttermCombinedAmount is 3,631,000.
+        k, q = "0001628280-26-059261", "0001628280-26-071659"
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2026-06-30", 537000, "2026-08-20", accn=k, form="10-K"),
+                                                     fact(None, "2026-06-30", 537000, "2026-11-05", accn=q)],
+                          "ShortTermBorrowings": [fact(None, "2026-06-30", 3094000, "2026-08-20", accn=k, form="10-K")],
+                          "LongTermDebtCurrent": [fact(None, "2026-06-30", 3094000, "2026-11-05", accn=q)],
+                          "DebtLongtermAndShorttermCombinedAmount":
+                              [fact(None, "2026-06-30", 3631000, "2026-08-20", accn=k, form="10-K")]}, "2026-06-30")
+        self.assertAlmostEqual(r["v"], 3631000)
+        self.assertIn("relabelled between filings", r["src"])
+
+    def test_relabel_control_a_total_of_the_doubled_sum_keeps_both(self):
+        # control: same shape, but a filing's total debt is the sum WITH both amounts
+        k, q = "k1", "q1"
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2026-06-30", 537000, "2026-08-20", accn=k, form="10-K"),
+                                                     fact(None, "2026-06-30", 537000, "2026-11-05", accn=q)],
+                          "ShortTermBorrowings": [fact(None, "2026-06-30", 3094000, "2026-08-20", accn=k, form="10-K")],
+                          "LongTermDebtCurrent": [fact(None, "2026-06-30", 3094000, "2026-11-05", accn=q)],
+                          "DebtLongtermAndShorttermCombinedAmount":
+                              [fact(None, "2026-06-30", 6725000, "2026-08-20", accn=k, form="10-K")]}, "2026-06-30")
+        self.assertAlmostEqual(r["v"], 6725000)
+
+    def test_relabel_control_a_filing_showing_both_apart_keeps_both(self):
+        # control: one filing shows the two tags at different amounts: two lines, never relabelled
+        k, q = "k1", "q1"
+        r = self.resolve({"LongTermDebtNoncurrent": [fact(None, "2026-06-30", 500e6, "2026-08-20", accn=k, form="10-K"),
+                                                     fact(None, "2026-06-30", 500e6, "2026-11-05", accn=q)],
+                          "ShortTermBorrowings": [fact(None, "2026-06-30", 30e6, "2026-08-20", accn=k, form="10-K"),
+                                                  fact(None, "2026-06-30", 30e6, "2026-11-05", accn=q)],
+                          "LongTermDebtCurrent": [fact(None, "2026-06-30", 20e6, "2026-08-20", accn=k, form="10-K"),
+                                                  fact(None, "2026-06-30", 30e6, "2026-11-06", accn="q2")]},
+                         "2026-06-30")
+        self.assertAlmostEqual(r["v"], 560e6)
+        self.assertNotIn("counted once", r["src"])
+
+    def test_relabel_control_qcom_shape_paper_not_inside_the_total(self):
+        # control: QCOM 2016-09-25. LongTermDebt 10,008 (notes only) and CommercialPaper 1,749 in the
+        # 10-K; later filings tag the same paper DebtCurrent. The total does not hold the paper, so
+        # it is a real second borrowing: 11,757, never 10,008.
+        k, q = "0001234452-16-000552", "0001234452-17-000154"
+        r = self.resolve({"LongTermDebt": [fact(None, "2016-09-25", 10008e6, "2016-11-02", accn=k, form="10-K"),
+                                           fact(None, "2016-09-25", 10008e6, "2017-07-19", accn=q)],
+                          "CommercialPaper": [fact(None, "2016-09-25", 1749e6, "2016-11-02", accn=k, form="10-K")],
+                          "DebtCurrent": [fact(None, "2016-09-25", 1749e6, "2017-07-19", accn=q)]}, "2016-09-25")
+        self.assertAlmostEqual(r["v"], 11757e6)
+
+    def test_once_rule_is_stated(self):
+        self.assertIn("counted once", F.DEBT_ONCE_RULE)
+        self.assertIn("never collapsed", F.DEBT_ONCE_RULE)
 
     def test_different_amounts_same_filing_both_count(self):
         # control: the usual shape (AMZN-like) - current portion and separate short-term debt

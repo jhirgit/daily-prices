@@ -167,6 +167,51 @@ DEBT_ST = {"us-gaap": ["CommercialPaper", "ShortTermBorrowings", "OtherShortTerm
 #     facts agree with the definition (the total is at least the part), the part is not added
 #     (or the total replaces the part); when they do not, both stay and the label says so.
 DEBT_TOTAL_CURRENT = {"DebtCurrent", "CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings"}
+# ---- one borrowing, counted once: the two shapes the first fix missed (fix-all 2026-11-23)
+DEBT_ONCE_RULE = (
+    "A short-term-borrowings fact and a current-portion-of-long-term-debt fact at the same balance-sheet "
+    "date are ONE borrowing, counted once, when either (a) one filing carries both and the two amounts "
+    "are equal, or equal once the finer figure is rounded to the unit the coarser one is reported in, "
+    "that unit being at most 5% of the amount (BE 10-K 2024-12-31: 114,385,000 and 114,400,000); or (b) no filing carries both, and two filings "
+    "that each show the same long-term-debt line also show the same non-zero amount, one under each tag, "
+    "the current-portion one being an amount the sum already counts (AOSL: ShortTermBorrowings in the "
+    "10-K, LongTermDebtCurrent in the next 10-Q's comparative column; never QCOM 2016, whose commercial "
+    "paper was later tagged DebtCurrent beside a LongTermDebt total that leaves it out). A "
+    "filing that shows both at different amounts, a filing that shows only the short-term tag without "
+    "the long-term line, or a total-debt fact equal to the doubled sum keeps them as two borrowings. "
+    "Noncurrent and current amounts are never collapsed.")
+# total-debt concepts used as the contradiction guard for (b)
+DEBT_COMBINED = ["DebtLongtermAndShorttermCombinedAmount"]
+
+
+def _unit_of(v):
+    """The rounding unit a reported amount carries, read from its trailing zeros: a power of ten
+    from 1e3 to 1e6 (no filer on the board tags a borrowing coarser than to the million), else 1."""
+    a = int(round(abs(v)))
+    for k in (6, 5, 4, 3):
+        if a and a % (10 ** k) == 0:
+            return 10 ** k
+    return 1
+
+
+def rounded_equal(a, b):
+    """True when a and b are one amount: equal to the unit, or the coarser figure is exactly the
+    finer one rounded (half up) to the coarser's unit, that unit being at most 5% of the amount
+    (so $3.0M against $2.95M is one figure to the $0.1M, but $1M against $0.6M is not)."""
+    if abs(a - b) <= max(0.5, 1e-9 * abs(a)):
+        return True
+    ua, ub = _unit_of(a), _unit_of(b)
+    if ua == ub:
+        return False
+    coarse, fine, top = (a, b, ua) if ua > ub else (b, a, ub)
+    sign = -1 if fine < 0 else 1
+    # every unit the coarse figure is consistent with (4,000,000 may be to the $1M or the $0.1M)
+    for u in (10 ** k for k in (3, 4, 5, 6)):
+        if u > top or u > 0.05 * abs(coarse):
+            break
+        if abs(sign * int(abs(fine) / u + 0.5) * u - coarse) <= 0.5:
+            return True
+    return False
 # A debt value from an earlier balance sheet is used (labelled, partial) only if it
 # is at most this old relative to the balance sheet the cash comes from.
 DEBT_ASOF_MAX_DAYS = 200
@@ -349,14 +394,100 @@ def statement_fact(x):
     return f is None or bool(STATEMENT_FORMS.match(f))
 
 
-def flow_periods(facts, taxonomy, names, currency):
+# ---- mis-dated contexts in a 10-Q (fix-all 2026-11-23) -------------------------------
+# AMSC's 10-Q for its fiscal second quarter (period to 2026-09-30, fiscal year from April 1)
+# tags its cash-flow statement with contexts 2026-01-01..2026-09-30 and 2025-01-01..2025-09-30:
+# nine-month spans carrying the six-month figures (stock pay 11,781,000 is the April-September
+# amount its expense note tags on the right dates in the same filing). Its first-quarter 10-Q
+# tags the April-June 2026 stock pay (5,264,000, on the right dates in the cash-flow statement)
+# a second time as October-December 2025. Read as dated, they made a quarter that does not exist
+# and replaced a real one: stock pay TTM 20.8 against the filed 19.4 (+7.4%).
+# THE RULE (10-Q filings with fp Q1-Q3; durations shorter than a year; the concepts of ONE line):
+#  a fact is MIS-DATED when its period is not one the filing reports -- it ends neither at the
+#  filing's period end nor one year before it (+-7 days), or it is longer than a quarter and its
+#  length is not the n quarters of the filing's fp (+-10 days) -- AND the same filing carries the
+#  identical amount, for this line, on exactly one period it does report. It is then read on that
+#  period. Nothing is ever dropped: an odd period with no such twin (a predecessor stub after a
+#  fresh start, WOLF and TLN) is left exactly as filed. A 10-K, and a filing without fp or whose
+#  period end cannot be read, are left as filed. Applied to the one-concept readers (stock pay
+#  and D&A), where AMSC's defect sits; other lines are read as before (a drop rule applied to
+#  every line was tried and moved 14 names that could not each be verified).
+FRAME_TOL_END, FRAME_TOL_LEN = 7, 10
+_FRAME_CACHE = []
+
+
+def filing_frames(facts):
+    """{accession: (quarters n, period end)} for 10-Q filings whose period end can be read."""
+    for f, fr in _FRAME_CACHE:
+        if f is facts:
+            return fr
+    per = {}
+    for tax in ("us-gaap", "ifrs-full"):
+        for c in (facts.get(tax) or {}).values():
+            for arr in (c.get("units") or {}).values():
+                for x in arr:
+                    a, fp, s, e = x.get("accn"), x.get("fp") or "", x.get("start"), x.get("end")
+                    if not (a and s and e and str(x.get("form", "")).startswith("10-Q") and fp in ("Q1", "Q2", "Q3")):
+                        continue
+                    per.setdefault(a, [int(fp[1]), set()])[1].add((s, e))
+    frames = {}
+    for a, (n, spans) in per.items():
+        right = [e for s, e in spans if abs(_days(s, e) - n * 91.3) <= FRAME_TOL_LEN]
+        if right:
+            frames[a] = (n, max(right))
+    _FRAME_CACHE[:] = [(facts, frames)] + _FRAME_CACHE[:1]
+    return frames
+
+
+def reported_period(s, e, frame):
+    """True when (s, e) is a period a 10-Q with this frame reports."""
+    n, P = frame
+    L = _days(s, e)
+    if L >= FY_MIN:
+        return True
+    if min(abs(_days(e, P)), abs(_days(e, P) - 365)) > FRAME_TOL_END:
+        return False
+    return L <= Q_MAX or abs(L - n * 91.3) <= FRAME_TOL_LEN
+
+
+def misdated_fixes(facts, taxonomy, names, currency):
+    """{(concept, accession, start, end): (start, end)}: each mis-dated fact of the line `names`
+    and the period it is read on (see the rule above)."""
+    frames = filing_frames(facts)
+    tax = facts.get(taxonomy, {})
+    rows = []
+    for name in names:
+        c = tax.get(name)
+        if not c:
+            continue
+        _, arr = _units(c, currency)
+        for x in arr:
+            if x.get("start") and x.get("end") and x.get("val") is not None and x.get("accn") in frames:
+                rows.append((name, x["accn"], x["start"], x["end"], float(x["val"])))
+    good = {}
+    for name, a, s, e, v in rows:
+        if v and reported_period(s, e, frames[a]):
+            good.setdefault((a, v), set()).add((s, e))
+    out = {}
+    for name, a, s, e, v in rows:
+        if not v or reported_period(s, e, frames[a]):
+            continue
+        twins = good.get((a, v), set())
+        if len(twins) == 1:
+            out[(name, a, s, e)] = next(iter(twins))
+    return out
+
+
+def flow_periods(facts, taxonomy, names, currency, fixes=None):
     """{(start, end): {"v", "first", "last", "concept"}} across the concepts in priority
     order. Within one concept the latest-filed value wins (restatement), and the first
     filing date is kept as when the period became known. A lower-priority concept fills
     only periods the higher ones lack (see OneConcept for lines whose concepts differ
-    in scope, where that fill is wrong)."""
+    in scope, where that fill is wrong). `fixes` (misdated_fixes) re-reads mis-dated 10-Q
+    contexts on the period the filing means (AMSC); OneConcept (stock pay, D&A) passes them."""
     out = {}
     tax = facts.get(taxonomy, {})
+    fixes = fixes or {}
     for name in names:
         c = tax.get(name)
         if not c:
@@ -364,6 +495,9 @@ def flow_periods(facts, taxonomy, names, currency):
         _, arr = _units(c, currency)
         mine = {}
         for x in arr:
+            fx = fixes.get((name, x.get("accn"), x.get("start"), x.get("end")))
+            if fx:
+                x = dict(x, start=fx[0], end=fx[1], redated="%s..%s" % (x.get("start"), x.get("end")))
             s, e = x.get("start"), x.get("end")
             if not s or not e or x.get("val") is None or not statement_fact(x):
                 continue
@@ -418,7 +552,14 @@ def quarters_from_periods(periods):
 
     A reported 3-month fact wins; otherwise a quarter is DERIVED as a longer period
     minus the period with the same start ending one quarter earlier (Q4 = FY - 9M).
-    `known` is the first date both pieces were public."""
+    `known` is the first date both pieces were public.
+
+    KNOWN DEFECT, not fixed here (fix-all 2026-11-23): both pieces are read at their latest
+    value, so a filer that recasts last year's half but not its nine months (CRWD stock pay:
+    540.8 as filed, 527.3 recast) gets a derived quarter no filing reports (TTM 1,244.0 against
+    1,230.5 as reported). Reading the shorter piece as of the longer one's filing fixes CRWD but
+    breaks per-share lines across a split (NOW EPS), so it waits for a rule that handles both;
+    dcf/check_history.py reads the trailing figures consistently and catches it in a model."""
     q = {}
     for (s, e), v in periods.items():
         n = _days(s, e)
@@ -475,14 +616,15 @@ class OneConcept:
 
     def __init__(self, facts, taxonomy, names, currency):
         self.parts = []
+        fr = misdated_fixes(facts, taxonomy, names, currency)
         for n in names:
-            P = flow_periods(facts, taxonomy, [n], currency)
+            P = flow_periods(facts, taxonomy, [n], currency, fr)
             if P:
                 self.parts.append((n, P, quarters_from_periods(P)))
         self.periods = {k: v for _, P, _ in reversed(self.parts) for k, v in P.items()}
         # the period-level fill across concepts (the pre-2026-11-22 reading), used ONLY when no
         # single concept gives the twelve months, so a line is never lost to this rule
-        self.mixed_P = flow_periods(facts, taxonomy, names, currency)
+        self.mixed_P = flow_periods(facts, taxonomy, names, currency, fr)
         self.mixed_Q = quarters_from_periods(self.mixed_P)
 
     def ttm(self, end, mixed_ok=True):
@@ -763,7 +905,8 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
     # {concept: {end: {accession: value}}}: which filing reported which amount, for the
     # double-tag test (one borrowing under two concepts in the same filing).
     by_filing = {}
-    for n in names:
+    form_of = {}
+    for n in names | set(DEBT_COMBINED):
         c = facts.get(taxonomy, {}).get(n)
         if not c:
             continue
@@ -771,6 +914,7 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
         for x in arr:
             if x.get("end") and not x.get("start") and x.get("val") is not None and x.get("accn"):
                 by_filing.setdefault(n, {}).setdefault(x["end"], {})[x["accn"]] = float(x["val"])
+                form_of[x["accn"]] = x.get("form") or "?"
 
     def first(tags, end):
         for t in tags:
@@ -782,12 +926,37 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
     def same_amount(a, b):
         return abs(a - b) <= max(0.5, 1e-9 * abs(a))
 
-    def double_tag(t1, v1, t2, v2, end):
-        """True when t1 and t2 carry the same amount at `end` in one filing."""
-        if not same_amount(v1, v2):
-            return False
+    def double_tag(t1, v1, t2, v2, end, base=None):
+        """Why t1 and t2 are ONE borrowing at `end` (a label), or None. See DEBT_ONCE_RULE.
+        `base` is given only when t1 is a current-portion amount the method actually sums: the
+        relabel test (b) never removes an amount that is counted nowhere else (QCOM 2016: its
+        commercial paper, later tagged DebtCurrent beside a LongTermDebt total that excludes it)."""
+        if not rounded_equal(v1, v2):
+            return None
         f1, f2 = by_filing.get(t1, {}).get(end, {}), by_filing.get(t2, {}).get(end, {})
-        return any(k in f2 and same_amount(f1[k], v1) and same_amount(f2[k], v2) for k in f1)
+        both = [k for k in f1 if k in f2]
+        # (a) one filing carries both, equal to the unit or to the coarser figure's rounding
+        if any(rounded_equal(f1[k], f2[k]) for k in both):
+            exact = all(same_amount(f1[k], f2[k]) for k in both if rounded_equal(f1[k], f2[k]))
+            return "the same amount as %s in one filing%s" % (t1, "" if exact else " (to rounding)")
+        # a filing that shows both as different amounts says they are two lines
+        if both:
+            return None
+        # (b) relabelled between filings: each filing shows the base debt line and ONE of the two
+        if not base or not v1:
+            return None
+        fb = by_filing.get(base, {}).get(end, {})
+        pair = next(((k1, k2) for k1 in f1 for k2 in f2
+                     if rounded_equal(f1[k1], f2[k2]) and k1 in fb and k2 in fb and rounded_equal(fb[k1], fb[k2])), None)
+        if not pair:
+            return None
+        # contradiction guard: a filing whose total debt is the doubled sum says two borrowings
+        for tc in DEBT_COMBINED:
+            for k, tv in by_filing.get(tc, {}).get(end, {}).items():
+                if rounded_equal(tv, fb[pair[0]] + v1 + v2):
+                    return None
+        return "the same amount as %s, relabelled between filings (%s in the %s, %s in the %s; each shows %s too)" % (
+            t1, t1, form_of.get(pair[0], "?"), t2, form_of.get(pair[1], "?"), base)
 
     def at(end):
         if end in over:
@@ -812,11 +981,13 @@ def debt_resolver(facts, taxonomy, ccy, tk=None):
                     # total LongTermDebt already holds its current maturities
                     seen = list(parts[1:]) + [(t, pts[t][end]["v"]) for t in cur_tags
                                               if t in pts and end in pts[t] and t != s[1]]
-                    dup = next((t for t, v in seen if double_tag(t, v, s[1], s[0], end)), None)
+                    summed = {t for t, _ in parts[1:]}
+                    dup = next((r for r in (double_tag(t, v, s[1], s[0], end, b[1] if t in summed else None)
+                                            for t, v in seen) if r), None)
                     tot = next(((t, v) for t, v in parts if t in DEBT_TOTAL_CURRENT), None)
                     cur_part = next(((t, v) for t, v in parts[1:] if t not in DEBT_TOTAL_CURRENT), None)
                     if dup:
-                        notes.append("%s is the same amount as %s in one filing: counted once" % (s[1], dup))
+                        notes.append("%s is %s: counted once" % (s[1], dup))
                     elif tot and s[0] <= tot[1] + 0.5:
                         notes.append("%s is inside %s: counted once" % (s[1], tot[0]))
                     elif s[1] in DEBT_TOTAL_CURRENT and cur_part and cur_part[1] <= s[0] + 0.5:
@@ -1122,7 +1293,9 @@ def main(argv=None):
                       "shorter, e.g. Q4 = FY - 9M). Restated values keep the latest filing; `known` is the first "
                       "filing date. Debt = long-term noncurrent + current portion + commercial paper/short-term "
                       "borrowings, operating leases excluded; one amount a filing tags under two of these "
-                      "concepts is counted once. Cash = cash + short-term marketable securities."),
+                      "concepts (equal, or equal to the coarser figure's rounding), or that two filings tag "
+                      "one each beside the same long-term line, is counted once. Cash = cash + short-term "
+                      "marketable securities."),
            "names": {}, "na": {}}
     for tk, why in na.items():
         out["na"][tk] = why
