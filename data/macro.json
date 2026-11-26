@@ -1,11 +1,14 @@
 {
- "generated_at": "2026-11-25T22:20:34Z",
- "asof": "2026-11-25",
- "status": "ok",
+ "generated_at": "2026-11-26T22:15:32Z",
+ "asof": "2026-11-26",
+ "status": "degraded",
  "counts": {
-  "ok": 149
+  "ok": 148,
+  "stale": 1
  },
- "degraded": [],
+ "degraded": [
+  "core series pcetrim12m159sfrbdal: stale"
+ ],
  "not_published": {
   "ids": [
    "adpmes1t19enersa",
@@ -29,17 +32,17 @@
   "energy": "Energy"
  },
  "meta": {
-  "requests": 137,
-  "bytes": 14519625,
-  "seconds": 232.0,
+  "requests": 136,
+  "bytes": 14516631,
+  "seconds": 148.4,
   "by_host": {
    "api.fiscaldata.treasury.gov": {
-    "requests": 6,
-    "bytes": 1856759
+    "requests": 5,
+    "bytes": 1855883
    },
    "api.stlouisfed.org": {
     "requests": 110,
-    "bytes": 3103199
+    "bytes": 3101082
    },
    "apps.bea.gov": {
     "requests": 1,
@@ -47,7 +50,7 @@
    },
    "data-api.ecb.europa.eu": {
     "requests": 4,
-    "bytes": 716304
+    "bytes": 716306
    },
    "ec.europa.eu": {
     "requests": 7,
@@ -67,7 +70,7 @@
    },
    "www.bankofengland.co.uk": {
     "requests": 1,
-    "bytes": 13443
+    "bytes": 13440
    },
    "www.census.gov": {
     "requests": 1,
@@ -83,7 +86,7 @@
  "fed_path": {
   "what": "CBOT 30-day fed funds futures, one contract per month; implied rate = 100 minus price, the market-priced average overnight rate for that month. Contract symbols are generated from the date (never the generic ZQ=F).",
   "source": "CME settlement prices via Yahoo (yfinance)",
-  "asof": "2026-11-25",
+  "asof": "2026-11-26",
   "status": "ok",
   "reason": null,
   "contracts": [
@@ -91,92 +94,92 @@
     "month": "2026-11",
     "symbol": "ZQX26.CBT",
     "date": "2026-11-25",
-    "price": 96.12,
-    "implied": 3.88
+    "price": 96.1225,
+    "implied": 3.878
    },
    {
     "month": "2026-12",
     "symbol": "ZQZ26.CBT",
-    "date": "2026-11-25",
-    "price": 95.95,
-    "implied": 4.05
+    "date": "2026-11-26",
+    "price": 95.945,
+    "implied": 4.055
    },
    {
     "month": "2027-01",
     "symbol": "ZQF27.CBT",
-    "date": "2026-11-25",
-    "price": 95.86,
-    "implied": 4.14
+    "date": "2026-11-26",
+    "price": 95.85,
+    "implied": 4.15
    },
    {
     "month": "2027-02",
     "symbol": "ZQG27.CBT",
-    "date": "2026-11-25",
-    "price": 95.72,
-    "implied": 4.28
+    "date": "2026-11-26",
+    "price": 95.715,
+    "implied": 4.285
    },
    {
     "month": "2027-03",
     "symbol": "ZQH27.CBT",
-    "date": "2026-11-25",
-    "price": 95.65,
-    "implied": 4.35
+    "date": "2026-11-26",
+    "price": 95.645,
+    "implied": 4.355
    },
    {
     "month": "2027-04",
     "symbol": "ZQJ27.CBT",
-    "date": "2026-11-25",
-    "price": 95.575,
-    "implied": 4.425
+    "date": "2026-11-26",
+    "price": 95.56,
+    "implied": 4.44
    },
    {
     "month": "2027-05",
     "symbol": "ZQK27.CBT",
-    "date": "2026-11-25",
-    "price": 95.52,
-    "implied": 4.48
+    "date": "2026-11-26",
+    "price": 95.51,
+    "implied": 4.49
    },
    {
     "month": "2027-06",
     "symbol": "ZQM27.CBT",
-    "date": "2026-11-25",
+    "date": "2026-11-26",
     "price": 95.465,
     "implied": 4.535
    },
    {
     "month": "2027-07",
     "symbol": "ZQN27.CBT",
-    "date": "2026-11-25",
+    "date": "2026-11-26",
     "price": 95.445,
     "implied": 4.555
    },
    {
     "month": "2027-08",
     "symbol": "ZQQ27.CBT",
-    "date": "2026-11-25",
+    "date": "2026-11-26",
     "price": 95.455,
     "implied": 4.545
    },
    {
     "month": "2027-09",
     "symbol": "ZQU27.CBT",
-    "date": "2026-11-25",
-    "price": 95.455,
-    "implied": 4.545
+    "date": "2026-11-26",
+    "price": 95.46,
+    "implied": 4.54
    },
    {
     "month": "2027-10",
     "symbol": "ZQV27.CBT",
-    "date": "2026-11-25",
+    "date": "2026-11-26",
     "price": 95.465,
     "implied": 4.535
    },
    {
     "month": "2027-11",
     "symbol": "ZQX27.CBT",
-    "date": "2026-11-25",
-    "price": 95.485,
-    "implied": 4.515
+    "date": "2026-11-26",
+    "price": 95.495,
+    "implied": 4.505
    }
   ]
  },
@@ -447,14 +450,14 @@
    "title": "Fed reaction: policy rate, rule and market path",
    "formula": "Policy-range midpoint; the Atlanta Fed Taylor-rule utility's FOMCTaylor99UR prescription; the fed funds futures strip's implied rate for the next policy month and about 6 and 12 months out (100 minus price); the latest FOMC median projections. Value: the change the futures price over about 12 months (pp).",
    "limits": "The neutral rate inside any Taylor rule is disputed; the utility shows one documented choice. Futures embed a term premium, so they are not a pure expectation.",
-   "value": 0.64,
+   "value": 0.63,
    "unit": "pp (change priced over about 12 months against the policy-range midpoint)",
    "rows": [
     {
      "label": "Policy-range midpoint",
      "value": 3.875,
      "unit": "%",
-     "asof": "2026-11-25"
+     "asof": "2026-11-26"
     },
     {
      "label": "Taylor-rule prescription (Atlanta Fed, FOMCTaylor99UR)",
@@ -464,21 +467,21 @@
     },
     {
      "label": "Futures, this month (2026-11)",
-     "value": 3.88,
+     "value": 3.878,
      "unit": "%",
      "asof": "2026-11-25"
     },
     {
      "label": "Futures, about 6 months out (2027-05)",
-     "value": 4.48,
+     "value": 4.49,
      "unit": "%",
-     "asof": "2026-11-25"
+     "asof": "2026-11-26"
     },
     {
      "label": "Futures, about 12 months out (2027-11)",
-     "value": 4.515,
+     "value": 4.505,
      "unit": "%",
-     "asof": "2026-11-25"
+     "asof": "2026-11-26"
     },
     {
      "label": "FOMC median projection, end of 2026",
@@ -512,7 +515,7 @@
      "name": "Fed funds policy range, top",
      "field": "value",
      "value": 4.0,
-     "asof": "2026-11-25",
+     "asof": "2026-11-26",
      "status": "ok"
     },
     {
@@ -520,7 +523,7 @@
      "name": "Fed funds policy range, bottom",
      "field": "value",
      "value": 3.75,
-     "asof": "2026-11-25",
+     "asof": "2026-11-26",
      "status": "ok"
     },
     {
@@ -551,8 +554,8 @@
      "id": "@fed_path",
      "name": "Fed funds futures strip",
      "field": "implied",
-     "value": 4.515,
-     "asof": "2026-11-25",
+     "value": 4.505,
+     "asof": "2026-11-26",
      "status": "ok"
     }
    ],
@@ -785,7 +788,7 @@
      "pair": "CEW",
      "leg": -1,
      "label": "down",
-     "chg_63": -4.244,
+     "chg_63": -4.254,
      "asof": "2026-11-25"
     }
    ],
@@ -819,7 +822,7 @@
      "name": "Euro short-term rate (euro overnight rate)",
      "field": "value",
      "value": 2.444,
-     "asof": "2026-11-24",
+     "asof": "2026-11-25",
      "status": "ok"
     },
     {
@@ -1102,8 +1105,8 @@
      "field": "yoy",
      "label": "Brent crude, year over year (%)",
      "name": "Brent crude, front month",
-     "value": 45.278,
-     "asof": "2026-11-25",
+     "value": 45.303,
+     "asof": "2026-11-26",
      "status": "ok",
      "op": "<",
      "confirm": 0.0,
@@ -3276,8 +3279,8 @@
    },
    "released": "2026-11-25",
    "next_release": "2026-12-23",
-   "status": "ok",
-   "reason": null,
+   "status": "stale",
+   "reason": "the Personal Income and Outlays release of 2026-11-25 was due to carry 2026-10; the latest here is 2026-09",
    "judged_by": "calendar",
    "priority": "core",
    "licence": "Federal Reserve Bank research data: free, with attribution"
@@ -3656,10 +3659,10 @@
    "source": "fred",
    "source_id": "DFEDTARU",
    "release": "fomc",
-   "asof": "2026-11-25",
+   "asof": "2026-11-26",
    "value": 4.0,
    "prior": 4.0,
-   "prior_asof": "2026-11-24",
+   "prior_asof": "2026-11-25",
    "change": 0.0,
    "change_unit": "pp",
    "yoy": 0.0,
@@ -3686,10 +3689,10 @@
    "source": "fred",
    "source_id": "DFEDTARL",
    "release": "fomc",
-   "asof": "2026-11-25",
+   "asof": "2026-11-26",
    "value": 3.75,
    "prior": 3.75,
-   "prior_asof": "2026-11-24",
+   "prior_asof": "2026-11-25",
    "change": 0.0,
    "change_unit": "pp",
    "yoy": 0.0,
@@ -4675,15 +4678,15 @@
    "source_id": "CEW",
    "release": "market",
    "asof": "2026-11-25",
-   "value": 19.132,
+   "value": 19.13,
    "prior": 19.15,
    "prior_asof": "2026-11-24",
-   "change": -0.094,
+   "change": -0.104,
    "change_unit": "%",
-   "yoy": 3.018,
+   "yoy": 3.008,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": -4.244
+    "chg_63": -4.254
    },
    "released": null,
    "next_release": null,
@@ -5097,10 +5100,10 @@
    "source": "sdmx_csv",
    "source_id": "ECB FM/D.U2.EUR.4F.KR.DFR.LEV",
    "release": "ecb_mp",
-   "asof": "2026-11-25",
+   "asof": "2026-11-26",
    "value": 2.5,
    "prior": 2.5,
-   "prior_asof": "2026-11-24",
+   "prior_asof": "2026-11-25",
    "change": 0.0,
    "change_unit": "pp",
    "yoy": 0.5,
@@ -5127,10 +5130,10 @@
    "source": "boe_csv",
    "source_id": "IUDBEDR",
    "release": "boe_mpc",
-   "asof": "2026-11-24",
+   "asof": "2026-11-25",
    "value": 4.0,
    "prior": 4.0,
-   "prior_asof": "2026-11-23",
+   "prior_asof": "2026-11-24",
    "change": 0.0,
    "change_unit": "pp",
    "yoy": 0.0,
@@ -5157,16 +5160,16 @@
    "source": "sdmx_csv",
    "source_id": "ECB EST/B.EU000A2X2A25.WT",
    "release": "ecb_estr",
-   "asof": "2026-11-24",
+   "asof": "2026-11-25",
    "value": 2.444,
-   "prior": 2.443,
-   "prior_asof": "2026-11-23",
-   "change": 0.001,
+   "prior": 2.444,
+   "prior_asof": "2026-11-24",
+   "change": 0.0,
    "change_unit": "pp",
-   "yoy": 0.52,
+   "yoy": 0.518,
    "yoy_unit": "pp",
    "extra": {
-    "chg_63": 0.256
+    "chg_63": 0.254
    },
    "released": null,
    "next_release": null,
@@ -5740,16 +5743,16 @@
    "source": "pricedb",
    "source_id": "BZ=F",
    "release": "market",
-   "asof": "2026-11-25",
-   "value": 90.77,
-   "prior": 91.4,
-   "prior_asof": "2026-11-24",
-   "change": -0.689,
+   "asof": "2026-11-26",
+   "value": 91.73,
+   "prior": 94.61,
+   "prior_asof": "2026-11-25",
+   "change": -3.044,
    "change_unit": "%",
-   "yoy": 45.278,
+   "yoy": 45.303,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": 1.635
+    "chg_63": 1.37
    },
    "released": null,
    "next_release": null,
@@ -5770,16 +5773,16 @@
    "source": "pricedb",
    "source_id": "CL=F",
    "release": "market",
-   "asof": "2026-11-25",
-   "value": 84.17,
-   "prior": 82.05,
-   "prior_asof": "2026-11-24",
-   "change": 2.584,
+   "asof": "2026-11-26",
+   "value": 84.91,
+   "prior": 83.68,
+   "prior_asof": "2026-11-25",
+   "change": 1.47,
    "change_unit": "%",
-   "yoy": 45.246,
+   "yoy": 44.774,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": 0.766
+    "chg_63": 1.811
    },
    "released": null,
    "next_release": null,
@@ -5800,16 +5803,16 @@
    "source": "pricedb",
    "source_id": "NG=F",
    "release": "market",
-   "asof": "2026-11-25",
-   "value": 3.677,
-   "prior": 3.323,
-   "prior_asof": "2026-11-24",
-   "change": 10.653,
+   "asof": "2026-11-26",
+   "value": 3.599,
+   "prior": 3.269,
+   "prior_asof": "2026-11-25",
+   "change": 10.095,
    "change_unit": "%",
-   "yoy": -16.885,
+   "yoy": -21.04,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": 26.488
+    "chg_63": 24.619
    },
    "released": null,
    "next_release": null,
@@ -5830,16 +5833,16 @@
    "source": "pricedb",
    "source_id": "TTF=F",
    "release": "market",
-   "asof": "2026-11-25",
-   "value": 88.1,
-   "prior": 91.669,
-   "prior_asof": "2026-11-24",
-   "change": -3.893,
+   "asof": "2026-11-26",
+   "value": 87.55,
+   "prior": 87.303,
+   "prior_asof": "2026-11-25",
+   "change": 0.283,
    "change_unit": "%",
-   "yoy": 199.803,
+   "yoy": 198.114,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": 29.378
+    "chg_63": 30.713
    },
    "released": null,
    "next_release": null,
@@ -5890,16 +5893,16 @@
    "source": "pricedb",
    "source_id": "HG=F",
    "release": "market",
-   "asof": "2026-11-25",
-   "value": 5.48,
-   "prior": 5.3625,
-   "prior_asof": "2026-11-24",
-   "change": 2.191,
+   "asof": "2026-11-26",
+   "value": 5.4335,
+   "prior": 5.3325,
+   "prior_asof": "2026-11-25",
+   "change": 1.894,
    "change_unit": "%",
-   "yoy": 9.611,
+   "yoy": 6.445,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": -16.806
+    "chg_63": -17.198
    },
    "released": null,
    "next_release": null,

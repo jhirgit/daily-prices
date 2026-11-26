@@ -1,5 +1,5 @@
 {
-"generated_at":"2026-11-25T22:11:06Z",
+"generated_at":"2026-11-26T22:09:04Z",
 "source":"SEC EDGAR NPORT-P primary_doc.xml: the latest public filing per fund series (the last three for a Select Industry fund)",
 "line_fields":["name","isin","ticker","ccy","w","px"],
 "funds":{
@@ -288,30 +288,30 @@
 ]
 },
 "DRAM":{
-"acc":"0000894189-26-023623",
-"checked":"2026-11-18",
+"acc":"0000894189-26-031428",
+"checked":"2026-11-26",
 "cik":"1976517",
-"excluded":{"n":6,"w":0.430696820549},
-"filed":"2026-08-26",
+"excluded":{"n":11,"w":0.433919646474},
+"filed":"2026-11-24",
 "fund":"Roundhill Memory ETF",
 "n_sec":12,
-"period":"2026-06-30",
+"period":"2026-09-30",
 "series":"S000102337",
 "tail":{"n":0,"w":0},
-"w_sec":0.573328046812,
+"w_sec":0.568156776462,
 "lines":[
-["SK hynix Inc","KR7000660001","000660","KRW",0.15894233,1710.449881],
-["Samsung Electronics Co Ltd","KR7005930003","005930","KRW",0.14371627,215.58123],
-["Sandisk Corp","US80004C2008","SNDK","USD",0.05211208,2273.73],
-["Kioxia Holdings Corp","JP3236330001","285A","JPY",0.0435905,551.792032],
-["Western Digital Corp","US9581021055","WDC","USD",0.04295531,638.72],
-["Seagate Technology Holdings PL","IE00BKVD2N49","STX","USD",0.04191318,965.0],
-["GigaDevice Semiconductor Inc","CNE1000030S9","603986","CNY",0.0307367,120.110826],
-["Micron Technology Inc","US5951121038","MU","USD",0.02029967,1154.29],
-["Nanya Technology Corp","TW0002408002","2408","TWD",0.01814749,14.204323],
-["Winbond Electronics Corp","TW0002344009","2344","TWD",0.01111931,6.513584],
-["Phison Electronics Corp","TW0008299009","8299","TWD",0.00629425,74.866982],
-["Macronix International Co Ltd","TW0002337003","2337","TWD",0.00350095,4.881264]
+["Samsung Electronics Co Ltd","KR7005930003","005930","KRW",0.18682802,198.374584],
+["SK hynix Inc","KR7000660001","000660","KRW",0.16515376,1312.153676],
+["Seagate Technology Holdings PL","IE00BKVD2N49","STX","USD",0.04755749,922.34],
+["Sandisk Corp","US80004C2008","SNDK","USD",0.04717278,1739.89],
+["Western Digital Corp","US9581021055","WDC","USD",0.03628324,454.46],
+["Kioxia Holdings Corp","JP3236330001","285A","JPY",0.03244319,115.155758],
+["Nanya Technology Corp","TW0002408002","2408","TWD",0.02477798,16.305628],
+["Winbond Electronics Corp","TW0002344009","2344","TWD",0.01145108,5.639423],
+["GigaDevice Semiconductor Inc","CNE1000030S9","603986","CNY",0.0093685,52.778358],
+["SK hynix Inc","US78392B2060","SKHY","USD",0.00601673,184.15],
+["Samsung Electronics Co Ltd","KR7005931001","005935","KRW",0.0010422,144.218692],
+["Micron Technology Inc","US5951121038","MU","USD",6.182e-05,1065.11]
 ]
 },
 "DRIV":{
@@ -7508,7 +7508,7 @@
 },
 "SILJ":{
 "acc":"0001193125-26-372658",
-"checked":"2026-11-18",
+"checked":"2026-11-26",
 "cik":"1633061",
 "excluded":{"n":3,"w":0.09679184953},
 "filed":"2026-08-28",

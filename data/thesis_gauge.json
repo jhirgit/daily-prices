@@ -1,5 +1,5 @@
 {
-"generated_at":"2026-11-25T22:08:27Z",
+"generated_at":"2026-11-26T22:09:00Z",
 "asof":"2026-11-25",
 "note":"AI-hardware thesis gauge. Every input is a MARKET PROXY (relative strength, credit, rates, breadth), standardized against its own trailing 252 sessions and sign-aligned so + = healthy for the thesis. Hard-data events (capex guides, memory contract prices) are not read here; see event_inputs. The quadrant is a description of the tape, not a forecast; see evidence.",
 "quadrant":"C",
