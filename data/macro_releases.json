@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-27T04:21:15Z",
+ "generated_at": "2026-11-27T22:19:07Z",
  "asof": "2026-11-27",
  "note": "Release dates, generated each night. Each row carries its source and the date it was verified; rows from macro_calendar_fixed.json are hand-verified.",
  "sources": {
@@ -8,8 +8,8 @@
    "reason": null
   },
   "fiscaldata": {
-   "status": "error",
-   "reason": "HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts"
+   "status": "ok",
+   "reason": null
   },
   "fixed": {
    "status": "ok",
@@ -1078,6 +1078,14 @@
    "release": "fed_h41",
    "name": "fed_h41",
    "source": "FRED API fred/release/dates (release_id 20)",
+   "verified": "2026-11-27"
+  },
+  {
+   "date": "2026-12-10",
+   "time_et": "19:00",
+   "release": "treasury_mts",
+   "name": "Monthly Treasury Statement",
+   "source": "https://api.fiscaldata.treasury.gov/services/calendar/release (dataset 015-BFS-2014Q1-13)",
    "verified": "2026-11-27"
   },
   {
