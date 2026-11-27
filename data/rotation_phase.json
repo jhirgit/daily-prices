@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T22:12:58Z",
+ "generated_at": "2026-11-27T04:14:25Z",
  "asof": "2026-11-25",
  "evidence_asof": "2026-09-25",
  "evidence_summary": {
@@ -183,11 +183,11 @@
      "label": "Equal-weight Nasdaq vs QQQ (QQQE/QQQ)",
      "window": 63,
      "s": 1,
-     "m": null,
-     "z": null,
-     "status": "n/a",
-     "value": "n/a",
-     "note": "no price series for QQQE",
+     "m": 0.01289,
+     "z": 0.29,
+     "status": "neutral",
+     "value": "+1.3% over 63d",
+     "note": "",
      "inputs": [
       "QQQE",
       "QQQ"
@@ -398,7 +398,7 @@
      }
     }
    ],
-   "read": "Accelerating down since 11/17 — 2 of 4 checks confirm the down-trend; nothing diverging; washed out: 3rd pct of its 3y range.",
+   "read": "Accelerating down since 11/17 — 2 of 5 checks confirm the down-trend; nothing diverging; washed out: 3rd pct of its 3y range.",
    "topping": "QQQ rising on fewer names: the equal-weight Nasdaq and the semis lag while the 10y yield climbs — a narrow, duration-exposed advance.",
    "bottoming": "QQQ still falling but semis and the equal-weight Nasdaq start beating it and the 10y yield rolls over — the engine restarting before the index.",
    "phase_evidence": {
@@ -2044,7 +2044,7 @@
      "groups": [
       {
        "name": "producers / physical",
-       "c": -0.20544,
+       "c": -0.2055,
        "found": [
         "CCO.TO",
         "NXE.TO",
@@ -2063,7 +2063,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.19045,
+       "c": -0.19039,
        "found": null
       }
      ],
@@ -2814,7 +2814,7 @@
      "groups": [
       {
        "name": "iron-ore miners",
-       "c": -0.08264,
+       "c": -0.08263,
        "found": [
         "BHP",
         "RIO",
@@ -3772,7 +3772,7 @@
      "groups": [
       {
        "name": "rare earths",
-       "c": -0.06324,
+       "c": -0.06322,
        "found": [
         "MP",
         "LYC.AX",
@@ -3782,7 +3782,7 @@
       },
       {
        "name": "lithium",
-       "c": -0.09719,
+       "c": -0.09718,
        "found": [
         "PLS.AX",
         "ALB",
@@ -3791,7 +3791,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.28688,
+       "c": -0.28691,
        "found": null
       }
      ],
@@ -6909,11 +6909,11 @@
      "label": "Heating oil (about jet fuel, HO=F)",
      "window": 63,
      "s": -1,
-     "m": -0.14464,
-     "z": -0.49,
-     "status": "neutral",
-     "value": "−13.5% over 63d",
-     "note": "",
+     "m": null,
+     "z": null,
+     "status": "n/a",
+     "value": "n/a",
+     "note": "no price series for HO=F",
      "inputs": [
       "HO=F"
      ],
@@ -7058,7 +7058,7 @@
      }
     }
    ],
-   "read": "Steady down since 11/23 — 0 of 3 checks confirm the down-trend; nothing diverging.",
+   "read": "Steady down since 11/23 — 0 of 2 checks confirm the down-trend; nothing diverging.",
    "topping": "Airlines up while jet fuel climbs and PEJ softens — the demand leg fading as costs rise.",
    "bottoming": "Airlines still down, but jet fuel falls and PEJ turns up — margins and demand repairing together.",
    "phase_evidence": {
@@ -15554,7 +15554,7 @@
       },
       {
        "name": "fuel",
-       "c": -0.10937,
+       "c": -0.1094,
        "found": [
         "CCO.TO",
         "UEC",
@@ -15571,7 +15571,7 @@
       },
       {
        "name": "the rest",
-       "c": -0.23118,
+       "c": -0.23115,
        "found": null
       }
      ],
@@ -17500,10 +17500,10 @@
  },
  "errors": {
   "_fetch": {
-   "QQQE": "no bars returned"
+   "HO=F": "no bars returned"
   },
-  "QQQ": [
-   "eqw: no price series for QQQE"
+  "JETS": [
+   "fuel: no price series for HO=F"
   ]
  }
 }

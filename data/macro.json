@@ -1,13 +1,21 @@
 {
- "generated_at": "2026-11-26T22:15:32Z",
- "asof": "2026-11-26",
+ "generated_at": "2026-11-27T04:21:15Z",
+ "asof": "2026-11-27",
  "status": "degraded",
  "counts": {
-  "ok": 148,
+  "ok": 142,
+  "error": 6,
   "stale": 1
  },
  "degraded": [
-  "core series pcetrim12m159sfrbdal: stale"
+  "core series customs_daily: error",
+  "core series customs_gross: error",
+  "core series customs_net: error",
+  "core series customs_refunds: error",
+  "core series interest_public: error",
+  "core series pcetrim12m159sfrbdal: stale",
+  "core series tga: error",
+  "calendar source fiscaldata: HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts"
  ],
  "not_published": {
   "ids": [
@@ -32,17 +40,17 @@
   "energy": "Energy"
  },
  "meta": {
-  "requests": 136,
-  "bytes": 14516631,
-  "seconds": 148.4,
+  "requests": 146,
+  "bytes": 12660365,
+  "seconds": 402.8,
   "by_host": {
    "api.fiscaldata.treasury.gov": {
-    "requests": 5,
-    "bytes": 1855883
+    "requests": 15,
+    "bytes": 0
    },
    "api.stlouisfed.org": {
     "requests": 110,
-    "bytes": 3101082
+    "bytes": 3100697
    },
    "apps.bea.gov": {
     "requests": 1,
@@ -50,7 +58,7 @@
    },
    "data-api.ecb.europa.eu": {
     "requests": 4,
-    "bytes": 716306
+    "bytes": 716308
    },
    "ec.europa.eu": {
     "requests": 7,
@@ -93,7 +101,7 @@
    {
     "month": "2026-11",
     "symbol": "ZQX26.CBT",
-    "date": "2026-11-25",
+    "date": "2026-11-26",
     "price": 96.1225,
     "implied": 3.878
    },
@@ -115,64 +123,64 @@
     "month": "2027-02",
     "symbol": "ZQG27.CBT",
     "date": "2026-11-26",
-    "price": 95.715,
-    "implied": 4.285
+    "price": 95.705,
+    "implied": 4.295
    },
    {
     "month": "2027-03",
     "symbol": "ZQH27.CBT",
     "date": "2026-11-26",
-    "price": 95.645,
-    "implied": 4.355
+    "price": 95.63,
+    "implied": 4.37
    },
    {
     "month": "2027-04",
     "symbol": "ZQJ27.CBT",
     "date": "2026-11-26",
-    "price": 95.56,
-    "implied": 4.44
+    "price": 95.545,
+    "implied": 4.455
    },
    {
     "month": "2027-05",
     "symbol": "ZQK27.CBT",
     "date": "2026-11-26",
-    "price": 95.51,
-    "implied": 4.49
+    "price": 95.485,
+    "implied": 4.515
    },
    {
     "month": "2027-06",
     "symbol": "ZQM27.CBT",
     "date": "2026-11-26",
-    "price": 95.465,
-    "implied": 4.535
+    "price": 95.435,
+    "implied": 4.565
    },
    {
     "month": "2027-07",
     "symbol": "ZQN27.CBT",
     "date": "2026-11-26",
-    "price": 95.445,
-    "implied": 4.555
+    "price": 95.415,
+    "implied": 4.585
    },
    {
     "month": "2027-08",
     "symbol": "ZQQ27.CBT",
     "date": "2026-11-26",
-    "price": 95.455,
-    "implied": 4.545
+    "price": 95.415,
+    "implied": 4.585
    },
    {
     "month": "2027-09",
     "symbol": "ZQU27.CBT",
     "date": "2026-11-26",
-    "price": 95.46,
-    "implied": 4.54
+    "price": 95.42,
+    "implied": 4.58
    },
    {
     "month": "2027-10",
     "symbol": "ZQV27.CBT",
     "date": "2026-11-26",
-    "price": 95.465,
-    "implied": 4.535
+    "price": 95.425,
+    "implied": 4.575
    },
    {
     "month": "2027-11",
@@ -469,11 +477,11 @@
      "label": "Futures, this month (2026-11)",
      "value": 3.878,
      "unit": "%",
-     "asof": "2026-11-25"
+     "asof": "2026-11-26"
     },
     {
      "label": "Futures, about 6 months out (2027-05)",
-     "value": 4.49,
+     "value": 4.515,
      "unit": "%",
      "asof": "2026-11-26"
     },
@@ -567,30 +575,10 @@
    "title": "Fiscal impulse",
    "formula": "12-month primary deficit (deficit excluding interest on the public debt) as a share of nominal GDP, now minus 12 months earlier, in percentage points; positive means fiscal policy is putting more into demand than a year ago. Tariff refunds are shown as a separate line.",
    "limits": "Payment-timing shifts move single months, so only 12-month sums are used. A tariff refund is a one-off transfer to importers, not a policy stance. The Brookings Hutchins Fiscal Impact Measure is the published comparator (availability not established).",
-   "value": 0.523,
+   "value": null,
    "unit": "pp of GDP (positive = fiscal policy putting more into demand than a year earlier)",
-   "asof": "2026-10",
+   "asof": null,
    "rows": [
-    {
-     "label": "Primary deficit, 12 months to 2026-10, share of GDP",
-     "value": 3.125,
-     "unit": "% of GDP"
-    },
-    {
-     "label": "Same, 12 months earlier",
-     "value": 2.602,
-     "unit": "% of GDP"
-    },
-    {
-     "label": "Total deficit, 12 months to 2026-10, share of GDP",
-     "value": 6.39,
-     "unit": "% of GDP"
-    },
-    {
-     "label": "Primary deficit, 12 months to 2026-10",
-     "value": 1033.0,
-     "unit": "billions of dollars"
-    },
     {
      "label": "Tariff refunds paid to importers, 12 months (a one-off, shown apart from the impulse)",
      "value": 149.6,
@@ -613,7 +601,7 @@
      "field": "value",
      "value": 98616.1797,
      "asof": "2026-10",
-     "status": "ok"
+     "status": "error"
     },
     {
      "id": "gdp",
@@ -629,11 +617,11 @@
      "field": "sum12",
      "value": 149582.91,
      "asof": "2026-10",
-     "status": "ok"
+     "status": "error"
     }
    ],
-   "status": "ok",
-   "reason": null
+   "status": "error",
+   "reason": "not enough inputs (interest_public)"
   },
   "size_divergence": {
    "id": "size_divergence",
@@ -1045,9 +1033,9 @@
    "id": "tariff_one_time",
    "title": "Tariff pass-through is a one-time level shift",
    "claim": "Tariffs raise the price level once; they do not keep inflation high.",
-   "side": "mixed",
-   "side_text": "The data are split on this view",
-   "line": "1 of 3 tests sit with this view, 1 against, 0 neither, 1 without data.",
+   "side": "insufficient",
+   "side_text": "Not enough data to place this view",
+   "line": "0 of 3 tests sit with this view, 1 against, 0 neither, 2 without data.",
    "tests": [
     {
      "series": "cusr0000sacl1e",
@@ -1080,13 +1068,13 @@
      "field": "sum12_yoy",
      "label": "Net customs receipts, 12-month total, change from a year earlier (%)",
      "name": "Customs duties, net",
-     "value": -26.42,
+     "value": null,
      "asof": "2026-10",
-     "status": "ok",
+     "status": "error",
      "op": "<",
      "confirm": 0.0,
      "refute": 10.0,
-     "sits": "with"
+     "sits": "no data"
     }
    ],
    "note": null,
@@ -1105,7 +1093,7 @@
      "field": "yoy",
      "label": "Brent crude, year over year (%)",
      "name": "Brent crude, front month",
-     "value": 45.303,
+     "value": 46.048,
      "asof": "2026-11-26",
      "status": "ok",
      "op": "<",
@@ -2085,8 +2073,8 @@
    "extra": {
     "pct_3m": 3.78
    },
-   "released": "2026-11-20",
-   "next_release": "2026-11-27",
+   "released": "2026-11-27",
+   "next_release": "2026-12-04",
    "status": "ok",
    "reason": null,
    "judged_by": "calendar",
@@ -2393,10 +2381,10 @@
     "sum12_yoy": null
    },
    "released": null,
-   "next_release": "2026-12-10",
+   "next_release": null,
    "status": "ok",
    "reason": null,
-   "judged_by": "calendar",
+   "judged_by": "days",
    "notes": [
     "a percent change is not meaningful for a flow that is negative or changes sign"
    ],
@@ -2428,10 +2416,10 @@
     "sum12_yoy": 1.046
    },
    "released": null,
-   "next_release": "2026-12-10",
+   "next_release": null,
    "status": "ok",
    "reason": null,
-   "judged_by": "calendar",
+   "judged_by": "days",
    "priority": "useful",
    "licence": "US federal government work: public domain"
   },
@@ -2460,10 +2448,10 @@
     "sum12_yoy": 5.133
    },
    "released": null,
-   "next_release": "2026-12-10",
+   "next_release": null,
    "status": "ok",
    "reason": null,
-   "judged_by": "calendar",
+   "judged_by": "days",
    "priority": "useful",
    "licence": "US federal government work: public domain"
   },
@@ -2492,10 +2480,10 @@
     "sum12_yoy": 36.556
    },
    "released": null,
-   "next_release": "2026-12-10",
-   "status": "ok",
-   "reason": null,
-   "judged_by": "calendar",
+   "kept_from": "2026-11-26T22:15:32Z",
+   "status": "error",
+   "reason": "HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts",
+   "next_release": null,
    "priority": "core",
    "licence": "US federal government work: public domain"
   },
@@ -2524,10 +2512,10 @@
     "sum12_yoy": 1643.829
    },
    "released": null,
-   "next_release": "2026-12-10",
-   "status": "ok",
-   "reason": null,
-   "judged_by": "calendar",
+   "kept_from": "2026-11-26T22:15:32Z",
+   "status": "error",
+   "reason": "HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts",
+   "next_release": null,
    "priority": "core",
    "licence": "US federal government work: public domain"
   },
@@ -2556,10 +2544,10 @@
     "sum12_yoy": -26.42
    },
    "released": null,
-   "next_release": "2026-12-10",
-   "status": "ok",
-   "reason": null,
-   "judged_by": "calendar",
+   "kept_from": "2026-11-26T22:15:32Z",
+   "status": "error",
+   "reason": "HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts",
+   "next_release": null,
    "priority": "core",
    "licence": "US federal government work: public domain"
   },
@@ -2583,13 +2571,10 @@
    "yoy": null,
    "yoy_unit": "%",
    "released": null,
+   "kept_from": "2026-11-26T22:15:32Z",
+   "status": "error",
+   "reason": "HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts",
    "next_release": null,
-   "status": "ok",
-   "reason": null,
-   "judged_by": "days",
-   "notes": [
-    "no observation a year earlier in the fetched window"
-   ],
    "priority": "core",
    "licence": "US federal government work: public domain"
   },
@@ -2616,10 +2601,10 @@
     "chg_63": -34422.0
    },
    "released": null,
+   "kept_from": "2026-11-26T22:15:32Z",
+   "status": "error",
+   "reason": "HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts",
    "next_release": null,
-   "status": "ok",
-   "reason": null,
-   "judged_by": "days",
    "priority": "core",
    "licence": "US federal government work: public domain"
   },
@@ -2648,10 +2633,10 @@
     "sum12_yoy": 9.696
    },
    "released": null,
-   "next_release": "2026-12-10",
-   "status": "ok",
-   "reason": null,
-   "judged_by": "calendar",
+   "kept_from": "2026-11-26T22:15:32Z",
+   "status": "error",
+   "reason": "HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts",
+   "next_release": null,
    "priority": "core",
    "licence": "US federal government work: public domain"
   },
@@ -3841,7 +3826,7 @@
     "chg_13w": -0.063
    },
    "released": null,
-   "next_release": "2026-11-27",
+   "next_release": "2026-12-03",
    "status": "ok",
    "reason": null,
    "judged_by": "days",
@@ -3871,7 +3856,7 @@
     "chg_13w": 44.369
    },
    "released": null,
-   "next_release": "2026-11-27",
+   "next_release": "2026-12-03",
    "status": "ok",
    "reason": null,
    "judged_by": "days",
@@ -5100,10 +5085,10 @@
    "source": "sdmx_csv",
    "source_id": "ECB FM/D.U2.EUR.4F.KR.DFR.LEV",
    "release": "ecb_mp",
-   "asof": "2026-11-26",
+   "asof": "2026-11-27",
    "value": 2.5,
    "prior": 2.5,
-   "prior_asof": "2026-11-25",
+   "prior_asof": "2026-11-26",
    "change": 0.0,
    "change_unit": "pp",
    "yoy": 0.5,
@@ -5744,15 +5729,15 @@
    "source_id": "BZ=F",
    "release": "market",
    "asof": "2026-11-26",
-   "value": 91.73,
+   "value": 92.2,
    "prior": 94.61,
    "prior_asof": "2026-11-25",
-   "change": -3.044,
+   "change": -2.547,
    "change_unit": "%",
-   "yoy": 45.303,
+   "yoy": 46.048,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": 1.37
+    "chg_63": 1.89
    },
    "released": null,
    "next_release": null,
@@ -5774,15 +5759,15 @@
    "source_id": "CL=F",
    "release": "market",
    "asof": "2026-11-26",
-   "value": 84.91,
+   "value": 85.77,
    "prior": 83.68,
    "prior_asof": "2026-11-25",
-   "change": 1.47,
+   "change": 2.498,
    "change_unit": "%",
-   "yoy": 44.774,
+   "yoy": 46.24,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": 1.811
+    "chg_63": 2.842
    },
    "released": null,
    "next_release": null,
@@ -5804,15 +5789,15 @@
    "source_id": "NG=F",
    "release": "market",
    "asof": "2026-11-26",
-   "value": 3.599,
+   "value": 3.606,
    "prior": 3.269,
    "prior_asof": "2026-11-25",
-   "change": 10.095,
+   "change": 10.309,
    "change_unit": "%",
-   "yoy": -21.04,
+   "yoy": -20.886,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": 24.619
+    "chg_63": 24.861
    },
    "released": null,
    "next_release": null,
@@ -5894,15 +5879,15 @@
    "source_id": "HG=F",
    "release": "market",
    "asof": "2026-11-26",
-   "value": 5.4335,
+   "value": 5.641,
    "prior": 5.3325,
    "prior_asof": "2026-11-25",
-   "change": 1.894,
+   "change": 5.785,
    "change_unit": "%",
-   "yoy": 6.445,
+   "yoy": 10.51,
    "yoy_unit": "%",
    "extra": {
-    "chg_63": -17.198
+    "chg_63": -14.035
    },
    "released": null,
    "next_release": null,

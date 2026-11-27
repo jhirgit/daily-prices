@@ -1,9 +1,10 @@
 {
- "generated_at": "2026-11-26T22:15:32Z",
+ "generated_at": "2026-11-27T04:21:15Z",
  "session": "2026-11-25",
  "status": "degraded",
  "degraded": [
-  "macro.json: core series pcetrim12m159sfrbdal: stale"
+  "macro.json: 7 core series not ok: customs_daily, customs_gross, customs_net, customs_refunds, interest_public, pcetrim12m159sfrbdal, tga",
+  "macro.json: calendar source fiscaldata: HTTP 504 from api.fiscaldata.treasury.gov after 3 attempts"
  ],
  "warnings": [],
  "steps": {
@@ -19,8 +20,8 @@
  "payloads": {
   "latest.json": {
    "present": true,
-   "bytes": 112292,
-   "generated_at": "2026-11-26T22:08:51Z",
+   "bytes": 112332,
+   "generated_at": "2026-11-27T04:05:13Z",
    "rows": 318,
    "asof": "2026-11-25",
    "errors": {
@@ -29,50 +30,92 @@
   },
   "technicals.json": {
    "present": true,
-   "bytes": 1968704,
-   "generated_at": "2026-11-26T22:08:59Z",
+   "bytes": 1968710,
+   "generated_at": "2026-11-27T04:05:22Z",
    "rows": 304,
    "asof": "2026-11-25"
   },
   "closes.json": {
    "present": true,
    "bytes": 1731567,
-   "generated_at": "2026-11-26T22:09:01Z",
+   "generated_at": "2026-11-27T04:05:24Z",
    "rows": 316,
    "asof": "2026-11-25"
   },
   "crowd.json": {
    "present": true,
-   "bytes": 43843,
-   "generated_at": "2026-11-26T22:09:01Z",
+   "bytes": 43833,
+   "generated_at": "2026-11-27T04:05:24Z",
    "rows": 316,
-   "asof": "2026-11-26"
+   "asof": "2026-11-27"
   },
   "rotation_members.json": {
    "present": true,
-   "bytes": 1543922,
-   "generated_at": "2026-11-26T22:12:54Z",
+   "bytes": 1549935,
+   "generated_at": "2026-11-27T04:14:21Z",
    "rows": 81,
    "asof": "2026-11-25",
    "errors": {
     "rows": [
+     "AMLP",
+     "ARTY",
+     "BOTZ",
+     "COPX",
+     "DRAM",
+     "DRIV",
+     "DTCR",
+     "ESPO",
+     "EWY",
+     "FINX",
+     "GDX",
+     "GDXJ",
+     "IAI",
+     "IBB",
+     "ICLN",
+     "ICOP",
+     "IGM",
+     "IGV",
+     "IHF",
+     "IHI",
+     "ITA",
+     "ITB",
+     "IWM",
+     "IYT",
+     "JETS",
      "LIT",
+     "NLR",
+     "OIH",
+     "PAVE",
+     "PBJ",
+     "PEJ",
+     "PJP",
+     "PPA",
      "QQQ",
+     "REMX",
+     "RING",
      "SILJ",
+     "SLX",
+     "SMH",
+     "SOXX",
      "SPY",
+     "TAN",
+     "UFO",
+     "URA",
+     "VNQ",
+     "WCLD",
      "XLK"
     ]
    }
   },
   "rotation_phase.json": {
    "present": true,
-   "bytes": 397155,
-   "generated_at": "2026-11-26T22:12:58Z",
+   "bytes": 397150,
+   "generated_at": "2026-11-27T04:14:25Z",
    "rows": 81,
    "asof": "2026-11-25",
    "errors": {
     "rows": [
-     "QQQ",
+     "JETS",
      "_fetch"
     ]
    }
@@ -80,52 +123,52 @@
   "rotation_corr.json": {
    "present": true,
    "bytes": 454399,
-   "generated_at": "2026-11-26T22:12:59Z",
+   "generated_at": "2026-11-27T04:14:26Z",
    "rows": 86,
    "asof": "2026-11-25"
   },
   "rotation_fundamentals.json": {
    "present": true,
    "bytes": 295764,
-   "generated_at": "2026-11-26T22:13:00Z",
+   "generated_at": "2026-11-27T04:14:28Z",
    "rows": 81,
    "asof": "2026-11-25"
   },
   "exhaustion.json": {
    "present": true,
    "bytes": 275189,
-   "generated_at": "2026-11-26T22:13:04Z",
+   "generated_at": "2026-11-27T04:14:32Z",
    "rows": null,
    "asof": "2026-11-25"
   },
   "thesis_gauge.json": {
    "present": true,
    "bytes": 98085,
-   "generated_at": "2026-11-26T22:09:00Z",
+   "generated_at": "2026-11-27T04:05:23Z",
    "rows": null,
    "asof": "2026-11-25"
   },
   "options_flow.json": {
    "present": true,
-   "bytes": 261161,
-   "generated_at": "2026-11-25T22:26:06Z",
+   "bytes": 259895,
+   "generated_at": "2026-11-26T22:19:39Z",
    "rows": 274,
    "asof": "2026-11-25",
-   "cap_share": 0.85
+   "cap_share": 0.846
   },
   "earnings_dates.json": {
    "present": true,
-   "bytes": 12992,
-   "generated_at": "2026-11-25T22:22:50Z",
+   "bytes": 12994,
+   "generated_at": "2026-11-26T22:17:08Z",
    "rows": 140,
-   "asof": "2026-11-25"
+   "asof": "2026-11-26"
   },
   "earnings_detected.json": {
    "present": true,
    "bytes": 1840,
-   "generated_at": "2026-11-25T22:22:51Z",
+   "generated_at": "2026-11-26T22:17:09Z",
    "rows": 3,
-   "asof": "2026-11-25",
+   "asof": "2026-11-26",
    "errors": {
     "edgar": 0,
     "overdue": 0
@@ -167,17 +210,24 @@
   },
   "macro.json": {
    "present": true,
-   "bytes": 171016,
-   "generated_at": "2026-11-26T22:15:32Z",
-   "asof": "2026-11-26",
+   "bytes": 171202,
+   "generated_at": "2026-11-27T04:21:15Z",
+   "asof": "2026-11-27",
    "rows": 149,
    "errors": {
     "counts": {
-     "ok": 148,
+     "ok": 142,
+     "error": 6,
      "stale": 1
     },
     "not_ok": [
-     "pcetrim12m159sfrbdal"
+     "customs_daily",
+     "customs_gross",
+     "customs_net",
+     "customs_refunds",
+     "interest_public",
+     "pcetrim12m159sfrbdal",
+     "tga"
     ]
    }
   }
